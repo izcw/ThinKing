@@ -1,0 +1,24 @@
+dist-ssr/
+*.local
+
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+/sql
+
+### IntelliJ IDEA ###
+.idea
+/Backend/out/
+/Backend/target/
+/Backend/.iws
+/Backend/.iml
+/Backend/.ipr
+
+### VS Code ###
+.vscode/
+node_modules/
+dist/
+
+### Mac OS ###
+.DS_Store

@@ -1,0 +1,30 @@
+/* 侧边栏-树 */
+.n-tree-node-content__text {
+    font-size: 14px;
+    color: #000;
+}
+
+/* 鼠标悬浮 */
+.n-tree-node.n-tree-node--selectable.n-tree-node--clickable {
+    padding: 6px 0 !important;
+    cursor: pointer !important;
+    border-radius: 6px;
+}
+
+.n-tree-node.n-tree-node--selectable.n-tree-node--clickable:hover {
+    background-color: #EFEFED !important;
+}
+
+/* 选中 */
+.n-tree-node.n-tree-node--selected.n-tree-node--selectable.n-tree-node--clickable {
+    background-color: #EFEFED !important;
+}
+
+/* 箭头 */
+.n-tree-node-switcher__icon {
+    border-radius: 2px;
+}
+
+.n-tree-node-switcher__icon:hover {
+    background-color: #E4E4E2 !important;
+}

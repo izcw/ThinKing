@@ -1,0 +1,13 @@
+/** 圆角主题(css-var) */
+@use 'element-plus/theme-chalk/src/mixins/_var.scss' as *;
+@use 'ele-admin-plus/es/style/themes/rounded-css-var.scss' as *;
+
+#{$rounded-selector} {
+  @include set-component-css-var(
+    'border-radius',
+    (
+      'base': 6px,
+      'small': 4px
+    )
+  );
+}

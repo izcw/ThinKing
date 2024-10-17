@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Sunday April";
+  src: url('SmileySans-Oblique.ttf');
+}
+@font-face {
+  /* 自定义的字体名车，调用该字体时使用 */
+  font-family: "SmileySans得意黑";
+  /* 引用字体包。.ttf后缀不区分大小写，用.TTF也可以 */
+  src: url('SmileySans-Oblique.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
