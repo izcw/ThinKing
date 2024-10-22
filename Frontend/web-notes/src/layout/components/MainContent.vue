@@ -1,51 +1,52 @@
 <template>
-    <n-flex>
-        <n-tooltip trigger="hover" placement="right">
-            <template #trigger>
-                <n-float-button position="fixed" bottom="2.5rem" right="2.5rem" menu-trigger="hover">
-                    <n-icon>
-                        <Crow />
-                    </n-icon>
-                    <template #menu>
-                        <n-tooltip trigger="hover" placement="right">
-                            <template #trigger>
-                                <n-float-button shape="square">
-                                    <n-icon>
-                                        <Connectdevelop />
-                                    </n-icon>
-                                </n-float-button>
-                            </template>
-                            AI
-                        </n-tooltip>
-                        <n-tooltip trigger="hover" placement="right">
-                            <template #trigger>
-                                <n-float-button shape="square">
-                                    <n-icon>
-                                        <Blackberry />
-                                    </n-icon>
-                                </n-float-button>
-                            </template>
-                            插件
-                        </n-tooltip>
-                        <n-tooltip trigger="hover" placement="right">
-                            <template #trigger>
-                                <n-float-button shape="square">
-                                    <n-icon>
-                                        <Magic />
-                                    </n-icon>
-                                </n-float-button>
-                            </template>
-                            模板
-                        </n-tooltip>
-                    </template>
-                </n-float-button>
-            </template>
-            使用AI、模板、插件等
-        </n-tooltip>
-    </n-flex>
+    <div class="MainContent">
+        <div class="PageHeader">
+            <PageHeaderBox />
+        </div><!-- 页头 -->
+        <div class="mainbox">
+            <PanelSplitBox :defaultSize="0" :minPanelSize="280" :maxPanelSize="800" contentPanel="right">
+                <template v-slot:1>
+                    <ToolSidebarBox /><!-- 工具侧边栏 -->
+                </template>
+                <template v-slot:2>
+                    <div style="width: 100%;height: 100%; position: relative;">
+                        <ContentBox />
+                        <levitatedSphereBox /><!-- 悬浮球 -->
+                    </div>
+                </template>
+            </PanelSplitBox><!-- 分割面板 -->
+        </div>
+
+    </div>
+
 
 </template>
 
 <script setup>
 import { Crow, Connectdevelop, Blackberry, Magic } from '@vicons/fa'
+import PanelSplitBox from '../components/PanelSplit.vue'
+import PageHeaderBox from './PageHeader/index.vue'
+import ToolSidebarBox from './toolSidebar/index.vue'
+import ContentBox from './content/index.vue'
+import levitatedSphereBox from './levitatedSphere.vue'
+
 </script>
+<style scoped lang='scss'>
+.MainContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.PageHeader {
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+
+.mainbox {
+    width: 100%;
+    height: calc(100% - 50px);
+}
+</style>

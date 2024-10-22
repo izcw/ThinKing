@@ -1,33 +1,50 @@
+<!--
+* @FileDescription: 系统侧边栏
+-->
 <template>
-    <n-tree block-line draggable :data="data" :checked-keys="checkedKeys" :expanded-keys="expandedKeys"
-        @drop="handleDrop" @update:checked-keys="handleCheckedKeysChange"
-        @update:expanded-keys="handleExpandedKeysChange" />
+    <div>
+        <UserBox /><!-- 用户头像 -->
+        <collectBox />
+        <n-tree block-line draggable :data="data" :checked-keys="checkedKeys" :expanded-keys="expandedKeys"
+            @drop="handleDrop" @update:checked-keys="handleCheckedKeysChange"
+            @update:expanded-keys="handleExpandedKeysChange">
+            <template #title="{ node }">
+                <n-icon size="20">{{ node.icon }}</n-icon> {{ node.label }}
+            </template>
+        </n-tree>
+
+
+    </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { repeat } from "seemly";
+import UserBox from './components/UserBox.vue';
+import collectBox from './components/collect.vue';
+import { Crow, Connectdevelop, Blackberry, Magic } from '@vicons/fa'
+
+
+// 根据层级创建标签和图标
+function createLabel(level) {
+    const labels = ["道生一", "一生二", "二生三", "三生万物"];
+    const icons = [Blackberry, Connectdevelop, Crow, Magic]; // 图标数组
+    return { label: labels[level - 1], icon: icons[level - 1] };
+}
 
 // 创建树数据
 function createData(level = 4, baseKey = "") {
     if (!level) return;
     return repeat(6 - level, void 0).map((_, index) => {
         const key = `${baseKey}${level}${index}`;
+        const { label, icon } = createLabel(level);
         return {
-            label: createLabel(level),
+            label,
             key,
+            icon, // 添加图标属性
             children: createData(level - 1, key),
         };
     });
-}
-
-// 根据层级创建标签
-function createLabel(level) {
-    if (level === 4) return "道生一";
-    if (level === 3) return "一生二";
-    if (level === 2) return "二生三";
-    if (level === 1) return "三生万物";
-    return "";
 }
 
 // 查找节点的兄弟节点和索引
@@ -86,6 +103,4 @@ function handleDrop({ node, dragNode, dropPosition }) {
     data.value = Array.from(data.value);
 }
 </script>
-<style scoped lang='scss'>
-
-</style>
+<style scoped lang='scss'></style>

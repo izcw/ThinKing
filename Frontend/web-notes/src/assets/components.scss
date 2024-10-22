@@ -1,0 +1,23 @@
+// 工具图标
+.Tools-item {
+    padding: 4px 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    i {
+        color: #999;
+    }
+}
+
+.Tools-item:hover,
+.Tools-item:active {
+    background-color: #f3f3f3;
+}
