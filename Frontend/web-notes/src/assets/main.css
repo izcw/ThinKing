@@ -23,3 +23,8 @@ a {
   -ms-user-select: none;
   user-select: none;
 }
+
+/* 禁止拖拽 */
+.ban-drag {
+  -webkit-user-drag: none;
+}

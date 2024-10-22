@@ -1,5 +1,5 @@
 <template>
-    <div class="header-wrapper">
+    <div class="header-wrapper GMargin">
         <div class="logo-box">
             <div class="logo">
                 <img src="/src/assets/logo.png" alt="">
@@ -9,7 +9,7 @@
                 <template #trigger>
                     <div class="Tools-item">
                         <n-icon size="20">
-                            <AngleDoubleLeft />
+                            <ChevronDoubleLeft16Filled />
                         </n-icon>
                     </div>
                 </template>
@@ -19,11 +19,11 @@
     </div>
 </template>
 <script setup>
-import { Icon } from '@vicons/utils'
-import { Carrot, AngleDoubleLeft } from '@vicons/fa'
+import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
 </script>
 <style scoped lang='scss'>
 .header-wrapper {
+    padding-top: 10px;
     margin-bottom: 1.5rem;
 }
 
