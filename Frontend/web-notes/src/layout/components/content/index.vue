@@ -4,12 +4,36 @@
         <div class="pagebox" :style="{ width: centiBoole ? '100%' : 850 + 'px' }">
             <contentPageBox />
         </div><!-- 页面 -->
+        <n-tooltip placement="bottom" trigger="hover">
+            <template #trigger>
+                <div class="Tools-item"
+                    style="width: 26px;height: 26px; position: absolute;right: 14px;top: 0;bottom: 0;margin: auto;font-size: 28px;"
+                    @click="toggleSidebarStatus">
+                    <n-icon size="24" v-if="parentSidebarStatus">
+                        <ChevronRight16Filled />
+                    </n-icon>
+                    <n-icon size="24" v-else>
+                        <ChevronLeft16Filled />
+                    </n-icon>
+                </div>
+            </template>
+            <span  v-if="parentSidebarStatus">收起侧边栏 Ctrl+\</span>
+            <span v-else>展开侧边栏 Ctrl+\</span>
+        </n-tooltip>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
+import { ChevronLeft16Filled, ChevronRight16Filled } from '@vicons/fluent'
 import contentPageBox from './components/contentPage.vue';
+
+// 展开关闭侧边栏状态
+const parentSidebarStatus = inject('parentSidebarStatus'); // 注入父组件的状态
+const updateParentSidebarStatus = inject('updateParentSidebarStatus'); // 注入更新状态的方法
+const toggleSidebarStatus = () => {
+    updateParentSidebarStatus(!parentSidebarStatus.value);
+};
 
 
 let centiBoole = ref(false)
@@ -42,12 +66,10 @@ onMounted(() => {
 }
 
 // 滚动条样式
+/* 高度和宽度分别对应横竖滚动条的尺寸 */
 .contentBox::-webkit-scrollbar {
-    /* 高度和宽度分别对应横竖滚动条的尺寸 */
     width: 10px;
-    /* 竖向滚动条的宽度 */
     height: 10px;
-    /* 横向滚动条的高度 */
 }
 
 // https://segmentfault.com/q/1010000043110324

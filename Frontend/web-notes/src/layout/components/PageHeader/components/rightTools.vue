@@ -4,7 +4,7 @@
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item">
-                    <n-icon size="20">
+                    <n-icon size="18">
                         <Search28Filled />
                     </n-icon>
                 </div>
@@ -15,7 +15,7 @@
             <template #trigger>
                 <div class="Tools-item">
                     <n-rate clearable count="1">
-                        <n-icon size="20">
+                        <n-icon size="18">
                             <StarRegular />
                         </n-icon>
                     </n-rate>
@@ -27,7 +27,7 @@
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item">
-                    <n-icon size="20">
+                    <n-icon size="18">
                         <MoreHorizontal32Filled />
                     </n-icon>
                 </div>
@@ -37,8 +37,10 @@
     </div>
 </template>
 <script setup>
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
 import { StarRegular } from '@vicons/fa'
-import { MoreHorizontal32Filled, Search28Filled } from '@vicons/fluent'
+import { MoreHorizontal32Filled, Search28Filled,ChevronDoubleRight16Filled } from '@vicons/fluent'
+
 </script>
 <style scoped lang='scss'>
 .rightTools {
@@ -59,7 +61,7 @@ import { MoreHorizontal32Filled, Search28Filled } from '@vicons/fluent'
     }
 
     .Tools-item {
-        margin-left: 4px;
+        margin-left: 6px;
     }
 }
 </style>

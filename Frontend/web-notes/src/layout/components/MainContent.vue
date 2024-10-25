@@ -4,7 +4,7 @@
             <PageHeaderBox />
         </div><!-- 页头 -->
         <div class="mainbox">
-            <PanelSplitBox :defaultSize="0" :minPanelSize="280" :maxPanelSize="800" contentPanel="right">
+            <PanelSplitBox :defaultSize="300" :minPanelSize="280" :maxPanelSize="800" contentPanel="right" :defaultSwitch="true">
                 <template v-slot:1>
                     <ToolSidebarBox /><!-- 工具侧边栏 -->
                 </template>
@@ -16,19 +16,17 @@
                 </template>
             </PanelSplitBox><!-- 分割面板 -->
         </div>
-
     </div>
-
-
 </template>
 
 <script setup>
-import { Crow, Connectdevelop, Blackberry, Magic } from '@vicons/fa'
 import PanelSplitBox from '../components/PanelSplit.vue'
 import PageHeaderBox from './PageHeader/index.vue'
 import ToolSidebarBox from './toolSidebar/index.vue'
 import ContentBox from './content/index.vue'
 import levitatedSphereBox from './levitatedSphere.vue'
+
+
 
 </script>
 <style scoped lang='scss'>

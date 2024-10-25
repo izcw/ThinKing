@@ -2,14 +2,17 @@
     <div class="sidebar">
         <UserBox /><!-- 用户头像 -->
         <collectBox /><!-- 快速访问 收藏 -->
-        <n-tree block-line draggable :data="data" :checked-keys="checkedKeys" :expanded-keys="expandedKeys"
-            @drop="handleDrop" @update:checked-keys="handleCheckedKeysChange"
-            @update:expanded-keys="handleExpandedKeysChange">
-            <template #title="{ node }">
-                <n-icon size="20" :component="node.icon"></n-icon> {{ node.label }}
-            </template>
-        </n-tree>
+        <div class="text-select GMargin">
+            <n-tree block-line draggable :data="data" :checked-keys="checkedKeys" :expanded-keys="expandedKeys"
+                @drop="handleDrop" @update:checked-keys="handleCheckedKeysChange"
+                @update:expanded-keys="handleExpandedKeysChange">
+                <template #title="{ node }">
+                    <n-icon size="20" :component="node.icon"></n-icon> {{ node.label }}
+                </template>
+            </n-tree>
+        </div>
         <spaceBox />
+        <moreBox />
     </div>
 </template>
 
@@ -17,7 +20,9 @@
 import { ref } from "vue";
 import UserBox from './components/UserBox.vue';
 import collectBox from './components/collect.vue';
-import spaceBox from './components/space.vue';
+// import spaceBox from './components/space.vue';
+import spaceBox from './components/space2.vue';
+import moreBox from './components/more.vue';
 import { Crow, Connectdevelop, Blackberry, Magic } from '@vicons/fa';
 
 // 加载 JSON 数据
@@ -77,5 +82,8 @@ function handleDrop({ node, dragNode, dropPosition }) {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden;
+    padding-bottom: 40px;
+    box-sizing: border-box;
 }
 </style>

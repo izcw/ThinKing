@@ -2,6 +2,16 @@
     <div class="leftTools">
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
+                <div class="Tools-item" @click="toggleSidebarStatus" v-show="!parentSidebarStatus">
+                    <n-icon size="20">
+                        <ChevronDoubleRight16Filled />
+                    </n-icon>
+                </div>
+            </template>
+            <span>展开侧边栏 Ctrl+\</span>
+        </n-tooltip>
+        <n-tooltip placement="bottom" trigger="hover">
+            <template #trigger>
                 <div class="Tools-item">
                     <n-icon size="16">
                         <ArrowLeft28Filled />
@@ -55,8 +65,16 @@
 
 </template>
 <script setup>
+import { inject } from 'vue';
 import { StarRegular } from '@vicons/fa'
-import { ArrowLeft28Filled, ArrowRight28Filled } from '@vicons/fluent'
+import { ArrowLeft28Filled, ArrowRight28Filled, ChevronDoubleRight16Filled } from '@vicons/fluent'
+
+// 展开关闭侧边栏状态
+const parentSidebarStatus = inject('parentSidebarStatus'); // 注入父组件的状态
+const updateParentSidebarStatus = inject('updateParentSidebarStatus'); // 注入更新状态的方法
+const toggleSidebarStatus = () => {
+    updateParentSidebarStatus(!parentSidebarStatus.value);
+};
 </script>
 <style scoped lang='scss'>
 .leftTools {
@@ -65,6 +83,10 @@ import { ArrowLeft28Filled, ArrowRight28Filled } from '@vicons/fluent'
 
     .Breadcrumb {
         margin-left: 12px;
+    }
+
+    .Tools-item {
+        margin-right: 6px;
     }
 }
 </style>

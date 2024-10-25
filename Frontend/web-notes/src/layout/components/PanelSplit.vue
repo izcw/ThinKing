@@ -4,11 +4,10 @@
 <template>
     <div class="PanelSplitter">
         <div class="container" :class="{ 'reversed': contentPanel !== 'left' }">
-            <div class="panel panel-left"
-                :style="{ width: leftPanelSize + 'px', display: leftPanelSize == 0 ? 'none' : 'block' }">
+            <div class="panel panel-left" v-show="parentSidebarStatus" :style="{ width: leftPanelSize + 'px' }">
                 <slot name="1"></slot>
             </div>
-            <div class="divider" @mousedown.stop="startDrag"></div>
+            <div class="divider" @mousedown.stop="startDrag" v-show="parentSidebarStatus"></div>
             <div class="panel panel-right">
                 <slot name="2"></slot>
             </div>
@@ -17,7 +16,10 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, onMounted } from 'vue';
+import { ref, computed, defineProps, onMounted, watch, provide } from 'vue';
+
+
+
 
 const props = defineProps({
     defaultSize: {
@@ -35,14 +37,27 @@ const props = defineProps({
     contentPanel: {
         type: String,
         default: 'left'
+    },
+    defaultSwitch: {
+        type: Boolean,
+        default: false
     }
 });
 
-const leftPanelSize = ref(props.defaultSize);
+
+// 提供一个方法用于更新侧边栏状态
+const parentSidebarStatus = ref(props.defaultSwitch);
+const updateStatus = (status) => {
+    parentSidebarStatus.value = status;
+};
+provide('parentSidebarStatus', parentSidebarStatus); // 提供状态
+provide('updateParentSidebarStatus', updateStatus); // 提供更新状态的方法
+// 
+
+let leftPanelSize = ref(props.defaultSize); // 左面板默认宽度
 let dragging = false;
 let startX = 0;
 let startLeftSize = 0;
-
 const maxPanelSizeValue = computed(() => {
     return props.maxPanelSize !== null ? props.maxPanelSize : Infinity;
 });

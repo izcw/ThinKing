@@ -10,7 +10,7 @@ import rightToolsBox from './components/rightTools.vue';
 </script>
 <style scoped lang='scss'>
 .PageHeader {
-    padding: 0 15px;
+    padding: 0 6px;
     box-sizing: border-box;
     width: 100%;
     height: 100%;

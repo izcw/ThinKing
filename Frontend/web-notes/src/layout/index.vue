@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <PanelSplitBox :defaultSize="280" :minPanelSize="200" :maxPanelSize="800" contentPanel="left">
+        <PanelSplitBox :defaultSize="280" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"  :defaultSwitch="true">
             <template v-slot:1>
                 <div class="sidebar">
                     <SidebarBox /><!-- 系统侧边栏 -->
@@ -16,10 +16,11 @@
 </template>
 
 <script setup>
-
+import { ref  } from 'vue';
 import SidebarBox from './components/sidebar/index.vue';
 import MainContentBox from './components/MainContent.vue';
 import PanelSplitBox from './components/PanelSplit.vue'
+
 </script>
 
 <style scoped>
