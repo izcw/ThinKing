@@ -1,6 +1,7 @@
 <template>
     <div class="layout">
-        <PanelSplitBox :defaultSize="280" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"  :defaultSwitch="true">
+        <PanelSplitBox :defaultSize="280" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"
+            :defaultSwitch="true">
             <template v-slot:1>
                 <div class="sidebar">
                     <SidebarBox /><!-- 系统侧边栏 -->
@@ -16,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref  } from 'vue';
+import { ref } from 'vue';
 import SidebarBox from './components/sidebar/index.vue';
 import MainContentBox from './components/MainContent.vue';
 import PanelSplitBox from './components/PanelSplit.vue'
@@ -34,7 +35,7 @@ import PanelSplitBox from './components/PanelSplit.vue'
 .sidebar {
     width: 100%;
     height: 100%;
-    background-color: #F7F7F5;
+    background-color: #F5F5F5;
 }
 
 .content {

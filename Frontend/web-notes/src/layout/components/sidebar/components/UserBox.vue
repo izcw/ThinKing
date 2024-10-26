@@ -2,8 +2,10 @@
     <div class="header-wrapper GMargin">
         <div class="logo-box">
             <div class="logo">
-                <img src="/src/assets/logo.png" alt="">
-                <span>Yoko</span>
+                <router-link to="/login">
+                    <img src="/src/assets/logo.png" alt="">
+                    <span>Yoko</span>
+                </router-link>
             </div>
             <n-tooltip placement="bottom" trigger="hover">
                 <template #trigger>
@@ -20,6 +22,7 @@
 </template>
 <script setup>
 import { inject } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
 import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
 
 // 展开关闭侧边栏状态

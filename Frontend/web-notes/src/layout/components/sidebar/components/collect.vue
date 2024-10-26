@@ -1,16 +1,17 @@
 <template>
     <div class="collect GMargin">
         <n-grid cols="3 300:4 400:5 500:6 600:7" :y-gap="8" style="justify-items: center;">
-                <n-grid-item style="width: 100%;" v-for="(item,index) in data" :key="item.id" >
-                    <div class="Tools-item item">
-                        <n-icon size="20">
-                            <component :is="item.icon" />
-                        </n-icon>
-                        <n-icon size="10" color="#F6C050cc" v-if="index >= 3" style="position: absolute;top: 4px;left: 4px;">
+            <n-grid-item style="width: 100%;" v-for="(item, index) in data" :key="item.id">
+                <div class="Tools-item item">
+                    <n-icon size="20">
+                        <component :is="item.icon" />
+                    </n-icon>
+                    <n-icon size="10" color="#F6C050cc" v-if="index >= 3"
+                        style="position: absolute;top: 4px;left: 4px;">
                         <Star />
                     </n-icon>
-                    </div>
-                </n-grid-item>
+                </div>
+            </n-grid-item>
         </n-grid>
     </div>
 </template>
@@ -85,6 +86,6 @@ let data = ref([
 
 .item:hover,
 .item:active {
-    background-color: #EBEBEB;
+    background-color: #E9E9E9;
 }
 </style>

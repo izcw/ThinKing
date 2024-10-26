@@ -1,6 +1,6 @@
 <template>
-    <div>
-        sf
+    <div class="Annotations">
+        批注
     </div>
 </template>
 <script setup>

@@ -1,24 +1,31 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
-// import indexView from '../views/indexView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/:id',
       name: 'home',
-      component: Layout
+      component: Layout,
+      children: [
+        {
+          path: '', // 这里使用空字符串，表示与父路径相同
+          component: () => import('../views/NoteContent.vue')
+        },
+        {
+          path: 'template', // 这里省略前面的/:id
+          name: 'template',
+          component: () => import('../views/templateView.vue')
+        },
+      ]
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/indexView.vue')
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/login/index.vue')
     }
   ]
-})
+});
 
-export default router
+export default router;

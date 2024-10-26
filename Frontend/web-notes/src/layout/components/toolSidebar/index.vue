@@ -3,36 +3,16 @@
 -->
 <template>
     <div class="toolSidebar">
-        <n-tabs type="segment" animated>
+        <n-tabs type="segment" animated default-value="chap1" @before-leave="handleBeforeLeave"
+            @update:value="handleUpdateValue">
             <n-tab-pane name="chap1" tab="目录">
-                <div>
-                    <div>目录</div>
-                    <div>第一章</div>
-                    <div>第二章</div>
-                    <br>
-                    <hr>
-                    <n-collapse default-expanded-names="1">
-                        <n-collapse-item title="文件目录" name="1">
-                            <div>图片</div>
-                            <div>PDF</div>
-                        </n-collapse-item>
-                        <n-collapse-item title="日历" name="2">
-                            <div>1，2，3，4，5，6，7</div>
-                        </n-collapse-item>
-                        <n-collapse-item title="标签" name="3">
-                            <div>vue、java</div>
-                        </n-collapse-item>
-                        <n-collapse-item title="双向链接" name="4">
-                            <div>1——2——3</div>
-                        </n-collapse-item>
-                    </n-collapse>
-                </div>
+                <catalogOutlineBox />
             </n-tab-pane>
             <n-tab-pane name="chap2" tab="AI">
-                AI
+                <AIStormBox />
             </n-tab-pane>
-            <n-tab-pane name="chap5" tab="批注">
-                批注
+            <n-tab-pane name="chap3" tab="批注">
+                <AnnotationsBox />
             </n-tab-pane>
         </n-tabs>
     </div>
@@ -40,13 +20,35 @@
 
 </template>
 <script setup>
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
+import catalogOutlineBox from './components/catalogOutline.vue'
+import AIStormBox from './components/aiStorm.vue'
+import AnnotationsBox from './components/Annotations.vue'
+
+// 展开关闭侧边栏状态
+const updateParentSidebarWidth = inject('updateParentSidebarWidth'); // 注入更新状态的方法
+const toggleSidebarWidth = (width) => {
+    updateParentSidebarWidth(width);
+};
+
+const handleBeforeLeave = (tabName) => {
+    switch (tabName) {
+        case 'chap2':
+            console.log('ai')
+            toggleSidebarWidth(550)
+            return true;
+        default:
+            toggleSidebarWidth(300)
+            return true;
+    }
+};
 
 </script>
 <style scoped lang='scss'>
 .toolSidebar {
     width: 100%;
     height: 100%;
-    padding: 0 15px;
+    padding: 0 1rem;
     box-sizing: border-box;
 }
 </style>

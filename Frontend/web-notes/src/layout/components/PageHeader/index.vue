@@ -1,13 +1,33 @@
 <template>
     <div class="PageHeader">
         <leftToolsBox />
-        <rightToolsBox />
+        <rightToolsBox v-if="!isTemplateRoute" />
     </div>
 </template>
+
 <script setup>
+import { watch } from 'vue'
+import { useRoute } from 'vue-router';
+import { ref } from 'vue';
 import leftToolsBox from './components/leftTools.vue';
 import rightToolsBox from './components/rightTools.vue';
+
+const route = useRoute();
+const isTemplateRoute = ref(false);
+
+// 监听路由变化
+watch(() => route.path, (newPath) => {
+    detectionRightTools(newPath)
+});
+
+// 初始检测
+let detectionRightTools = (routepath) => {
+    // isTemplateRoute.value = /\/template$/.test(routepath);
+    isTemplateRoute.value = /^\/[^/]+\/template$/.test(routepath);
+}
+detectionRightTools(route.path)
 </script>
+
 <style scoped lang='scss'>
 .PageHeader {
     padding: 0 6px;

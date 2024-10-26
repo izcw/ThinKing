@@ -4,29 +4,14 @@
             <PageHeaderBox />
         </div><!-- 页头 -->
         <div class="mainbox">
-            <PanelSplitBox :defaultSize="300" :minPanelSize="280" :maxPanelSize="800" contentPanel="right" :defaultSwitch="true">
-                <template v-slot:1>
-                    <ToolSidebarBox /><!-- 工具侧边栏 -->
-                </template>
-                <template v-slot:2>
-                    <div style="width: 100%;height: 100%; position: relative;">
-                        <ContentBox />
-                        <levitatedSphereBox /><!-- 悬浮球 -->
-                    </div>
-                </template>
-            </PanelSplitBox><!-- 分割面板 -->
+            <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script setup>
-import PanelSplitBox from '../components/PanelSplit.vue'
+import { RouterLink, RouterView } from 'vue-router'
 import PageHeaderBox from './PageHeader/index.vue'
-import ToolSidebarBox from './toolSidebar/index.vue'
-import ContentBox from './content/index.vue'
-import levitatedSphereBox from './levitatedSphere.vue'
-
-
 
 </script>
 <style scoped lang='scss'>

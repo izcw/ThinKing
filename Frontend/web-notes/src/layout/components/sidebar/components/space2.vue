@@ -71,18 +71,15 @@ onBeforeUnmount(() => {
         font-size: 13px;
         padding: 6px 1rem;
         cursor: pointer;
-        border-right: 1px solid #ccc;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        background-color: #EFEFED;
-        // transition: all 0.1s ease;
-        opacity: 0.8;
+        border-right: 1px solid #DCDCDC;
+        border-top: 1px solid #DCDCDC;
+        border-bottom: 1px solid #DCDCDC;
+        opacity: 0.9;
     }
 
     .item-space:hover,
     .item-space:active {
         opacity: 1;
-        // background-color: transparent !important;
     }
 
     .item-space.active {
@@ -118,7 +115,7 @@ onBeforeUnmount(() => {
 }
 
 .space::-webkit-scrollbar-thumb {
-    background: #D3D1CB;
+    background: #DCDCDC;
     border-radius: 6px;
 }
 

@@ -26,7 +26,7 @@
         <p class="share-text text-select Tools-item">分享</p>
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
-                <div class="Tools-item">
+                <div class="Tools-item" @click="activate('right')">
                     <n-icon size="18">
                         <MoreHorizontal32Filled />
                     </n-icon>
@@ -34,13 +34,28 @@
             </template>
             <span>页面设置</span>
         </n-tooltip>
+
+        <n-drawer v-model:show="active" :width="340" :placement="placement" show-mask="transparent">
+            <n-drawer-content title="页面设置">
+                <PageSettingsBox />
+            </n-drawer-content>
+        </n-drawer>
     </div>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
 import { StarRegular } from '@vicons/fa'
-import { MoreHorizontal32Filled, Search28Filled,ChevronDoubleRight16Filled } from '@vicons/fluent'
+import { MoreHorizontal32Filled, Search28Filled, ChevronDoubleRight16Filled } from '@vicons/fluent'
+import PageSettingsBox from '@/components/PageSettings.vue'
 
+// 抽屉
+const active = ref(false);
+const placement = ref('right');
+
+const activate = (place) => {
+    active.value = true;
+    placement.value = place;
+};
 </script>
 <style scoped lang='scss'>
 .rightTools {

@@ -28,3 +28,16 @@
 .n-tree-node-switcher__icon:hover {
     background-color: #E4E4E2 !important;
 }
+
+
+/* tabs标签 */
+.n-tabs,
+.n-tabs-pane-wrapper,
+.n-tab-pane {
+    height: 100%;
+}
+
+.n-tab-pane {
+    padding: 1rem 0 !important;
+    box-sizing: border-box;
+}

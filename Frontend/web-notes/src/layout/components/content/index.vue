@@ -109,7 +109,7 @@ onMounted(() => {
 
 /* 滚动条里面的小方块 */
 .contentBox::-webkit-scrollbar-thumb {
-    background: #D3D1CB;
+    background: #DCDCDC;
 }
 
 /* 滚动条里面的轨道 */

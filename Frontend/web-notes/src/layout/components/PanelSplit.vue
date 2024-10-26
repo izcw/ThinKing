@@ -1,10 +1,8 @@
-<!--
-* @FileDescription: 分割面板
--->
 <template>
     <div class="PanelSplitter">
         <div class="container" :class="{ 'reversed': contentPanel !== 'left' }">
-            <div class="panel panel-left" v-show="parentSidebarStatus" :style="{ width: leftPanelSize + 'px' }">
+            <div class="panel panel-left" :class="{ 'no-transition': dragging }" v-show="parentSidebarStatus"
+                :style="{ width: leftPanelSize + 'px' }">
                 <slot name="1"></slot>
             </div>
             <div class="divider" @mousedown.stop="startDrag" v-show="parentSidebarStatus"></div>
@@ -17,9 +15,6 @@
 
 <script setup>
 import { ref, computed, defineProps, onMounted, watch, provide } from 'vue';
-
-
-
 
 const props = defineProps({
     defaultSize: {
@@ -43,7 +38,10 @@ const props = defineProps({
         default: false
     }
 });
-
+let leftPanelSize = ref(props.defaultSize); // 左面板默认宽度
+let dragging = false;
+let startX = 0;
+let startLeftSize = 0;
 
 // 提供一个方法用于更新侧边栏状态
 const parentSidebarStatus = ref(props.defaultSwitch);
@@ -52,12 +50,12 @@ const updateStatus = (status) => {
 };
 provide('parentSidebarStatus', parentSidebarStatus); // 提供状态
 provide('updateParentSidebarStatus', updateStatus); // 提供更新状态的方法
-// 
 
-let leftPanelSize = ref(props.defaultSize); // 左面板默认宽度
-let dragging = false;
-let startX = 0;
-let startLeftSize = 0;
+const updateWidth = (width) => {
+    leftPanelSize.value = width;
+};
+provide('updateParentSidebarWidth', updateWidth); // 提供更新状态的方法
+
 const maxPanelSizeValue = computed(() => {
     return props.maxPanelSize !== null ? props.maxPanelSize : Infinity;
 });
@@ -70,8 +68,8 @@ const calculateNewLeftSize = (deltaX) => {
 const startDrag = (event) => {
     dragging = true;
     startX = event.clientX;
-
     startLeftSize = leftPanelSize.value;
+
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'col-resize';
 
@@ -99,7 +97,7 @@ const stopDrag = () => {
 onMounted(() => {
     const container = document.querySelector('.container');
     if (container) {
-        container.style.transition = 'none';
+        // container.style.transition = 'all 0.3s ease';
     }
 });
 </script>
@@ -119,7 +117,14 @@ onMounted(() => {
     box-sizing: border-box;
 }
 
-.panel-left {}
+.panel-left {
+    transition: all 0.3s ease;
+}
+
+.panel-left.no-transition {
+    transition: none;
+    /* 拖动时去除动画 */
+}
 
 .panel-right {
     flex-grow: 1;
