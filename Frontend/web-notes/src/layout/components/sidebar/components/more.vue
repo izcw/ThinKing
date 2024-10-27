@@ -20,7 +20,7 @@
 import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { Crow, Connectdevelop, Blackberry } from '@vicons/fa'
-import { Money16Regular, Diamond16Regular, BookInformation24Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
+import { Money16Regular, Diamond16Regular, BookInformation24Regular, Box20Regular,Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
 
 let data = ref([
     {
@@ -46,13 +46,20 @@ let data = ref([
     },
     {
         id: 4,
+        name: "文件仓库",
+        link: '/GuguTh67Hi/template',
+        describe: "查看引用的文件",
+        icon: Box20Regular
+    },
+    {
+        id: 5,
         name: "垃圾箱",
         link: '/template',
         describe: "恢复已删除的页面",
         icon: Broom16Regular
     },
     {
-        id: 5,
+        id: 6,
         name: "帮助",
         link: '/template',
         describe: "帮助联系和更多",

@@ -21,8 +21,31 @@
         </div>
         <div class="Settings-item">
             <p class="settingsTitle">页面布局</p>
-            <div class="contentBox">
-
+            <div class="contentBox layout">
+                <div class="item">
+                    <n-icon size="30">
+                        <ArrowAutofitWidth20Regular />
+                    </n-icon>
+                    <p class="PreviewText">全宽</p>
+                </div>
+                <div class="item active">
+                    <n-icon size="30">
+                        <ReadingModeMobile24Regular />
+                    </n-icon>
+                    <p class="PreviewText">默认</p>
+                </div>
+                <div class="item">
+                    <n-icon size="30">
+                        <PhoneSpanIn16Regular />
+                    </n-icon>
+                    <p class="PreviewText">紧密</p>
+                </div>
+                <div class="item">
+                    <n-icon size="30">
+                        <Phone16Regular />
+                    </n-icon>
+                    <p class="PreviewText">手机</p>
+                </div>
             </div>
         </div>
         <div class="Settings-item">
@@ -39,6 +62,24 @@
         <div class="Settings-item">
             <p class="settingsTitle">其它</p>
             <div class="contentBox">
+                <div class="item select">
+                    <p>标题自动编号</p><n-switch size="small" />
+                </div>
+                <div class="item select">
+                    <p>页面底部信息</p> <n-switch size="small" />
+                </div>
+                <div class="item select">
+                    <p>页面历史</p>
+                </div>
+                <div class="item select">
+                    <p>删除</p>
+                </div>
+                <div class="item select">
+                    <p>转为模板</p><n-switch size="small" />
+                </div>
+                <div class="item select">
+                    <p>页面背景</p>
+                </div>
                 <div class="item select">
                     <p>导入</p>
                 </div>
@@ -78,6 +119,7 @@
 <script setup>
 import { ref } from 'vue';
 
+import { ReadingModeMobile24Regular, ArrowAutofitWidth20Regular, PhoneSpanIn16Regular, Phone16Regular } from '@vicons/fluent'
 
 let data = ref({
     font: [
@@ -127,7 +169,9 @@ let data = ref({
             padding: 4px;
             margin-bottom: 10px;
         }
-        .select:hover,.select:active{
+
+        .select:hover,
+        .select:active {
             background-color: #F7F7FA;
         }
 
@@ -184,8 +228,37 @@ let data = ref({
             }
         }
 
+        // 布局
+        .layout {
+            display: flex;
+            justify-content: space-between;
+
+            .item {
+                width: 60px;
+                height: 60px;
+                padding: 4px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                color: #999;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                cursor: pointer;
+            }
+
+            .item.active .PreviewText {
+                color: #18A0FB;
+            }
+
+            .item:hover {
+                background-color: #F7F7FA;
+            }
+        }
+
         // 页面信息
-        .info{
+        .info {
             font-size: 12px;
             color: #999;
         }
