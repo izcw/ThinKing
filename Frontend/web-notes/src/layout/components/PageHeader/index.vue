@@ -17,6 +17,8 @@ const isTemplateRoute = ref(false);
 
 // 监听路由变化
 watch(() => route.path, (newPath) => {
+    console.log(newPath);
+    
     detectionRightTools(newPath)
 });
 

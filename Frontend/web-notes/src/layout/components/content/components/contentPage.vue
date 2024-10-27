@@ -1,59 +1,10 @@
 <template>
     <div class="contentPage GMargin"  contenteditable="true" spellcheck="true">
-        <div>
-            <dragDemo />
-        </div>
-        <br>
-        <hr>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
-        <h1>345</h1>
+        <RouterView />
     </div>
 </template>
 <script setup>
-import dragDemo from "@/components/drag.vue"
+import { RouterLink, RouterView } from 'vue-router'
 // 点点
 </script>
 <style scoped lang='scss'>

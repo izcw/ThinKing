@@ -14,7 +14,7 @@
             <main>
                 <h2>登录/注册 NexNote</h2>
                 <input type="text" name="" id="">
-                <button>登录</button>
+                <router-link to="/Yoko"><button>登录</button></router-link> 
                 <div class="thirdParty">
                     qq,微信
                 </div>

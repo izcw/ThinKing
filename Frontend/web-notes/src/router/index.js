@@ -1,22 +1,41 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
+import NoteContentLayout from '@/views/NoteContent.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/:id',
+      path: '/',
       name: 'home',
       component: Layout,
+      redirect: '/:id',
       children: [
         {
-          path: '', // 这里使用空字符串，表示与父路径相同
-          component: () => import('../views/NoteContent.vue')
+          path: '/:id',
+          component: () => import('../views/indexView.vue')
         },
         {
-          path: 'template', // 这里省略前面的/:id
-          name: 'template',
+          path: '/:id/:id',
+          component: NoteContentLayout,
+          children: [
+            {
+              path: '/:id/:id',
+              component: () => import('../views/hello.vue')
+            },
+          ]
+        },
+        {
+          path: '/vip',
+          component: () => import('../views/vipView.vue')
+        },
+        {
+          path: '/template',
           component: () => import('../views/templateView.vue')
+        },
+        {
+          path: '/file',
+          component: () => import('@/views/world.vue')
         },
       ]
     },

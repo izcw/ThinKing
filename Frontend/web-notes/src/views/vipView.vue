@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>模板中心</h1>
+        <h1>会员中心</h1>
     </div>
 </template>
 <script setup>

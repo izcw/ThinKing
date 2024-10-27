@@ -3,7 +3,7 @@
         <div class="logo-box">
             <div class="logo">
                 <router-link to="/login">
-                    <img src="/src/assets/logo.png" alt="">
+                    <img src="/src/assets/user.png" alt="">
                     <span>Yoko</span>
                 </router-link>
             </div>
