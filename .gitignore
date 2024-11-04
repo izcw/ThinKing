@@ -22,3 +22,7 @@ dist/
 
 ### Mac OS ###
 .DS_Store
+
+
+### 其他 ###
+/Frontend/web-notes/build/

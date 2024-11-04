@@ -20,8 +20,8 @@ function createWindow() {
     Menu.setApplicationMenu(null);
 
     // 加载开发或生产模式下的文件
-    mainWindow.loadURL('http://localhost:7436/Yoko'); // 开发模式
-    // mainWindow.loadFile(path.join(__dirname, 'dist/index.html')); // 生产模式
+    // mainWindow.loadURL('http://localhost:7436/Yoko'); // 开发模式
+    mainWindow.loadFile(path.join(__dirname, 'dist/index.html')); // 生产模式
 
     // 监听窗口关闭事件
     mainWindow.on('closed', () => {

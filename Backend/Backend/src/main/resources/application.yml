@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  profiles:
+    active: dev
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**
+  global-config:
+    db-config:
+      id-type: auto
