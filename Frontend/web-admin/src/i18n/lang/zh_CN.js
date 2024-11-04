@@ -111,6 +111,18 @@ export const zh_CN = {
         status: '状态',
         action: '操作'
       }
+    },
+    customer: {
+      table: {
+        avatar: '头像',
+        nickname: '用户名',
+        email: '邮箱',
+        phone: '手机号',
+        subscribe : '订阅信息',
+        createTime: '注册时间',
+        status: '状态',
+        action: '操作'
+      }
     }
   }
 };

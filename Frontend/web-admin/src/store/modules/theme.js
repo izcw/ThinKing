@@ -22,11 +22,11 @@ const DEFAULT_STATE = Object.freeze({
   // 布局类型
   layout: 'side',
   // 侧栏布局类型
-  sidebarLayout: 'default',
+  sidebarLayout: 'mix',
   // 顶栏风格
   headerStyle: 'light',
   // 侧栏风格
-  sidebarStyle: 'dark',
+  sidebarStyle: 'light',
   // 页签风格
   tabStyle: 'simple',
   // 是否固定顶栏
@@ -38,7 +38,7 @@ const DEFAULT_STATE = Object.freeze({
   // 内容区是否撑满
   fluid: true,
   // 图标是否置于顶栏
-  logoInHeader: false,
+  logoInHeader: true,
   // 侧栏菜单是否彩色图标
   colorfulIcon: false,
   // 侧栏排他展开
@@ -56,7 +56,7 @@ const DEFAULT_STATE = Object.freeze({
   // 内容区宽度
   contentWidth: null,
   // 是否开启圆角主题
-  roundedTheme: true,
+  roundedTheme: false,
   // 是否开启响应式
   responsive: true
 });
