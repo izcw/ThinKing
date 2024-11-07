@@ -1,6 +1,8 @@
 /* @import './base.css'; */
 @import './components.scss';
+@import './font/smiley-sans/font.css';
 @import './NaiveUI.css';
+@import './Element-plus.css';
 
 * {
   padding: 0;

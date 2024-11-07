@@ -28,6 +28,7 @@ public class NoteUserMapperTest {
 
     @Test
     public void insert(){
+
         InfoUser();
     }
 }

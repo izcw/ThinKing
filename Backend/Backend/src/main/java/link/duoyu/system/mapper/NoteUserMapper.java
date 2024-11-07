@@ -2,6 +2,7 @@ package link.duoyu.system.mapper;
 
 import link.duoyu.system.entity.NoteUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -12,5 +13,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2024-11-04
  */
 public interface NoteUserMapper extends BaseMapper<NoteUser> {
-
 }

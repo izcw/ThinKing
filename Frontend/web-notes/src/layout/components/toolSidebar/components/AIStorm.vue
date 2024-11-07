@@ -3,13 +3,13 @@
         <div class="ChatHistory">
             <div class="Session-item" v-for="item in data" :key="item.id">
                 <div class="chat problem">
-                    <img class="profilePic" src="@/assets/book.png" alt="">
+                    <img class="profilePic" src="@images/logo.png" alt="">
                     <div class="chatcontent">
                         {{ item.user }}
                     </div>
                 </div>
                 <div class="chat answer">
-                    <img class="profilePic" src="@/assets/logo.png" alt="">
+                    <img class="profilePic" src="@images/logo.png" alt="">
                     <div class="chatcontent">
                         {{ item.answer }}
                     </div>

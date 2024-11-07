@@ -121,7 +121,7 @@ onMounted(() => {
 .cover {
     width: 100%;
     height: 300px;
-    background-image: url(/src/assets/noteback.jpg);
+    background-image: url(/src/assets/images/noteback.jpg);
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;

@@ -16,6 +16,9 @@
     "make-installer": "electron-builder"
   },
   "dependencies": {
+    "axios": "^1.7.7",
+    "element-plus": "^2.8.7",
+    "lodash": "^4.17.21",
     "pinia": "^2.2.4",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5"
