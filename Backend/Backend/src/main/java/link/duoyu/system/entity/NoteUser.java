@@ -28,7 +28,7 @@ public class NoteUser implements Serializable {
     /**
      * 客户id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "user_id", type = IdType.AUTO)
     private Integer id;
 
     /**

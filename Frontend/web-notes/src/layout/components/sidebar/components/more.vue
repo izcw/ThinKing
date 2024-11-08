@@ -24,18 +24,11 @@ import { Money16Regular, Diamond16Regular, BookInformation24Regular, Box20Regula
 
 let data = ref([
     {
-        id: 1,
-        name: "主页",
-        link: '/Yoko',
-        describe: "升级享受更好的体验，点击了解》",
-        icon: Money16Regular
-    },
-    {
-        id: 1,
-        name: "笔记",
-        link: '/Yoko/345rsdfg',
-        describe: "升级享受更好的体验，点击了解》",
-        icon: Money16Regular
+        id: 2,
+        name: "模板中心",
+        link: '/template',
+        describe: "查找精美的模板",
+        icon: Diamond16Regular
     },
     {
         id: 1,
@@ -44,27 +37,14 @@ let data = ref([
         describe: "升级享受更好的体验，点击了解》",
         icon: Money16Regular
     },
-    {
-        id: 2,
-        name: "模板中心",
-        link: '/template',
-        describe: "查找精美的模板",
-        icon: Diamond16Regular
-    },
-    {
-        id: 3,
-        name: "归档",
-        link: '/file',
-        describe: "查看已完成的具有价值的笔记",
-        icon: BookCoins24Regular
-    },
-    {
-        id: 4,
-        name: "文件仓库",
-        link: '/warehouse',
-        describe: "查看引用的文件",
-        icon: Box20Regular
-    },
+    // {
+    //     id: 4,
+    //     name: "文件仓库",
+    //     link: '/warehouse',
+    //     describe: "查看引用的文件",
+    //     icon: Box20Regular
+    // },
+    
     {
         id: 5,
         name: "垃圾箱",

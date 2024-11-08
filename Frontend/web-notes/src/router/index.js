@@ -28,14 +28,14 @@ const router = createRouter({
         },
         {
           path: '/vip',
-          component: () => import('../views/vipView.vue')
+          component: () => import('../views/subscribe/index.vue')
         },
         {
           path: '/template',
           component: () => import('../views/templateView.vue')
         },
         {
-          path: '/file',
+          path: '/warehouse',
           component: () => import('@/views/world.vue')
         },
       ]

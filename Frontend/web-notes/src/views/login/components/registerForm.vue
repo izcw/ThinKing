@@ -182,6 +182,7 @@ const submitForm = async () => {
     }
 
     .Verification {
+        width: 100%;
         display: flex;
         cursor: pointer;
 

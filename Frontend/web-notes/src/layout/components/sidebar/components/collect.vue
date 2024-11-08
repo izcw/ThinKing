@@ -2,15 +2,17 @@
     <div class="collect GMargin">
         <n-grid cols="3 300:4 400:5 500:6 600:7" :y-gap="8" style="justify-items: center;">
             <n-grid-item style="width: 100%;" v-for="(item, index) in data" :key="item.id">
-                <div class="Tools-item item">
-                    <n-icon size="20">
-                        <component :is="item.icon" />
-                    </n-icon>
-                    <n-icon size="10" color="#F6C050cc" v-if="index >= 3"
-                        style="position: absolute;top: 4px;left: 4px;">
-                        <Star />
-                    </n-icon>
-                </div>
+                <router-link :to="item.link">
+                    <div class="Tools-item item">
+                        <n-icon size="20">
+                            <component :is="item.icon" />
+                        </n-icon>
+                        <n-icon size="10" color="#F6C050cc" v-if="index >= 3"
+                            style="position: absolute;top: 4px;left: 4px;">
+                            <Star />
+                        </n-icon>
+                    </div>
+                </router-link>
             </n-grid-item>
         </n-grid>
     </div>
@@ -24,6 +26,7 @@ let data = ref([
     {
         name: '主页',
         id: 1,
+        link: '/space1',
         icon: Home48Regular
     },
     {
@@ -39,27 +42,33 @@ let data = ref([
     {
         name: 'link1',
         id: 4,
+        link: '/space1/345rsdsdfg',
         icon: Star
     },
     {
         name: 'link2',
         id: 5,
+        link: '/space1/345rsdsdfg',
         icon: Star
     }, {
         name: 'link3',
         id: 6,
+        link: '/space1/345rsdsdfg',
         icon: Star
     }, {
         name: 'link4',
         id: 7,
+        link: '/space1/345rsdsdfg',
         icon: Star
     }, {
         name: 'link5',
         id: 8,
+        link: '/space1/345rsdsdfg',
         icon: Star
     }, {
         name: 'link6',
         id: 9,
+        link: '/space1/345rsdsdfg',
         icon: Star
     }
 ])

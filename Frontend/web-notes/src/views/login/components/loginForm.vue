@@ -138,6 +138,7 @@ const submitForm = async (formEl) => {
 
     // 验证码
     .Verification {
+        width: 100%;
         display: flex;
         cursor: pointer;
 

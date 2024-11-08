@@ -72,8 +72,6 @@ public class NoteUserController {
      */
     @PostMapping("/login")
     public ResponseResult<NoteUser> login(@RequestBody NoteUser noteUser) {
-        System.out.println("sbsbsb");
-        System.out.println(noteUser.getEmail()+"用户邮箱");
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
 
@@ -98,8 +96,6 @@ public class NoteUserController {
      */
     @PostMapping("/register")
     public ResponseResult<NoteUser> Register(@RequestBody NoteUser noteUser) {
-        System.out.println(noteUser);
-        System.out.println(noteUser.getEmail()+"用户邮箱");
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
         System.out.println(existingUser+"检查用户是否已存在");
