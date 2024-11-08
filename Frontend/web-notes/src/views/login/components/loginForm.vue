@@ -1,7 +1,7 @@
 <template>
     <el-form ref="ruleFormRef" class="input-box" :model="ruleForm" :rules="rules" label-width="auto" inline-message>
         <el-form-item prop="email" class="item">
-            <el-input v-model="ruleForm.email" size="large" placeholder="请输入手机号 / 邮箱" clearable />
+            <el-input v-model="ruleForm.email" size="large" placeholder="请输入邮箱" clearable />
         </el-form-item>
         <el-form-item prop="password" class="item">
             <el-input v-model="ruleForm.password" size="large" placeholder="请输入密码" clearable />
@@ -13,8 +13,8 @@
             <router-link to="/login" class="issue">账号常见问题</router-link>
             <div>
                 <router-link to="/register">立即注册</router-link>
-                <span>|</span>
-                <router-link to="/login">忘记密码</router-link>
+                <!-- <span>|</span>
+                <router-link to="/login">忘记密码</router-link> -->
             </div>
         </div>
     </el-form>
@@ -25,87 +25,84 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { getVerifyCode, postlogin } from '@/api/login';
 import { debounce } from 'lodash';  // 防抖
+ import { ElMessage } from 'element-plus'
 import loading from '@icon/loading.png';
 
 const router = useRouter();
 
-
-
-// 引入正则表达式用于手机号和邮箱的验证
-const phoneRegEx = /^[1][3-9][0-9]{9}$/ // 手机号正则
-const emailRegEx = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+$/ // 邮箱正则
+const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ // 邮箱正则
 
 const ruleFormRef = ref()
 const ruleForm = reactive({
-    email: '2405824084@qq.com',
+    email: '',
     password: "",
-    code: '4141',
 })
 
 const rules = reactive({
     email: [
-        { required: true, message: '请输入手机号或邮箱', trigger: 'blur' },
+        { required: true, message: '请输入邮箱', trigger: 'blur' },
         {
             validator: (rule, value, callback) => {
                 if (!value) {
-                    return callback(new Error('请输入手机号或邮箱'))
-                }
-                // 判断是手机号还是邮箱
-                if (phoneRegEx.test(value)) {
-                    return callback() // 手机号验证通过
+                    return callback(new Error('请输入邮箱'))
                 }
                 if (emailRegEx.test(value)) {
                     return callback() // 邮箱验证通过
                 }
-                callback(new Error('请输入有效的手机号或邮箱')) // 验证失败
+                callback(new Error('请输入有效的邮箱')) // 验证失败
             },
             trigger: 'blur'
         }
     ],
-    code: [
-        { required: true, message: '请输入正确的验证码', trigger: 'blur' },
-        { min: 4, max: 4, message: '请输入6位验证码', trigger: 'blur' },
+    password: [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { min: 6, max: 30, message: '密码长度需在6至30位', trigger: 'blur' }
     ]
 })
 
 // 提交
 const submitForm = async (formEl) => {
-    postlogin(ruleForm).then((msg) => {
-        console.log(msg);
+
+    if (!formEl) return
+    await formEl.validate((valid, fields) => {
+        if (valid) {
+            postlogin(ruleForm).then((msg) => {
+                console.log(msg);
+                if(msg.code == 200){
+                    router.push({ name: 'home' })
+                    ElMessage.success(msg.message)
+                    return
+                }
+                ElMessage.warning(msg.message)
+            }).catch((e) => {
+                console.error('登录失败', e);
+            });
+        } else {
+            console.log('error submit!', fields)
+        }
     })
-        .catch((e) => {
-            console.error('登录失败', e);
-        });
-    // if (!formEl) return
-    // await formEl.validate((valid, fields) => {
-    //     if (valid) {
-
-    //     } else {
-    //         console.log('error submit!', fields)
-    //     }
-    // })
 }
 
-// 获取图片验证码
-let captchaUrl = ref(loading); // 验证码图片
-// 点击时防抖
-const VerificationClick = debounce(() => {
-    VerificationGet()
-}, 500);  // 防抖时间为 1000 毫秒（1秒）
+// // 获取图片验证码
+// let captchaUrl = ref(loading); // 验证码图片
+// // 点击时防抖
+// const VerificationClick = debounce(() => {
+//     VerificationGet()
+// }, 500);  // 防抖时间为 1000 毫秒（1秒）
 
 
-let VerificationGet = () => {
-    getVerifyCode()
-        .then((msg) => {
-            captchaUrl.value = msg;
-            console.log('获取验证码成功', captchaUrl.value);
-        })
-        .catch((e) => {
-            console.error('获取验证码失败', e);
-            // 这里处理失败的逻辑
-        });
-}
-VerificationGet();
+// let VerificationGet = () => {
+//     getVerifyCode()
+//         .then((msg) => {
+//             captchaUrl.value = msg;
+//             console.log('获取验证码成功', captchaUrl.value);
+//         })
+//         .catch((e) => {
+//             console.error('获取验证码失败', e);
+//             // 这里处理失败的逻辑
+//         });
+// }
+// VerificationGet();
 </script>
 <style scoped lang='scss'>
 .input-box {

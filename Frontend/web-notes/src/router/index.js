@@ -10,7 +10,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Layout,
-      redirect: '/1',
+      redirect: '/space1',
       children: [
         {
           path: '/:id',

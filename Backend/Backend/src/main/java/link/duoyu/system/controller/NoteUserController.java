@@ -72,6 +72,7 @@ public class NoteUserController {
      */
     @PostMapping("/login")
     public ResponseResult<NoteUser> login(@RequestBody NoteUser noteUser) {
+        System.out.println("sbsbsb");
         System.out.println(noteUser.getEmail()+"用户邮箱");
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
@@ -86,14 +87,7 @@ public class NoteUserController {
                 return ResponseResult.fail("密码错误");
             }
         } else {
-            // 如果用户不存在，注册新用户
-            noteUser.setPassword(passwordService.hashPassword(noteUser.getPassword())); // 散列密码
-            boolean inserted = noteUserService.save(noteUser); // 保存新用户
-            if (inserted) {
-                return ResponseResult.success("注册成功", noteUser);
-            } else {
-                return ResponseResult.fail("注册失败");
-            }
+            return ResponseResult.unauthorized("该用户未注册！");
         }
     }
 
@@ -104,17 +98,20 @@ public class NoteUserController {
      */
     @PostMapping("/register")
     public ResponseResult<NoteUser> Register(@RequestBody NoteUser noteUser) {
+        System.out.println(noteUser);
         System.out.println(noteUser.getEmail()+"用户邮箱");
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
-
+        System.out.println(existingUser+"检查用户是否已存在");
         if (existingUser != null) {
             return ResponseResult.created("该用户已注册，请登录", existingUser);
         } else {
             // 如果用户不存在，注册新用户
 
             noteUser.setPassword(passwordService.hashPassword(noteUser.getPassword())); // 散列密码
+            System.out.println(noteUser.getPassword()+"密码");
             boolean inserted = noteUserService.save(noteUser); // 保存新用户
+            System.out.println(inserted);
             if (inserted) {
                 return ResponseResult.success("注册成功", noteUser);
             } else {
@@ -166,7 +163,7 @@ public class NoteUserController {
 
         // 发送验证码到用户邮箱
         try {
-            String title = "注册【NexNote】 验证码";
+            String title = "注册【NexNote】 验证码 "+verificationCode;
             String content = "【NexNote】您的注册验证码是：" + verificationCode+"，十分钟内有效，请不要透露给他人。";
             emailUtil.sendMail(email, title, content);
             return ResponseResult.success("验证码已发送到您的邮箱",null);

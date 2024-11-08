@@ -3,7 +3,7 @@
         <div class="logo-box">
             <div class="logo">
                 <router-link to="/login">
-                    <img src="@images/user.png" alt="">
+                    <img :src="API_BASE_URL+'/images/avatar.png'" alt="">
                     <span>Yoko</span>
                 </router-link>
             </div>
@@ -24,6 +24,7 @@
 import { inject } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
+import {API_BASE_URL} from "@/config/setting"
 
 // 展开关闭侧边栏状态
 const parentSidebarStatus = inject('parentSidebarStatus'); // 注入父组件的状态
