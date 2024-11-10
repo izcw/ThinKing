@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 管理员用户 服务类
  * </p>
  *
  * @author izcw
- * @since 2024-11-04
+ * @since 2024-11-10
  */
 public interface ISysUserService extends IService<SysUser> {
 

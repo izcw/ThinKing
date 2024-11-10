@@ -16,7 +16,6 @@ spring:
     host: smtp.qq.com # qq邮箱的SMTP
     username: 2405824084@qq.com # 发送方的qq邮箱
     password: otxrwywsqpubdjgb # smtp密码（是16位授权码，不是邮箱密码）
-    receiver: zhangchengwei.work@hotmail.com # 接收方邮箱，随意填写
     default-encoding: UTF-8 # 编码格式
     protocol: smtp # SMTP邮件协议
     properties:
@@ -27,3 +26,23 @@ spring:
             enable: true # 启用 STARTTLS 加密
             required: true # 强制要求 STARTTLS 加密
     port: 587
+
+# Sa-Token配置
+sa-token:
+  # token前缀
+  token-prefix: Bearer
+  # token 名称（同时也是 cookie 名称）
+  token-name: token
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: -1
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: false
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: random-128
+  # 是否输出操作日志
+  is-log: true
+  # 是否尝试从 cookie 里读取 Token，此值为 false 后，StpUtil.login(id) 登录时也不会再往前端注入Cookie
+  isReadCookie: false
+

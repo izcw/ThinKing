@@ -1,6 +1,9 @@
 package link.duoyu.system.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import jakarta.servlet.http.HttpServletRequest;
 import link.duoyu.core.utils.EmailUtil;
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.system.entity.NoteUser;
@@ -78,8 +81,9 @@ public class NoteUserController {
         if (existingUser != null) {
             // 如果用户已存在，验证密码
             if (passwordService.verifyPassword(noteUser.getPassword(), existingUser.getPassword())) {
+                StpUtil.login(noteUser.getEmail());
                 // 密码验证成功，返回用户信息
-                return ResponseResult.success("登录成功", existingUser);
+                return ResponseResult.success("登录成功", null);
             } else {
                 // 密码验证失败
                 return ResponseResult.fail("密码错误");
@@ -87,6 +91,22 @@ public class NoteUserController {
         } else {
             return ResponseResult.unauthorized("该用户未注册！");
         }
+    }
+
+    @PostMapping("/islogin")
+    public String islogin(@RequestBody NoteUser noteUser , HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        System.out.println(token);
+        return "当前会话是否登录：" + StpUtil.isLogin(noteUser.getEmail());
+    }
+
+    /**
+     * 注销接口，使用 Sa-Token 实现用户注销
+     */
+    @PostMapping("/logout")
+    public String logout() {
+        StpUtil.logout();
+        return "注销成功";
     }
 
     /**
@@ -109,7 +129,7 @@ public class NoteUserController {
             boolean inserted = noteUserService.save(noteUser); // 保存新用户
             System.out.println(inserted);
             if (inserted) {
-                return ResponseResult.success("注册成功", noteUser);
+                return ResponseResult.success("注册成功",null);
             } else {
                 return ResponseResult.fail("注册失败");
             }

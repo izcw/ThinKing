@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * 角色 Mapper 接口
  * </p>
  *
  * @author izcw
- * @since 2024-11-04
+ * @since 2024-11-10
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
