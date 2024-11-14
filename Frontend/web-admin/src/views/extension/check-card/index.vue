@@ -116,21 +116,21 @@
   const items = ref([]);
 
   // 获取卡片数据
-  getDemoCardData()
-    .then((data) => {
-      items.value = data.map((d) => {
-        return {
-          ...d,
-          col: { md: 6, sm: 12, xs: 24, style: { marginBottom: '12px' } }
-        };
-      });
-      items2.value = items.value.map((d) => {
-        return { ...d, disabled: d.value === 2 };
-      });
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  // getDemoCardData()
+  //   .then((data) => {
+  //     items.value = data.map((d) => {
+  //       return {
+  //         ...d,
+  //         col: { md: 6, sm: 12, xs: 24, style: { marginBottom: '12px' } }
+  //       };
+  //     });
+  //     items2.value = items.value.map((d) => {
+  //       return { ...d, disabled: d.value === 2 };
+  //     });
+  //   })
+  //   .catch((e) => {
+  //     console.error(e);
+  //   });
 
   // 单选选中
   const checked2 = ref();

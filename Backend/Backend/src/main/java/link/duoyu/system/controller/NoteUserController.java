@@ -1,12 +1,16 @@
 package link.duoyu.system.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletRequest;
 import link.duoyu.core.utils.EmailUtil;
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.system.entity.NoteUser;
+import link.duoyu.system.entity.SysRole;
+import link.duoyu.system.entity.SysUser;
 import link.duoyu.system.entity.VerifyEmail;
 import link.duoyu.system.mapper.NoteUserMapper;
 import link.duoyu.system.service.INoteUserService;
@@ -15,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +45,24 @@ public class NoteUserController {
     private INoteUserService noteUserService; // 注入NoteUserService
     @Autowired
     private PasswordService passwordService; // 注入密码服务
+
+    /**
+     * 获取分页查询用户列表
+     * @param page 当前页码
+     * @param limit 每页显示条数
+     * @return 分页查询的用户列表
+     */
+    @GetMapping("/page")
+    public ResponseResult<Page<NoteUser>> page(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        // 创建Page对象，设置当前页和每页显示条数
+        Page<NoteUser> noteUserPage = new Page<>(page, limit);
+
+        // 执行分页查询
+        Page<NoteUser> pageResult = noteUserService.page(noteUserPage);
+
+        // 返回分页结果
+        return ResponseResult.success("查询成功", pageResult);
+    }
 
 
 
@@ -74,16 +97,20 @@ public class NoteUserController {
      * @return 创建或登录结果
      */
     @PostMapping("/login")
-    public ResponseResult<NoteUser> login(@RequestBody NoteUser noteUser) {
+    public ResponseResult<SaTokenInfo> login(@RequestBody NoteUser noteUser) {
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
 
         if (existingUser != null) {
             // 如果用户已存在，验证密码
             if (passwordService.verifyPassword(noteUser.getPassword(), existingUser.getPassword())) {
+                // 第1步 设置登录账号id
                 StpUtil.login(noteUser.getEmail());
+
+                // 第2步，获取 Token  相关参数
+                SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
                 // 密码验证成功，返回用户信息
-                return ResponseResult.success("登录成功", null);
+                return ResponseResult.success("登录成功", tokenInfo);
             } else {
                 // 密码验证失败
                 return ResponseResult.fail("密码错误");

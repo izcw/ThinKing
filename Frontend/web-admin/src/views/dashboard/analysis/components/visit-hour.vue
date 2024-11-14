@@ -95,5 +95,5 @@
       });
   };
 
-  getVisitHourData();
+  // getVisitHourData();
 </script>

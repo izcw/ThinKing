@@ -19,8 +19,8 @@
     <div class="header-avatar">
       <el-avatar
         :size="28"
-        :src="loginUser.avatar"
-        :icon="loginUser.avatar ? void 0 : User"
+        :src="API_BASE_URL+loginUser.avatar"
+        :icon="API_BASE_URL+loginUser.avatar ? void 0 : User"
       />
       <span class="hidden-sm-and-down" style="margin-left: 4px">
         {{ loginUser.nickname }}
@@ -43,6 +43,7 @@
   import { useUserStore } from '@/store/modules/user';
   import { logout } from '@/utils/use-page-tab';
   import PasswordModal from './password-modal.vue';
+   import {API_BASE_URL} from "@/config/setting"
 
   const { t } = useI18n();
   const { push, currentRoute } = useRouter();

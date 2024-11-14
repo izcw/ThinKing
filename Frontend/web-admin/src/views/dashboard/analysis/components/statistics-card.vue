@@ -220,7 +220,7 @@
       });
   };
 
-  getPayNumData();
+  // getPayNumData();
 </script>
 
 <style lang="scss" scoped>

@@ -14,8 +14,8 @@
           { label: t('login.qrcodeType'), value: 2 }
         ]" style="margin-bottom: 18px" @change="onTabChange" />
         <el-form v-if="tabActive == 1" ref="formRef" size="large" :model="form" :rules="rules">
-          <el-form-item prop="username">
-            <el-input clearable v-model="form.username" :placeholder="t('login.username')" :prefix-icon="User" />
+          <el-form-item prop="email">
+            <el-input clearable v-model="form.email" :placeholder="t('login.username')" :prefix-icon="User" />
           </el-form-item>
           <el-form-item prop="password">
             <el-input show-password v-model="form.password" :placeholder="t('login.password')" :prefix-icon="Lock" />
@@ -79,16 +79,16 @@ const loading = ref(false);
 
 // 表单数据
 const form = reactive({
-  username: 'admin',
-  password: 'admin',
-  code: '',
+  email: '2405824084@qq.com',
+  password: '123456',
+  code: '123456',
   remember: true
 });
 
 // 表单验证规则
 const rules = computed(() => {
   return {
-    username: [
+    email: [
       {
         required: true,
         message: t('login.username'),
@@ -130,10 +130,10 @@ const submit = () => {
     if (!valid) {
       return false;
     }
-    if (form.code.toLowerCase() !== text.value) {
-      EleMessage.error('验证码错误');
-      return;
-    }
+    // if (form.code.toLowerCase() !== text.value) {
+    //   EleMessage.error('验证码错误');
+    //   return;
+    // }
     loading.value = true;
     login(form)
       .then((msg) => {
@@ -152,12 +152,14 @@ const submit = () => {
 const changeCaptcha = () => {
   getCaptcha()
     .then((data) => {
-      captcha.value = data.base64;
+      console.log(data+"验证码");
+
+      captcha.value = data;
       // 实际项目后端一般会返回验证码的key而不是直接返回验证码的内容, 登录用key去验证, 可以根据自己后端接口修改
-      text.value = data.text;
-      // 自动回填验证码, 实际项目去掉
-      form.code = data.text;
-      formRef.value?.clearValidate();
+      // text.value = data.text;
+      // // 自动回填验证码, 实际项目去掉
+      // form.code = data.text;
+      // formRef.value?.clearValidate();
     })
     .catch((e) => {
       EleMessage.error(e.message);
@@ -179,6 +181,8 @@ const onTabChange = (active) => {
 /* 跳转到首页 */
 const goHome = () => {
   const { query } = unref(currentRoute);
+  console.log(query.from+"这是");
+
   goHomeRoute(query.from);
 };
 
@@ -262,7 +266,7 @@ if (getToken()) {
   }
 
   .login-captcha {
-    width: 108px;
+    width: 100px;
     height: 40px;
     margin-left: 8px;
     border-radius: 4px;

@@ -65,14 +65,14 @@
 
   /* 获取中国地图数据并注册地图 */
   const registerChinaMap = () => {
-    getChinaMapData()
-      .then((data) => {
-        registerMap('china', data);
-        getUserCountData();
-      })
-      .catch((e) => {
-        EleMessage.error(e.message);
-      });
+    // getChinaMapData()
+    //   .then((data) => {
+    //     registerMap('china', data);
+    //     getUserCountData();
+    //   })
+    //   .catch((e) => {
+    //     EleMessage.error(e.message);
+    //   });
   };
 
   /* 获取用户分布数据 */

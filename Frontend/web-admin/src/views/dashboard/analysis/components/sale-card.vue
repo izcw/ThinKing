@@ -158,15 +158,15 @@
 
   /* 获取销售量数据 */
   const getSaleroomData = () => {
-    getSaleroomList()
-      .then((data) => {
-        saleroomData1.value = data.list1;
-        saleroomData2.value = data.list2;
-        onSaleTypeChange();
-      })
-      .catch((e) => {
-        EleMessage.error(e.message);
-      });
+    // getSaleroomList()
+    //   .then((data) => {
+    //     saleroomData1.value = data.list1;
+    //     saleroomData2.value = data.list2;
+    //     onSaleTypeChange();
+    //   })
+    //   .catch((e) => {
+    //     EleMessage.error(e.message);
+    //   });
   };
 
   /* 销售量tab选择改变事件 */

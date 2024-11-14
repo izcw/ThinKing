@@ -64,5 +64,5 @@
       });
   };
 
-  getBrowserCountData();
+  // getBrowserCountData();
 </script>

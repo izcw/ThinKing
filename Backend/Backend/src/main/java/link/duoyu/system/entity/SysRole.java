@@ -28,7 +28,7 @@ public class SysRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "sys_role_id", type = IdType.AUTO)
+    @TableId(value = "role_id", type = IdType.AUTO)
     private Integer sysRoleId;
 
     @ApiModelProperty(value = "角色名称")

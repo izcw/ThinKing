@@ -42,13 +42,13 @@
   });
 
   //
-  getDemoMD()
-    .then((res) => {
-      content.value = res;
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  // getDemoMD()
+  //   .then((res) => {
+  //     content.value = res;
+  //   })
+  //   .catch((e) => {
+  //     console.error(e);
+  //   });
 </script>
 
 <script>

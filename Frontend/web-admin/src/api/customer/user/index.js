@@ -5,8 +5,8 @@ import request from '@/utils/request';
  */
 export async function pageUsers(params) {
   const res = await request.get('/system/user/page', { params });
-  if (res.data.code === 0) {
-    return res.data.data;
+  if (res.data.code === 200) {
+    return res.data.data.records;
   }
   return Promise.reject(new Error(res.data.message));
 }

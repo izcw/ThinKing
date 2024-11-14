@@ -5,8 +5,10 @@ import request from '@/utils/request';
  */
 export async function pageRoles(params) {
   const res = await request.get('/system/role/page', { params });
-  if (res.data.code === 0) {
-    return res.data.data;
+  console.log(res);
+
+  if (res.data.code === 200) {
+    return res.data.data.records;
   }
   return Promise.reject(new Error(res.data.message));
 }
@@ -18,6 +20,7 @@ export async function listRoles(params) {
   const res = await request.get('/system/role', {
     params
   });
+
   if (res.data.code === 0 && res.data.data) {
     return res.data.data;
   }

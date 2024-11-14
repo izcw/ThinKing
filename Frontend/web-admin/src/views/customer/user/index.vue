@@ -99,7 +99,7 @@
         <template #avatar="{ row }">
           <el-avatar
             v-if="row.avatar"
-            :src="row.avatar"
+            :src="API_BASE_URL+row.avatar"
             :size="32"
             @click.stop=""
             style="vertical-align: -8px"
@@ -208,6 +208,7 @@
   import SearchForm from './components/search-form.vue';
   import NicknameFilter from './components/nickname-filter.vue';
   import { pageUsers } from '@/api/customer/user';
+  import { API_BASE_URL } from "@/config/setting"
 
   const { t } = useI18n();
   const { push } = useRouter();

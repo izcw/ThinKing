@@ -31,24 +31,24 @@ public class CustomSaTokenInterceptor implements HandlerInterceptor {
         if (!StpUtil.isLogin()) {
             response.setContentType("application/json; charset=utf-8");
             try (PrintWriter writer = response.getWriter()) {
-                SaResult result = SaResult.error("用户未登录，请先登录");
-                writer.write(result.toString());
+                ResponseResult<?> result = ResponseResult.unauthorized("用户未登录，请先登录");
+                writer.write(new ObjectMapper().writeValueAsString(result)); // 使用 ObjectMapper 将对象转为 JSON
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return false;
         }
-        System.out.println(requestURI);
+        System.out.println("路径："+requestURI);
         // 只有当请求路径以 /system/ 开头时，才检查管理员权限
         if (requestURI.startsWith("/api/system/")) {
             // 检查用户是否具有管理员角色
             String role = StpUtil.getTokenSession().getString("role");
-            System.out.println(role);
+            System.out.println("角色："+role);
             if (!RoleConstants.ADMIN_ROLE_ADMIN.equals(role) && !RoleConstants.ADMIN_ROLE_USER.equals(role)) {
                 response.setContentType("application/json; charset=utf-8");
                 try (PrintWriter writer = response.getWriter()) {
-                    SaResult result = SaResult.error("您没有管理员权限，请联系管理员");
-                    writer.write(result.toString());
+                    ResponseResult<?> result = ResponseResult.unauthorized("您没有管理员权限，请联系管理员");
+                    writer.write(new ObjectMapper().writeValueAsString(result));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

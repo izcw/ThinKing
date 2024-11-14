@@ -148,7 +148,7 @@
       slot: 'nickname'
     },
     {
-      prop: 'sexName',
+      prop: 'sex',
       label: '性别',
       sortable: 'custom',
       showOverflowTooltip: true,

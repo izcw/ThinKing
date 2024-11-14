@@ -213,13 +213,13 @@
 
   /* 查询项目进度 */
   const queryProjectList = () => {
-    getProjectList()
-      .then((data) => {
-        projectList.value = data;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    // getProjectList()
+    //   .then((data) => {
+    //     projectList.value = data;
+    //   })
+    //   .catch((e) => {
+    //     console.error(e);
+    //   });
   };
 
   queryProjectList();

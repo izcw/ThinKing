@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2024/11/6 下午8:35
  */
 @RestController
-@RequestMapping("/note/verify")
+@RequestMapping("/verify")
 public class VerifyController {
 
     @Autowired
@@ -39,13 +39,12 @@ public class VerifyController {
      * @param request  Request对象
      * @throws Exception
      */
-    @GetMapping("/getcode")
-    public ResponseEntity<String> getCode(HttpServletResponse response, HttpServletRequest request) throws Exception {
+    @GetMapping("/captcha")
+    public ResponseResult<String> getCode(HttpServletResponse response, HttpServletRequest request) throws Exception {
         // 获取到session
         HttpSession session = request.getSession();
         // 获取sessionid
         String id = session.getId();
-        System.out.println(id);
 
         // 如果Redis中已经有旧的验证码尝试次数，先删除
         redisTemplate.delete("VERIFY_CODE_" + id);
@@ -77,7 +76,7 @@ public class VerifyController {
         String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes);  // 转为 base64 字符串
 
         // 返回 Base64 字符串
-        return ResponseEntity.ok(base64Image);
+        return ResponseResult.success(base64Image);
     }
 
 

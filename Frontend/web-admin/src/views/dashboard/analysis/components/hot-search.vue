@@ -94,5 +94,5 @@
       });
   };
 
-  getWordCloudData();
+  // getWordCloudData();
 </script>

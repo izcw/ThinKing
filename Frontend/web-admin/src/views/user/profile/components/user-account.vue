@@ -12,52 +12,12 @@
       <div class="list-item-body">
         <ele-text size="md">密保邮箱</ele-text>
         <ele-text type="placeholder">
-          已绑定邮箱: eleadmin@eclouds.com
+          已绑定邮箱: {{ data.email }}
         </ele-text>
       </div>
       <el-link type="primary" :underline="false">去修改</el-link>
     </div>
     <el-divider style="margin: 0; opacity: 0.6" />
-    <div class="list-item">
-      <div class="list-item-body">
-        <ele-text size="md">密保问题</ele-text>
-        <ele-text type="placeholder">未设置密保问题</ele-text>
-      </div>
-      <el-link type="primary" :underline="false">去设置</el-link>
-    </div>
-    <el-divider style="margin: 0; opacity: 0.6" />
-    <div class="list-item">
-      <el-icon class="list-item-icon">
-        <qq-outlined />
-      </el-icon>
-      <div class="list-item-body">
-        <ele-text size="md">绑定QQ</ele-text>
-        <ele-text type="placeholder">当前未绑定QQ账号</ele-text>
-      </div>
-      <el-link type="primary" :underline="false">去绑定</el-link>
-    </div>
-    <el-divider style="margin: 0; opacity: 0.6" />
-    <div class="list-item">
-      <el-icon class="list-item-icon" style="background: #4daf29">
-        <wechat-outlined />
-      </el-icon>
-      <div class="list-item-body">
-        <ele-text size="md">绑定微信</ele-text>
-        <ele-text type="placeholder">当前未绑定绑定微信账号</ele-text>
-      </div>
-      <el-link type="primary" :underline="false">去绑定</el-link>
-    </div>
-    <el-divider style="margin: 0; opacity: 0.6" />
-    <div class="list-item">
-      <el-icon class="list-item-icon" style="background: #1476fe">
-        <alipay-outlined />
-      </el-icon>
-      <div class="list-item-body">
-        <ele-text size="md">绑定支付宝</ele-text>
-        <ele-text type="placeholder">当前未绑定绑定支付宝账号</ele-text>
-      </div>
-      <el-link type="primary" :underline="false">去绑定</el-link>
-    </div>
   </div>
 </template>
 

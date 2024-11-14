@@ -6,7 +6,7 @@ import { unref } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import { API_BASE_URL, LAYOUT_PATH } from '@/config/setting';
 import router from '@/router';
-import { getToken } from './token-util';
+import { getToken ,removeToken} from './token-util';
 import { logout } from './use-page-tab';
 
 // 创建axios实例
@@ -42,6 +42,7 @@ service.interceptors.response.use(
       if (path == LAYOUT_PATH) {
         logout(true, void 0, router.push);
       } else {
+        removeToken()
         ElMessageBox.close();
         ElMessageBox.alert('登录状态已过期, 请退出重新登录!', '系统提示', {
           confirmButtonText: '重新登录',

@@ -7,7 +7,9 @@ export async function listMenus(params) {
   const res = await request.get('/system/menu', {
     params
   });
-  if (res.data.code === 0) {
+  console.log("菜单",res);
+
+  if (res.data.code === 200) {
     return res.data.data;
   }
   return Promise.reject(new Error(res.data.message));
@@ -18,7 +20,7 @@ export async function listMenus(params) {
  */
 export async function addMenu(data) {
   const res = await request.post('/system/menu', data);
-  if (res.data.code === 0) {
+  if (res.data.code === 200) {
     return res.data.message;
   }
   return Promise.reject(new Error(res.data.message));

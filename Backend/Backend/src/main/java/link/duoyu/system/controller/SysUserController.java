@@ -5,10 +5,12 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import link.duoyu.core.config.RoleConstants;
 import link.duoyu.core.utils.EmailUtil;
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.system.entity.NoteUser;
+import link.duoyu.system.entity.SysRole;
 import link.duoyu.system.entity.SysUser;
 import link.duoyu.system.mapper.SysRoleMapper;
 import link.duoyu.system.mapper.SysUserMapper;
@@ -17,12 +19,9 @@ import link.duoyu.system.service.ISysUserService;
 import link.duoyu.system.service.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,46 +41,70 @@ public class SysUserController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate; // Redis 操作
     @Autowired
-    private EmailUtil emailUtil; // 发送邮件工具
-    @Autowired
     private ISysUserService sysUserService; // 注入NoteUserService
     @Autowired
     private PasswordService passwordService; // 注入密码服务
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+
 
     /**
-     * 登录
-     * @param sysUser 管理用户信息
-     * @return 创建或登录结果
+     * 获取用户列表
+     * @return 用户列表
      */
-    @PostMapping("/login")
-    public ResponseResult<SaTokenInfo> login(@RequestBody SysUser sysUser) {
-        // 检查用户是否已存在
-        SysUser existingUser = sysUserService.getOne(new QueryWrapper<SysUser>().eq("email", sysUser.getEmail()));
-
-        if (existingUser != null) {
-            // 如果用户已存在，验证密码
-            if (passwordService.verifyPassword(sysUser.getPassword(), existingUser.getPassword())) {
-                // 第1步 第一个参数设置登录账号id，第二个参数指定是否为[记住我]，当此值为false后，关闭浏览器后再次打开需要重新登录
-                StpUtil.login(sysUser.getEmail(), false);
-
-                // 第2步，获取 Token  相关参数
-                SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-
-                // 判断是否为管理员用户，这里假设根据用户的某个字段（比如isAdmin）来判断
-                if (existingUser.getSysRoleId() == 1) {
-                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_ADMIN);
-                } else if (existingUser.getSysRoleId() == 2) {
-                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_USER);
-                }
-
-                // 密码验证成功，返回用户信息
-                return ResponseResult.success("登录成功", tokenInfo);
-            } else {
-                // 密码验证失败
-                return ResponseResult.fail("密码错误");
-            }
-        } else {
-            return ResponseResult.unauthorized("该用户未注册！");
-        }
+    @GetMapping("/all")
+    public ResponseResult<List<SysUser>> getAllUsers() {
+        List<SysUser> list = sysUserMapper.selectList(null);
+        return ResponseResult.success("查询成功",list);
     }
+
+    /**
+     * 获取分页查询用户列表
+     * @param page 当前页码
+     * @param limit 每页显示条数
+     * @return 分页查询的用户列表
+     */
+    @GetMapping("/page")
+    public ResponseResult<Page<SysUser>> page(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        // 创建Page对象，设置当前页和每页显示条数
+        Page<SysUser> sysUserPage = new Page<>(page, limit);
+
+        // 执行分页查询
+        Page<SysUser> pageResult = sysUserService.page(sysUserPage);
+
+        // 为每个用户查询角色信息并设置到 roles 属性
+        for (SysUser sysUser : pageResult.getRecords()) {
+            // 根据 sysRoleId 查询角色信息
+            SysRole role = sysRoleMapper.selectByRoleId(sysUser.getRoleId());
+            List<SysRole> roles = new ArrayList<>();
+            if (role != null) {
+                roles.add(role);
+            }
+            sysUser.setRoles(roles);
+        }
+
+        // 返回分页结果
+        return ResponseResult.success("查询成功", pageResult);
+    }
+
+
+    /**
+     * 根据ID获取用户信息
+     * @param id 用户ID
+     * @return 用户信息
+     */
+    @GetMapping("/{id}")
+    public ResponseResult<SysUser> getUserById(@PathVariable Integer id) { // 改为 Integer
+        // 获取当前登录用户的 ID
+        String userId = (String) StpUtil.getLoginId();
+        System.out.println("用户ID: " + userId);
+
+        SysUser sysUser = sysUserMapper.selectById(userId);
+        if (sysUser == null) {
+            return ResponseResult.fail("用户未找到");
+        }
+        return ResponseResult.success(sysUser);
+    }
+
+
 }

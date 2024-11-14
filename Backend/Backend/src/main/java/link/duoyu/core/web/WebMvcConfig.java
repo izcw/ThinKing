@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(allowedOrigins.split(","))
+                .allowedOrigins("http://localhost:7435", "http://localhost:7436")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
@@ -33,6 +33,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CustomSaTokenInterceptor())
                 .addPathPatterns("/**") // 包含哪些路径
-                .excludePathPatterns("/note/user/login", "/note/user/register", "/system/user/login"); // 排除哪些路径
+                .excludePathPatterns("/images/**","/note/user/login", "/note/user/register","/verify/**", "/system/login"); // 排除哪些路径
     }
 }

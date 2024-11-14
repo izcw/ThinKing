@@ -181,15 +181,15 @@
 
   /* 查询数据 */
   const query = () => {
-    getUnreadNotice()
-      .then((result) => {
-        notice.value = result.notice;
-        letter.value = result.letter;
-        todo.value = result.todo;
-      })
-      .catch((e) => {
-        EleMessage.error(e.message);
-      });
+    // getUnreadNotice()
+    //   .then((result) => {
+    //     notice.value = result.notice;
+    //     letter.value = result.letter;
+    //     todo.value = result.todo;
+    //   })
+    //   .catch((e) => {
+    //     EleMessage.error(e.message);
+    //   });
   };
 
   /* 清空通知 */
