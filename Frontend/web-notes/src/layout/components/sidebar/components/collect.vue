@@ -1,44 +1,59 @@
 <template>
     <div class="collect GMargin">
         <n-grid cols="3 300:4 400:5 500:6 600:7" :y-gap="8" style="justify-items: center;">
+            <n-grid-item style="width: 100%;">
+                <router-link to="/space1">
+                    <div class="Tools-item item">
+                        <n-icon size="20">
+                            <Home48Regular />
+                        </n-icon>
+                    </div>
+                </router-link>
+            </n-grid-item>
+            <n-grid-item style="width: 100%;" @click="dialogTableVisible = true">
+                <div class="Tools-item item">
+                    <n-icon size="20">
+                        <Search28Filled />
+                    </n-icon>
+                </div>
+            </n-grid-item>
+            <n-grid-item style="width: 100%;">
+                <div class="Tools-item item">
+                    <n-icon size="20">
+                        <Lock />
+                    </n-icon>
+                </div>
+            </n-grid-item>
+
             <n-grid-item style="width: 100%;" v-for="(item, index) in data" :key="item.id">
                 <router-link :to="item.link">
                     <div class="Tools-item item">
                         <n-icon size="20">
                             <component :is="item.icon" />
                         </n-icon>
-                        <n-icon size="10" color="#F6C050cc" v-if="index >= 3"
-                            style="position: absolute;top: 4px;left: 4px;">
+                        <n-icon size="10" color="#F6C050cc" style="position: absolute;top: 4px;left: 4px;">
                             <Star />
                         </n-icon>
                     </div>
                 </router-link>
             </n-grid-item>
         </n-grid>
+        <el-dialog v-model="dialogTableVisible" width="800"  :show-close="false">
+            <template #header>
+                <el-input v-model="input"  style="width: 100%" placeholder="请搜索..." />
+            </template>
+        </el-dialog>
+
     </div>
 </template>
 <script setup>
 import { Home48Regular, Search28Filled } from '@vicons/fluent'
-import { BellRegular, Star } from '@vicons/fa'
+import { BellRegular, Star ,Lock} from '@vicons/fa'
 import { ref } from 'vue';
 
+let dialogTableVisible = ref(false)
+
 let data = ref([
-    {
-        name: '主页',
-        id: 1,
-        link: '/space1',
-        icon: Home48Regular
-    },
-    {
-        name: '搜索',
-        id: 2,
-        icon: Search28Filled
-    },
-    {
-        name: '消息',
-        id: 3,
-        icon: BellRegular
-    },
     {
         name: 'link1',
         id: 4,
@@ -72,6 +87,11 @@ let data = ref([
         icon: Star
     }
 ])
+
+let searchFor = () => {
+    console.log("搜索");
+
+}
 </script>
 <style scoped lang='scss'>
 .collect {

@@ -33,3 +33,27 @@
     padding:0 1rem;
     box-sizing: border-box;
 }
+
+// 卡片
+.card{
+    border: 1px solid #e3e2e4;
+    border-radius: 16px;
+    box-shadow: 0 1px 6px #0000000d;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+// 空白页面
+.blankPage{
+    padding:1rem;
+    box-sizing: border-box;
+    margin-bottom: 3rem;
+}
+
+
+@media (max-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+}

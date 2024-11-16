@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
-import NoteContentLayout from '@/views/NoteContent.vue';
+import NoteLayout from '@/views/note/index.vue';
 import LoginLayout from '@/views/login/index.vue';
 
 const router = createRouter({
@@ -14,15 +14,15 @@ const router = createRouter({
       children: [
         {
           path: '/:id',
-          component: () => import('../views/indexView.vue')
+          component: () => import('../views/index/index.vue')
         },
         {
           path: '/:id/:id',
-          component: NoteContentLayout,
+          component: NoteLayout,
           children: [
             {
               path: '/:id/:id',
-              component: () => import('../views/hello.vue')
+              component: () => import('../views/note/components/hello.vue')
             },
           ]
         },
@@ -32,12 +32,8 @@ const router = createRouter({
         },
         {
           path: '/template',
-          component: () => import('../views/templateView.vue')
-        },
-        {
-          path: '/warehouse',
-          component: () => import('@/views/world.vue')
-        },
+          component: () => import('../views/template/index.vue')
+        }
       ]
     },
     {

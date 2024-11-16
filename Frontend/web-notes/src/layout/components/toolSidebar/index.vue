@@ -11,9 +11,9 @@
             <n-tab-pane name="chap2" tab="AI">
                 <AIStormBox />
             </n-tab-pane>
-            <n-tab-pane name="chap3" tab="批注">
+            <!-- <n-tab-pane name="chap3" tab="批注">
                 <AnnotationsBox />
-            </n-tab-pane>
+            </n-tab-pane> -->
         </n-tabs>
     </div>
 
@@ -22,7 +22,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
 import catalogOutlineBox from './components/catalogOutline.vue'
-import AIStormBox from './components/aiStorm.vue'
+import AIStormBox from './components/AIStorm.vue'
 import AnnotationsBox from './components/Annotations.vue'
 
 // 展开关闭侧边栏状态

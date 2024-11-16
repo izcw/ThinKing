@@ -1,9 +1,0 @@
-<template>
-    <div>
-        <h1>模板中心</h1>
-    </div>
-</template>
-<script setup>
-
-</script>
-<style scoped lang='scss'></style>

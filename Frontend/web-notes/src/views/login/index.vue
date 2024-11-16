@@ -55,11 +55,13 @@ import registerFormBox from "./components/registerForm.vue"
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
 
             img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
+                width: 42px;
+                height: 42px;
+                margin-right: 6px;
             }
         }
 

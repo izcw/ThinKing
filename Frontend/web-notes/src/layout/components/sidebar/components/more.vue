@@ -5,7 +5,6 @@
                 <router-link :to="item.link">
                     <div class="item-more">
                         <n-icon size="20">
-                            <!-- <AnimalCat20Filled /> -->
                             <component :is="item.icon" />
                         </n-icon>
                         <span>{{ item.name }}</span>
@@ -14,13 +13,43 @@
             </template>
             <span>{{ item.describe }}</span>
         </n-tooltip>
+
+        <div class="item-more" ref="buttonRef" v-click-outside="onClickOutside">
+            <n-icon size="20">
+                <Broom16Regular />
+            </n-icon>
+            <span>垃圾箱</span>
+        </div>
+
+        <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="right" trigger="click" :width="500"
+            virtual-triggering>
+            <el-input v-model="input" style="width: 100%;" placeholder="搜索被移入垃圾箱的页面" />
+            <div class="dustbin">
+                <div class="item">
+                    <p>mysql</p>
+                    <div class="tool">
+                        <span>恢复&emsp;</span>
+                        <span>彻底删除</span>
+                    </div>
+                </div>
+            </div>
+            <el-alert title="垃圾箱中超过30天的页面将自动删除" type="info" :closable="false" />
+        </el-popover>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, inject, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import { Crow, Connectdevelop, Blackberry } from '@vicons/fa'
 import { Money16Regular, Diamond16Regular, BookInformation24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
+
+// 弹出框
+const buttonRef = ref()
+const popoverRef = ref()
+const onClickOutside = () => {
+    unref(popoverRef).popperRef?.delayHide?.()
+}
+
 
 let data = ref([
     {
@@ -36,28 +65,6 @@ let data = ref([
         link: '/vip',
         describe: "升级享受更好的体验，点击了解》",
         icon: Money16Regular
-    },
-    // {
-    //     id: 4,
-    //     name: "文件仓库",
-    //     link: '/warehouse',
-    //     describe: "查看引用的文件",
-    //     icon: Box20Regular
-    // },
-    
-    {
-        id: 5,
-        name: "垃圾箱",
-        link: '/trashcan',
-        describe: "恢复已删除的页面",
-        icon: Broom16Regular
-    },
-    {
-        id: 6,
-        name: "帮助",
-        link: '/help',
-        describe: "帮助联系和更多",
-        icon: BookInformation24Regular
     }
 ])
 </script>
@@ -81,6 +88,68 @@ let data = ref([
     .item-more:hover,
     .item-more:active {
         background-color: #E9E9E9;
+    }
+}
+
+// 垃圾桶
+.dustbin {
+    min-height: 200px;
+    margin: 1rem 0 3rem 0;
+    .item {
+        padding:6px 10px;
+        margin: 4px 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    .item:hover,.item:active{
+        background-color: #E9E9E9;
+    }
+}
+
+.AccountBox {
+    p a {
+        display: block;
+        font-size: 14px;
+        color: #999;
+        width: 100%;
+        padding: 4px 8px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    p a:hover {
+        background-color: #E9E9E9;
+        color: #333;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #eee;
+        }
+
+        .info {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #333;
+
+            .name {
+                font-size: 16px;
+            }
+
+            .subscribe {
+                color: #999;
+            }
+        }
     }
 }
 </style>

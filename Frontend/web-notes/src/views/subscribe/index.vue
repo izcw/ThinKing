@@ -1,60 +1,68 @@
 <template>
-    <div class="subscribe TMargin">
-        <h1>加入或续费 NexNote会员</h1>
-        <div class="current">
-            <p>当前方案</p>
-            <p><span class="my">个人免费板</span><span class="recommend">升级个人Plus版，支持至多5个空间</span></p>
+    <div class="blankPage">
+        <div class="container">
+            <div class="banner">
+
+            </div>
+            <h1>加入或续费 NexNote会员</h1>
+            <div class="current">
+                <p>当前方案</p>
+                <p><span class="my">个人免费板</span><span class="recommend">升级个人Plus版，支持至多5个空间</span></p>
+            </div>
+            <el-row :gutter="20" class="scheme">
+                <el-col :span="8" v-for="item in data" :key="item.id">
+                    <div class="item">
+                        <div class="title">{{ item.title }}<span class="hot" v-if="item.hot">热门方案</span></div>
+                        <p class="describe">{{ item.describe }}</p>
+                        <div class="price">
+                            <p>折扣价：<span class="Current">￥{{ item.priceCurrent }}</span><span>&nbsp;/&nbsp;月</span></p>
+                            <p>原&emsp;价：<del>￥{{ item.price }}<span>&nbsp;/&nbsp;月</span></del></p>
+                        </div>
+                        <el-button type="primary">升级</el-button>
+                    </div>
+                </el-col>
+            </el-row>
+            <div>
+                <el-table :data="tableData" style="width: 100%">
+                    <el-table-column prop="describe" label="范围对比" />
+                    <el-table-column prop="person" label="个人Plus版" width="180">
+                        <template #default="scope">
+                            <div v-if="typeof scope.row.person === 'boolean'">
+                                <el-text v-if="scope.row.person" type="primary">√</el-text>
+                                <el-text v-else type="info">×</el-text>
+                            </div>
+                            <div v-else>
+                                {{ scope.row.person }}
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="team" label="团队版" width="180">
+                        <template #default="scope">
+                            <div v-if="typeof scope.row.team === 'boolean'">
+                                <el-text v-if="scope.row.team" type="primary">√</el-text>
+                                <el-text v-else type="info">×</el-text>
+                            </div>
+                            <div v-else>
+                                {{ scope.row.team }}
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="enterprise" label="企业版" width="180">
+                        <template #default="scope">
+                            <div v-if="typeof scope.row.enterprise === 'boolean'">
+                                <el-text v-if="scope.row.enterprise" type="primary">√</el-text>
+                                <el-text v-else type="info">×</el-text>
+                            </div>
+                            <div v-else>
+                                {{ scope.row.enterprise }}
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
         </div>
-        <el-row :gutter="20" class="scheme">
-            <el-col :span="8" v-for="item in data" :key="item.id">
-                <div class="item">
-                    <div class="title">{{ item.title }}<span class="hot" v-if="item.hot">热门方案</span></div>
-                    <p class="describe">{{ item.describe }}</p>
-                    <div class="price">
-                        <p>折扣价：<span class="Current">￥{{ item.priceCurrent }}</span><span>&nbsp;/&nbsp;月</span></p>
-                        <p>原&emsp;价：<del>￥{{ item.price }}<span>&nbsp;/&nbsp;月</span></del></p>
-                    </div>
-                    <el-button type="primary">升级</el-button>
-                </div>
-            </el-col>
-        </el-row>
-        <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="describe" label="范围对比" />
-            <el-table-column prop="person" label="个人Plus版" width="180">
-                <template #default="scope">
-                    <div v-if="typeof scope.row.person === 'boolean'">
-                        <el-text v-if="scope.row.person" type="primary">√</el-text>
-                        <el-text v-else type="info">×</el-text>
-                    </div>
-                    <div v-else>
-                        {{ scope.row.person }}
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="team" label="团队版" width="180">
-                <template #default="scope">
-                    <div v-if="typeof scope.row.team === 'boolean'">
-                        <el-text v-if="scope.row.team" type="primary">√</el-text>
-                        <el-text v-else type="info">×</el-text>
-                    </div>
-                    <div v-else>
-                        {{ scope.row.team }}
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="enterprise" label="企业版" width="180">
-                <template #default="scope">
-                    <div v-if="typeof scope.row.enterprise === 'boolean'">
-                        <el-text v-if="scope.row.enterprise" type="primary">√</el-text>
-                        <el-text v-else type="info">×</el-text>
-                    </div>
-                    <div v-else>
-                        {{ scope.row.enterprise }}
-                    </div>
-                </template>
-            </el-table-column>
-        </el-table>
     </div>
+
 </template>
 <script setup>
 import { ref } from 'vue';
@@ -127,9 +135,21 @@ let tableData = ref([
 ])
 </script>
 <style scoped lang='scss'>
-.subscribe {
+.container {
     width: 1200px;
+    height: 100%;
     margin: 0 auto;
+
+    .banner {
+        width: 100%;
+        height: 350px;
+        background-image: url("/src/assets/images/subscribe-banner.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-bottom: 60px;
+        border-radius: 10px;
+    }
 
     h1 {
         font-size: 28px;
@@ -203,4 +223,5 @@ let tableData = ref([
         }
     }
 }
+
 </style>

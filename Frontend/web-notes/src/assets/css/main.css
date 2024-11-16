@@ -1,8 +1,7 @@
 /* @import './base.css'; */
 @import './components.scss';
 @import './font/smiley-sans/font.css';
-@import './NaiveUI.css';
-@import './Element-plus.css';
+@import './Element-plus.scss';
 
 * {
   padding: 0;
@@ -29,4 +28,26 @@ a {
 /* 禁止拖拽 */
 .ban-drag {
   -webkit-user-drag: none;
+}
+
+
+/* 笔记关系图 */
+.relation-graph .rel-node-shape-0{
+  width: 60px !important;
+  height: 60px !important;
+  background-color: #888888 !important;
+}
+
+.c-node-text{
+  position: relative;
+}
+
+.c-node-text span{
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 18px;
+  color:#333;
 }

@@ -3,7 +3,7 @@
         <div class="ChatHistory">
             <div class="Session-item" v-for="item in data" :key="item.id">
                 <div class="chat problem">
-                    <img class="profilePic" src="@images/logo.png" alt="">
+                    <img  class="profilePic" :src="API_BASE_URL + '/images/avatar-default.png'" alt="Yoko">
                     <div class="chatcontent">
                         {{ item.user }}
                     </div>
@@ -60,6 +60,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { API_BASE_URL } from "@/config/setting"
 import { Home48Regular, Search28Filled } from '@vicons/fluent'
 let data = ref([
     {
@@ -161,7 +162,8 @@ let data = ref([
 
     .InputBox {
         border-top: 1px solid #DCDCDC;
-        padding: 15px 0;
+        padding-top: 15px;
+        box-sizing: border-box;
 
         .tools {
             display: flex;

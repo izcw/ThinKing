@@ -23,7 +23,7 @@
             </template>
             <span>收藏 加入快速访问</span>
         </n-tooltip>
-        <p class="share-text text-select Tools-item">分享</p>
+        <p class="share-text text-select Tools-item" ref="buttonRef" v-click-outside="onClickOutside">分享</p>
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item" @click="activate('right')">
@@ -35,11 +35,16 @@
             <span>页面设置</span>
         </n-tooltip>
 
-        <n-drawer v-model:show="active" :width="340" :placement="placement" show-mask="transparent">
-            <n-drawer-content title="页面设置">
-                <PageSettingsBox />
-            </n-drawer-content>
-        </n-drawer>
+
+        <el-drawer v-model="active" :size="340" direction="rtl" title="页面设置">
+            <PageSettingsBox />
+        </el-drawer>
+
+
+        <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="bottom" trigger="click" :width="500"
+            virtual-triggering>
+            <div class="sharebox"></div>
+        </el-popover><!-- 弹出框 -->
     </div>
 </template>
 <script setup>
@@ -48,13 +53,19 @@ import { StarRegular } from '@vicons/fa'
 import { MoreHorizontal32Filled, Search28Filled, ChevronDoubleRight16Filled } from '@vicons/fluent'
 import PageSettingsBox from '@/components/PageSettings.vue'
 
+// 弹出框
+const buttonRef = ref()
+const popoverRef = ref()
+const onClickOutside = () => {
+    unref(popoverRef).popperRef?.delayHide?.()
+}
+
+
 // 抽屉
 const active = ref(false);
-const placement = ref('right');
 
 const activate = (place) => {
     active.value = true;
-    placement.value = place;
 };
 </script>
 <style scoped lang='scss'>
@@ -78,5 +89,12 @@ const activate = (place) => {
     .Tools-item {
         margin-left: 6px;
     }
+}
+
+// 分享
+.sharebox {
+    min-height: 200px;
+    margin: 1rem 0 3rem 0;
+
 }
 </style>
