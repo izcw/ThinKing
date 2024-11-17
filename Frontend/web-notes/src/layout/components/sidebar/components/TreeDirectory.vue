@@ -24,11 +24,11 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter  } from 'vue-router'
+import { useRouter } from 'vue-router'
 const router = useRouter()
 
-let openPage = (val)=>{
-    router.push('/space1/'+val.label) 
+let openPage = (val) => {
+    router.push('/space1/' + val.label)
 }
 
 // Data
@@ -146,9 +146,17 @@ const remove = (node, data) => {
         align-items: center;
         overflow: hidden;
         padding-left: 4px;
-        font-size: 14px;
+        
+        width: 100%;
+        height: 100%;
+        padding-right: 10px;
+        box-sizing: border-box;
 
+        span{
+            font-size: 15px !important;
+        }
         .icon {
+            font-size: 18px !important;
             opacity: 1;
         }
     }
@@ -156,7 +164,6 @@ const remove = (node, data) => {
     .tools {
         display: flex;
         align-items: center;
-        margin: 0 10px;
         opacity: 0;
 
         .item {
@@ -166,8 +173,11 @@ const remove = (node, data) => {
             align-items: center;
             justify-content: center;
 
-            &:hover {
-                background-color: #d61313;
+            border-radius: 4px;
+
+            &:hover,
+            &:active {
+                background-color: #fff;
             }
         }
     }

@@ -40,18 +40,21 @@
         </n-grid>
         <el-dialog v-model="dialogTableVisible" width="800"  :show-close="false">
             <template #header>
-                <el-input v-model="input"  style="width: 100%" placeholder="请搜索..." />
+                <el-input v-model="input"  style="width: 100%;padding: 1rem;box-sizing: border-box;" placeholder="全局搜索，请输入..." />
+                <div style="padding:1rem;box-sizing: border-box;">
+                    <searchItemBox />
+                </div>
             </template>
-        </el-dialog>
-
+        </el-dialog><!-- 搜索对话框 -->
     </div>
 </template>
 <script setup>
+import searchItemBox from '@/components/searchItem.vue';
 import { Home48Regular, Search28Filled } from '@vicons/fluent'
 import { BellRegular, Star ,Lock} from '@vicons/fa'
 import { ref } from 'vue';
 
-let dialogTableVisible = ref(false)
+let dialogTableVisible = ref(false) // 搜索对话框
 
 let data = ref([
     {

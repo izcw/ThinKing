@@ -2,17 +2,17 @@
   <div class="login-wrapper">
     <ele-card class="login-card">
       <div class="login-cover">
-        <h1 class="login-title">Nex Notes 得意黑</h1>
-        <h4 class="login-subtitle">新一代知识管理，学习更顺心</h4>
+        <h1 class="login-title"><img src="@/assets/images/logo.png" alt=""> Nex Note</h1>
+        <h4 class="login-subtitle">Nex Note笔记 后台管理</h4>
       </div>
       <div class="login-body">
         <ele-text type="heading" style="font-size: 24px; margin-bottom: 18px">
           {{ t('login.title') }}
         </ele-text>
-        <ele-segmented v-model="tabActive" :items="[
+        <!-- <ele-segmented v-model="tabActive" :items="[
           { label: t('login.passwordType'), value: 1 },
           { label: t('login.qrcodeType'), value: 2 }
-        ]" style="margin-bottom: 18px" @change="onTabChange" />
+        ]" style="margin-bottom: 18px" @change="onTabChange" /> -->
         <el-form v-if="tabActive == 1" ref="formRef" size="large" :model="form" :rules="rules">
           <el-form-item prop="email">
             <el-input clearable v-model="form.email" :placeholder="t('login.username')" :prefix-icon="User" />
@@ -34,20 +34,20 @@
             </el-checkbox>
           </el-form-item>
           <el-form-item>
-            <el-button size="large" type="primary" :loading="loading" style="width: 100%" @click="submit">
+            <el-button size="large" type="primary" :loading="loading" style="width: 100%;margin-top: 1.5rem;" @click="submit">
               {{ t('login.login') }}
             </el-button>
           </el-form-item>
         </el-form>
-        <div v-else class="login-qrcode-group">
-          <ele-qr-code-svg :size="180" :margin="2" :value="qrcode" class="login-qrcode" />
-          <div style="margin-top: 16px; cursor: pointer" @click="refreshQrCode">
-            <el-icon :size="17" style="vertical-align: -3px; margin-right: 6px">
-              <refresh-right />
-            </el-icon>
-            <span>{{ t('login.refreshQrcode') }}</span>
-          </div>
-        </div>
+          <!-- <div v-else class="login-qrcode-group">
+            <ele-qr-code-svg :size="180" :margin="2" :value="qrcode" class="login-qrcode" />
+            <div style="margin-top: 16px; cursor: pointer" @click="refreshQrCode">
+              <el-icon :size="17" style="vertical-align: -3px; margin-right: 6px">
+                <refresh-right />
+              </el-icon>
+              <span>{{ t('login.refreshQrcode') }}</span>
+            </div>
+          </div> -->
       </div>
     </ele-card>
   </div>
@@ -152,7 +152,7 @@ const submit = () => {
 const changeCaptcha = () => {
   getCaptcha()
     .then((data) => {
-      console.log(data+"验证码");
+      console.log(data + "验证码");
 
       captcha.value = data;
       // 实际项目后端一般会返回验证码的key而不是直接返回验证码的内容, 登录用key去验证, 可以根据自己后端接口修改
@@ -181,7 +181,7 @@ const onTabChange = (active) => {
 /* 跳转到首页 */
 const goHome = () => {
   const { query } = unref(currentRoute);
-  console.log(query.from+"这是");
+  console.log(query.from + "这是");
 
   goHomeRoute(query.from);
 };
@@ -224,15 +224,18 @@ if (getToken()) {
 }
 
 .login-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   flex: 1;
   padding: 36px 8px;
   box-sizing: border-box;
   // background-color: #000;
-  background-image: url('/src/assets/login-img.png');
+  background-image: url('/src/assets/login-bg.png');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: bottom;
-  text-align: center;
+  background-position: center;
 }
 
 .login-body {
@@ -295,23 +298,37 @@ if (getToken()) {
 }
 
 // 标题
-.login-title {
-  color: #000;
-  font-size: 52px;
-  margin: 0 0 6px 0;
-  font-weight: bold;
-  font-family: 'SmileySans得意黑';
-  letter-spacing: 1.2px;
+.login-cover {
+  .login-title {
+    color: #000;
+    font-size: 52px;
+    margin: 0 0 6px 0;
+    font-weight: bold;
+    font-family: 'SmileySans得意黑';
+    letter-spacing: 1.2px;
+
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 100px;
+      margin-right: 10px;
+    }
+
+
+
+  }
+
+  .login-subtitle {
+    color: #333;
+    font-size: 18px;
+    margin: 0;
+    font-weight: normal;
+    font-family: 'AliPuHui';
+    letter-spacing: 4px;
+  }
 }
 
-.login-subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 18px;
-  margin: 0;
-  font-weight: normal;
-  font-family: 'AliPuHui';
-  letter-spacing: 4px;
-}
 
 /* 阿里巴巴普惠体 */
 @font-face {

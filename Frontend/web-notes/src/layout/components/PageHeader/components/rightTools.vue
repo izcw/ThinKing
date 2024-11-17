@@ -1,9 +1,9 @@
 <template>
     <div class="rightTools">
-        <p class="updatetime-text text-select">上次编辑&nbsp;47分&nbsp;前</p>
+        <p class="updatetime-text text-select">上次编辑&nbsp;{{ timeAgo('2024/11/17 18:22:49') }}</p>
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
-                <div class="Tools-item">
+                <div class="Tools-item"  @click="dialogTableVisible = true">
                     <n-icon size="18">
                         <Search28Filled />
                     </n-icon>
@@ -44,22 +44,29 @@
         <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="bottom" trigger="click" :width="500"
             virtual-triggering>
             <div class="sharebox"></div>
-        </el-popover><!-- 弹出框 -->
+        </el-popover><!-- 分享弹出框 -->
+
+        <el-dialog v-model="dialogTableVisible" width="400" :show-close="false">
+            <el-input v-model="input" style="width: 100%;" placeholder="查找..." />
+        </el-dialog><!-- 搜索对话框 -->
     </div>
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
+import { timeAgo } from '@/utils/timeAgo'
 import { StarRegular } from '@vicons/fa'
 import { MoreHorizontal32Filled, Search28Filled, ChevronDoubleRight16Filled } from '@vicons/fluent'
 import PageSettingsBox from '@/components/PageSettings.vue'
 
-// 弹出框
+// 分享弹出框
 const buttonRef = ref()
 const popoverRef = ref()
 const onClickOutside = () => {
     unref(popoverRef).popperRef?.delayHide?.()
 }
 
+// 搜索对话框
+const dialogTableVisible = ref(false)
 
 // 抽屉
 const active = ref(false);

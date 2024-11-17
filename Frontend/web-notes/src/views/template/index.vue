@@ -1,5 +1,6 @@
 <template>
     <div class="blankPage">
+       <CollapseMenuBox />
         <div class="container">
             <div class="banner">
 
@@ -7,37 +8,41 @@
 
             <div class="template">
                 <div class="catalog">
-df
+                    df
                 </div>
                 <div class="content">
-                    <el-row  :gutter="20">
-                        <el-col :span="8">
-                           <div class="item">
-                            <img src="@/assets/images/template-item1.png" alt="">
-                            <h2>会议记录</h2>
-                            <p><el-text line-clamp="2">使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率</el-text></p>
-                           </div>
+                    <el-row :gutter="20">
+                        <el-col :span="8"  :xs="24" :sm="24" :md="12" :lg="8">
+                            <div class="item">
+                                <img src="@/assets/images/template-item1.png" alt="">
+                                <h2>会议记录</h2>
+                                <p><el-text
+                                        line-clamp="2">使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率</el-text>
+                                </p>
+                            </div>
                         </el-col>
-                        <el-col :span="8">
-                           <div class="item">
-                            <img src="@/assets/images/template-item1.png" alt="">
-                            <h2>会议记录</h2>
-                            <p><el-text line-clamp="2">使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率</el-text></p>
-                           </div>
+                        <el-col :span="8"  :xs="24" :sm="24" :md="12" :lg="8">
+                            <div class="item">
+                                <img src="@/assets/images/template-item1.png" alt="">
+                                <h2>会议记录</h2>
+                                <p><el-text
+                                        line-clamp="2">使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率使用此会议记录模板可最大限度地提高会议效率</el-text>
+                                </p>
+                            </div>
                         </el-col>
-                        <el-col :span="8">
-                           <div class="item">
-                            <img src="@/assets/images/template-item1.png" alt="">
-                            <h2>会议记录</h2>
-                            <p><el-text line-clamp="2">哈哈哈</el-text></p>
-                           </div>
+                        <el-col :span="8"  :xs="24"  :sm="24" :md="12" :lg="8">
+                            <div class="item">
+                                <img src="@/assets/images/template-item1.png" alt="">
+                                <h2>会议记录</h2>
+                                <p><el-text line-clamp="2">哈哈哈</el-text></p>
+                            </div>
                         </el-col>
-                        <el-col :span="8">
-                           <div class="item">
-                            <img src="@/assets/images/template-item1.png" alt="">
-                            <h2>会议记录</h2>
-                            <p><el-text line-clamp="2">议记录模板可最大限度地提高会议效率</el-text></p>
-                           </div>
+                        <el-col :span="8"  :xs="24" :sm="24" :md="12" :lg="8">
+                            <div class="item">
+                                <img src="@/assets/images/template-item1.png" alt="">
+                                <h2>会议记录</h2>
+                                <p><el-text line-clamp="2">议记录模板可最大限度地提高会议效率</el-text></p>
+                            </div>
                         </el-col>
                     </el-row>
                 </div>
@@ -46,13 +51,15 @@ df
     </div>
 </template>
 <script setup>
-
+import CollapseMenuBox from '@/components/CollapseMenu.vue';
 </script>
 <style scoped lang='scss'>
 .container {
-    width: 1200px;
+    padding: 0 150px;
+    box-sizing: border-box;
     height: 100%;
     margin: 0 auto;
+
 
     .banner {
         width: 100%;
@@ -65,27 +72,27 @@ df
         border-radius: 10px;
     }
 
-    .template{
+    .template {
         display: flex;
 
-        .catalog{
+        .catalog {
             width: 400px;
             height: 100%;
             background-color: antiquewhite;
         }
 
-        .content{
+        .content {
             margin-left: 1rem;
             width: 100%;
             height: 100%;
 
-            .item{
+            .item {
                 width: 100%;
                 height: 300px;
                 margin-bottom: 30px;
                 cursor: pointer;
 
-                img{
+                img {
                     width: 100%;
                     height: 200px;
                     object-fit: cover;

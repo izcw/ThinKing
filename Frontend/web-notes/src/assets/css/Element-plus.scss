@@ -1,43 +1,55 @@
 // 标签页
-.n-tabs, .n-tab-pane ,.n-tabs-pane-wrapper{
+.n-tabs,
+.n-tab-pane,
+.n-tabs-pane-wrapper {
     height: 100% !important;
 }
-.n-tab-pane{
+.n-tab-pane {
     box-sizing: border-box;
 }
-.n-tabs-pane-wrapper{
+.n-tabs-pane-wrapper {
     padding: 1rem 0;
     box-sizing: border-box;
 }
 
 /* 输入框焦点颜色 */
 .el-input__wrapper.is-focus {
-    box-shadow:0 0 0 1px var(--el-input-border-color,var(--el-border-color)) inset !important;
+    box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset !important;
 }
 
-
 /* 树 */
-.el-tree-node__content{
+.el-tree-node__content {
 
-    .el-tree-node__expand-icon{
-        font-size: 14px;
+    .el-tree-node__expand-icon {
+        font-size: 16px;
+        border-radius: 4px;
     }
-    .el-tree-node__expand-icon:hover{
-        background-color: red;
+    .el-tree-node__expand-icon:hover {
+        background-color: #fff;
     }
     padding: 2px 0;
     margin-bottom: 8px;
 }
 
-.el-tree-node__content:hover{
+.el-tree-node__content:hover {
     background-color: antiquewhite !important;
 }
 
 // 抽屉
-.rightTools .el-overlay{
+.rightTools .el-overlay {
     background-color: transparent !important;
 }
 
-.rightTools .el-drawer{
+.rightTools .el-drawer {
     box-shadow: 0 0 4px #ccc !important;
+}
+
+// 单选按钮
+.space-radio {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+}
+.space-radio .el-radio__inner {
+    opacity: 0;
 }

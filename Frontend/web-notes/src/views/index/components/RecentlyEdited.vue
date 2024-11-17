@@ -3,46 +3,13 @@
         <p><el-text class="mx-1" type="primary">最近编辑</el-text></p>
         <div class="time-base-mark"></div>
         <div class="content">
-            <div class="item">
-                <div class="time">2024/11/16</div>
+            <div class="item" v-for="item in data" :key="item.id">
+                <div class="time">{{ timeAgo(item.time) }}</div>
                 <div class="recentPage">
-                    <div class="title">Hello</div>
+                    <div class="title">{{ item.title }}</div>
                     <p>
                         <el-text line-clamp="4">
-                            圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好
-                        </el-text>
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="time">2024/11/16</div>
-                <div class="recentPage">
-                    <div class="title">论文灵感</div>
-                    <p>
-                        <el-text line-clamp="4">
-                            圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好
-                        </el-text>
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="time">2024/11/16</div>
-                <div class="recentPage">
-                    <div class="title">Java基础学习</div>
-                    <p>
-                        <el-text line-clamp="4">
-                            圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好
-                        </el-text>
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="time">2024/11/16</div>
-                <div class="recentPage">
-                    <div class="title">English</div>
-                    <p>
-                        <el-text line-clamp="4">
-                            圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好
+                            {{ item.article }}
                         </el-text>
                     </p>
                 </div>
@@ -51,7 +18,35 @@
     </div>
 </template>
 <script setup>
+import { ref } from 'vue'
+import { timeAgo } from '@/utils/timeAgo'
 
+let data = ref([
+    {
+        id: "1",
+        title: "Hello",
+        time: "2024/11/17 13:07:03",
+        article: "发达结果的独具一格东方精工女方风格结合地方v"
+    },
+    {
+        id: "2",
+        title: "论文灵感",
+        time: "2024/11/17 9:07:03",
+        article: "圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好"
+    },
+    {
+        id: "2",
+        title: "Java基础学习",
+        time: "2024/11/13 13:07:03",
+        article: "圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好"
+    },
+    {
+        id: "2",
+        title: "English圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第",
+        time: "2023/1/11 9:07:03",
+        article: "圣诞节开发噶世界第一上帝就发故事大纲是圣诞节开发噶世界第一上帝就发故事大纲是对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好对方就会感受到尽快发给收到甲方公司的接口是大家看法和公司上的飞机公司的健康就好"
+    }
+])
 </script>
 <style scoped lang='scss'>
 .RecentlyEdited {
@@ -98,6 +93,10 @@
                     font-size: 18px;
                     font-weight: bold;
                     padding-bottom: 6px;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
                 }
             }
 
@@ -154,7 +153,7 @@
         background-size: 16px 10px;
         background-image: linear-gradient(rgba(0, 0, 0, .1) 1px, transparent 0);
         position: absolute;
-        bottom: 0;
+        bottom: 2px;
         left: 20px;
         -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000);
         pointer-events: none;

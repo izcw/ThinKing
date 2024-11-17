@@ -1,16 +1,16 @@
 <template>
     <div class="blankPage">
+        <CollapseMenuBox />
         <div class="container">
             <div class="banner">
-
+                <h1>加入或续费 NexNote会员</h1>
             </div>
-            <h1>加入或续费 NexNote会员</h1>
             <div class="current">
                 <p>当前方案</p>
                 <p><span class="my">个人免费板</span><span class="recommend">升级个人Plus版，支持至多5个空间</span></p>
             </div>
             <el-row :gutter="20" class="scheme">
-                <el-col :span="8" v-for="item in data" :key="item.id">
+                <el-col :md="24" :lg="8" v-for="item in data" :key="item.id">
                     <div class="item">
                         <div class="title">{{ item.title }}<span class="hot" v-if="item.hot">热门方案</span></div>
                         <p class="describe">{{ item.describe }}</p>
@@ -22,7 +22,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <div>
+            <!-- <div>
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column prop="describe" label="范围对比" />
                     <el-table-column prop="person" label="个人Plus版" width="180">
@@ -59,13 +59,14 @@
                         </template>
                     </el-table-column>
                 </el-table>
-            </div>
+            </div> -->
         </div>
     </div>
 
 </template>
 <script setup>
 import { ref } from 'vue';
+import CollapseMenuBox from '@/components/CollapseMenu.vue';
 
 let data = ref([
     {
@@ -136,9 +137,11 @@ let tableData = ref([
 </script>
 <style scoped lang='scss'>
 .container {
-    width: 1200px;
+    padding: 0 150px;
+    box-sizing: border-box;
     height: 100%;
     margin: 0 auto;
+
 
     .banner {
         width: 100%;
@@ -149,15 +152,22 @@ let tableData = ref([
         background-size: cover;
         margin-bottom: 60px;
         border-radius: 10px;
+        box-shadow: 0 0 5px #eee;
+        padding: 1rem;
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+
+        h1 {
+            font-size: 34px;
+            color: #0355E3;
+            // border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+        }
     }
 
-    h1 {
-        font-size: 28px;
-        color: #0355E3;
-        border-bottom: 1px solid #eee;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-    }
 
     .current {
         font-size: 14px;
@@ -183,6 +193,7 @@ let tableData = ref([
             box-sizing: border-box;
             min-width: 300px;
             border: 1px solid #eee;
+            margin-bottom: 1rem;
 
             .title {
                 display: flex;

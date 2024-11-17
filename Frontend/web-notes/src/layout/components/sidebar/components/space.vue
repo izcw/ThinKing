@@ -9,7 +9,7 @@
         </div>
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
-                <div class="item-space AddSpace">
+                <div class="item-space AddSpace" @click="dialogTableVisible = true">
                     <n-icon size="20">
                         <AddCircle16Regular />
                     </n-icon>
@@ -17,6 +17,52 @@
             </template>
             <span>新建空间</span>
         </n-tooltip>
+
+        <el-dialog v-model="dialogTableVisible" width="600" style="height: 400px;" :show-close="false">
+            <div style="padding:1rem;box-sizing: border-box;">
+                <el-table :data="data" style="width: 100%">
+                    <el-table-column prop="name" label="空间" />
+                    <el-table-column prop="color" label="色彩">
+                        <template #default="scope">
+                            <div style="width: 25px;height: 25px;border-radius: 50%"
+                                :style="{ 'background-color': scope.row.color }">
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column fixed="right" width="100" label="操作">
+                        <template #default>
+                            <el-button link type="danger" size="small" @click="handleClick">
+                                删除
+                            </el-button>
+                            <el-button link type="primary" size="small">修改</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-button style="width: 100%;margin:1rem 0 2rem 0;" @click="innerVisible = true">添加</el-button>
+                <el-alert title="免费空间最多3个" type="info" :closable="false" />
+            </div>
+            <el-dialog v-model="innerVisible" width="600" style="height: 400px;" title="添加" :show-close="false"
+                append-to-body>
+                <div style="padding:1rem;box-sizing: border-box;">
+                    <el-form :model="form" label-width="auto" style="max-width: 600px">
+                        <el-form-item label="空间名称">
+                            <el-input v-model="form.name" placeholder="请输入空间名称..." />
+                        </el-form-item>
+                        <el-form-item label="选择色彩">
+                            <el-radio-group v-model="form.color">
+                                <el-radio size="large" border v-for="(item, index) in colorSpace" :key="index"
+                                    :value="item.name" :style="{ 'background-color': item.colora }"  class="space-radio">{{ item.color1 }}</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button >取消</el-button>
+                            <el-button type="primary" @click="onSubmit">确定</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </el-dialog><!-- 添加对话框 -->
+        </el-dialog><!-- 管理空间对话框 -->
+
     </div>
 </template>
 
@@ -25,6 +71,57 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router'
 import { AddCircle16Regular } from '@vicons/fluent';
 const router = useRouter()
+
+let dialogTableVisible = ref(false) // 管理空间对话框
+const innerVisible = ref(false) // 新建空间对话框
+import { reactive } from 'vue'
+
+let colorSpace = ref([
+    {
+        name:"orange",
+        colora: "#FCECE4",
+        colorb: "#FCECE4",
+        colorc: "#FCECE4",
+        colord: "#FCECE4",
+        colore: "#FCECE4"
+    },
+    {
+        name:"yellow",
+        colora: "#FEFBF0",
+        colorb: "#FEFBF0",
+        colorc: "#FEFBF0",
+        colord: "#FEFBF0",
+        colore: "#FEFBF0"
+    },
+    {
+        name:"blue",
+        colora: "#EBF7FC",
+        colorb: "#EBF7FC",
+        colorc: "#EBF7FC",
+        colord: "#EBF7FC",
+        colore: "#EBF7FC"
+    },
+    {
+        name:"purple",
+        colora: "#EEEBFB",
+        colorb: "#EEEBFB",
+        colorc: "#EEEBFB",
+        colord: "#EEEBFB",
+        colore: "#EEEBFB"
+    }
+])
+
+// 添加表单
+const form = reactive({
+    name: '',
+    color: '',
+    status: true,
+})
+
+const onSubmit = () => {
+    console.log('submit!')
+}
+
 
 let data = ref([
     { id: 1, name: "主空间", color: "#FCECE4", status: false },
@@ -42,7 +139,7 @@ const toggleStatus = (item) => {
     // 设置被点击的空间项的状态为 true
     item.status = true;
 
-    router.push('/space'+item.id) 
+    router.push('/space' + item.id)
 };
 
 // 鼠标横向滚动
@@ -73,7 +170,7 @@ onBeforeUnmount(() => {
     .item-space {
         color: #666;
         font-size: 13px;
-        padding: 6px 1rem;
+        padding: 8px 1rem;
         cursor: pointer;
         border-right: 1px solid #DCDCDC;
         border-top: 1px solid #DCDCDC;

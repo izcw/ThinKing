@@ -1,4 +1,5 @@
 <template>
+    <h2>NexNote ｜ 登录</h2>
     <el-form ref="ruleFormRef" class="input-box" :model="ruleForm" :rules="rules" label-width="auto" inline-message>
         <el-form-item prop="email" class="item">
             <el-input v-model="ruleForm.email" size="large" placeholder="请输入邮箱" clearable />

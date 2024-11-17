@@ -15,9 +15,7 @@
         </div>
         <div class="login-box">
             <main>
-                <h2>NexNote</h2>
                 <router-view></router-view>
-
             </main>
         </div>
         <div class="footer">
@@ -55,8 +53,9 @@ import registerFormBox from "./components/registerForm.vue"
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
+            font-family: 'SmileySans得意黑';
 
             img {
                 width: 42px;
