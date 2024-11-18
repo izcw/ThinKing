@@ -1,28 +1,61 @@
+import { login } from '@/api/login';
 import request from '@/utils/request';
 
 /**
  * 分页查询客户
  */
-export async function pageUsers(params) {
-  const res = await request.get('/system/user/page', { params });
+export async function PageUsers(params) {
+  const res = await request.get('/note/user/page', { params });
   if (res.data.code === 200) {
-    return res.data.data.records;
+    return {
+      list:res.data.data.records,
+      count:res.data.data.total
+    };
+  }
+
+  return Promise.reject(new Error(res.data.data.message));
+}
+
+/**
+ * 添加用户
+ */
+export async function AddUser(data) {
+  console.log(data);
+  
+  const res = await request.post('/note/user/add', data);
+  if (res.data.code === 200) {
+    return res.data.message;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+
+/**
+ * 修改用户
+ */
+export async function UpdateUser(data) {
+  const res = await request.put('/note/user/update', data);
+  if (res.data.code === 0) {
+    return res.data.message;
   }
   return Promise.reject(new Error(res.data.message));
 }
 
 /**
- * 查询用户列表
+ * 上传用户头像
  */
-export async function listUsers(params) {
-  const res = await request.get('/system/user', {
-    params
-  });
-  if (res.data.code === 0 && res.data.data) {
-    return res.data.data;
+export async function UploadAvatar(data) {
+  const res = await request.post('/note/user/upload-avatar', data);
+  if (res.data.code === 200) {
+    return res.data;
   }
   return Promise.reject(new Error(res.data.message));
 }
+
+
+
+
+
 
 /**
  * 根据id查询用户
@@ -35,27 +68,6 @@ export async function getUser(id) {
   return Promise.reject(new Error(res.data.message));
 }
 
-/**
- * 添加用户
- */
-export async function addUser(data) {
-  const res = await request.post('/system/user', data);
-  if (res.data.code === 0) {
-    return res.data.message;
-  }
-  return Promise.reject(new Error(res.data.message));
-}
-
-/**
- * 修改用户
- */
-export async function updateUser(data) {
-  const res = await request.put('/system/user', data);
-  if (res.data.code === 0) {
-    return res.data.message;
-  }
-  return Promise.reject(new Error(res.data.message));
-}
 
 /**
  * 删除用户
@@ -109,18 +121,6 @@ export async function updateUserPassword(userId, password = '123456') {
   return Promise.reject(new Error(res.data.message));
 }
 
-/**
- * 导入用户
- */
-export async function importUsers(file) {
-  const formData = new FormData();
-  formData.append('file', file);
-  const res = await request.post('/system/user/import', formData);
-  if (res.data.code === 0) {
-    return res.data.message;
-  }
-  return Promise.reject(new Error(res.data.message));
-}
 
 /**
  * 检查用户是否存在

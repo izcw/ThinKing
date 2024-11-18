@@ -232,7 +232,7 @@ if (getToken()) {
   padding: 36px 8px;
   box-sizing: border-box;
   // background-color: #000;
-  background-image: url('/src/assets/login-bg.png');
+  background-image: url('/src/assets/images/login-bg.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

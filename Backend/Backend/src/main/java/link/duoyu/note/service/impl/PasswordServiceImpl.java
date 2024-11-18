@@ -1,8 +1,8 @@
-package link.duoyu.system.service.impl;
+package link.duoyu.note.service.impl;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
-import link.duoyu.system.service.PasswordService;
+import link.duoyu.note.service.PasswordService;
 import org.springframework.stereotype.Service;
 
 /**

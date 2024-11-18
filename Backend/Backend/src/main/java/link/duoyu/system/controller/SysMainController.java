@@ -14,7 +14,7 @@ import link.duoyu.system.mapper.SysRoleMapper;
 import link.duoyu.system.mapper.SysRoleMenuMapper;
 import link.duoyu.system.mapper.SysUserMapper;
 import link.duoyu.system.service.ISysUserService;
-import link.duoyu.system.service.PasswordService;
+import link.duoyu.note.service.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;

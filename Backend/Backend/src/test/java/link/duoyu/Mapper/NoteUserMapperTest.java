@@ -1,7 +1,7 @@
 package link.duoyu.Mapper;
 
-import link.duoyu.system.entity.NoteUser;
-import link.duoyu.system.mapper.NoteUserMapper;
+import link.duoyu.note.entity.NoteUser;
+import link.duoyu.note.mapper.NoteUserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

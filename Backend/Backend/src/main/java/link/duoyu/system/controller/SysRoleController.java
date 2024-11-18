@@ -1,14 +1,9 @@
 package link.duoyu.system.controller;
 
 
-import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import link.duoyu.core.web.ResponseResult;
-import link.duoyu.system.entity.NoteUser;
 import link.duoyu.system.entity.SysRole;
-import link.duoyu.system.entity.SysUser;
-import link.duoyu.system.mapper.NoteUserMapper;
-import link.duoyu.system.mapper.SysRoleMapper;
 import link.duoyu.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>

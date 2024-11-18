@@ -41,7 +41,7 @@
     <router-layout />
     <!-- logo -->
     <template #logo>
-      <img src="/src/assets/logo.svg" style="width: 30px; height: 30px" />
+      <img src="/src/assets/images/logo.png" style="width: 30px; height: 30px" />
       <h1 style="font-size: 17px; letter-spacing: 1px">{{ PROJECT_NAME }}</h1>
     </template>
     <!-- 顶栏左侧按钮 -->

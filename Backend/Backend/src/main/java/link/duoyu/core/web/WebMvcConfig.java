@@ -2,9 +2,11 @@ package link.duoyu.core.web;
 
 import link.duoyu.core.config.CustomSaTokenInterceptor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -15,9 +17,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+    // @Value("${cors.allowed.origins}")
+    // private String allowedOrigins;
 
-    @Value("${cors.allowed.origins}")
-    private String allowedOrigins;
+    @Value("${custom.warehouse.path}")
+    private String File_Warehouse_Path;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -33,6 +37,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CustomSaTokenInterceptor())
                 .addPathPatterns("/**") // 包含哪些路径
-                .excludePathPatterns("/images/**","/note/user/login", "/note/user/register","/verify/**", "/system/login"); // 排除哪些路径
+                .excludePathPatterns("/note/login", "/note/register","/system/login", "/file_warehouse/**","/verify/**"); // 排除哪些路径
+    }
+
+    // 映射静态资源路径
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        System.out.println("颜色"+File_Warehouse_Path);
+        // 映射静态资源路径
+        registry.addResourceHandler("/file_warehouse/**")
+                .addResourceLocations("file:" + File_Warehouse_Path);
     }
 }

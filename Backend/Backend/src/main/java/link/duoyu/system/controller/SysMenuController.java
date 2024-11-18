@@ -3,12 +3,8 @@ package link.duoyu.system.controller;
 
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.system.entity.SysMenu;
-import link.duoyu.system.entity.SysUser;
 import link.duoyu.system.mapper.SysMenuMapper;
-import link.duoyu.system.mapper.SysUserMapper;
 import link.duoyu.system.service.ISysMenuService;
-import link.duoyu.system.service.ISysUserService;
-import link.duoyu.system.service.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;

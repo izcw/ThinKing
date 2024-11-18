@@ -1,28 +1,20 @@
 package link.duoyu.system.controller;
 
 
-import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import link.duoyu.core.config.RoleConstants;
-import link.duoyu.core.utils.EmailUtil;
 import link.duoyu.core.web.ResponseResult;
-import link.duoyu.system.entity.NoteUser;
 import link.duoyu.system.entity.SysRole;
 import link.duoyu.system.entity.SysUser;
 import link.duoyu.system.mapper.SysRoleMapper;
 import link.duoyu.system.mapper.SysUserMapper;
-import link.duoyu.system.service.INoteUserService;
 import link.duoyu.system.service.ISysUserService;
-import link.duoyu.system.service.PasswordService;
+import link.duoyu.note.service.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

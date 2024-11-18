@@ -1,7 +1,4 @@
-package link.duoyu.system.service;
-
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
+package link.duoyu.note.service;
 
 /**
  * PasswordService

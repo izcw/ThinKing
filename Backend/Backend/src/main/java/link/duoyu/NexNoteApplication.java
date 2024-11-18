@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("link.duoyu.system.mapper")
+@MapperScan({"link.duoyu.system.mapper", "link.duoyu.note.mapper"})
 public class NexNoteApplication {
 
     public static void main(String[] args) {
