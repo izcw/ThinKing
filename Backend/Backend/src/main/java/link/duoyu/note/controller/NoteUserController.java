@@ -109,8 +109,6 @@ public class NoteUserController {
      */
     @PostMapping("/add")
     public ResponseResult<String> add(@RequestBody NoteUser noteUser) {
-        System.out.println("添加");
-        System.out.println(noteUser);
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
         if (existingUser != null) {
@@ -134,7 +132,8 @@ public class NoteUserController {
      * @return 更新结果
      */
     @PutMapping("/update")
-    public ResponseResult<NoteUser> update(@PathVariable Integer id, @RequestBody NoteUser noteUser) { // 改为 Integer
+    public ResponseResult<NoteUser> update(@PathVariable Integer id, @RequestBody NoteUser noteUser) {
+        System.out.println();
         noteUser.setUserId(id); // 确保ID正确
         noteUserMapper.updateById(noteUser);
         return ResponseResult.success(noteUser); // 返回更新后的用户信息
@@ -181,7 +180,7 @@ public class NoteUserController {
 
             // 构造文件访问的 URL，动态获取主机地址和端口
             String imageUrl = "/file_warehouse/"+uploadTo_Path + fileName;
-            return ResponseResult.success(imageUrl);
+            return ResponseResult.success("上传成功",imageUrl);
         } catch (IOException e) {
             return ResponseResult.error("上传失败: " + e.getMessage());
         }

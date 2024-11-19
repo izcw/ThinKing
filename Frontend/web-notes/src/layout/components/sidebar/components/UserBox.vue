@@ -2,14 +2,14 @@
     <div class="header-wrapper GMargin">
         <div class="logo-box text-select">
             <div class="logo" ref="buttonRef" v-click-outside="onClickOutside">
-                <img :src="API_BASE_URL + '/images/avatar-default.png'" alt="Yoko">
+                <img :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'" alt="Yoko">
                 <span>Yoko</span>
             </div>
 
             <el-popover ref="popoverRef" :virtual-ref="buttonRef" trigger="click" :width="300" virtual-triggering>
                 <div class="AccountBox">
                     <div class="logo">
-                        <img :src="API_BASE_URL + '/images/avatar-default.png'" alt="Yoko">
+                        <img :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'" alt="Yoko">
                         <div class="info">
                             <p class="name">Yoko</p>
                             <p class="subscribe">免费版</p>

@@ -1,0 +1,25 @@
+// 上传头像
+.avatar-uploader {
+  position: relative;
+}
+.avatar-uploader::after {
+  display: block;
+  content: "修改图片";
+  font-size: 12px;
+  text-align: center;
+  width: 100%;
+  transform: scale(0.7);
+  color: #999;
+  position: absolute;
+  bottom: -14px;
+}
+
+.avatar-uploader:hover ,.avatar-uploader:active {
+  filter: grayscale(20%);
+}
+
+
+// element-plus卡片
+.ele-modal-body{
+  margin-bottom: 1.5rem;
+}

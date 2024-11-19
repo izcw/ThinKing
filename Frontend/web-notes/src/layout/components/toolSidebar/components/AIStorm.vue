@@ -3,7 +3,7 @@
         <div class="ChatHistory">
             <div class="Session-item" v-for="item in data" :key="item.id">
                 <div class="chat problem">
-                    <img  class="profilePic" :src="API_BASE_URL + '/images/avatar-default.png'" alt="Yoko">
+                    <img  class="profilePic" :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'" alt="Yoko">
                     <div class="chatcontent">
                         {{ item.user }}
                     </div>

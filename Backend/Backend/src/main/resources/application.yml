@@ -8,13 +8,15 @@ mybatis-plus:
     db-config:
       id-type: auto
   configuration:
-    # 启用分页插件
     plugins:
       - com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor
       -
 spring:
   profiles:
-    active: dev
+    active: devmac
+  servlet:
+    multipart:
+      location: src/static/images/file
 
   #邮箱验证码配置
   mail:

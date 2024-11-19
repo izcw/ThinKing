@@ -3,6 +3,12 @@
   <ele-modal form :width="640" :model-value="modelValue" :title="isUpdate ? '修改用户' : '新建用户'"
     @update:modelValue="updateModelValue">
     <el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
+      <el-form-item v-if="isUpdate" label="头像">
+        <el-upload class="avatar-uploader" :http-request="avatarSubmit" :show-file-list="false"
+          :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <el-avatar :size="80" :src="API_BASE_URL+form.avatar" class="upload-avatar" />
+        </el-upload>
+      </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input clearable :maxlength="100" v-model="form.email" placeholder="请输入邮箱" />
       </el-form-item>
@@ -12,13 +18,19 @@
       <el-form-item label="昵称" prop="nickname">
         <el-input clearable :maxlength="20" v-model="form.nickname" placeholder="请输入昵称" />
       </el-form-item>
-      <el-form-item v-if="!isUpdate" label="头像">
-        <!-- <el-input type="textarea" :rows="3" :maxlength="200" v-model="form.avatar" placeholder="请上传头像" /> -->
-        <el-upload class="avatar-uploader" :http-request="avatarSubmit" :show-file-list="false"
-          :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <el-avatar :size="80" :src="imageUrl" />
-        </el-upload>
-      </el-form-item>
+      <el-row :gutter="20"  v-if="isUpdate">
+        <el-col :span="10">
+          <el-form-item label="套餐" prop="subscribe">
+            <SubscribeSelect v-model="form.subscribe" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="14">
+          <el-form-item label="到期时间">
+            <el-date-picker v-model="form.becomeTime" value-format="YYYY-MM-DD" placeholder="请选择套餐到期时间"
+              class="ele-fluid" />
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <template #footer>
       <el-button @click="updateModelValue(false)">取消</el-button>
@@ -33,8 +45,9 @@
 import { ref, reactive, watch } from 'vue';
 import { EleMessage, emailReg } from 'ele-admin-plus/es';
 import { useFormData } from '@/utils/use-form-data';
-import { AddUser, UpdateUser, UploadAvatar } from '@/api/customer/user/index.js';
+import { AddUser, UpdateUser, UploadAvatar } from '@/api/note/user/index.js';
 import { API_BASE_URL } from "@/config/setting"
+import SubscribeSelect from "./subscribe-select.vue"
 const emit = defineEmits(['done', 'update:modelValue']);
 
 const props = defineProps({
@@ -59,6 +72,8 @@ const { form, resetFields, assignFields } = useFormData({
   password: '',
   nickname: '',
   avatar: '',
+  subscribe: void 0,
+  becomeTime: ''
 });
 
 // 表单验证规则
@@ -126,10 +141,15 @@ watch(
   (modelValue) => {
     if (modelValue) {
       if (props.data) {
+
         assignFields({
           ...props.data,
-          password: ''
+          password: ""
         });
+        console.log("哈哈哈");
+
+        console.log(form);
+
         isUpdate.value = true;
       } else {
         isUpdate.value = false;
@@ -142,12 +162,9 @@ watch(
 );
 
 
-// 上传
-const imageUrl = ref(API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png');
-
 // 处理头像上传成功的回调
 const handleAvatarSuccess = (response, uploadFile) => {
-  imageUrl.value = URL.createObjectURL(!uploadFile.raw);
+  // console.log("处理头像上传成功的回调");
 };
 
 // 在上传头像前进行验证
@@ -170,7 +187,6 @@ let avatarSubmit = async ({ file }) => {
   UploadAvatar(formData)
     .then((res) => {
       EleMessage.success(res.message);
-      imageUrl.value = API_BASE_URL + res.data
       form.avatar = res.data
     })
     .catch((e) => {

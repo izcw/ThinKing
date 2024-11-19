@@ -3,7 +3,7 @@
     <el-result title="403">
       <template #icon>
         <div style="width: 250px; height: 295px; margin-bottom: 10px">
-          777
+          <img src="@/assets/images/logo-grey.png" style="width: 100%;" alt="">
         </div>
       </template>
       <template #sub-title>

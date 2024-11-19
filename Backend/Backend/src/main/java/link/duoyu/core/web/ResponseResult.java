@@ -113,9 +113,14 @@ public class ResponseResult<T> {
     }
 
     // 其他状态返回示例
+    public static <T> ResponseResult<T> created(String message) {
+        return response(HttpStatusEnum.CREATED.getCode(), true, message, null);
+    }
+
     public static <T> ResponseResult<T> created(String message, T data) {
         return response(HttpStatusEnum.CREATED.getCode(), true, message, data);
     }
+
     public static <T> ResponseResult<T> created(T data) {
         return response(HttpStatusEnum.CREATED.getCode(), true, HttpStatusEnum.CREATED.getMessage(), data);
     }

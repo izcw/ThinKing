@@ -1,7 +1,7 @@
 <template>
     <div class="searchItem text-select">
         <p v-if="data.length > 0"><el-text class="mx-1" type="primary">搜索结果：</el-text></p>
-        <img class="logo" v-if="data.length == 0" src="@/assets/images/logo.png" alt="">
+        <img class="logo" v-if="data.length == 0" src="@/assets/images/logo-grey.png" alt="">
         <div class="content">
             <div class="item" v-for="item in data" :key="item.id">
                 <div class="time">{{ timeAgo(item.time) }}</div>
@@ -89,9 +89,8 @@ let data = ref([
         right: 0;
         margin: auto;
         width: 100px;
-        height: 100px;
-        opacity: 0.1;
-        filter: grayscale(100%);
+        // opacity: 0.1;
+        // filter: grayscale(100%);
     }
 
     .content {

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 /**
  * Web MVC 配置类，用于配置跨域请求和拦截器。
@@ -17,9 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    // @Value("${cors.allowed.origins}")
-    // private String allowedOrigins;
-
     @Value("${custom.warehouse.path}")
     private String File_Warehouse_Path;
 
@@ -46,6 +44,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         System.out.println("颜色"+File_Warehouse_Path);
         // 映射静态资源路径
         registry.addResourceHandler("/file_warehouse/**")
-                .addResourceLocations("file:" + File_Warehouse_Path);
+                .addResourceLocations("file:" + File_Warehouse_Path)
+                .setCachePeriod(0) // 禁用缓存
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver());;
     }
 }

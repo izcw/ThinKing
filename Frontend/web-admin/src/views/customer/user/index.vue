@@ -102,7 +102,7 @@ import { Plus, ArrowDown } from '@element-plus/icons-vue';
 import { EleMessage } from 'ele-admin-plus';
 import SearchForm from './components/Search-Form.vue';
 import AddEditForm from './components/AddEdit-Form.vue';
-import { PageUsers } from '@/api/customer/user';
+import { PageUsers } from '@/api/note/user';
 import { API_BASE_URL } from "@/config/setting"
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
