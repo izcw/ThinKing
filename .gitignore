@@ -5,8 +5,6 @@ dist-ssr/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-/sql
-
 ### IntelliJ IDEA ###
 .idea
 /Backend/out/
