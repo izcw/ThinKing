@@ -2,7 +2,7 @@
   <ele-card>
     <div class="info-user">
       <div class="info-user-avatar" @click="openCropper">
-        <el-avatar :size="100" :src="API_BASE_URL + data.avatar" />
+        <el-avatar :size="100" :src="FILE_PATH_API_URL + data.avatar" />
         <el-icon class="info-user-avatar-icon">
           <upload />
         </el-icon>
@@ -28,7 +28,7 @@
       </el-tag>
     </div>
     <!-- 头像裁剪弹窗 -->
-    <ele-cropper-modal v-model="visible" :src="API_BASE_URL + data.avatar" :options="{
+    <ele-cropper-modal v-model="visible" :src="FILE_PATH_API_URL + data.avatar" :options="{
       aspectRatio: 1,
       autoCropArea: 1,
       viewMode: 1,
@@ -48,7 +48,7 @@ import {
 } from '@element-plus/icons-vue';
 //import { EleMessage } from 'ele-admin-plus/es';
 //import { updateUserInfo } from '@/api/layout';
-import { API_BASE_URL } from "@/config/setting"
+import { FILE_PATH_API_URL } from "@/config/setting"
 
 defineProps({
   data: Object

@@ -41,7 +41,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     // 映射静态资源路径
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println("颜色"+File_Warehouse_Path);
         // 映射静态资源路径
         registry.addResourceHandler("/file_warehouse/**")
                 .addResourceLocations("file:" + File_Warehouse_Path)

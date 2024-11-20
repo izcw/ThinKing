@@ -3,7 +3,7 @@
   <ele-card :body-style="{ padding: '20px' }">
     <div class="profile-wrapper">
       <div class="profile-main">
-        <el-avatar :size="68" :src="API_BASE_URL + loginUser.avatar" class="profile-avatar" />
+        <el-avatar :size="68" :src="FILE_PATH_API_URL + loginUser.avatar" class="profile-avatar" />
         <div class="profile-body">
           <ele-text size="xl" type="heading" style="font-weight: normal">
             早安, {{ loginUser.nickname }}, 开始您一天的工作吧!
@@ -67,7 +67,7 @@ import {
   BellFilled
 } from '@element-plus/icons-vue';
 import { useUserStore } from '@/store/modules/user';
-import { API_BASE_URL } from "@/config/setting"
+import { FILE_PATH_API_URL } from "@/config/setting"
 
 const userStore = useUserStore();
 

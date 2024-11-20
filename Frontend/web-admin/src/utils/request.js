@@ -37,7 +37,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (res) => {
     // 登录过期处理
-    if (res.data?.code === 401) {
+    if (res.data?.code === 403) {
       const { path, fullPath } = unref(router.currentRoute);
       if (path == LAYOUT_PATH) {
         logout(true, void 0, router.push);

@@ -129,6 +129,10 @@ public class ResponseResult<T> {
         return response(HttpStatusEnum.UNAUTHORIZED.getCode(), true, message, null);
     }
 
+    public static <T> ResponseResult<T> forbidden(String message) {
+        return response(HttpStatusEnum.FORBIDDEN.getCode(), true, message, null);
+    }
+
     public static <T> ResponseResult<T> accepted(String message) {
         return response(HttpStatusEnum.ACCEPTED.getCode(), true, message, null);
     }

@@ -29,8 +29,7 @@
               新建
             </el-button>
             <ele-dropdown :disabled="!selections.length" :items="[
-              { title: '批量删除', command: 'del' },
-              { title: '批量修改', command: 'edit' }
+              { title: '批量删除', command: 'del' }
             ]" @command="onDropClick">
               <el-button :disabled="!selections.length" class="ele-btn-icon">
                 <span>批量操作</span>
@@ -43,7 +42,7 @@
         </template>
         <!-- 头像列 -->
         <template #avatar="{ row }">
-          <el-avatar v-if="row.avatar" :src="API_BASE_URL+row.avatar" :size="32" @click.stop=""
+          <el-avatar v-if="row.avatar" :src="FILE_PATH_API_URL + row.avatar" :size="32" @click.stop=""
             style="vertical-align: -8px" />
           <el-avatar v-else :size="32" style="background: #1677ff; vertical-align: -8px" @click.stop="">
             {{
@@ -63,15 +62,13 @@
         </template>
         <!-- 状态列 -->
         <template #status="{ row }">
-          <ele-dot v-if="row.status === 0" text="正常"  :ripple="false" size="8px" />
-          <ele-dot v-else-if="row.status === 1" text="冻结" type="warning" size="8px" />
-          <ele-dot v-else-if="row.status === 2" text="异常" type="danger"  size="8px" />
-          <ele-dot v-else-if="row.status === 3" text="注销" type="info"  size="8px" />
+          <ele-dot v-for="(itemStatus, index) in statusListData" :key="index" v-show="row.status == itemStatus.code"
+            :text="itemStatus.describe" :type="itemStatus.type" :ripple="itemStatus.ripple" size="8px" />
         </template>
         <!-- 操作列 -->
         <template #action="{ row }">
           <el-space>
-            <el-link type="primary" :underline="false" @click.stop="openEdit(row)">˝
+            <el-link type="primary" :underline="false" @click.stop="openEdit(row)">
               修改
             </el-link>
             <el-divider direction="vertical" style="margin: 0" />
@@ -104,8 +101,9 @@ import { Plus, ArrowDown } from '@element-plus/icons-vue';
 import { EleMessage } from 'ele-admin-plus';
 import SearchForm from './components/Search-Form.vue';
 import AddEditForm from './components/AddEdit-Form.vue';
-import { PageUsers } from '@/api/note/user';
-import { API_BASE_URL } from "@/config/setting"
+import { PageUsers, removeUser, BatchremoveUsers } from '@/api/note/user';
+import { FILE_PATH_API_URL } from "@/config/setting"
+import { ListStatus } from '@/api/common/index.js';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -242,7 +240,6 @@ const datasource = async ({ page, limit, where, orders, filters }) => {
 /* 表格数据请求完成事件 */
 const onDone = (result, parent) => {
   // const { data, page, total, response } = result;
-  // data 是当前页数据, page 是当前页码, total 是总数量
   // response 是数据源原始返回的数据(如果有 parseData 是处理后的)
   // console.log("data 是当前页数据, page 是当前页码, total 是总数量");
   // console.log({ data, page, total, response });
@@ -277,17 +274,42 @@ const openEdit = (row) => {
 
 /* 删除 */
 const remove = (row) => {
-  console.log(row);
-  EleMessage.info('点击了删除');
+  removeUser(row)
+    .then((msg) => {
+      EleMessage.success(msg);
+      reload()
+    })
+    .catch((e) => {
+      EleMessage.error(e.message);
+    });
 };
 
 /* 下拉按钮点击 */
 const onDropClick = (command) => {
   if (command === 'del') {
+    BatchremoveUsers(selections.value)
+      .then((msg) => {
+        EleMessage.success(msg);
+        reload()
+      })
+      .catch((e) => {
+        EleMessage.error(e.message);
+      });
     EleMessage.info('点击了批量删除');
   } else if (command === 'edit') {
     EleMessage.info('点击了批量修改');
   }
 };
 
+
+
+// 调用 ListStatus 方法获取状态数据
+let statusListData = ref()
+ListStatus()
+  .then((response) => {
+    statusListData.value = response;
+  })
+  .catch((e) => {
+    EleMessage.error(e.message);
+  });
 </script>

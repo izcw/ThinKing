@@ -11,8 +11,8 @@
         <el-col :lg="8" :md="12" :sm="12" :xs="24">
           <el-form-item label="状态">
             <el-select clearable v-model="form.status" placeholder="请选择" class="ele-fluid">
-              <el-option :value="0" label="正常" />
-              <el-option :value="1" label="冻结" />
+              <el-option v-for="(item, index) in statusListData" :key="index" :value="item.code"
+                :label="item.describe" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -57,8 +57,9 @@
 import { ref } from 'vue';
 import { ArrowDown, ArrowUp } from '@element-plus/icons-vue';
 import { useFormData } from '@/utils/use-form-data';
-import { EleMessage } from 'ele-admin-plus/es';
+import { ListStatus } from '@/api/common/index.js';
 const emit = defineEmits(['search']);
+
 
 // 表单数据
 const { form, resetFields } = useFormData({
@@ -86,4 +87,14 @@ const reset = () => {
 const toggleExpand = () => {
   searchExpand.value = !searchExpand.value;
 };
+
+// 调用 ListStatus 方法获取状态数据
+let statusListData = ref()
+ListStatus()
+  .then((response) => {
+    statusListData.value = response;
+  })
+  .catch((e) => {
+    EleMessage.error(e.message);
+  });
 </script>

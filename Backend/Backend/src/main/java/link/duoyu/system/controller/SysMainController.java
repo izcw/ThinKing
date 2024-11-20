@@ -56,8 +56,7 @@ public class SysMainController {
     @GetMapping("/auth/user")
     public ResponseResult<SysUser> getUserById() {
         // 获取当前登录用户的 ID
-        String userId = (String) StpUtil.getLoginId();
-        System.out.println("用户ID: " + userId);
+        String userId = StpUtil.getLoginIdAsString();
 
         // 根据用户 ID 查找用户
         SysUser sysUser = sysUserMapper.selectById(userId);
@@ -117,6 +116,8 @@ public class SysMainController {
                     StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_ADMIN);
                 } else if (existingUser.getRoleId() == 2) {
                     StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_USER);
+                }else if (existingUser.getRoleId() == 3) {
+                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_TOURIST);
                 }
 
                 // 密码验证成功，返回用户信息

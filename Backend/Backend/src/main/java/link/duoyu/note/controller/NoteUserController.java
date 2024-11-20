@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.models.auth.In;
+import link.duoyu.common.service.FileService;
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.note.entity.NoteUser;
 import link.duoyu.note.mapper.NoteUserMapper;
@@ -21,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -40,6 +43,8 @@ public class NoteUserController {
     private INoteUserService noteUserService; // 注入NoteUserService
     @Autowired
     private PasswordService passwordService; // 注入密码服务
+    @Autowired
+    private FileService fileService;
 
     /**
      * 获取分页查询用户列表
@@ -131,9 +136,10 @@ public class NoteUserController {
 
     /**
      * 更新用户信息
-     * @param avatar 头像（可选）
-     * @param email 邮箱（可选）
-     * @param nickname 昵称（可选）
+     * @param avatar 头像
+     * @param email 邮箱
+     * @param nickname 昵称
+     * @param status 状态
      * @return 更新结果
      */
     @PutMapping("/update")
@@ -144,13 +150,10 @@ public class NoteUserController {
         String nickname = request.getNickname();
         String status = request.getStatus();
 
-        // 打印调试信息
-        System.out.println(userId + " " + avatar + " " + email + " " + nickname);
 
         // 使用 UpdateWrapper 来构建条件和更新字段
         UpdateWrapper<NoteUser> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("user_id", userId);  // 根据 userId 查找要更新的用户
-        System.out.println(updateWrapper.getSqlSegment());  // 输出生成的 SQL
 
         // 如果传入了某些字段，添加对应的更新条件
         if (avatar != null) {
@@ -179,98 +182,98 @@ public class NoteUserController {
         }
     }
 
-
-
-
-
     /**
-     * 上传用户头像
-     * @return
+     * 删除用户及其头像
+     *
+     * @param noteUser 包含用户ID和头像路径的对象
+     * @return 响应结果，包含操作状态
      */
-    @Value("${custom.warehouse.path}") // 从配置文件获取上传路径
-    private String File_Warehouse_Path;
+    @PostMapping("/deleteUser")
+    public ResponseResult<Void> deleteUser(@RequestBody NoteUser noteUser) {
+        // 打印日志，方便调试
+        System.out.println("开始删除用户，用户信息: " + noteUser);
 
-    @Value("${custom.agreement-host}") // 协议+主机
-    private String agreementHost;
-
-    @Value("${server.port}") // 从配置文件获取服务端口
-    private int serverPort;
-
-
-
-    @PostMapping("/upload-avatar")
-    public ResponseResult<String> uploadAvatar(@RequestParam("avatar") MultipartFile file) {
-        String uploadTo_Path = "images/avatar/users/"; // 具体上传到基础路径哪
-
-        if (file.isEmpty()) {
-            return ResponseResult.error("上传失败，文件为空");
+        // 检查用户ID是否有效
+        String userId = String.valueOf(noteUser.getUserId());
+        String avatar = noteUser.getAvatar();
+        if (userId == null || userId.trim().isEmpty()) {
+            return ResponseResult.error("用户ID不能为空");
         }
 
-        try {
-            // 确保外部目录存在
-            File uploadDir = new File(File_Warehouse_Path+uploadTo_Path);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
+        // 删除用户记录
+        int rowsAffected = noteUserMapper.deleteById(userId);
+
+        // 检查删除用户的结果
+        if (rowsAffected > 0) {
+            System.out.println("用户删除成功，用户ID: " + userId);
+
+            // 如果提供了头像路径，调用 FileService 删除文件
+            if (avatar != null && !avatar.trim().isEmpty()) {
+                ResponseResult<List<String>> deleteResult = fileService.deleteFiles(Collections.singletonList(avatar));
+                if (deleteResult.getCode() != 200) {
+                    System.out.println("头像删除失败: " + deleteResult.getMessage());
+                } else {
+                    System.out.println("头像删除成功，路径: " + avatar);
+                }
             }
 
-            // 生成唯一文件名
-            String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename != null ? originalFilename.substring(originalFilename.lastIndexOf(".")) : "";
-            String fileName = UUID.randomUUID() + extension;
-            File dest = new File(uploadDir, fileName);
-
-            // 保存文件到外部路径
-            file.transferTo(dest);
-
-            // 构造文件访问的 URL，动态获取主机地址和端口
-            String imageUrl = "/file_warehouse/"+uploadTo_Path + fileName;
-            return ResponseResult.success("上传成功",imageUrl);
-        } catch (IOException e) {
-            return ResponseResult.error("上传失败: " + e.getMessage());
+            return ResponseResult.success("删除成功", null);
+        } else {
+            System.out.println("用户删除失败，用户ID: " + userId + " 不存在");
+            return ResponseResult.error("用户删除失败，用户ID不存在");
         }
     }
 
 
-
     /**
-     * 获取用户列表
-     * @return 用户列表
+     * 批量删除用户及其头像
+     *
+     * @param noteUsers 包含多个用户ID和头像路径的对象列表
+     * @return 响应结果，包含操作状态
      */
-    // @GetMapping("/all")
-    // public ResponseResult<List<NoteUser>> getAllUsers() {
-    //     List<NoteUser> list = noteUserMapper.selectList(null);
-    //     return ResponseResult.success("查询成功",list);
-    // }
+    @PostMapping("/batchDeleteUsers")
+    public ResponseResult<Void> batchDeleteUsers(@RequestBody List<NoteUser> noteUsers) {
+        // 打印日志，方便调试
+        System.out.println("开始批量删除用户，用户信息列表: " + noteUsers);
 
+        // 检查用户列表是否为空
+        if (noteUsers == null || noteUsers.isEmpty()) {
+            return ResponseResult.error("用户列表不能为空");
+        }
 
+        // 遍历用户列表，逐一删除
+        for (NoteUser noteUser : noteUsers) {
+            String userId = String.valueOf(noteUser.getUserId());
+            String avatar = noteUser.getAvatar();
 
-    /**
-     * 根据ID获取用户信息
-     * @param id 用户ID
-     * @return 用户信息
-     */
-    // @GetMapping("/{id}")
-    // public ResponseResult<NoteUser> getUserById(@PathVariable Integer id) { // 改为 Integer
-    //     NoteUser user = noteUserMapper.selectById(id);
-    //     if (user == null) {
-    //         return ResponseResult.fail("用户未找到");
-    //     }
-    //     return ResponseResult.success(user);
-    // }
+            if (userId == null || userId.trim().isEmpty()) {
+                System.out.println("用户ID为空，跳过此用户");
+                continue; // 如果用户ID为空，则跳过此用户
+            }
 
+            // 删除用户记录
+            int rowsAffected = noteUserMapper.deleteById(userId);
 
+            // 检查删除用户的结果
+            if (rowsAffected > 0) {
+                System.out.print("用户删除成功，用户ID: " + userId+"；");
 
+                // 如果提供了头像路径，调用 FileService 删除文件
+                if (avatar != null && !avatar.trim().isEmpty()) {
+                    ResponseResult<List<String>> deleteResult = fileService.deleteFiles(Collections.singletonList(avatar));
+                    if (deleteResult.getCode() != 200) {
+                        System.out.println("头像删除失败，用户ID: " + userId + "，路径: " + avatar);
+                    } else {
+                        System.out.println("头像删除成功，路径: " + avatar);
+                    }
+                }
+            } else {
+                System.out.println("用户删除失败，用户ID: " + userId + " 不存在");
+            }
+        }
 
-
-    /**
-     * 删除用户
-     * @param id 用户ID
-     * @return 响应结果
-     */
-    @DeleteMapping("/delete/{id}")
-    public ResponseResult<Void> deleteUser(@PathVariable Integer id) { // 改为 Integer
-        noteUserMapper.deleteById(id);
-        return ResponseResult.success(); // 返回成功状态
+        // 返回成功响应
+        return ResponseResult.success("批量删除成功", null);
     }
 
 }

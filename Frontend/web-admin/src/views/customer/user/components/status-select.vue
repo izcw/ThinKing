@@ -1,31 +1,47 @@
-<!-- 状态选择下拉框 -->
 <template>
-  <el-select clearable :model-value="modelValue" :placeholder="placeholder" class="ele-fluid"
-    @update:modelValue="updateValue">
-    <el-option v-for="item in data" :key="item.code" :value="item.code" :label="item.describe" />
+  <el-select
+    clearable
+    :model-value="modelValue"
+    :placeholder="placeholder"
+    class="ele-fluid"
+    @update:modelValue="updateValue"
+  >
+    <el-option
+      v-for="item in data"
+      :key="item.code"
+      :value="item.code"
+      :label="item.describe"
+    />
   </el-select>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { ListStatus } from '@/api/common/index.js';
 
+// 定义事件触发器
 const emit = defineEmits(['update:modelValue']);
 
+// 定义 Props
 defineProps({
   modelValue: Number,
   placeholder: {
     type: String,
-    default: '请选择状态'
-  }
+    default: '请选择状态',
+  },
 });
 
 // 字典数据
-const data = ref([
-  { code: 0, describe: '正常' },
-  { code: 1, describe: '冻结' },
-  { code: 2, describe: '异常' },
-  { code: 3, describe: '注销' },
-]);
+const data = ref([]);
+
+// 调用 ListStatus 方法获取状态数据
+ListStatus()
+  .then((response) => {
+    data.value = response;
+  })
+  .catch((e) => {
+    EleMessage.error(e.message);
+  });
 
 /* 更新选中数据 */
 const updateValue = (value) => {

@@ -8,8 +8,8 @@ export async function PageUsers(params) {
   const res = await request.get('/note/user/page', { params });
   if (res.data.code === 200) {
     return {
-      list:res.data.data.records,
-      count:res.data.data.total
+      list: res.data.data.records,
+      count: res.data.data.total
     };
   }
 
@@ -20,8 +20,6 @@ export async function PageUsers(params) {
  * 添加用户
  */
 export async function AddUser(data) {
-  console.log(data);
-
   const res = await request.post('/note/user/add', data);
   if (res.data.code === 200) {
     return res.data.message;
@@ -42,15 +40,36 @@ export async function UpdateUser(data) {
 }
 
 /**
- * 上传用户头像
+ * 删除用户
  */
-export async function UploadAvatar(data) {
-  const res = await request.post('/note/user/upload-avatar', data);
+export async function removeUser(data) {
+  const res = await request.post('/note/user/deleteUser', data);
   if (res.data.code === 200) {
-    return res.data;
+    return res.data.message;
   }
   return Promise.reject(new Error(res.data.message));
 }
+
+/**
+ * 批量删除用户
+ */
+export async function BatchremoveUsers(data) {
+  const res = await request.post('/note/user/batchDeleteUsers', data);
+  if (res.data.code === 200) {
+    return res.data.message;
+  }
+  return Promise.reject(new Error(res.data.message));
+}
+
+
+
+
+
+
+
+
+
+
 
 /**
  * 根据id查询用户
@@ -64,29 +83,6 @@ export async function getUser(id) {
 }
 
 
-/**
- * 删除用户
- */
-export async function removeUser(id) {
-  const res = await request.delete('/system/user/' + id);
-  if (res.data.code === 0) {
-    return res.data.message;
-  }
-  return Promise.reject(new Error(res.data.message));
-}
-
-/**
- * 批量删除用户
- */
-export async function removeUsers(data) {
-  const res = await request.delete('/system/user/batch', {
-    data
-  });
-  if (res.data.code === 0) {
-    return res.data.message;
-  }
-  return Promise.reject(new Error(res.data.message));
-}
 
 /**
  * 修改用户状态
