@@ -3,12 +3,16 @@ package link.duoyu.note.controller;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.models.auth.In;
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.note.entity.NoteUser;
 import link.duoyu.note.mapper.NoteUserMapper;
+import link.duoyu.note.param.UpdateUserRequest;
 import link.duoyu.note.service.INoteUserService;
 import link.duoyu.note.service.PasswordService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
@@ -127,17 +131,57 @@ public class NoteUserController {
 
     /**
      * 更新用户信息
-     * @param id 用户ID
-     * @param noteUser 更新后的用户信息
+     * @param avatar 头像（可选）
+     * @param email 邮箱（可选）
+     * @param nickname 昵称（可选）
      * @return 更新结果
      */
     @PutMapping("/update")
-    public ResponseResult<NoteUser> update(@PathVariable Integer id, @RequestBody NoteUser noteUser) {
-        System.out.println();
-        noteUser.setUserId(id); // 确保ID正确
-        noteUserMapper.updateById(noteUser);
-        return ResponseResult.success(noteUser); // 返回更新后的用户信息
+    public ResponseResult<NoteUser> update(@RequestBody UpdateUserRequest request) {
+        Long userId = request.getUserId();
+        String avatar = request.getAvatar();
+        String email = request.getEmail();
+        String nickname = request.getNickname();
+        String status = request.getStatus();
+
+        // 打印调试信息
+        System.out.println(userId + " " + avatar + " " + email + " " + nickname);
+
+        // 使用 UpdateWrapper 来构建条件和更新字段
+        UpdateWrapper<NoteUser> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_id", userId);  // 根据 userId 查找要更新的用户
+        System.out.println(updateWrapper.getSqlSegment());  // 输出生成的 SQL
+
+        // 如果传入了某些字段，添加对应的更新条件
+        if (avatar != null) {
+            updateWrapper.set("avatar", avatar);
+        }
+        if (email != null) {
+            updateWrapper.set("email", email);
+        }
+        if (nickname != null) {
+            updateWrapper.set("nickname", nickname);
+        }
+        if (status != null) {
+            updateWrapper.set("status", status);
+        }
+
+        // 执行更新操作，返回是否成功
+        boolean updated = noteUserMapper.update(null, updateWrapper) > 0;
+
+        if (updated) {
+            // 更新成功，返回更新后的用户信息
+            NoteUser updatedUser = noteUserMapper.selectById(userId);
+            return ResponseResult.success("修改成功", updatedUser);
+        } else {
+            // 更新失败，返回失败消息
+            return ResponseResult.error("修改失败");
+        }
     }
+
+
+
+
 
     /**
      * 上传用户头像

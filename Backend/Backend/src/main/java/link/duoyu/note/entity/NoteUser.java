@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import link.duoyu.core.config.FileUrlSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -33,8 +35,8 @@ public class NoteUser implements Serializable {
     /**
      * 客户id
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer userId;
+    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
+    private Long userId;
 
     /**
      * 邮箱/账号

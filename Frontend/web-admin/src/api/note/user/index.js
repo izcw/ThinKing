@@ -21,7 +21,7 @@ export async function PageUsers(params) {
  */
 export async function AddUser(data) {
   console.log(data);
-  
+
   const res = await request.post('/note/user/add', data);
   if (res.data.code === 200) {
     return res.data.message;
@@ -35,7 +35,7 @@ export async function AddUser(data) {
  */
 export async function UpdateUser(data) {
   const res = await request.put('/note/user/update', data);
-  if (res.data.code === 0) {
+  if (res.data.code === 200) {
     return res.data.message;
   }
   return Promise.reject(new Error(res.data.message));
@@ -51,11 +51,6 @@ export async function UploadAvatar(data) {
   }
   return Promise.reject(new Error(res.data.message));
 }
-
-
-
-
-
 
 /**
  * 根据id查询用户

@@ -118,8 +118,9 @@ export const zh_CN = {
         nickname: '用户名',
         email: '邮箱',
         phone: '手机号',
-        subscribe : '订阅信息',
+        subscribe : '订阅套餐',
         createTime: '注册时间',
+        updateTime:'更新时间',
         status: '状态',
         action: '操作'
       }

@@ -2,6 +2,12 @@
 .avatar-uploader {
   position: relative;
 }
+
+.avatar-uploader img {
+  border: 1px solid #d6e2fb;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
 .avatar-uploader::after {
   display: block;
   content: "修改图片";
@@ -14,12 +20,12 @@
   bottom: -14px;
 }
 
-.avatar-uploader:hover ,.avatar-uploader:active {
+.avatar-uploader:hover,
+.avatar-uploader:active {
   filter: grayscale(20%);
 }
 
-
 // element-plus卡片
-.ele-modal-body{
+.ele-modal-body {
   margin-bottom: 1.5rem;
 }

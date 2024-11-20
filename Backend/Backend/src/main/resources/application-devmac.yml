@@ -1,6 +1,11 @@
 server:
   port: 8071
 
+
+# 自定义
+host-address:
+  api: http://127.0.0.1:8071/api # 文件的请求拼接url
+
 # 自定义
 custom:
   warehouse:

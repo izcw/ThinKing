@@ -43,7 +43,7 @@
         </template>
         <!-- 头像列 -->
         <template #avatar="{ row }">
-          <el-avatar v-if="row.avatar" :src="API_BASE_URL + row.avatar" :size="32" @click.stop=""
+          <el-avatar v-if="row.avatar" :src="API_BASE_URL+row.avatar" :size="32" @click.stop=""
             style="vertical-align: -8px" />
           <el-avatar v-else :size="32" style="background: #1677ff; vertical-align: -8px" @click.stop="">
             {{
@@ -63,13 +63,15 @@
         </template>
         <!-- 状态列 -->
         <template #status="{ row }">
-          <ele-dot v-if="row.status === 0" text="正常" size="8px" />
-          <ele-dot v-else-if="row.status === 1" text="冻结" type="danger" :ripple="false" size="8px" />
+          <ele-dot v-if="row.status === 0" text="正常"  :ripple="false" size="8px" />
+          <ele-dot v-else-if="row.status === 1" text="冻结" type="warning" size="8px" />
+          <ele-dot v-else-if="row.status === 2" text="异常" type="danger"  size="8px" />
+          <ele-dot v-else-if="row.status === 3" text="注销" type="info"  size="8px" />
         </template>
         <!-- 操作列 -->
         <template #action="{ row }">
           <el-space>
-            <el-link type="primary" :underline="false" @click.stop="openEdit(row)">
+            <el-link type="primary" :underline="false" @click.stop="openEdit(row)">˝
               修改
             </el-link>
             <el-divider direction="vertical" style="margin: 0" />
@@ -129,6 +131,14 @@ const columns = computed(() => {
       fixed: 'left'
     },
     {
+      prop: 'userId',
+      label: 'id',
+      minWidth: 60,
+      slot: 'roles',
+      showOverflowTooltip: true
+      // hideInTable: true // 隐藏不显示
+    },
+    {
       columnKey: 'avatar',
       prop: 'avatar',
       label: t('list.customer.table.avatar'),
@@ -140,7 +150,7 @@ const columns = computed(() => {
     {
       prop: 'nickname',
       label: t('list.customer.table.nickname'),
-      minWidth: 50,
+      minWidth: 40,
       sortable: 'custom',
       slot: 'nickname',
       headerSlot: 'nicknameHeader',
@@ -156,7 +166,7 @@ const columns = computed(() => {
     {
       prop: 'subscribe',
       label: t('list.customer.table.subscribe'),
-      minWidth: 100,
+      minWidth: 50,
       slot: 'roles',
       showOverflowTooltip: true
       // hideInTable: true // 隐藏不显示
@@ -164,7 +174,14 @@ const columns = computed(() => {
     {
       prop: 'create_time',
       label: t('list.customer.table.createTime'),
-      minWidth: 60,
+      minWidth: 50,
+      sortable: 'custom',
+      showOverflowTooltip: true
+    },
+    {
+      prop: 'update_time',
+      label: t('list.customer.table.updateTime'),
+      minWidth: 50,
       sortable: 'custom',
       showOverflowTooltip: true
     },
@@ -180,7 +197,7 @@ const columns = computed(() => {
     {
       columnKey: 'action',
       label: t('list.customer.table.action'),
-      width: 110,
+      width: 120,
       align: 'center',
       resizable: false,
       slot: 'action',

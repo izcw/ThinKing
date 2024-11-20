@@ -6,7 +6,7 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/**
   global-config:
     db-config:
-      id-type: auto
+      id-type: ASSIGN_ID
   configuration:
     plugins:
       - com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor
@@ -17,6 +17,8 @@ spring:
   servlet:
     multipart:
       location: src/static/images/file
+      max-file-size: 100MB
+      max-request-size: 1000MB
 
   #邮箱验证码配置
   mail:
