@@ -13,7 +13,7 @@ mybatis-plus:
       -
 spring:
   profiles:
-    active: devmac
+    active: dev
   servlet:
     multipart:
       location: src/static/images/file

@@ -99,7 +99,7 @@
 import { ref, reactive, computed } from 'vue';
 import { Plus, ArrowDown } from '@element-plus/icons-vue';
 import { EleMessage } from 'ele-admin-plus';
-import SearchForm from './components/Search-Form.vue';
+import SearchForm from './components/search-form.vue';
 import AddEditForm from './components/AddEdit-Form.vue';
 import { PageUsers, removeUser, BatchremoveUsers } from '@/api/note/user';
 import { FILE_PATH_API_URL } from "@/config/setting"
@@ -295,7 +295,6 @@ const onDropClick = (command) => {
       .catch((e) => {
         EleMessage.error(e.message);
       });
-    EleMessage.info('点击了批量删除');
   } else if (command === 'edit') {
     EleMessage.info('点击了批量修改');
   }

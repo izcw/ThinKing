@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 订阅套餐 服务实现类
+ *  服务实现类
  * </p>
  *
  * @author izcw
- * @since 2024-11-19
+ * @since 2024-11-21
  */
 @Service
 public class NoteSubscribeServiceImpl extends ServiceImpl<NoteSubscribeMapper, NoteSubscribe> implements INoteSubscribeService {

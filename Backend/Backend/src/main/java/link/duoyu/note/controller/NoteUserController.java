@@ -1,11 +1,8 @@
 package link.duoyu.note.controller;
 
-import cn.dev33.satoken.stp.SaTokenInfo;
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.models.auth.In;
 import link.duoyu.common.service.FileService;
 import link.duoyu.core.web.ResponseResult;
 import link.duoyu.note.entity.NoteUser;
@@ -13,18 +10,10 @@ import link.duoyu.note.mapper.NoteUserMapper;
 import link.duoyu.note.param.UpdateUserRequest;
 import link.duoyu.note.service.INoteUserService;
 import link.duoyu.note.service.PasswordService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * <p>

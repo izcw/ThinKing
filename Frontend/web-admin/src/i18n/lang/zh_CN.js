@@ -124,6 +124,25 @@ export const zh_CN = {
         status: '状态',
         action: '操作'
       }
+    },
+    subscribe: {
+      table: {
+        name: '套餐名称',
+        code: '套餐标识',
+        comments: '描述',
+        price: '价格',
+        unit: '单位',
+        space : '空间',
+        recycle : '回收站(天)',
+        pagehistory : '页面编辑历史(天)',
+        pagewordage : '最大字数(单页)',
+        ai : 'AI(天/次)',
+        recommend:'是否推荐',
+        createTime: '注册时间',
+        updateTime:'更新时间',
+        status: '状态',
+        action: '操作'
+      }
     }
   }
 };
