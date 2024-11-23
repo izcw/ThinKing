@@ -53,3 +53,17 @@
 .space-radio .el-radio__inner {
     opacity: 0;
 }
+
+
+// 对话框
+.HideTitle{
+    padding: 0 !important;
+}
+.HideTitle .el-dialog__header{
+    display: none;
+}
+
+.HideTitle .el-dialog__body{
+    width: 100%;
+    height: 100%;
+}

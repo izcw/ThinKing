@@ -9,7 +9,8 @@
             <el-popover ref="popoverRef" :virtual-ref="buttonRef" trigger="click" :width="300" virtual-triggering>
                 <div class="AccountBox">
                     <div class="logo">
-                        <img :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'" alt="Yoko">
+                        <img :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'"
+                            alt="Yoko">
                         <div class="info">
                             <p class="name">Yoko</p>
                             <p class="subscribe">免费版</p>
@@ -17,7 +18,7 @@
                     </div>
                     <el-divider />
                     <p @click="centerDialogVisible = true"><span>设置</span></p>
-                    <p><router-link to="/login"><span>退出登录</span></router-link></p>
+                    <p @click="LogOut"><span>退出登录</span></p>
                 </div>
             </el-popover><!-- 弹出框 -->
 
@@ -33,7 +34,7 @@
             </n-tooltip>
         </div>
 
-        <el-dialog v-model="centerDialogVisible" title="设置" width="1000" style=" height:650px;" lign-center
+        <el-dialog v-model="centerDialogVisible" width="1000" class="HideTitle" style="height:650px;" lign-center
             :show-close="false">
             <settingBox />
         </el-dialog><!-- 设置 -->
@@ -42,9 +43,11 @@
 <script setup>
 import { ref, inject, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
+import router from '@/router';
 import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
 import { API_BASE_URL } from "@/config/setting"
-import settingBox from "./setting.vue"
+import settingBox from "./setting/setting.vue"
+import { removeToken } from '@/utils/token-util';
 
 const centerDialogVisible = ref(false) // 设置对话框
 
@@ -62,6 +65,13 @@ const updateParentSidebarStatus = inject('updateParentSidebarStatus'); // 注入
 const toggleSidebarStatus = () => {
     updateParentSidebarStatus(!parentSidebarStatus.value);
 };
+
+
+// 退出登录
+let LogOut = () => {
+    removeToken()
+    router.push('/login');
+}
 </script>
 <style scoped lang='scss'>
 .header-wrapper {

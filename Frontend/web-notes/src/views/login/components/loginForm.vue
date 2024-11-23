@@ -24,9 +24,9 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
-import { getVerifyCode, postlogin } from '@/api/login';
+import { getVerifyCode, Userlogin } from '@/api/login';
 import { debounce } from 'lodash';  // 防抖
- import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import loading from '@icon/loading.png';
 
 const router = useRouter();
@@ -35,8 +35,8 @@ const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ // 邮箱正
 
 const ruleFormRef = ref()
 const ruleForm = reactive({
-    email: '',
-    password: "",
+    email: 'xiaoli@qq.com',
+    password: "123456",
 })
 
 const rules = reactive({
@@ -67,14 +67,11 @@ const submitForm = async (formEl) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
-            postlogin(ruleForm).then((msg) => {
+            Userlogin(ruleForm).then((msg) => {
                 console.log(msg);
-                if(msg.code == 200){
-                    router.push({ name: 'home' })
-                    ElMessage.success(msg.message)
-                    return
-                }
-                ElMessage.warning(msg.message)
+                router.push({ name: 'home' })
+                ElMessage.success(msg)
+                return
             }).catch((e) => {
                 console.error('登录失败', e);
             });

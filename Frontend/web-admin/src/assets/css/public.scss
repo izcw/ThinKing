@@ -9,7 +9,7 @@
   border-radius: 50%;
 }
 .avatar-uploader::after {
-  display: block;
+  display: none;
   content: "修改图片";
   font-size: 12px;
   text-align: center;
@@ -22,7 +22,12 @@
 
 .avatar-uploader:hover,
 .avatar-uploader:active {
-  filter: grayscale(20%);
+  filter: grayscale(30%);
+}
+
+.avatar-uploader:hover::after,
+.avatar-uploader:active::after {
+  display: block;
 }
 
 // element-plus卡片

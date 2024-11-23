@@ -11,7 +11,7 @@
  Target Server Version : 80100 (8.1.0)
  File Encoding         : 65001
 
- Date: 22/11/2024 00:28:25
+ Date: 24/11/2024 02:31:02
 */
 
 SET NAMES utf8mb4;
@@ -198,14 +198,26 @@ CREATE TABLE `note_subscribe_ order`  (
 DROP TABLE IF EXISTS `note_template`;
 CREATE TABLE `note_template`  (
   `template_id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `user_id` int NOT NULL COMMENT '用户id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'space' COMMENT '模板名称',
-  PRIMARY KEY (`template_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板中心' ROW_FORMAT = DYNAMIC;
+  `role` enum('admin','user') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'admin' COMMENT '用户或管理员',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户邮箱',
+  `template_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '未命名' COMMENT '模板名称',
+  `preview` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预览图',
+  `comments` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板描述',
+  `recommend` tinyint NULL DEFAULT 0 COMMENT '是否推荐 1 表示推荐，0 表示不推荐',
+  `status` int NOT NULL DEFAULT 0 COMMENT '状态, 0正常, 1下架',
+  `deleted` int NOT NULL DEFAULT 0 COMMENT '是否删除, 0否, 1是',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`template_id`) USING BTREE,
+  INDEX `sys_user`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '模板中心' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of note_template
 -- ----------------------------
+INSERT INTO `note_template` VALUES (1, 'admin', '2405824084@qq.com', '哈哈哈', 'SystemDefaultFiles/images/template/template1.jpg', 'todolist', 0, 0, 0, '2024-11-23 03:19:40', '2024-11-23 23:02:51');
+INSERT INTO `note_template` VALUES (2, 'admin', 'zhang3@qq.com', 'hello', 'SystemDefaultFiles/images/template/template2.jpg', 'helloworld', 1, 1, 0, '2024-11-23 03:49:44', '2024-11-23 23:02:55');
+INSERT INTO `note_template` VALUES (3, 'user', '123@gmail.com', '记录', 'SystemDefaultFiles/images/template/template3.jpg', '记录花销', 0, 0, 0, '2024-11-23 16:24:43', '2024-11-23 23:03:02');
 
 -- ----------------------------
 -- Table structure for note_user
@@ -230,7 +242,7 @@ CREATE TABLE `note_user`  (
 -- ----------------------------
 INSERT INTO `note_user` VALUES (1859329812227633153, 'xiaoli@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$eZP8YBEbLeM7NQOSRZRUPQ$9pDUvkdrXFrE5P2pZvIbJoySlXkKJHF+mXEsGLtHMco', '小丽', 'UserFiles/images/avatar/a6540470-d522-42f1-bed0-a9fb7b73d4eb.jpg', 0, 0, '2024-11-21 04:15:46', '2024-11-21 04:15:46');
 INSERT INTO `note_user` VALUES (1859329962681511937, 'tianxiang@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$dzKkxYHuHWkuIfjte3QRMw$lRrnCd1CBy/YV2G0F1bNaRV2qJk/yZgsNS1zluCfUkM', '天线宝宝', 'UserFiles/images/avatar/13549b95-c562-4e76-8887-25bfffe7f75f.jpg', 0, 3, '2024-11-21 04:16:22', '2024-11-21 04:23:18');
-INSERT INTO `note_user` VALUES (1859330063948787713, 'mu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$jpq6HipmtzNNj0Z3ZrBkGw$vX6rNTFtaCLGa992QT/iJ8+VwayReyhiBi8jxIjGbsk', '', 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg', 0, 0, '2024-11-21 04:16:46', '2024-11-21 04:16:46');
+INSERT INTO `note_user` VALUES (1859330063948787713, 'mu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$jpq6HipmtzNNj0Z3ZrBkGw$vX6rNTFtaCLGa992QT/iJ8+VwayReyhiBi8jxIjGbsk', '34', 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg', 0, 0, '2024-11-21 04:16:46', '2024-11-23 20:38:39');
 INSERT INTO `note_user` VALUES (1859330240466071553, 'hello@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$f4a5fVafHq4eILipD6EM3Q$Xmz9b6uJQnCDi4BoYT/+c0PcRKKrdKkB1ceksRoMrVY', 'Nex笔记', 'UserFiles/images/avatar/9959db3c-5233-4340-8a9f-052b16ea6746.jpg', 0, 0, '2024-11-21 04:17:28', '2024-11-21 04:17:28');
 INSERT INTO `note_user` VALUES (1859330354152681474, '123@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$gpC4GwVRXdFhNdIACy8LOw$c794g7ddJ2gpP2ynjWEWyImBhXFotlF0Yj7FO1kHDLU', 'hai', 'UserFiles/images/avatar/dfd93a19-9deb-4e20-8439-7822d34e2f64.png', 0, 2, '2024-11-21 04:17:55', '2024-11-21 04:23:11');
 INSERT INTO `note_user` VALUES (1859330498411573249, 'huo@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$1ytWsbBIDAQ1KCUyNaUzUA$uH3MT+/FhoXWbJ1WuFPm1Jrif+eJeWrMHS3mYBJBPo0', 'sadness and sorrow', 'UserFiles/images/avatar/9b812e3a-cedf-4a39-8d9a-f27c84987811.jpg', 0, 0, '2024-11-21 04:18:30', '2024-11-21 04:18:30');
@@ -354,9 +366,9 @@ INSERT INTO `sys_menu` VALUES (98, 90, '预留2', NULL, NULL, 0, 8, NULL, NULL, 
 INSERT INTO `sys_menu` VALUES (99, 0, '套餐管理', '/subscribe', '', 0, 30, NULL, 'Ticket', 0, NULL, 0, '2021-02-02 20:15:18', '2024-11-19 23:17:52');
 INSERT INTO `sys_menu` VALUES (100, 99, '套餐管理', '/subscribe/membership', '/subscribe/membership', 0, 1, NULL, 'Ticket', 0, NULL, 0, '2021-02-02 20:15:18', '2024-11-21 15:01:23');
 INSERT INTO `sys_menu` VALUES (101, 0, '订单管理', '/order', '', 0, 40, '', 'Handbag', 0, NULL, 0, '2021-02-02 20:15:18', '2024-10-14 00:34:50');
-INSERT INTO `sys_menu` VALUES (120, 163, '插件管理', '/templateplugin/plugin', NULL, 0, 2, NULL, 'AppstoreAddOutlined', 0, NULL, 0, '2024-10-11 21:21:17', '2024-11-01 10:16:24');
+INSERT INTO `sys_menu` VALUES (120, 163, '插件管理', '/templateplugin/plugin', '/templateplugin/plugin', 0, 2, NULL, 'AppstoreAddOutlined', 0, NULL, 0, '2024-10-11 21:21:17', '2024-11-22 16:31:37');
 INSERT INTO `sys_menu` VALUES (130, 0, '数据管理', '/data', NULL, 0, 20, NULL, 'Coin', 0, NULL, 0, '2024-10-11 21:24:12', '2024-10-14 00:26:27');
-INSERT INTO `sys_menu` VALUES (140, 163, '模板管理', '/templateplugin/template', NULL, 0, 1, NULL, 'DataAnalysis', 0, NULL, 0, '2024-10-11 21:32:11', '2024-11-01 10:16:19');
+INSERT INTO `sys_menu` VALUES (140, 163, '模板管理', '/templateplugin/template', '/templateplugin/template', 0, 1, NULL, 'DataAnalysis', 0, NULL, 0, '2024-10-11 21:32:11', '2024-11-22 16:31:24');
 INSERT INTO `sys_menu` VALUES (150, 0, '用户管理', '/customer', NULL, 0, 10, NULL, 'User', 0, NULL, 0, '2024-10-11 21:34:48', '2024-11-20 01:26:33');
 INSERT INTO `sys_menu` VALUES (151, 130, '数据备份', '/data/databackup', '', 0, 3, '', 'MostlyCloudy', 0, '', 0, '2024-10-13 22:50:27', '2024-11-01 10:15:43');
 INSERT INTO `sys_menu` VALUES (152, 0, '笔记公开', '/release', '', 0, 50, '', 'Upload', 0, '', 0, '2024-10-13 23:05:22', '2024-10-14 00:57:23');
@@ -374,9 +386,9 @@ INSERT INTO `sys_menu` VALUES (163, 0, '模板与插件', '/templateplugin', '',
 INSERT INTO `sys_menu` VALUES (164, 152, '笔记发布管理', '/release/notespublicly', '', 0, 1, '', 'Compass', 0, '', 0, '2024-10-14 00:57:59', '2024-11-01 10:16:31');
 INSERT INTO `sys_menu` VALUES (165, 157, '意见反馈中心', '/feedback/opinion', '', 0, 2, '', 'InfoFilled', 0, '', 0, '2024-10-14 01:07:58', '2024-11-01 10:16:59');
 INSERT INTO `sys_menu` VALUES (166, 101, '订单管理', '/order/orderlist', '', 0, 1, '', 'GoodsFilled', 0, '', 0, '2024-10-14 01:18:37', '2024-11-01 10:16:05');
-INSERT INTO `sys_menu` VALUES (167, 101, '订单统计', '/order/statistics', '', 0, 2, '', 'PieChart', 0, '', 0, '2024-10-14 01:19:47', '2024-11-01 10:16:11');
+INSERT INTO `sys_menu` VALUES (167, 101, '订单统计', '/order/statistics', '/dashboard/analysis', 0, 2, '', 'PieChart', 0, '', 0, '2024-10-14 01:19:47', '2024-11-23 18:12:04');
 INSERT INTO `sys_menu` VALUES (168, 150, '用户管理', '/customer/user', '/customer/user', 0, 1, '', 'Avatar', 0, '', 0, '2024-11-01 10:13:21', '2024-11-20 01:26:45');
-INSERT INTO `sys_menu` VALUES (169, 150, '用户统计分析', '/customer/analysis', '/customer/analysis', 0, 2, '', 'Aim', 0, '', 0, '2024-11-01 10:19:51', '2024-11-20 01:26:49');
+INSERT INTO `sys_menu` VALUES (169, 150, '用户统计分析', '/customer/analysis', '/dashboard/monitor', 0, 2, '', 'Aim', 0, '', 0, '2024-11-01 10:19:51', '2024-11-23 18:11:27');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -396,9 +408,9 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '管理员', 'admin', '最高管理员', 0, '2024-11-09 23:44:17', '2024-11-09 23:45:41');
-INSERT INTO `sys_role` VALUES (2, '普通用户', 'user', '普通用户', 0, '2024-11-09 23:45:32', '2024-11-09 23:45:32');
-INSERT INTO `sys_role` VALUES (3, '游客', 'tourist', '游客', 0, '2024-11-09 23:45:32', '2024-11-15 00:07:21');
+INSERT INTO `sys_role` VALUES (1, '最高管理员', 'admin', '最高管理员', 0, '2024-11-09 23:44:17', '2024-11-23 17:31:07');
+INSERT INTO `sys_role` VALUES (2, '高级管理员', 'senior', '高级管理员', 0, '2024-11-09 23:45:32', '2024-11-23 17:31:10');
+INSERT INTO `sys_role` VALUES (3, '普通管理员', 'user', '普通管理员', 0, '2024-11-09 23:45:32', '2024-11-23 17:30:18');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -572,7 +584,6 @@ DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
   `user_id` int NOT NULL COMMENT '用户id',
   `role_id` int NULL DEFAULT NULL COMMENT '角色id',
-  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '账号',
   `email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `email_verified` int NOT NULL DEFAULT 0 COMMENT '邮箱是否验证, 0否, 1是',
   `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
@@ -585,14 +596,16 @@ CREATE TABLE `sys_user`  (
   `deleted` int NOT NULL DEFAULT 0 COMMENT '是否删除, 0否, 1是',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`user_id`) USING BTREE
+  PRIMARY KEY (`user_id`) USING BTREE,
+  UNIQUE INDEX `email`(`email` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (123, 1, 'Yoko', '2405824084@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Yoko', '17877059806', '男', 'SystemDefaultFiles/images/avatar/avatar-admin1.png', '这个人很懒', 0, 0, '2024-11-09 23:16:54', '2024-11-21 03:29:09');
-INSERT INTO `sys_user` VALUES (456, 2, 'Izcw', 'zhang@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Izcw', '18269328567', '女', 'SystemDefaultFiles/images/avatar/avatar-admin2.png', '这个人很懒', 0, 0, '2024-11-09 23:57:30', '2024-11-21 03:33:41');
-INSERT INTO `sys_user` VALUES (789, 3, 'zhang', 'zhang2@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'nike', '13472583897', '男', 'SystemDefaultFiles/images/avatar/avatar-admin3.png', '这个人很懒', 0, 0, '2024-11-09 23:57:30', '2024-11-21 03:33:42');
+INSERT INTO `sys_user` VALUES (123, 1, '2405824084@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Yoko', '17877059806', '男', 'SystemDefaultFiles/images/avatar/avatar-admin1.png', '这个人很懒', 0, 0, '2024-11-09 23:16:54', '2024-11-21 03:29:09');
+INSERT INTO `sys_user` VALUES (244, 2, 'zhang3@qq.com', 0, '123456', 'world', '17877059804', '男', 'SystemDefaultFiles/images/avatar/avatar-admin3.png', '这个人很懒', 0, 0, '2024-11-23 02:42:52', '2024-11-23 02:43:18');
+INSERT INTO `sys_user` VALUES (456, 2, 'zhang@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Izcw', '18269328567', '女', 'SystemDefaultFiles/images/avatar/avatar-admin2.png', '这个人很懒', 0, 0, '2024-11-09 23:57:30', '2024-11-21 03:33:41');
+INSERT INTO `sys_user` VALUES (789, 3, 'zhang2@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'nike', '13472583897', '男', 'SystemDefaultFiles/images/avatar/avatar-admin3.png', '这个人很懒', 0, 0, '2024-11-09 23:57:30', '2024-11-21 03:33:42');
 
 SET FOREIGN_KEY_CHECKS = 1;
