@@ -8,6 +8,6 @@ package link.duoyu.core.config;
  */
 public class RoleConstants {
     public static final String ADMIN_ROLE_ADMIN = "admin"; // 最高管理员
-    public static final String ADMIN_ROLE_USER = "user"; // 管理员
-    public static final String ADMIN_ROLE_TOURIST = "tourist"; // 游客
+    public static final String ADMIN_ROLE_SENIOR = "senior"; // 高级管理员
+    public static final String ADMIN_ROLE_USER = "user"; // 普通管理员
 }

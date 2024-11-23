@@ -44,7 +44,7 @@ public class CustomSaTokenInterceptor implements HandlerInterceptor {
             // 检查用户是否具有管理员角色
             String role = StpUtil.getTokenSession().getString("role");
             System.out.println("用户："+StpUtil.getLoginIdAsString()+"，角色："+role);
-            if (!RoleConstants.ADMIN_ROLE_ADMIN.equals(role) && !RoleConstants.ADMIN_ROLE_USER.equals(role) && !RoleConstants.ADMIN_ROLE_TOURIST.equals(role)) {
+            if (!RoleConstants.ADMIN_ROLE_ADMIN.equals(role) && !RoleConstants.ADMIN_ROLE_USER.equals(role) && !RoleConstants.ADMIN_ROLE_SENIOR.equals(role)) {
                 response.setContentType("application/json; charset=utf-8");
                 try (PrintWriter writer = response.getWriter()) {
                     ResponseResult<?> result = ResponseResult.unauthorized("您没有管理员权限，请联系管理员");

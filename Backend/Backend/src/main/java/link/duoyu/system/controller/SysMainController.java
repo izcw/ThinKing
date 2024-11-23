@@ -115,9 +115,9 @@ public class SysMainController {
                 if (existingUser.getRoleId() == 1) {
                     StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_ADMIN);
                 } else if (existingUser.getRoleId() == 2) {
-                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_USER);
+                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_SENIOR);
                 }else if (existingUser.getRoleId() == 3) {
-                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_TOURIST);
+                    StpUtil.getTokenSession().set("role", RoleConstants.ADMIN_ROLE_USER);
                 }
 
                 // 密码验证成功，返回用户信息

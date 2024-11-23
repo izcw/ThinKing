@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,9 +42,6 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "角色id")
     private Integer RoleId;
 
-    @ApiModelProperty(value = "账号")
-    private String username;
-
     @ApiModelProperty(value = "密码")
     private String password;
 
@@ -74,10 +72,12 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "是否删除, 0否, 1是")
     private Integer deleted;
 
-    @ApiModelProperty(value = "注册时间")
+    @TableField("create_time")  // 映射到数据库的 create_time 列
+    @JsonProperty("create_time")  // 控制序列化时的字段名为 create_time
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @TableField("update_time")  // 映射到数据库的 update_time 列
+    @JsonProperty("update_time")  // 控制序列化时的字段名为 update_time
     private LocalDateTime updateTime;
 
     @TableField(exist = false) // 表示这个字段不在 sys_user 表中

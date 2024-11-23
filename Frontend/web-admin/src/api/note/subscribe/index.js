@@ -1,4 +1,3 @@
-import { login } from '@/api/login';
 import request from '@/utils/request';
 
 /**

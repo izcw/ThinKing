@@ -104,8 +104,8 @@
       xs: 24
     },
     {
-      name: 'goal-card',
-      title: '本月目标',
+      name: 'template-card',
+      title: '模板数量',
       md: 8,
       sm: 24,
       xs: 24
@@ -223,7 +223,7 @@
 <script>
   import ActivitiesCard from './components/activities-card.vue';
   import TaskCard from './components/task-card.vue';
-  import GoalCard from './components/goal-card.vue';
+  import TemplateCard from './components/template-card.vue';
   import ProjectCard from './components/project-card.vue';
   import UserList from './components/user-list.vue';
 
@@ -232,7 +232,7 @@
     components: {
       ActivitiesCard,
       TaskCard,
-      GoalCard,
+      TemplateCard,
       ProjectCard,
       UserList
     }

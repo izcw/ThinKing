@@ -57,7 +57,7 @@
           <el-text v-for="(itemUnit, index) in unitListData" :key="index" v-show="row.unit == itemUnit.unit">{{
             itemUnit.describe }}</el-text>
         </template>
-        <!-- 单位 -->
+        <!-- 推荐 -->
         <template #recommend="{ row }">
           <el-switch v-model="row.recommend" :inactive-value="0" :active-value="1" inline-prompt active-text="推荐"
             inactive-text="No" disabled />

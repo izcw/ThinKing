@@ -3,12 +3,16 @@ import request from '@/utils/request';
 /**
  * 分页查询用户
  */
-export async function pageUsers(params) {
+export async function PageUsers(params) {
   const res = await request.get('/system/user/page', { params });
   if (res.data.code === 200) {
-    return res.data.data.records;
+    return {
+      list: res.data.data.records,
+      count: res.data.data.total
+    };
   }
-  return Promise.reject(new Error(res.data.message));
+
+  return Promise.reject(new Error(res.data.data.message));
 }
 
 /**
