@@ -191,7 +191,6 @@ let tableData = ref([
         .item {
             padding: 1rem;
             box-sizing: border-box;
-            min-width: 300px;
             border: 1px solid #eee;
             margin-bottom: 1rem;
 

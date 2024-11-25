@@ -18,15 +18,20 @@
             <span>新建空间</span>
         </n-tooltip>
 
-        <el-dialog v-model="dialogTableVisible" width="600" style="height: 400px;" :show-close="false">
+        <el-dialog v-model="dialogTableVisible" width="600" style="min-height: 400px;" :show-close="false" align-center>
             <div style="padding:1rem;box-sizing: border-box;">
-                <el-table :data="data" style="width: 100%">
+                <el-table :data="data" style="width: 100%;">
                     <el-table-column prop="name" label="空间" />
                     <el-table-column prop="color" label="色彩">
                         <template #default="scope">
                             <div style="width: 25px;height: 25px;border-radius: 50%"
                                 :style="{ 'background-color': scope.row.color }">
                             </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="color" label="默认空间">
+                        <template #default="scope">
+                            <el-switch v-model="value1" />
                         </template>
                     </el-table-column>
                     <el-table-column fixed="right" width="100" label="操作">
@@ -42,7 +47,7 @@
                 <el-alert title="免费空间最多3个" type="info" :closable="false" />
             </div>
             <el-dialog v-model="innerVisible" width="600" style="height: 400px;" title="添加" :show-close="false"
-                append-to-body>
+                align-center append-to-body>
                 <div style="padding:1rem;box-sizing: border-box;">
                     <el-form :model="form" label-width="auto" style="max-width: 600px">
                         <el-form-item label="空间名称">
@@ -51,11 +56,13 @@
                         <el-form-item label="选择色彩">
                             <el-radio-group v-model="form.color">
                                 <el-radio size="large" border v-for="(item, index) in colorSpace" :key="index"
-                                    :value="item.name" :style="{ 'background-color': item.colora }"  class="space-radio">{{ item.color1 }}</el-radio>
+                                    :value="item.name" :style="{ 'background-color': item.colora }"
+                                    class="space-radio">{{
+                                        item.color1 }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item>
-                            <el-button >取消</el-button>
+                            <el-button>取消</el-button>
                             <el-button type="primary" @click="onSubmit">确定</el-button>
                         </el-form-item>
                     </el-form>
@@ -78,7 +85,7 @@ import { reactive } from 'vue'
 
 let colorSpace = ref([
     {
-        name:"orange",
+        name: "orange",
         colora: "#FCECE4",
         colorb: "#FCECE4",
         colorc: "#FCECE4",
@@ -86,7 +93,7 @@ let colorSpace = ref([
         colore: "#FCECE4"
     },
     {
-        name:"yellow",
+        name: "yellow",
         colora: "#FEFBF0",
         colorb: "#FEFBF0",
         colorc: "#FEFBF0",
@@ -94,7 +101,7 @@ let colorSpace = ref([
         colore: "#FEFBF0"
     },
     {
-        name:"blue",
+        name: "blue",
         colora: "#EBF7FC",
         colorb: "#EBF7FC",
         colorc: "#EBF7FC",
@@ -102,7 +109,7 @@ let colorSpace = ref([
         colore: "#EBF7FC"
     },
     {
-        name:"purple",
+        name: "purple",
         colora: "#EEEBFB",
         colorb: "#EEEBFB",
         colorc: "#EEEBFB",

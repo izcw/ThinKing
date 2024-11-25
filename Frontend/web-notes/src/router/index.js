@@ -17,7 +17,7 @@ const router = createRouter({
         {
           path: '/:spaceId',
           component: () => import('../views/index/index.vue'),
-          meta: { title: '空间详情' },
+          meta: { title: '主页' },
         },
         {
           path: '/:spaceId/:noteId',
@@ -53,15 +53,21 @@ const router = createRouter({
           path: '',
           name: 'login',
           component: () => import('../views/login/components/loginForm.vue'),
-          meta: { title: '用户' },
+          meta: { title: '登录' },
         },
         {
           path: '/register',
           name: 'register',
           component: () => import('../views/login/components/registerForm.vue'),
-          meta: { title: '用户' },
-        },
+          meta: { title: '注册' },
+        }
       ],
+    },
+    {
+      path: '/lock',
+      name: 'lock',
+      component: () => import('../views/lockscreen/index.vue'),
+      meta: { title: '锁屏' },
     },
   ],
 });
@@ -71,13 +77,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = getToken();
 
-  // 动态设置页面标题
-  if (to.meta.title) {
-    setPageTitle(to.meta.title);
-  }
-
   // 路由守卫逻辑
-  if (to.path === '/login' || to.path === '/register') {
+  if (to.path === '/login' || to.path === '/register' || to.path === '/lock') {
     next();
   } else if (!token) {
     next({ path: '/login' });
@@ -85,5 +86,11 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+router.afterEach((to) => {
+  // 动态设置页面标题，仅在导航完成后设置
+  setPageTitle(to.meta.title);
+});
+
 
 export default router;

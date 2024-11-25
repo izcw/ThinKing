@@ -2,17 +2,22 @@
   <div class="setting">
     <!-- 左侧菜单 -->
     <div class="left">
-      <div class="avatar">
-        <el-avatar :size="30" :src="circleUrl" />
-        <div class="account">
-          <p class="nickname">Yoko</p>
-          <p>2405824084@qq.com</p>
+      <div>
+        <div class="avatar">
+          <el-avatar :size="30" :src="circleUrl" />
+          <div class="account">
+            <p class="nickname">Yoko</p>
+            <p>2405824084@qq.com</p>
+          </div>
+        </div>
+        <div class="item" v-for="(menu, index) in menuList" :key="index" :class="{ active: activeIndex === index }"
+          @click="changeActive(index)">
+          <span class="icon">{{ menu.icon }}</span>
+          <span>{{ menu.label }}</span>
         </div>
       </div>
-      <div class="item" v-for="(menu, index) in menuList" :key="index" :class="{ active: activeIndex === index }"
-        @click="changeActive(index)">
-        <span class="icon">{{ menu.icon }}</span>
-        <span>{{ menu.label }}</span>
+      <div class="Loguut item">
+        退出登录
       </div>
     </div>
 
@@ -39,7 +44,7 @@ const activeIndex = ref(0);
 const menuList = [
   { label: '我的账号', icon: '图标', component: MyAccount },
   { label: '设置', icon: '图标', component: Settings },
-  { label: '升级方案', icon: '图标', component: UpgradePlan },
+  { label: '升级方案', icon: '图标', component: UpgradePlan }
 ];
 
 const currentComponent = computed(() => menuList[activeIndex.value].component);
@@ -49,7 +54,7 @@ function changeActive(index) {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
 .setting {
   display: flex;
   width: 100%;
@@ -61,6 +66,9 @@ function changeActive(index) {
     padding: 1rem 0;
     box-sizing: border-box;
     background-color: #FAFAFA;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .avatar {
       padding: 6px 1rem;
@@ -82,6 +90,12 @@ function changeActive(index) {
           font-weight: bold;
         }
       }
+    }
+
+    .Loguut {
+      color: #0355E3;
+      padding: 6px 1rem;
+      cursor: pointer;
     }
 
     .item {
@@ -108,6 +122,25 @@ function changeActive(index) {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
+  }
+}
+
+.configuration {
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .name {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .value {
+      font-size: 12px;
+      color: #999;
+    }
   }
 }
 </style>

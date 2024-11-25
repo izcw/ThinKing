@@ -18,7 +18,7 @@
                 </div>
             </n-grid-item>
             <n-grid-item style="width: 100%;">
-                <div class="Tools-item item">
+                <div class="Tools-item item" @click="LockScreen">
                     <n-icon size="20">
                         <Lock />
                     </n-icon>
@@ -38,9 +38,10 @@
                 </router-link>
             </n-grid-item>
         </n-grid>
-        <el-dialog v-model="dialogTableVisible" width="800"  :show-close="false">
+        <el-dialog v-model="dialogTableVisible" width="800" :show-close="false">
             <template #header>
-                <el-input v-model="input"  style="width: 100%;padding: 1rem;box-sizing: border-box;" placeholder="全局搜索，请输入..." />
+                <el-input v-model="input" style="width: 100%;padding: 1rem;box-sizing: border-box;"
+                    placeholder="全局搜索，请输入..." />
                 <div style="padding:1rem;box-sizing: border-box;">
                     <searchItemBox />
                 </div>
@@ -51,8 +52,10 @@
 <script setup>
 import searchItemBox from '@/components/searchItem.vue';
 import { Home48Regular, Search28Filled } from '@vicons/fluent'
-import { BellRegular, Star ,Lock} from '@vicons/fa'
+import { BellRegular, Star, Lock } from '@vicons/fa'
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 let dialogTableVisible = ref(false) // 搜索对话框
 
@@ -94,6 +97,11 @@ let data = ref([
 let searchFor = () => {
     console.log("搜索");
 
+}
+
+// 锁屏
+let LockScreen = () => {
+    router.push({ name: 'lock' })
 }
 </script>
 <style scoped lang='scss'>
