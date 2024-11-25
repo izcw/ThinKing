@@ -8,7 +8,7 @@
             <el-input v-model="ruleForm.password" size="large" placeholder="请输入密码" clearable />
         </el-form-item>
         <el-form-item>
-            <el-button class="item submit" color="#112BBA" size="large" @click="submitForm(ruleFormRef)">登录</el-button>
+            <el-button class="item submit" color="#000" size="large" @click="submitForm(ruleFormRef)">登录</el-button>
         </el-form-item>
         <div class="otherMethods">
             <router-link to="/login" class="issue">账号常见问题</router-link>
@@ -167,7 +167,7 @@ const submitForm = async (formEl) => {
 
         a {
             font-size: 14px;
-            color: #409EFF;
+            color: #000;
         }
 
         .issue {

@@ -30,9 +30,9 @@
 
         <!-- 提交按钮 -->
         <el-form-item>
-            <el-button class="item submit" color="#112BBA" size="large" v-if="!nextCorrect"
+            <el-button class="item submit" color="#000" size="large" v-if="!nextCorrect"
                 :disabled="!isValidCode || !isValidEmail" @click="nextSubmitForm">下一步</el-button>
-            <el-button class="item submit" color="#112BBA" size="large" v-else @click="submitForm">注册</el-button>
+            <el-button class="item submit" color="#000" size="large" v-else @click="submitForm">注册</el-button>
         </el-form-item>
 
         <!-- 其他操作 -->
@@ -214,7 +214,7 @@ const submitForm = async () => {
         p {
             cursor: pointer;
             font-size: 14px;
-            color: #409EFF;
+            color: #000;
         }
     }
 }

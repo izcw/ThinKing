@@ -10,38 +10,19 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/home', // 修改默认重定向到 /home
+    },
+    {
+      path: '/home',
       name: 'home',
-      component: Layout,
-      redirect: '/space1',
-      children: [
-        {
-          path: '/:spaceId',
-          component: () => import('../views/index/index.vue'),
-          meta: { title: '主页' },
-        },
-        {
-          path: '/:spaceId/:noteId',
-          component: NoteLayout,
-          meta: { title: '笔记详情' },
-          children: [
-            {
-              path: 'edit',
-              component: () => import('../views/note/components/hello.vue'),
-              meta: { title: '编辑笔记' },
-            },
-          ],
-        },
-        {
-          path: '/vip',
-          component: () => import('../views/subscribe/index.vue'),
-          meta: { title: 'VIP 订阅' },
-        },
-        {
-          path: '/template',
-          component: () => import('../views/template/index.vue'),
-          meta: { title: '模板中心' },
-        },
-      ],
+      component: () => import('../views/homepage/index.vue'),
+      meta: { title: '' },
+    },
+    {
+      path: '/lock',
+      name: 'lock',
+      component: () => import('../views/lockscreen/index.vue'),
+      meta: { title: '锁屏' },
     },
     {
       path: '/login',
@@ -60,14 +41,41 @@ const router = createRouter({
           name: 'register',
           component: () => import('../views/login/components/registerForm.vue'),
           meta: { title: '注册' },
-        }
+        },
       ],
     },
     {
-      path: '/lock',
-      name: 'lock',
-      component: () => import('../views/lockscreen/index.vue'),
-      meta: { title: '锁屏' },
+      path: '/:spaceId',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          component: () => import('../views/index/index.vue'),
+          meta: { title: '主页' },
+        },
+        {
+          path: ':noteId',
+          component: NoteLayout,
+          meta: { title: '笔记详情' },
+          children: [
+            {
+              path: 'edit',
+              component: () => import('../views/note/components/hello.vue'),
+              meta: { title: '编辑笔记' },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: '/vip',
+      component: () => import('../views/subscribe/index.vue'),
+      meta: { title: 'VIP 订阅' },
+    },
+    {
+      path: '/template',
+      component: () => import('../views/template/index.vue'),
+      meta: { title: '模板中心' },
     },
   ],
 });
@@ -78,7 +86,7 @@ router.beforeEach((to, from, next) => {
   const token = getToken();
 
   // 路由守卫逻辑
-  if (to.path === '/login' || to.path === '/register' || to.path === '/lock') {
+  if (to.path === '/login' || to.path === '/register' || to.path === '/home' || to.path === '/lock') {
     next();
   } else if (!token) {
     next({ path: '/login' });

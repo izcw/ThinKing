@@ -1,16 +1,14 @@
 <template>
     <div class="login">
         <div class="header">
-            <router-link to="/">
+            <router-link to="/home">
                 <div class="logo">
                     <img src="@images/logo.png" alt="">
                     NexNote
                 </div>
             </router-link>
             <div>
-                <router-link to="/Yoko">下载</router-link>
-                <router-link to="/">进入官网</router-link>
-                <router-link to="/">帮助中心</router-link>
+                <router-link to="/home">进入官网</router-link>
             </div>
         </div>
         <div class="login-box">
