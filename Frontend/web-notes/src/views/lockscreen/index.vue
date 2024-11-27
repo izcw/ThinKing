@@ -5,14 +5,14 @@
                 <div class="mask" :class="{ blurred: isInputFocused }"></div>
                 <div class="centent">
                     <div class="Unlockbox">
-                        <div class="timeBox" :style="{ 'opacity': isInputFocused == true ? 0.2 : 1 }">
+                        <div class="timeBox" :class="{ 'timeBoxMask': isInputFocused }">
                             17:07
                         </div>
                         <img src="@/assets/images/noteback.jpg" alt="">
                         <div>
                             <el-input v-model="lockPassword" style="width: 200px" size="large" type="password"
                                 show-password placeholder="输入PIN码解锁" @focus="handleFocus(true)"
-                                @blur="handleFocus(false)" @keyup.enter="handleEnter" autofocus />
+                                @blur="handleFocus(false)" @keyup.enter="handleEnter" />
                             <div class="other">
                                 <p @click="gologin">其它账号</p>
                                 <p @click="centerDialogVisible = true">忘记密码？</p>
@@ -23,7 +23,9 @@
             </div>
         </div>
         <div class="logo" :style="{ 'z-index': isInputFocused == true ? 1 : 200 }">
-            <img src="@/assets/images/logo.png" alt="">
+            <router-link to="home">
+                <img src="@/assets/images/logo.png" alt="">
+            </router-link>
         </div>
     </div>
 
@@ -140,6 +142,8 @@ const handleEnter = () => {
     }
 }
 
+
+
 .centent {
     position: fixed;
     top: 0;
@@ -152,11 +156,18 @@ const handleEnter = () => {
     justify-content: center;
 
     .timeBox {
-        font-size: 46px;
+        font-size: 64px;
         font-weight: bold;
-        margin-bottom: 100px;
+        margin-bottom: 300px;
         color: #bbb;
         transition: all 0.3s ease;
+        opacity: 1;
+    }
+
+    .timeBoxMask {
+        opacity: 0.2;
+        color: transparent;
+        text-shadow: #111 0 0 5px;
     }
 
     .Unlockbox {

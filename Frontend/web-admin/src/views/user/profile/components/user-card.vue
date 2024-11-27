@@ -17,7 +17,7 @@
         <el-icon>
           <user-icon />
         </el-icon>
-        <div class="info-item-text">NexNote 管理员</div>
+        <div class="info-item-text">ThinKing 管理员</div>
       </div>
     </div>
     <el-divider border-style="dashed" style="margin: 0" />

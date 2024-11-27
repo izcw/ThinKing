@@ -9,12 +9,12 @@
       :size="24"
       style="--el-text-color-regular: var(--el-text-color-placeholder)"
     >
-      <el-link :underline="false" href="https://zhangchengwei.work" target="_blank">
+      <el-link :underline="false" href="https://www.note.zhangchengwei.work" target="_blank">
         {{ t('layout.footer.website') }}
       </el-link>
       <el-link
         :underline="false"
-        href="https://www.gxnzd.edu.cn/"
+        href="https://www.gxnzd.edu.cn"
         target="_blank"
       >
         {{ t('layout.footer.document') }}

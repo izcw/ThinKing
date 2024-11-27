@@ -17,7 +17,7 @@ import { timeAgo } from '@/utils/timeAgo'
 let data = ref([
     {
         id: "1",
-        title: "人士需要浮士德精神",
+        title: "莎士比亚笔下的爱情观",
         time: "2024/10/06",
         cover: "/src/assets/images/cover/recommend-item1.png"
     },

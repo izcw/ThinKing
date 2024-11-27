@@ -4,7 +4,7 @@
             <router-link to="/home">
                 <div class="logo">
                     <img src="@images/logo.png" alt="">
-                    NexNote
+                    ThinKing
                 </div>
             </router-link>
             <div>
@@ -51,9 +51,9 @@ import registerFormBox from "./components/registerForm.vue"
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
-            font-family: 'SmileySans得意黑';
+            // font-family: 'SmileySans得意黑';
 
             img {
                 width: 42px;
@@ -83,7 +83,6 @@ import registerFormBox from "./components/registerForm.vue"
             h2 {
                 font-size: 26px;
             }
-
             
         }
     }
@@ -94,7 +93,7 @@ import registerFormBox from "./components/registerForm.vue"
         align-items: center;
         justify-content: center;
 
-        font-size: 14px;
+        font-size: 12px;
         color: #666;
 
         a {

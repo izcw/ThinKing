@@ -3,7 +3,7 @@ import request from '@/utils/request';
 /**
  * 分页查询用户
  */
-export async function PageUsers(params) {
+export async function pageUsers(params) {
   const res = await request.get('/system/user/page', { params });
   if (res.data.code === 200) {
     return {

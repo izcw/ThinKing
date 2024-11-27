@@ -3,7 +3,7 @@
         <CollapseMenuBox />
         <div class="container">
             <div class="banner">
-                <h1>加入或续费 NexNote会员</h1>
+                <h1>加入或续费 ThinKing会员</h1>
             </div>
             <div class="current">
                 <p>当前方案</p>

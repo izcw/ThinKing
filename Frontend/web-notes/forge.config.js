@@ -11,7 +11,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'NexNote',
+        name: 'ThinKing',
         authors: 'Izcw',
         description: '这是一个笔记软件',
       }

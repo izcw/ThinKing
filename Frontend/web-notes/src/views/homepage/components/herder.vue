@@ -3,12 +3,12 @@
         <router-link to="/home">
             <div class="logo">
                 <img src="@/assets/images/logo.png" alt="">
-                <p>NexNote</p>
+                <p>ThinKing</p>
             </div>
         </router-link>
         <div class="link">
             <div class="item">
-                <router-link to="/home">首页</router-link>
+                <router-link to="/">首页</router-link>
             </div>
             <div class="separate">|</div>
             <div class="item">
@@ -26,11 +26,12 @@
 <style scoped lang='scss'>
 header {
     width: 100%;
-    padding: 1.5rem;
+    padding:1rem 1.5rem;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #fff;
 }
 
 @media (max-width: 992px) {
@@ -50,7 +51,7 @@ header {
     }
 
     p {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
         margin-left: 10px;
         color: #000;
@@ -74,5 +75,9 @@ header {
         color: #333;
         font-size: 16px;
     }
+}
+
+.link a:hover,.link a:active{
+    color: #474ce3;
 }
 </style>

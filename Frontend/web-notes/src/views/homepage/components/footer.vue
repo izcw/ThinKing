@@ -5,31 +5,28 @@
                 <el-col :xs="24" :md="6">
                     <div class="logo">
                         <img src="@/assets/images/logo-grey.png" alt="">
-                        <p>广西农业职业技术大学</p>
-                        <p>信息工程学院</p>
-                        <p>计算机应用工程（专升本）</p>
+                        <div>
+                            <p>广西农业职业技术大学</p>
+                            <p>信息工程学院</p>
+                            <p>计算机应用工程（专升本）2302</p>
+                        </div>
                     </div>
                 </el-col>
                 <el-col :xs="24" :md="18">
                     <div class="link">
                         <ul>
                             <li>产品</li>
-                            <li><router-link to="/login">NexNote主页</router-link></li>
                             <li><router-link to="/login">登录</router-link></li>
-                            <li><router-link to="/login">注册</router-link></li>
+                            <li><router-link to="/register">注册</router-link></li>
                         </ul>
                         <ul>
                             <li>帮助和支持</li>
-                            <li><router-link to="/login">帮助中心</router-link></li>
-                            <li><router-link to="/login">更新日志</router-link></li>
-                            <li><router-link to="/login">问题反馈</router-link></li>
-                            <li><router-link to="/login">常见问题</router-link></li>
+                            <li><a href="https://github.com/izcw" target="_blank">帮助中心</a></li>
+                            <li><a href="https://github.com/izcw/ThinKing" target="_blank">更新日志</a></li>
                         </ul>
                         <ul>
-                            <li>NexNote</li>
-                            <li><router-link to="/login">关于NexNote</router-link></li>
-                            <li><router-link to="/login">NexNote故事</router-link></li>
-                            <li><router-link to="/login">联系我们</router-link></li>
+                            <li>ThinKing</li>
+                            <li><a href="https://github.com/izcw/ThinKing" target="_blank">关于ThinKing</a></li>
                         </ul>
                     </div>
                 </el-col>
@@ -38,14 +35,14 @@
         <div class="info">
             <el-row :gutter="20">
                 <el-col :sm="24" :md="8">
-                    <a href="">开发者：©2024 张成威 2331020120242</a>
+                    <a href="#">开发者：©2024 张成威 2331020120242</a>
                 </el-col>
-                <el-col :sm="24" :md="8">
+                <!-- <el-col :sm="24" :md="8">
                     <a href="">桂公网安备 45098102000465号桂公网安备 45098102000465号</a>
                 </el-col>
                 <el-col :sm="24" :md="8">
                     <a href="">桂ICP备2022009640号-1</a>
-                </el-col>
+                </el-col> -->
             </el-row>
         </div>
     </footer>
@@ -62,10 +59,14 @@ footer {
         padding: 30px 0;
 
         .logo {
-            p {
-                font-size: 12px;
-                color: #999;
-                padding: 6px 0;
+            div {
+                margin-top: 10px;
+
+                p {
+                    font-size: 12px;
+                    color: #999;
+                    padding: 4px 0;
+                }
             }
 
             img {

@@ -26,7 +26,7 @@
 import { ref } from 'vue';
 import MoreIcon from './more-icon.vue';
 import { FILE_PATH_API_URL } from "@/config/setting"
-import { PageUsers } from '@/api/system/user/index';
+import { pageUsers } from '@/api/system/user/index';
 
 defineProps({
   title: String
@@ -39,7 +39,7 @@ const userList = ref([]);
 
 /* 查询小组成员 */
 const queryUserList = async (page, limit) => {
-  ({ list: userList.value } = await PageUsers({
+  ({ list: userList.value } = await pageUsers({
     // ...where,
     page,
     limit

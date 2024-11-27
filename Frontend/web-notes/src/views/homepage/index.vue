@@ -29,9 +29,12 @@ import footerBox from "./components/footer.vue";
     margin: 0 auto;
 }
 
-.herder-top{
-    position: fixed;top: 0;left: 0;right: 0;margin: auto;
+.herder-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 9999;
 }
-
-
 </style>

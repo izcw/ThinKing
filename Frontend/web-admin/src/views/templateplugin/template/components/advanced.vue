@@ -10,7 +10,7 @@
 <script setup>
 import { ref, reactive, watch, defineProps, watchEffect } from 'vue';
 import AccountSearch from './account-search.vue';
-import { PageUsers as SysPageUsers } from '@/api/system/user';
+import { pageUsers as SysPageUsers } from '@/api/system/user';
 import { PageUsers as NotePageUsers } from '@/api/note/user';
 
 // 表格下拉选中值

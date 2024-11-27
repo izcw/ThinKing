@@ -7,10 +7,10 @@ export const zh_CN = {
       logout: '退出登录'
     },
     footer: {
-      website: '官网',
+      website: 'ThinKing笔记',
       document: '广西农业职业技术大学',
-      authorization: '计算机应用工程（专升本）2302班 张成威 2331020120242',
-      copyright: 'Copyright © 2024'
+      authorization: '计算机应用工程（专升本）2302班',
+      copyright: '©2024 张成威 2331020120242'
     },
     logout: {
       title: '提示',

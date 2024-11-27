@@ -6,38 +6,25 @@
         <el-avatar :size="68" :src="FILE_PATH_API_URL + loginUser.avatar" class="profile-avatar" />
         <div class="profile-body">
           <ele-text size="xl" type="heading" style="font-weight: normal">
-            早安, {{ loginUser.nickname }}, 开始您一天的工作吧!
+            {{ greeting }}好, {{ loginUser.nickname }}, 开始您一天的工作吧!
           </ele-text>
-          <ele-text type="placeholder" :icon="PartlyCloudy">
-            今日多云转阴, 18℃ ~ 22℃, 出门记得穿外套哦~
+          <ele-text type="placeholder" :icon="CollectionTag">
+            简单记，深刻思 - ThinKing笔记 - Small in one
           </ele-text>
         </div>
       </div>
       <div class="profile-count">
         <div class="profile-count-item">
           <div class="profile-count-header">
-            <el-tag size="large" :disable-transitions="true">
-              <el-icon>
-                <briefcase />
-              </el-icon>
-            </el-tag>
-            <span class="profile-count-name">项目数</span>
-          </div>
-          <ele-text size="xl" type="heading" style="font-weight: normal">
-            3
-          </ele-text>
-        </div>
-        <div class="profile-count-item">
-          <div class="profile-count-header">
             <el-tag size="large" type="warning" :disable-transitions="true">
               <el-icon>
-                <checked />
+                <MostlyCloudy />
               </el-icon>
             </el-tag>
-            <span class="profile-count-name">待办项</span>
+            <span class="profile-count-name">数据备份</span>
           </div>
           <ele-text size="xl" type="heading" style="font-weight: normal">
-            6 / 24
+            2 / 3
           </ele-text>
         </div>
         <div class="profile-count-item">
@@ -50,7 +37,7 @@
             <span class="profile-count-name">消息</span>
           </div>
           <ele-text size="xl" type="heading" style="font-weight: normal">
-            1,689
+            0
           </ele-text>
         </div>
       </div>
@@ -59,20 +46,30 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed,onMounted ,ref} from 'vue';
 import {
-  PartlyCloudy,
+  CollectionTag,
   Briefcase,
   Checked,
+  UserFilled,
+  MostlyCloudy,
   BellFilled
 } from '@element-plus/icons-vue';
 import { useUserStore } from '@/store/modules/user';
 import { FILE_PATH_API_URL } from "@/config/setting"
+import { getGreeting } from "@/utils/timeGreeting.js"
 
 const userStore = useUserStore();
 
 // 当前登录用户信息
 const loginUser = computed(() => userStore.info ?? {});
+
+
+// 早、中晚
+const greeting = ref('');
+onMounted(() => {
+  greeting.value = getGreeting();
+});
 </script>
 
 <style lang="scss" scoped>

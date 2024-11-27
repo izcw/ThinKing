@@ -1,5 +1,5 @@
 <template>
-    <h2>NexNote ｜ 注册</h2>
+    <h2>ThinKing ｜ 注册</h2>
     <el-form ref="ruleFormRef" class="input-box" :model="ruleForm" :rules="rules" label-width="auto" inline-message>
         <!-- 邮箱输入项 -->
         <el-form-item prop="email" class="item" v-if="!nextCorrect">
@@ -22,7 +22,7 @@
             <div class="Verification">
                 <el-input v-model="ruleForm.code" minlength="6" maxlength="6" size="large" placeholder="验证码"
                     clearable />
-                <el-button class="code" type="primary" plain size="large" :disabled="countdown > 0" @click="EmailCode">
+                <el-button class="code" color="#000" plain size="large" :disabled="countdown > 0" @click="EmailCode">
                     {{ countdown > 0 ? `${countdown}s` : '获取验证码' }}
                 </el-button>
             </div>

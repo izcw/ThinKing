@@ -2,14 +2,14 @@
     <div class="header-wrapper GMargin">
         <div class="logo-box text-select">
             <div class="logo" ref="buttonRef" v-click-outside="onClickOutside">
-                <img :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'" alt="Yoko">
+                <img :src="FILE_PATH_API_URL + 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg'" alt="Yoko">
                 <span>Yoko</span>
             </div>
 
             <el-popover ref="popoverRef" :virtual-ref="buttonRef" trigger="click" :width="300" virtual-triggering>
                 <div class="AccountBox">
                     <div class="logo">
-                        <img :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'"
+                        <img :src="FILE_PATH_API_URL + 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg'"
                             alt="Yoko">
                         <div class="info">
                             <p class="name">Yoko</p>
@@ -45,7 +45,7 @@ import { ref, inject, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import router from '@/router';
 import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
-import { API_BASE_URL } from "@/config/setting"
+import { FILE_PATH_API_URL } from "@/config/setting"
 import settingBox from "./setting/setting.vue"
 import { removeToken } from '@/utils/token-util';
 

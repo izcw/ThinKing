@@ -34,7 +34,7 @@ let openPage = (val) => {
 // Data
 const data = ref([
     {
-        label: 'Level one 1',
+        label: '莎士比亚笔下的爱情观',
         children: [
             {
                 label: 'Level two 1-1',
@@ -47,18 +47,21 @@ const data = ref([
         ],
     },
     {
-        label: 'Level one 2基于Springboot开发的在线笔记软件',
+        label: 'Java',
         children: [
             {
-                label: 'Level two 2-1',
+                label: '探索Java世界的奥秘',
                 children: [
                     {
-                        label: 'Level three 2-1-1',
+                        label: '第一章学习',
+                    },
+                    {
+                        label: '第二章学习',
                     },
                 ],
             },
             {
-                label: 'Level two 2-2',
+                label: 'Springboot',
                 children: [
                     {
                         label: 'Level three 2-2-1',
@@ -68,10 +71,10 @@ const data = ref([
         ],
     },
     {
-        label: 'Level one 3',
+        label: '文字的力量',
         children: [
             {
-                label: 'Level two 3-1',
+                label: '文学的启示',
                 children: [
                     {
                         label: 'Level three 3-1-1',

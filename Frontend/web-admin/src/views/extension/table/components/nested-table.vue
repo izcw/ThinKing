@@ -46,7 +46,7 @@
 
 <script setup>
   import { ref } from 'vue';
-  import { listDictionaries } from '@/api/system/dictionary';
+  // import { listDictionaries } from '@/api/system/dictionary';
   import { listDictionaryData } from '@/api/system/dictionary-data';
 
   // 表格列配置
@@ -94,7 +94,7 @@
 
   // 表格数据源
   const datasource = ({ orders }) => {
-    return listDictionaries({ ...orders });
+    // return listDictionaries({ ...orders });
   };
 
   // 字典项列配置

@@ -1,5 +1,5 @@
 <template>
-    <h2>NexNote ｜ 登录</h2>
+    <h2>ThinKing ｜ 登录</h2>
     <el-form ref="ruleFormRef" class="input-box" :model="ruleForm" :rules="rules" label-width="auto" inline-message>
         <el-form-item prop="email" class="item">
             <el-input v-model="ruleForm.email" size="large" placeholder="请输入邮箱" clearable />
@@ -69,7 +69,7 @@ const submitForm = async (formEl) => {
         if (valid) {
             Userlogin(ruleForm).then((msg) => {
                 console.log(msg);
-                router.push({ name: 'home' })
+                router.push('/space1')
                 ElMessage.success(msg)
                 return
             }).catch((e) => {

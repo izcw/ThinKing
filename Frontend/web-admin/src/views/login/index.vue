@@ -2,8 +2,8 @@
   <div class="login-wrapper">
     <ele-card class="login-card">
       <div class="login-cover">
-        <h1 class="login-title"><img src="@/assets/images/logo.png" alt=""> Nex Note</h1>
-        <h4 class="login-subtitle">Nex Note笔记 后台管理</h4>
+        <h1 class="login-title"><img src="@/assets/images/logo.png" alt="">ThinKing</h1>
+        <h4 class="login-subtitle">ThinKing笔记 - 后台管理</h4>
       </div>
       <div class="login-body">
         <ele-text type="heading" style="font-size: 24px; margin-bottom: 18px">
@@ -301,10 +301,10 @@ if (getToken()) {
 .login-cover {
   .login-title {
     color: #000;
-    font-size: 52px;
+    font-size: 40px;
     margin: 0 0 6px 0;
     font-weight: bold;
-    font-family: 'SmileySans得意黑';
+    // font-family: 'SmileySans得意黑';
     letter-spacing: 1.2px;
 
     display: flex;

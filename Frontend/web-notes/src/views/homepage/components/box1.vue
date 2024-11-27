@@ -2,8 +2,10 @@
     <div class="box">
         <div class="introduce">
             <div class="middle">
-                <p class="title">简单记，深刻思</p>
-                <p class="Subtitle">让创意与思维流畅连接，助你高效管理知识与灵感。</p>
+                <p class="title">简单记，深刻<span style="background-color: rgba(187, 214, 251,0.7);">思</span></p>
+                <p class="Subtitle">让<span
+                        style="background-color: rgba(248,216,73,0.7);padding: 0 4px; color:#000;">创意与思维</span>流畅连接，助你高效管理知识与灵感。
+                </p>
                 <router-link to="/login">
                     <div class="start">立即开始</div>
                 </router-link>
@@ -12,7 +14,7 @@
         </div>
 
         <div class="show">
-
+            <img src="@/assets/images/home2.png" alt="">
         </div>
     </div>
 </template>
@@ -25,6 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 10;
 
     .introduce {
         position: relative;
@@ -49,7 +52,7 @@
             .Subtitle {
                 text-align: center;
                 font-size: 18px;
-                color: #666;
+                color: #333;
             }
         }
 
@@ -64,8 +67,14 @@
             z-index: -1;
         }
 
+        @media (max-width: 992px) {
+            .bg {
+                width: 400px;
+            }
+        }
+
         .start {
-            margin-top: 30px;
+            margin-top: 60px;
             width: 180px;
             text-align: center;
             padding: 10px 0;
@@ -77,20 +86,31 @@
 
         .start:hover,
         .start:active {
-            background-color: #424149;
+            background-color: #474ce3;
         }
     }
 
 
     .show {
         width: 100%;
-        height: 600px;
-        margin: 100px 0;
+        height: auto;
+        margin: 140px 0;
         // box-shadow: 0 0 5px #ccc;
-        background-image: url("@/assets/images/home2.png");
-        background-position: top;
-        background-repeat: no-repeat;
-        background-size: cover;
+        // background-image: url("@/assets/images/home2.png");
+        // background-position: top;
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+        }
     }
+
+    // @media (max-width: 992px) {
+    //     .show {
+    //         height: auto;
+    //     }
+    // }
 }
 </style>

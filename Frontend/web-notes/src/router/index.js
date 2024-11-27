@@ -65,17 +65,17 @@ const router = createRouter({
             },
           ],
         },
+        {
+          path: '/vip',
+          component: () => import('../views/subscribe/index.vue'),
+          meta: { title: 'VIP 订阅' },
+        },
+        {
+          path: '/template',
+          component: () => import('../views/template/index.vue'),
+          meta: { title: '模板中心' },
+        },
       ],
-    },
-    {
-      path: '/vip',
-      component: () => import('../views/subscribe/index.vue'),
-      meta: { title: 'VIP 订阅' },
-    },
-    {
-      path: '/template',
-      component: () => import('../views/template/index.vue'),
-      meta: { title: '模板中心' },
     },
   ],
 });
