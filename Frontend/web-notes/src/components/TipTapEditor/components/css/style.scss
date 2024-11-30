@@ -1,0 +1,77 @@
+.ThinKing-Editor-Box {
+    // 拖拽光标
+    .ThinKing-Dropcursor {
+    }
+
+    // 占位符提示
+    .ProseMirror-focused {
+        p.is-editor-empty:first-child::before {
+            color: #adb5bd;
+            content: attr(data-placeholder);
+            float: left;
+            height: 0;
+            pointer-events: none;
+        }
+
+        p.is-empty::before {
+            color: #adb5bd;
+            content: attr(data-placeholder);
+            float: left;
+            height: 0;
+            pointer-events: none;
+        }
+    }
+}
+
+.ThinKing-Editor {
+    outline: none;
+
+    p {
+        line-height: 28px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #333;
+        padding: 20px 0 6px 0;
+        box-sizing: border-box;
+    }
+    h1 {
+        font-size: 30px;
+        padding: 20px 0 6px 0;
+    }
+    h2 {
+        font-size: 28px;
+        padding: 18px 0 6px 0;
+    }
+    h3 {
+        font-size: 24px;
+        padding: 16px 0 6px 0;
+    }
+    h4 {
+        font-size: 20px;
+        padding: 12px 0 6px 0;
+    }
+    h5 {
+        font-size: 18px;
+        padding: 10px 0 6px 0;
+    }
+    h6 {
+        font-size: 16px;
+        padding: 8px 0 6px 0;
+    }
+
+    .mention {
+        background-color: #f6f2ff;
+        border-radius: 0.4rem;
+        box-decoration-break: clone;
+        color: #6a00f5;
+        padding: 0.1rem 0.3rem;
+    }
+}

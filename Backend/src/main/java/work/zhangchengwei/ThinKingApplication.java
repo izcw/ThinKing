@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan({"work.zhangchengwei.system.mapper", "work.zhangchengwei.note.mapper"})
-public class NexNoteApplication {
+public class ThinKingApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NexNoteApplication.class, args);
+        SpringApplication.run(ThinKingApplication.class, args);
     }
 
 }

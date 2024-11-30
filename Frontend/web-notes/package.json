@@ -16,14 +16,32 @@
     "make-installer": "electron-builder"
   },
   "dependencies": {
+    "@tiptap/extension-bubble-menu": "^2.10.3",
+    "@tiptap/extension-character-count": "^2.10.3",
+    "@tiptap/extension-color": "^2.10.3",
+    "@tiptap/extension-document": "^2.10.3",
+    "@tiptap/extension-dropcursor": "^2.10.3",
+    "@tiptap/extension-heading": "^2.10.3",
+    "@tiptap/extension-history": "^2.10.3",
+    "@tiptap/extension-mention": "^2.10.3",
+    "@tiptap/extension-paragraph": "^2.10.3",
+    "@tiptap/extension-placeholder": "^2.10.3",
+    "@tiptap/extension-text": "^2.10.3",
+    "@tiptap/extension-text-style": "^2.10.3",
+    "@tiptap/pm": "^2.10.3",
+    "@tiptap/suggestion": "^2.10.3",
+    "@tiptap/vue-3": "^2.10.3",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.7",
     "lodash": "^4.17.21",
     "pinia": "^2.2.4",
     "relation-graph-vue3": "^2.2.8",
+    "screenfull": "^6.0.2",
+    "v-click-outside": "^3.2.0",
     "vue": "^3.5.11",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vue3-colorpicker": "^2.3.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.5.0",

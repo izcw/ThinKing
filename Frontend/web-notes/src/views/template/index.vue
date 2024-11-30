@@ -103,7 +103,7 @@ import CollapseMenuBox from '@/components/CollapseMenu.vue';
         display: flex;
 
         .catalog {
-            width: 400px;
+            width: 300px;
             height: 100%;
 
             .item {

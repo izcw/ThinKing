@@ -1,5 +1,5 @@
 <template>
-    <div class="lock-screen">
+    <div class="lock-screen text-select ban-drag">
         <div class="background">
             <div class="lockbox">
                 <div class="mask" :class="{ blurred: isInputFocused }"></div>
@@ -8,7 +8,7 @@
                         <div class="timeBox" :class="{ 'timeBoxMask': isInputFocused }">
                             17:07
                         </div>
-                        <img src="@/assets/images/noteback.jpg" alt="">
+                        <img src="@/assets/images/noteback.jpg" class="ban-drag" alt="">
                         <div>
                             <el-input v-model="lockPassword" style="width: 200px" size="large" type="password"
                                 show-password placeholder="输入PIN码解锁" @focus="handleFocus(true)"
@@ -24,7 +24,7 @@
         </div>
         <div class="logo" :style="{ 'z-index': isInputFocused == true ? 1 : 200 }">
             <router-link to="home">
-                <img src="@/assets/images/logo.png" alt="">
+                <img src="@/assets/images/logo.png" class="ban-drag" alt="">
             </router-link>
         </div>
     </div>

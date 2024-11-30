@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
-import NoteLayout from '@/views/note/index.vue';
+import NoteLayout from '@/layout/components/content/index.vue';
 import LoginLayout from '@/views/login/index.vue';
 import { setPageTitle } from '@/utils/page-title-util';
 import { getToken } from '@/utils/token-util'; // 用于获取 token
@@ -45,26 +45,25 @@ const router = createRouter({
       ],
     },
     {
-      path: '/:spaceId',
+      path: '/space:spaceId',
       component: Layout,
       children: [
         {
-          path: '',
+          path: '/space:spaceId/',
           component: () => import('../views/index/index.vue'),
           meta: { title: '主页' },
         },
         {
-          path: ':noteId',
+          path: '/space:spaceId/:noteId',
           component: NoteLayout,
           meta: { title: '笔记详情' },
-          children: [
-            {
-              path: 'edit',
-              component: () => import('../views/note/components/hello.vue'),
-              meta: { title: '编辑笔记' },
-            },
-          ],
         },
+      ],
+    },
+    {
+      path: '/other',
+      component: Layout,
+      children: [
         {
           path: '/vip',
           component: () => import('../views/subscribe/index.vue'),

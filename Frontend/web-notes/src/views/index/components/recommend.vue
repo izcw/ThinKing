@@ -1,6 +1,6 @@
 <template>
     <div class="recommend text-select" v-if="!data.length == 0">
-        <p><el-text class="mx-1" type="primary">推荐编辑</el-text></p>
+        <p><el-text class="mx-1" type="primary">收藏</el-text></p>
         <div class="content">
             <div class="item" v-for="item in data" :key="item.id" :class="{ 'bgNot': item.cover == null }"
                 :style="{ 'background-image': 'URL(' + item.cover + ')' }">

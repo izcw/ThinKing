@@ -14,7 +14,7 @@
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item">
-                    <n-rate clearable count="1">
+                    <n-rate clearable :count="1">
                         <n-icon size="18">
                             <StarRegular />
                         </n-icon>

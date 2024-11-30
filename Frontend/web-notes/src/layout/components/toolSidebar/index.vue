@@ -25,6 +25,9 @@ import catalogOutlineBox from './components/catalogOutline.vue'
 import AIStormBox from './components/AIStorm.vue'
 import AnnotationsBox from './components/Annotations.vue'
 
+
+let handleUpdateValue = ref()
+
 // 展开关闭侧边栏状态
 const updateParentSidebarWidth = inject('updateParentSidebarWidth'); // 注入更新状态的方法
 const toggleSidebarWidth = (width) => {

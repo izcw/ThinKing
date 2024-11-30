@@ -2,7 +2,7 @@
     <el-tree style="background-color: transparent;" :allow-drop="allowDrop" :allow-drag="allowDrag" :data="data"
         draggable node-key="id" :expand-on-click-node="false" @node-drag-start="handleDragStart"
         @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-        @node-drag-end="handleDragEnd" @node-drop="handleDrop">
+        @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']" highlight-current>
         <template #default="{ node, data }">
             <div class="custom-tree-node">
                 <div class="title" @click="openPage(node)">
@@ -10,11 +10,13 @@
                     <el-text truncated>{{ node.label }}</el-text>
                 </div>
                 <div class="tools">
-                    <div class="item" @click="append(data)">
-                        +
-                    </div>
-                    <div class="item" @click="remove(node, data)">
-                        ...
+                    <div class="content">
+                        <div class="item" @click="append(data)">
+                            +
+                        </div>
+                        <div class="item" @click="remove(node, data)">
+                            ...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,12 +36,29 @@ let openPage = (val) => {
 // Data
 const data = ref([
     {
+        id: '1',
+        label: '欢迎来到ThinKing笔记',
+        children: [
+            {
+                id: '1.2',
+                label: '我能用ThinKing来干什么？',
+            },
+            {
+                id: '1.3',
+                label: '入门教程',
+            },
+        ],
+    },
+    {
+        id: '2',
         label: '莎士比亚笔下的爱情观',
         children: [
             {
+                id: '2.1',
                 label: 'Level two 1-1',
                 children: [
                     {
+                        id: '2.1.1',
                         label: 'Level three 1-1-1',
                     },
                 ],
@@ -47,9 +66,11 @@ const data = ref([
         ],
     },
     {
+        id: '3',
         label: 'Java',
         children: [
             {
+                id: '3.1',
                 label: '探索Java世界的奥秘',
                 children: [
                     {
@@ -135,59 +156,76 @@ const remove = (node, data) => {
 
 <style scoped lang='scss'>
 .custom-tree-node {
-    width: calc(100% - 26px);
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 
-    .icon {
-        margin-right: 10px;
-    }
 
     .title {
         display: flex;
         align-items: center;
         overflow: hidden;
         padding-left: 4px;
-        
+
         width: 100%;
         height: 100%;
         padding-right: 10px;
         box-sizing: border-box;
 
-        span{
-            font-size: 15px !important;
+        span {
+            font-size: 14px !important;
         }
+
         .icon {
-            font-size: 18px !important;
+            font-size: 14px !important;
             opacity: 1;
+            margin-right: 8px;
+
         }
     }
 
     .tools {
-        display: flex;
-        align-items: center;
+        position: absolute;
+        right: 4px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
         opacity: 0;
 
-        .item {
-            width: 24px;
-            height: 24px;
+        .content {
             display: flex;
             align-items: center;
-            justify-content: center;
+            padding-right: 4px;
 
-            border-radius: 4px;
+            .item {
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-            &:hover,
-            &:active {
-                background-color: #fff;
+                border-radius: 4px;
+
+                &:hover,
+                &:active {
+                    background-color: #DDDDDB;
+                }
             }
         }
     }
 }
 
-.custom-tree-node:hover .tools,
-.custom-tree-node:active .tools {
+.custom-tree-node:hover .title {
+    width: calc(100% - 52px)
+}
+
+.custom-tree-node:hover .tools {
     opacity: 1;
 }
-</style>
+
+// .custom-tree-node:hover .tools,
+// .custom-tree-node:active .tools {
+//     opacity: 1;
+// }</style>

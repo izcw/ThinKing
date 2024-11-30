@@ -19,20 +19,45 @@
 
 /* 树 */
 .el-tree-node__content {
+    position: relative;
+    padding: 4px 0;
+    margin-bottom: 8px;
 
     .el-tree-node__expand-icon {
-        font-size: 16px;
+        width: 12px;
+        height: 12px;
+        padding: 6px !important;
+        box-sizing: border-box;
         border-radius: 4px;
+        position: absolute;
+        left: 4px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 999;
+        color: #666;
+        background-color: #dddddb;
+        opacity: 0;
     }
-    .el-tree-node__expand-icon:hover {
-        background-color: #fff;
-    }
-    padding: 2px 0;
-    margin-bottom: 8px;
+}
+.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+    background-color: #efefed !important;
 }
 
 .el-tree-node__content:hover {
-    background-color: antiquewhite !important;
+    background-color: #efefed !important;
+}
+
+.el-tree-node__content:hover {
+    .el-tree-node__expand-icon {
+        opacity: 1;
+    }
+}
+
+.custom-tree-node:hover {
+    .tools {
+        display: block !important;
+    }
 }
 
 // 抽屉
@@ -54,16 +79,15 @@
     opacity: 0;
 }
 
-
 // 对话框
-.HideTitle{
+.HideTitle {
     padding: 0 !important;
 }
-.HideTitle .el-dialog__header{
+.HideTitle .el-dialog__header {
     display: none;
 }
 
-.HideTitle .el-dialog__body{
+.HideTitle .el-dialog__body {
     width: 100%;
     height: 100%;
 }

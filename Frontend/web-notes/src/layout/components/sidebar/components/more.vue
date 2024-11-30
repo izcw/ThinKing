@@ -4,9 +4,9 @@
             <template #trigger>
                 <router-link :to="item.link">
                     <div class="item-more">
-                        <n-icon size="20">
+                        <!-- <n-icon size="20">
                             <component :is="item.icon" />
-                        </n-icon>
+                        </n-icon> -->
                         <span>{{ item.name }}</span>
                     </div>
                 </router-link>
@@ -23,7 +23,7 @@
 
         <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="right" trigger="click" :width="500"
             virtual-triggering>
-            <el-input v-model="input" style="width: 100%;" placeholder="搜索被移入垃圾箱的页面" />
+            <el-input v-model="SearchGarbage" style="width: 100%;" placeholder="搜索被移入垃圾箱的页面" />
             <div class="dustbin">
                 <div class="item">
                     <p>mysql</p>
@@ -57,16 +57,20 @@ let data = ref([
         name: "模板中心",
         link: '/template',
         describe: "查找精美的模板",
-        icon: Diamond16Regular
+        // icon: Diamond16Regular
     },
     {
         id: 1,
         name: "会员中心",
         link: '/vip',
         describe: "升级享受更好的体验，点击了解》",
-        icon: Money16Regular
+        // icon: Money16Regular
     }
 ])
+
+
+// 搜索垃圾箱
+let SearchGarbage = ref()
 </script>
 <style scoped lang='scss'>
 .more {
