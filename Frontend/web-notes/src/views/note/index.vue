@@ -1,9 +1,10 @@
 <template>
-    <div class="contentPage GMargin">
+    <div class="contentPage">
         <div class="pageIcon"></div>
         <el-input v-model="title" :resize="'none'" style="width: 100%" autosize type="textarea" placeholder="未命名页面" />
         <TipTapEditor />
-        <!-- <p>大师风范的返回结果吧据东方大师风范的返回结果吧据东方化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给大师风范的返回结果吧据东方化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给</p> -->
+        <p>大师风范的返回结果吧据东方大师风范的返回结果吧据东方化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给大师风范的返回结果吧据东方化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给
+        </p>
     </div>
 </template>
 <script setup>
@@ -22,7 +23,7 @@ watch(title, (newValue, oldValue) => {
     width: 100%;
     height: 100%;
     margin-top: 1rem;
-    margin-bottom: 100px; // background-color: aqua;
+    margin-bottom: 100px;
     position: relative;
 
     // 页面图标

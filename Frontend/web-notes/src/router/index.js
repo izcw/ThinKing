@@ -10,7 +10,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/home', // 修改默认重定向到 /home
+      redirect: '/home',
     },
     {
       path: '/home',

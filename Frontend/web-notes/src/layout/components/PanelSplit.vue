@@ -6,7 +6,7 @@
                 <slot name="1"></slot>
             </div>
             <div class="divider" @mousedown.stop="startDrag" v-show="parentSidebarStatus"></div>
-            <div class="panel panel-right">
+            <div class="panel panel-right" :style="{ flex: '1' }">
                 <slot name="2"></slot>
             </div>
         </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, onMounted, watch, provide } from 'vue';
+import { ref, computed, defineProps, onMounted, provide } from 'vue';
 
 const props = defineProps({
     defaultSize: {
@@ -38,6 +38,7 @@ const props = defineProps({
         default: false
     }
 });
+
 let leftPanelSize = ref(props.defaultSize); // 左面板默认宽度
 let dragging = false;
 let startX = 0;
@@ -65,6 +66,7 @@ const calculateNewLeftSize = (deltaX) => {
     return Math.max(props.minPanelSize, Math.min(maxPanelSizeValue.value, newSize));
 };
 
+// 开始拖动
 const startDrag = (event) => {
     dragging = true;
     startX = event.clientX;
@@ -73,19 +75,20 @@ const startDrag = (event) => {
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'col-resize';
 
-    // 阻止冒泡事件
     event.stopPropagation();
 
     document.addEventListener('mousemove', onDrag);
     document.addEventListener('mouseup', stopDrag);
 };
 
+// 拖动中
 const onDrag = (event) => {
     if (!dragging) return;
     const deltaX = event.clientX - startX;
     leftPanelSize.value = calculateNewLeftSize(deltaX);
 };
 
+// 拖动结束
 const stopDrag = () => {
     dragging = false;
     document.body.style.userSelect = '';
@@ -111,6 +114,7 @@ onMounted(() => {
 .container {
     display: flex;
     height: 100%;
+    width: 100%;
 }
 
 .panel {
@@ -119,15 +123,18 @@ onMounted(() => {
 
 .panel-left {
     transition: all 0.3s ease;
+    flex-shrink: 0;
+    /* 确保 panel-left 不受挤压 */
 }
 
 .panel-left.no-transition {
     transition: none;
-    /* 拖动时去除动画 */
 }
 
 .panel-right {
     flex-grow: 1;
+    /* 确保 panel-right 填充剩余空间 */
+    transition: all 0.3s ease;
 }
 
 .divider {
@@ -144,6 +151,5 @@ onMounted(() => {
 
 .reversed {
     flex-direction: row-reverse;
-    /* 处理反向显示 */
 }
 </style>

@@ -161,17 +161,17 @@ const remove = (node, data) => {
     align-items: center;
     justify-content: space-between;
     position: relative;
-
-
+    
+    
     .title {
         display: flex;
         align-items: center;
         overflow: hidden;
         padding-left: 4px;
+        padding-right: 10px;
 
         width: 100%;
         height: 100%;
-        padding-right: 10px;
         box-sizing: border-box;
 
         span {

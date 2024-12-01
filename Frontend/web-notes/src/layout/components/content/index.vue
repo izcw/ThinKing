@@ -4,17 +4,17 @@
             <PageHeaderBox />
         </div><!-- 页头 -->
         <div class="mainbox">
-            <PanelSplitBox :defaultSize="300" :minPanelSize="280" :maxPanelSize="800" contentPanel="right"
+            <PanelSplitBox :defaultSize="300" :minPanelSize="250" :maxPanelSize="800" contentPanel="right"
                 :defaultSwitch="false">
                 <template v-slot:1>
                     <div class="sidebar">
-                        <ToolSidebarBox /><!-- 工具侧边栏 -->
+                        <ToolSidebarBox />
                     </div>
                 </template>
                 <template v-slot:2>
                     <main class="content">
                         <ContentBox />
-                        <levitatedSphereBox /><!-- 悬浮球 -->
+                        <levitatedSphereBox />
                     </main>
                 </template>
             </PanelSplitBox><!-- 分割面板 -->
@@ -58,6 +58,4 @@ import PageHeaderBox from '@/layout/components/PageHeader/index.vue'
         position: relative;
     }
 }
-
-
 </style>

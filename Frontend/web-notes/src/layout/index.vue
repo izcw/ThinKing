@@ -44,27 +44,4 @@ import PanelSplitBox from './components/PanelSplit.vue'
     width: 100%;
     height: 100%;
 }
-
-
-// @media (max-width: 1200px) {
-//     .sidebar {
-//         /* display: none; */
-//         position: fixed;
-//         top: 0;
-//         left: 0;
-//         z-index: 9999;
-//         width: 400px;
-//         animation: fadeOut 0.3s forwards;
-//     }
-// }
-
-// @keyframes fadeOut
-// {
-//     from {
-//         left: -20px;
-//     }
-//     to {
-//         left: 0;
-//     }
-// }
 </style>

@@ -23,7 +23,6 @@
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
 import catalogOutlineBox from './components/catalogOutline.vue'
 import AIStormBox from './components/AIStorm.vue'
-import AnnotationsBox from './components/Annotations.vue'
 
 
 let handleUpdateValue = ref()
@@ -38,7 +37,7 @@ const handleBeforeLeave = (tabName) => {
     switch (tabName) {
         case 'chap2':
             console.log('ai')
-            toggleSidebarWidth(550)
+            toggleSidebarWidth(500)
             return true;
         default:
             toggleSidebarWidth(300)

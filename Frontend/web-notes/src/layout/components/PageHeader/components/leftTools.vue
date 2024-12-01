@@ -20,7 +20,7 @@
             </template>
             <span>返回 Ctrl+[</span>
         </n-tooltip>
-        <n-tooltip placement="bottom" trigger="hover">
+        <n-tooltip placement="bottom" trigger="hover" class="LessHiddenElements">
             <template #trigger>
                 <div class="Tools-item">
                     <n-icon size="16">
@@ -34,7 +34,7 @@
 
         <div class="Breadcrumb text-select">
             <n-breadcrumb>
-                <n-breadcrumb-item>
+                <n-breadcrumb-item class="LessHiddenElements">
                     <n-icon size="16">
                         <StarRegular />
                     </n-icon>
@@ -42,7 +42,7 @@
                         打发十分拓展性sdfds 、用户体验和编辑灵活性上仍存在一定不足，难以满足用户个性化需求
                     </n-ellipsis>
                 </n-breadcrumb-item>
-                <n-breadcrumb-item>
+                <n-breadcrumb-item class="LessHiddenElements">
                     <n-icon size="16">
                         <StarRegular />
                     </n-icon>
@@ -87,6 +87,13 @@ const toggleSidebarStatus = () => {
 
     .Tools-item {
         margin-right: 6px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .LessHiddenElements {
+        display: none;
     }
 }
 </style>

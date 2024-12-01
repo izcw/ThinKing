@@ -1,11 +1,9 @@
 <template>
-    <div class="contentBox" ref="contentBoxRef"> <!-- 添加 ref -->
-        <div class="cover">
-
-        </div><!-- 封面 -->
-        <div class="pagebox" :style="{ width: centiBoole ? '100%' : 850 + 'px' }">
+    <div class="contentBox" ref="contentBoxRef">
+        <div class="cover"></div> <!-- 封面 -->
+        <div class="pagebox" :style="pageBoxStyle">
             <contentPageBox />
-        </div><!-- 页面 -->
+        </div> <!-- 页面 -->
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item"
@@ -27,40 +25,53 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
-import { ChevronLeft16Filled, ChevronRight16Filled } from '@vicons/fluent'
+import { ChevronLeft16Filled, ChevronRight16Filled } from '@vicons/fluent';
 import contentPageBox from '@/views/note/index.vue';
 
+// 父组件的侧边栏状态
+const parentSidebarStatus = inject('parentSidebarStatus');
+const updateParentSidebarStatus = inject('updateParentSidebarStatus');
 
-// 展开关闭侧边栏状态
-const parentSidebarStatus = inject('parentSidebarStatus'); // 注入父组件的状态
-const updateParentSidebarStatus = inject('updateParentSidebarStatus'); // 注入更新状态的方法
 const toggleSidebarStatus = () => {
     updateParentSidebarStatus(!parentSidebarStatus.value);
 };
 
+const contentBoxRef = ref(null); // 获取 contentBox 的引用
+const pageBoxStyle = ref({ padding: '0 100px' }); // 默认的 padding
 
-let centiBoole = ref(false)
-const contentBoxRef = ref(null); // 用于获取 .contentBox 元素的引用
+// 使用 ResizeObserver 实时监听 contentBox 的宽度变化
+const updatePadding = () => {
+    if (contentBoxRef.value && contentBoxRef.value.offsetWidth < 768) {
+        pageBoxStyle.value = { padding: '0 1.5rem' };
+    } else {
+        pageBoxStyle.value = { padding: '0 100px' };
+    }
+};
+
 onMounted(() => {
-    const observer = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-            // console.log('宽度变化:', entry.contentRect.width);
-            centiBoole.value = entry.contentRect.width < 880 ? true : false;
-        }
+    // 初始化时检测一次
+    updatePadding();
+
+    // 创建 ResizeObserver 来监听 contentBox 宽度变化
+    const resizeObserver = new ResizeObserver(() => {
+        updatePadding(); // 每次宽度变化时更新 padding
     });
 
+    // 观察 contentBox 元素
     if (contentBoxRef.value) {
-        console.log(contentBoxRef.value);
-        observer.observe(contentBoxRef.value); // 观察 .contentBox 元素
+        resizeObserver.observe(contentBoxRef.value);
     }
 
+    // 在组件卸载时停止监听
     onBeforeUnmount(() => {
-        observer.disconnect(); // 组件卸载时停止观察
+        if (contentBoxRef.value) {
+            resizeObserver.unobserve(contentBoxRef.value);
+        }
     });
 });
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .contentBox {
     width: 100%;
     height: 100%;
@@ -74,7 +85,6 @@ onMounted(() => {
     height: 10px;
 }
 
-// https://segmentfault.com/q/1010000043110324
 // 滚动条两端的按钮
 .contentBox::-webkit-scrollbar-button {
     // display: block;
@@ -108,7 +118,6 @@ onMounted(() => {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 100,0 50,50'/></svg>");
 }
 
-
 /* 滚动条里面的小方块 */
 .contentBox::-webkit-scrollbar-thumb {
     background: #DCDCDC;
@@ -131,5 +140,7 @@ onMounted(() => {
 
 .pagebox {
     margin: 0 auto;
+    padding: 0 100px;
+    box-sizing: border-box;
 }
 </style>
