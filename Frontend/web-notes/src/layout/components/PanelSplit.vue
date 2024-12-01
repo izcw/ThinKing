@@ -138,7 +138,7 @@ onMounted(() => {
 }
 
 .divider {
-    width: 3px;
+    width: 4px;
     background-color: #f7f7f7;
     transition: all 0.1s ease;
     cursor: col-resize;

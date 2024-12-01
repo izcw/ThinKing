@@ -5,7 +5,7 @@
         </div><!-- 页头 -->
         <div class="mainbox">
             <PanelSplitBox :defaultSize="300" :minPanelSize="250" :maxPanelSize="800" contentPanel="right"
-                :defaultSwitch="false">
+                :defaultSwitch="true">
                 <template v-slot:1>
                     <div class="sidebar">
                         <ToolSidebarBox />

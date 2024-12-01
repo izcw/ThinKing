@@ -1,13 +1,20 @@
 <template>
     <div class="contentBox" ref="contentBoxRef">
-        <div class="cover"></div> <!-- 封面 -->
-        <div class="pagebox" :style="pageBoxStyle">
+        <div class="cover" :style="{
+            'background-image': coverImage ? 'url(' + coverImage + ')' : 'none',
+            'height': coverImage ? '280px' : '70px'
+        }">
+            <div class="SelectCover">
+                <el-button plain size="small">更换封面</el-button>
+            </div>
+        </div> <!-- 封面 -->
+        <div class="pagebox" :style="pageBoxStyle" style="max-width:920px;">
             <contentPageBox />
         </div> <!-- 页面 -->
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item"
-                    style="width: 26px;height: 26px; position: absolute;right: 14px;top: 0;bottom: 0;margin: auto;font-size: 28px;"
+                    style="width: 26px;height: 26px; position: absolute;right: 14px;top: 0;bottom: 0;margin: auto;font-size: 28px;background-color: #f3f3f363;"
                     @click="toggleSidebarStatus">
                     <n-icon size="24" v-if="parentSidebarStatus">
                         <ChevronRight16Filled />
@@ -27,6 +34,8 @@
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
 import { ChevronLeft16Filled, ChevronRight16Filled } from '@vicons/fluent';
 import contentPageBox from '@/views/note/index.vue';
+
+let coverImage = ref('https://www.notion.so/images/page-cover/rijksmuseum_jansz_1649.jpg')
 
 // 父组件的侧边栏状态
 const parentSidebarStatus = inject('parentSidebarStatus');
@@ -77,6 +86,7 @@ onMounted(() => {
     height: 100%;
     overflow-y: auto;
 }
+
 
 // 滚动条样式
 /* 高度和宽度分别对应横竖滚动条的尺寸 */
@@ -131,11 +141,22 @@ onMounted(() => {
 
 .cover {
     width: 100%;
-    height: 280px;
-    background-image: url(/src/assets/images/noteback.jpg);
-    background-position: top;
+    background-color: #fff;
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    position: relative;
+
+    .SelectCover {
+        display: none;
+        position: absolute;
+        top: 1rem;
+        right: 3rem;
+    }
+
+    &:hover .SelectCover {
+        display: block;
+    }
 }
 
 .pagebox {

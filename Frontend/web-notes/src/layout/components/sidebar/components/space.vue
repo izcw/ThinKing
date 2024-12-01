@@ -157,7 +157,7 @@ const handleWheel = (event) => {
 
 // 鼠标横向滚动--添加事件监听
 onMounted(() => {
-    scrollContainer.value.addEventListener('wheel', handleWheel);
+    scrollContainer.value.addEventListener('wheel', handleWheel, { passive: false });
 });
 
 // 鼠标横向滚动--移除事件监听

@@ -32,6 +32,28 @@
         color: #333;
     }
 
+    // 文本选中时的背景颜色
+    p::selection,
+    span::selection,
+    mark::selection {
+        background: #ceeafe !important;
+        color: #444 !important;
+    }
+
+    p::-moz-selection,
+    span::selection,
+    mark::selection {
+        background: #ceeafe !important;
+        color: #444 !important;
+    }
+
+    p::-webkit-selection,
+    span::selection,
+    mark::selection {
+        background: #ceeafe !important;
+        color: #444 !important;
+    }
+
     h1,
     h2,
     h3,
@@ -67,11 +89,33 @@
         padding: 8px 0 6px 0;
     }
 
+    // 提及
     .mention {
         background-color: #f6f2ff;
         border-radius: 0.4rem;
         box-decoration-break: clone;
         color: #6a00f5;
         padding: 0.1rem 0.3rem;
+    }
+
+    // 标记为代码
+    code {
+        background-color: #e7e8ec;
+        border-radius: 4px;
+        color: #bc2525;
+        font-size: 0.85rem;
+        padding: 4px 10px;
+        transform: scale(0.7);
+    }
+
+    // 链接
+    a {
+        color: #00a1d6;
+        cursor: pointer;
+        text-decoration:underline;
+
+        &:hover {
+            color: #00a1d6;
+        }
     }
 }

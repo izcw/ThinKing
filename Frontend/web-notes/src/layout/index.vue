@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <PanelSplitBox :defaultSize="300" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"
+        <PanelSplitBox :defaultSize="320" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"
             :defaultSwitch="true">
             <template v-slot:1>
                 <div class="sidebar">

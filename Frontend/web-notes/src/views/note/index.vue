@@ -1,10 +1,8 @@
 <template>
     <div class="contentPage">
-        <div class="pageIcon"></div>
-        <el-input v-model="title" :resize="'none'" style="width: 100%" autosize type="textarea" placeholder="未命名页面" />
+        <div class="pageIcon">😀</div>
+        <el-input v-model.trim="title" :resize="'none'" style="width: 100%" autosize type="textarea" placeholder="未命名页面" />
         <TipTapEditor />
-        <p>大师风范的返回结果吧据东方大师风范的返回结果吧据东方化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给大师风范的返回结果吧据东方化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给化工科技和就返回港口集团引入俄国热狗图也工程包括v凯瑞福永看过热炕头给
-        </p>
     </div>
 </template>
 <script setup>
@@ -29,12 +27,24 @@ watch(title, (newValue, oldValue) => {
     // 页面图标
     .pageIcon {
         position: absolute;
-        top: -46px;
-        left: 12px;
-        width: 60px;
-        height: 60px;
-        background-color: #efefed;
+        top: -52px;
+        left: 0;
+        width: 70px;
+        height: 70px;
+        font-size: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .pageIcon {
+            top: -45px;
+            width: 55px;
+            height: 55px;
+            font-size: 45px;
+        }
     }
 
     // 标题
@@ -46,10 +56,9 @@ watch(title, (newValue, oldValue) => {
         padding: 0 !important;
         margin: 0 !important;
         padding-bottom: 1rem !important;
-        margin-top: 3rem !important;
+        margin-top: 50px !important;
         margin-bottom: 1rem !important;
         border-bottom: 1px solid #eee;
-
 
         &::-webkit-input-placeholder {
             color: #E1E1E0;

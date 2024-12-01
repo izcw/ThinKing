@@ -9,7 +9,7 @@
                 <el-col :span="15" :xs="24" :sm="24" :md="24" :lg="14" :xl="15">
                     <el-row :gutter="30">
                         <el-col :span="24">
-                            <el-input v-model="input" size="large" style="width:320px;" placeholder="全局搜索，请输入..."
+                            <el-input v-model="search" size="large" style="width:320px;" placeholder="全局搜索，请输入..."
                                 clearable />
                         </el-col>
                         <el-col :span="24">
@@ -23,7 +23,7 @@
                         </el-col>
                     </el-row>
                 </el-col>
-                <el-col :span="9"  :xs="24" :sm="24"  :md="24" :lg="10" :xl="9">
+                <el-col :span="9" :xs="24" :sm="24" :md="24" :lg="10" :xl="9">
                     <!-- <calendarBox /> -->
                     <RecentlyEditedBox />
                     <RelationshipDiagramBox />
@@ -33,6 +33,7 @@
     </div>
 </template>
 <script setup>
+import { ref } from 'vue'
 import RecentlyEditedBox from './components/RecentlyEdited.vue';
 import calendarBox from './components/calendar.vue';
 import RelationshipDiagramBox from './components/RelationshipDiagram.vue';
@@ -41,6 +42,9 @@ import recommendBox from './components/recommend.vue';
 import searchItemBox from '@/components/searchItem.vue';
 
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
+
+
+let search = ref()
 </script>
 <style scoped lang='scss'>
 .title {
