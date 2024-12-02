@@ -18,13 +18,13 @@
 }
 
 /* 树 */
-.el-tree-node__content {
+.sidebarTree .el-tree-node__content {
     position: relative;
     margin-bottom: 8px;
 
     .el-tree-node__expand-icon {
-        width: 12px;
-        height: 12px;
+        width: 22px;
+        height: 22px;
         padding: 6px !important;
         box-sizing: border-box;
         border-radius: 4px;
@@ -39,21 +39,21 @@
         opacity: 0;
     }
 }
-.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+.sidebarTree .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
     background-color: #efefed !important;
 }
 
-.el-tree-node__content:hover {
+.sidebarTree .el-tree-node__content:hover {
     background-color: #efefed !important;
 }
 
-.el-tree-node__content:hover {
+.sidebarTree .el-tree-node__content:hover {
     .el-tree-node__expand-icon {
         opacity: 1;
     }
 }
 
-.custom-tree-node:hover {
+.sidebarTree .custom-tree-node:hover {
     .tools {
         display: block !important;
     }

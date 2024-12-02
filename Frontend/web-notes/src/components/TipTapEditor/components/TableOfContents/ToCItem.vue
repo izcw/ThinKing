@@ -1,6 +1,6 @@
 <template>
-    <div :class="dynamicClasses" :style="{ '--level': item.level }">
-        <a :href="'#' + item.id" @click.prevent="onItemClick" :data-item-index="item.itemIndex">
+    <div :class="dynamicClasses">
+        <a :href="'#' + item.id" @click.prevent="onItemClick" :data-item-index="item.itemIndex" :style="{ '--level': item.level }">
             {{ item.textContent }}
         </a>
     </div>
@@ -8,7 +8,6 @@
 
 <script setup>
 import { defineProps, defineEmits, computed } from 'vue'
-
 
 // 定义props
 const props = defineProps({
@@ -28,7 +27,7 @@ const dynamicClasses = computed(() => {
     return {
         'is-active': props.item.isActive && !props.item.isScrolledOver,
         'is-scrolled-over': props.item.isScrolledOver,
-        [`level${props.item.level}`]: true  // 使用方括号包裹表达式来拼接类名，符合对象语法要求
+        [`level-${props.item.level}`]: true  // 使用方括号包裹表达式来拼接类名，符合对象语法要求
     };
 });
 
@@ -40,3 +39,6 @@ const onItemClick = (event) => {
     emits('item-click', event, props.item.id)
 }
 </script>
+
+
+<style scoped lang='scss'></style>

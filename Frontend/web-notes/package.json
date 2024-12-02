@@ -17,10 +17,12 @@
   },
   "dependencies": {
     "@tiptap-pro/extension-table-of-contents": "^2.16.3",
+    "@tiptap/core": "^2.10.3",
     "@tiptap/extension-bold": "^2.10.3",
     "@tiptap/extension-bubble-menu": "^2.10.3",
     "@tiptap/extension-character-count": "^2.10.3",
     "@tiptap/extension-code": "^2.10.3",
+    "@tiptap/extension-collaboration": "^2.10.3",
     "@tiptap/extension-color": "^2.10.3",
     "@tiptap/extension-document": "^2.10.3",
     "@tiptap/extension-dropcursor": "^2.10.3",
@@ -44,14 +46,15 @@
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.7",
-    "lodash": "^4.17.21",
-    "pinia": "^2.2.4",
+    "pinia": "^2.2.8",
     "relation-graph-vue3": "^2.2.8",
     "screenfull": "^6.0.2",
     "v-click-outside": "^3.2.0",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5",
-    "vue3-colorpicker": "^2.3.0"
+    "vue3-colorpicker": "^2.3.0",
+    "y-indexeddb": "^9.0.12",
+    "yjs": "^13.6.20"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.5.0",

@@ -1,27 +1,29 @@
 <template>
-    <el-tree style="background-color: transparent;" :allow-drop="allowDrop" :allow-drag="allowDrag" :data="data"
-        draggable node-key="id" :expand-on-click-node="false" @node-drag-start="handleDragStart"
-        @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-        @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']" highlight-current>
-        <template #default="{ node, data }">
-            <div class="custom-tree-node">
-                <div class="title" @click="openPage(node)">
-                    <span class="icon">🥈</span>
-                    <el-text truncated>{{ node.label }}</el-text>
-                </div>
-                <div class="tools">
-                    <div class="content">
-                        <div class="item" @click="append(data)">
-                            +
-                        </div>
-                        <div class="item" @click="remove(node, data)">
-                            ...
+    <div class="sidebarTree">
+        <el-tree style="background-color: transparent;" :allow-drop="allowDrop" :allow-drag="allowDrag" :data="data"
+            draggable node-key="id" :expand-on-click-node="false" @node-drag-start="handleDragStart"
+            @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
+            @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']" highlight-current>
+            <template #default="{ node, data }">
+                <div class="custom-tree-node">
+                    <div class="title" @click="openPage(node)">
+                        <span class="icon">🥈</span>
+                        <el-text truncated>{{ node.label }}</el-text>
+                    </div>
+                    <div class="tools">
+                        <div class="content">
+                            <div class="item" @click="append(data)">
+                                +
+                            </div>
+                            <div class="item" @click="remove(node, data)">
+                                ...
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </template>
-    </el-tree>
+            </template>
+        </el-tree>
+    </div>
 </template>
 
 <script setup>
@@ -161,8 +163,8 @@ const remove = (node, data) => {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    
-    
+
+
     .title {
         display: flex;
         align-items: center;
@@ -175,11 +177,11 @@ const remove = (node, data) => {
         box-sizing: border-box;
 
         span {
-            font-size: 14px !important;
+            font-size: 15px !important;
         }
 
         .icon {
-            font-size: 14px !important;
+            font-size: 15px !important;
             opacity: 1;
             margin-right: 8px;
 
@@ -218,14 +220,10 @@ const remove = (node, data) => {
 }
 
 .custom-tree-node:hover .title {
-    width: calc(100% - 52px)
+    width: calc(100% - 52px);
 }
 
 .custom-tree-node:hover .tools {
     opacity: 1;
 }
-
-// .custom-tree-node:hover .tools,
-// .custom-tree-node:active .tools {
-//     opacity: 1;
-// }</style>
+</style>
