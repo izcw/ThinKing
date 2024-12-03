@@ -2,7 +2,7 @@
     <div class="catalogOutline">
         <!-- 目录 -->
         <n-collapse default-expanded-names="1" arrow-placement="right">
-            <n-collapse-item title="目录" name="1">
+            <n-collapse-item title="目录" name="1" @click="scrollIntoViewUp">
                 <template v-if="store.editor">
                     <Toc :editor="store.editor" :items="store.catalog" />
                 </template>

@@ -2,33 +2,30 @@
 <template>
   <div class="dropdown-menu">
     <template v-if="items.length">
-      <n-tabs type="line" trigger="hover" style="min-width: 240px; min-height: 320px;">
+      <n-tabs type="line" trigger="hover" style="min-width: 300px; min-height: 360px;">
         <n-tab-pane name="tabP1" tab="基本">
-          <n-infinite-scroll style="height: 240px" :distance="10" @load="handleLoad">
-            <n-button :class="{ 'is-selected': index === selectedIndex }" v-for="(item, index) in items" :key="index"
-              @click="selectItem(index)">
-              {{ item.title }}
-            </n-button>
-            <n-button :class="{ 'is-selected': index === selectedIndex }" v-for="(item, index) in items" :key="index"
-              @click="selectItem(index)">
-              {{ item.title }}
-            </n-button> <n-button :class="{ 'is-selected': index === selectedIndex }" v-for="(item, index) in items" :key="index"
-              @click="selectItem(index)">
-              {{ item.title }}
-            </n-button>
+          <n-infinite-scroll style="height: 360px;" :distance="10">
+            <div class="item" v-for="(item, index) in items" :key="index" text @click="selectItem(index)">
+              <div class="icon">
+                <n-icon size="24">
+                  <component :is="item.icon" />
+                </n-icon>
+              </div>
+              <div class="text">
+                <p class="title">{{ item.title }}</p>
+                <p class="describe">{{ item.describe }}</p>
+              </div>
+            </div>
           </n-infinite-scroll>
         </n-tab-pane>
         <n-tab-pane name="tabP2" tab="AI">
           ai
         </n-tab-pane>
-        <n-tab-pane name="tabP3" tab="表格">
-          表格
+        <n-tab-pane name="tabP4" tab="图像与文件">
+          图像与文件
         </n-tab-pane>
-        <n-tab-pane name="tabP4" tab="转换成">
-          转换成
-        </n-tab-pane>
-        <n-tab-pane name="tabP5" tab="媒体">
-          媒体
+        <n-tab-pane name="tabP5" tab="嵌入媒体">
+          嵌入媒体
         </n-tab-pane>
       </n-tabs>
     </template>
@@ -39,7 +36,12 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
+import { ElButton, ElText } from 'element-plus'
+
+
+
+
 // 使用defineProps定义props
 const props = defineProps({
   items: {
@@ -55,7 +57,7 @@ const props = defineProps({
 const selectedIndex = ref(0);
 
 // 使用watch函数来监听items的变化
-watch(() => props.items, () => {
+watch(() => props.items, (newValue) => {
   selectedIndex.value = 0;
 });
 
@@ -105,21 +107,61 @@ const selectItem = (index) => {
   padding: 6px 1rem;
   position: relative;
 
-  button {
-    align-items: center;
-    background-color: transparent;
-    display: flex;
-    gap: 0.25rem;
-    text-align: left;
+  .item {
     width: 100%;
+    height: auto;
+    margin: 0;
+    margin-bottom: 4px;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #eee;
+      padding: 4px;
+      box-sizing: border-box;
+      border-radius: 2px;
+      width: 46px;
+      min-width: 46px;
+      height: 46px;
+      margin-right: 10px;
+    }
+
+
+    .text {
+
+
+      .title {
+        font-size: 14px;
+        color: #333;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+      }
+
+      .describe {
+        font-size: 12px;
+        color: #666;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+      }
+    }
 
     &:hover,
     &:hover.is-selected {
-      background-color: blueviolet;
+      background-color: #f5f7fa;
     }
 
     &.is-selected {
-      background-color: blueviolet;
+      background-color: #f5f7fa;
     }
   }
 }

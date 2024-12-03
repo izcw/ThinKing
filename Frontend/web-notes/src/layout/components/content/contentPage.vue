@@ -6,12 +6,46 @@
             'height': coverImage ? '280px' : '70px'
         }">
             <div class="SelectCover">
-                <el-button plain size="small">更换封面</el-button>
+                <el-button plain size="small" ref="buttonCoverRef" v-click-outside="onClickOutside">更换封面</el-button>
             </div>
+            <el-popover ref="popoverCoverRef" :virtual-ref="buttonCoverRef" placement="bottom" trigger="click"
+                @show="showPopover" @hide="hidePopover" :hide-after="0" :width="600" virtual-triggering>
+                <n-tabs type="line" animated>
+                    <n-tab-pane name="oasis" tab="画廊">
+                        <div style="height: 360px;">
+                            <n-infinite-scroll :distance="10">
+                                <el-input v-model="SearchCover" style="width: 100%;margin-bottom: 1rem;"
+                                    placeholder="筛选" />
+
+                                <el-space direction="vertical" alignment="normal" style="margin-bottom: 1rem">
+                                    <el-text size="small">渐变</el-text>
+                                    <el-row :gutter="20">
+                                        <el-col :span="6" v-for="(item, index) in 20" :key="index">
+                                            <el-image style="width: 100%; height: 70px;"
+                                                src="https://picserver.duoyu.link/picfile/image/202403/31-1711877892472.jpg"
+                                                loading="lazy" fit="cover">
+                                            </el-image>
+                                        </el-col>
+                                    </el-row>
+                                </el-space>
+
+                            </n-infinite-scroll>
+                        </div>
+                    </n-tab-pane>
+                    <n-tab-pane name="the beatles" tab="上传">
+                        上传
+                    </n-tab-pane>
+                    <n-tab-pane name="jay chou" tab="链接">
+                        链接
+                    </n-tab-pane>
+                </n-tabs>
+            </el-popover>
         </div> <!-- 封面 -->
+
         <div class="pagebox" :style="pageBoxStyle" style="max-width:920px;">
             <contentPageBox />
         </div> <!-- 页面 -->
+
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item"
@@ -33,7 +67,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
-import { ChevronLeft16Filled, ChevronRight16Filled } from '@vicons/fluent';
+import { ChevronLeft16Filled, ChevronRight16Filled, ImageGlobe24Regular } from '@vicons/fluent';
 import contentPageBox from '@/views/note/index.vue';
 
 let coverImage = ref('https://www.notion.so/images/page-cover/rijksmuseum_jansz_1649.jpg')
@@ -79,6 +113,29 @@ onMounted(() => {
         }
     });
 });
+
+
+// 搜索封面
+let SearchCover = ref()
+
+// 弹出框
+const buttonCoverRef = ref()
+const popoverCoverRef = ref()
+const onClickOutside = () => {
+    unref(popoverCoverRef).popoverCoverRef?.delayHide?.()
+}
+
+// 弹出框显示
+const showPopover = () => {
+    // 禁止页面滚动
+    contentBoxRef.value.style.overflow = 'hidden';
+}
+
+// 弹出框隐藏
+const hidePopover = () => {
+    // 恢复页面滚动
+    contentBoxRef.value.style.overflow = '';
+}
 </script>
 
 <style scoped lang="scss">

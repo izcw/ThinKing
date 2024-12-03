@@ -65,18 +65,30 @@ import Link from '@tiptap/extension-link' // 链接
 import Subscript from '@tiptap/extension-subscript' // 下标
 import Superscript from '@tiptap/extension-superscript' // 上标
 // 离线支持
-import Collaboration from '@tiptap/extension-collaboration'
-// import * as Y from 'yjs'
-// import { IndexeddbPersistence } from 'y-indexeddb'
+import { createYDoc, initYjsStore, fetchServerData, updateServerData } from '@/utils/yjsSync'
 
 // 将Editor对象放入状态管理
 import { useEditorPageStore } from '@/stores/EditorPage'
 const store = useEditorPageStore()
 
 
-// const ydoc = new Y.Doc()
-// //为Y文档的本地存储设置IndexedDB
-// new IndexeddbPersistence('example-document', ydoc)
+//为Y文档的本地存储设置IndexedDB
+// 在组件加载时同步数据
+// onMounted(async () => {
+//     // 尝试从服务器获取数据并初始化
+//     const serverData = await fetchServerData()
+//     if (serverData) {
+//         store.content = serverData.content
+//     }
+
+//     // 启动数据同步
+//     provider.connect()
+// })
+
+// // 在组件卸载时关闭 Yjs 连接
+// onBeforeUnmount(() => {
+//     provider.disconnect()
+// })
 
 
 const editor = useEditor({
@@ -90,9 +102,6 @@ const editor = useEditor({
         },
     },
     extensions: [ // 扩展
-        // Collaboration.configure({
-        //     document: ydoc,
-        // }),
         Document,
         Paragraph,
         Text,
