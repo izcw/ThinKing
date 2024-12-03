@@ -13,7 +13,7 @@
                     <template #menu>
                         <n-tooltip trigger="hover" placement="right">
                             <template #trigger>
-                                <n-float-button shape="square">
+                                <n-float-button shape="square" @click="openAiTool">
                                     <n-icon>
                                         <Connectdevelop />
                                     </n-icon>
@@ -23,34 +23,56 @@
                         </n-tooltip>
                         <n-tooltip trigger="hover" placement="right">
                             <template #trigger>
-                                <n-float-button shape="square">
-                                    <n-icon>
-                                        <Blackberry />
-                                    </n-icon>
-                                </n-float-button>
+                                <router-link to="/template">
+                                    <n-float-button shape="square">
+                                        <n-icon>
+                                            <Diamond16Regular />
+                                        </n-icon>
+                                    </n-float-button>
+                                </router-link>
                             </template>
-                            插件
+                            模板
                         </n-tooltip>
                         <n-tooltip trigger="hover" placement="right">
                             <template #trigger>
-                                <n-float-button shape="square">
+                                <n-float-button shape="square" @click="scrollIntoViewUp">
                                     <n-icon>
-                                        <Magic />
+                                        <ArrowCircleUp16Filled />
                                     </n-icon>
                                 </n-float-button>
                             </template>
-                            模板
+                            回到首页
                         </n-tooltip>
                     </template>
                 </n-float-button>
             </template>
-            使用AI、模板、插件等
+            使用AI、模板等
         </n-tooltip>
     </n-flex>
 </template>
 
 <script setup>
-import { Crow, Connectdevelop, Blackberry, Magic } from '@vicons/fa'
+import { ref, onMounted, watch, defineProps, inject } from 'vue'
+import { Crow, Connectdevelop, Magic } from '@vicons/fa'
+import { ArrowCircleUp16Filled, Diamond16Regular } from '@vicons/fluent'
+
+import { useSettingStore } from '@/stores/setting'
+const store = useSettingStore()
+
+// 回到顶部的函数
+const scrollIntoViewUp = () => {
+    let element = document.getElementById('BackTop')
+    element.scrollIntoView({
+        behavior: "smooth",
+        inline: "nearest"
+    });
+};
+
+// 切换到ai标签页
+const openAiTool = () => {
+    store.TabsStatus = 'tabP2';
+    store.switchTabsStatus = !store.switchTabsStatus
+};
 </script>
 
 <style scoped lang='scss'></style>

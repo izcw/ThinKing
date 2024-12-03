@@ -4,9 +4,9 @@
             <template #trigger>
                 <router-link :to="item.link">
                     <div class="item-more">
-                        <!-- <n-icon size="20">
+                        <n-icon size="20">
                             <component :is="item.icon" />
-                        </n-icon> -->
+                        </n-icon>
                         <span>{{ item.name }}</span>
                     </div>
                 </router-link>
@@ -38,7 +38,7 @@
     </div>
 </template>
 <script setup>
-import { ref, inject, onMounted, onBeforeUnmount } from 'vue';
+import { ref, markRaw, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import { Crow, Connectdevelop, Blackberry } from '@vicons/fa'
 import { Money16Regular, Diamond16Regular, BookInformation24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
@@ -50,6 +50,9 @@ const onClickOutside = () => {
     unref(popoverRef).popperRef?.delayHide?.()
 }
 
+// 使用 markRaw 来标记组件
+const Diamond16RegularIcon = markRaw(Diamond16Regular);
+const Money16RegularIcon = markRaw(Money16Regular);
 
 let data = ref([
     {
@@ -57,14 +60,14 @@ let data = ref([
         name: "模板中心",
         link: '/template',
         describe: "查找精美的模板",
-        // icon: Diamond16Regular
+        icon: Diamond16RegularIcon
     },
     {
         id: 1,
         name: "会员中心",
         link: '/vip',
         describe: "升级享受更好的体验，点击了解》",
-        // icon: Money16Regular
+        icon: Money16RegularIcon
     }
 ])
 

@@ -3,9 +3,12 @@
         <ToCEmptyState />
     </template>
     <template v-else>
-        <!-- <ToCItem v-for="(item, i) in items" :key="item.id" :item="item" :index="i + 1" @item-click="onItemClick" /> -->
-        <el-tree style="max-width: 600px" :data="treeData" :props="defaultProps" @node-click="handleNodeClick"
-            default-expand-all :expand-on-click-node="false" />
+        <el-tree style="margin-bottom: 3rem;" :data="store.treeData" :props="defaultProps" @node-click="handleNodeClick"
+            default-expand-all :expand-on-click-node="false">
+            <template #default="{ node, data }">
+                <el-text truncated>{{ node.label }}</el-text>
+            </template>
+        </el-tree>
     </template>
 </template>
 
@@ -13,7 +16,8 @@
 import { ref, onMounted, watch } from 'vue'
 import { TextSelection } from '@tiptap/pm/state'
 import ToCEmptyState from './ToCEmptyState.vue'
-import ToCItem from './ToCItem.vue'
+import { useEditorPageStore } from '@/stores/EditorPage'
+const store = useEditorPageStore()
 
 const props = defineProps({
     items: {
@@ -26,13 +30,9 @@ const props = defineProps({
     },
 })
 
-// 将原始数组转换为树形结构
-const treeData = ref([]);
-
 // 监听 items 的变化
 watch(() => props.items, (newItems) => {
-    treeData.value = buildTree(newItems)
-    console.log(newItems);
+    store.treeData = buildTree(newItems)
 });
 
 // 用于构建树形结构的函数
@@ -44,6 +44,8 @@ const buildTree = (arr) => {
         const node = {
             label: item.textContent,
             id: item.id,
+            originalLevel: item.originalLevel, // 标题
+            itemIndex: item.itemIndex, // 序号
             children: [],
         };
 
@@ -73,7 +75,7 @@ const defaultProps = {
     label: 'label',
 }
 
-// 点击数
+// 点击目录
 const handleNodeClick = (data) => {
     onItemClick(data.id)
 }
@@ -83,18 +85,18 @@ const onItemClick = (id) => {
     if (props.editor) {
         const element = props.editor.view.dom.querySelector(`[data-toc-id="${id}"`)
 
-        if (element) {
-            // 保存原背景色
-            const originalBgColor = element.style.backgroundColor;
+        // if (element) {
+        //     // 保存原背景色
+        //     const originalBgColor = element.style.backgroundColor;
 
-            // 设置背景色为亮色            
-            element.style.backgroundColor = '#E7F5FF';
+        //     // 设置背景色为亮色            
+        //     element.style.backgroundColor = '#E7F5FF';
 
-            // 一秒后恢复原背景色
-            // setTimeout(() => {
-            //     element.style.backgroundColor = originalBgColor;
-            // }, 2000);  // 延长为2秒
-        }
+        //     // 1秒后恢复原背景色
+        //     setTimeout(() => {
+        //         element.style.backgroundColor = originalBgColor;
+        //     }, 1000);
+        // }
 
         // 设置光标位置
         const pos = props.editor.view.posAtDOM(element, element.childNodes.length)
@@ -103,6 +105,7 @@ const onItemClick = (id) => {
         tr.setSelection(new TextSelection(tr.doc.resolve(pos)))
         props.editor.view.dispatch(tr)
         props.editor.view.focus()
+
 
         // 操作浏览器历史记录
         if (history.pushState) { // eslint-disable-line

@@ -33,32 +33,22 @@
         <!-- 前进后退 -->
 
         <div class="Breadcrumb text-select">
-            <n-breadcrumb>
-                <n-breadcrumb-item class="LessHiddenElements">
-                    <n-icon size="16">
-                        <StarRegular />
-                    </n-icon>
-                    <n-ellipsis style="max-width: 140px;margin-left: 4px">
-                        打发十分拓展性sdfds 、用户体验和编辑灵活性上仍存在一定不足，难以满足用户个性化需求
-                    </n-ellipsis>
-                </n-breadcrumb-item>
-                <n-breadcrumb-item class="LessHiddenElements">
-                    <n-icon size="16">
-                        <StarRegular />
-                    </n-icon>
-                    <n-ellipsis style="max-width: 140px;margin-left: 4px">
-                        打发十分拓展性
-                    </n-ellipsis>
-                </n-breadcrumb-item>
-                <n-breadcrumb-item>
-                    <n-icon size="16">
-                        <StarRegular />
-                    </n-icon>
-                    <n-ellipsis style="max-width: 140px;margin-left: 4px">
-                        打发十分拓展性sdfds 、用户体验和编辑灵活性上仍存在一定不足，难以满足用户个性化需求
-                    </n-ellipsis>
-                </n-breadcrumb-item>
-            </n-breadcrumb>
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item :to="{ path: '/space1' }">
+                    <el-text style="width: 120px;" truncated size="small">
+                        发十分拓展性sdfds 、用户体验和编辑灵活性上仍存在一定不足，难以满足用户个性化需求
+                    </el-text>
+                </el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: './pfdgg' }">
+                    <el-text style="width: 120px;" truncated size="small">
+                        发十分拓展性sdfds
+                    </el-text>
+                </el-breadcrumb-item>
+                <el-breadcrumb-item>
+                    <el-text style="width: 120px;" truncated size="small">
+                        欢迎来到ThinKing笔记
+                    </el-text></el-breadcrumb-item>
+            </el-breadcrumb>
         </div><!-- 面包屑 -->
 
     </div>

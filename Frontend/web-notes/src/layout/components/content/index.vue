@@ -14,7 +14,7 @@
                 <template v-slot:2>
                     <main class="content">
                         <ContentBox />
-                        <levitatedSphereBox />
+                        <levitatedSphereBox/>
                     </main>
                 </template>
             </PanelSplitBox><!-- 分割面板 -->
@@ -23,11 +23,13 @@
 
 </template>
 <script setup>
+import { ref } from 'vue'
 import PanelSplitBox from '@/layout/components/PanelSplit.vue'
 import ToolSidebarBox from '@/layout/components/toolSidebar/index.vue'
 import ContentBox from './contentPage.vue'
 import levitatedSphereBox from '@/layout/components/levitatedSphere.vue'
 import PageHeaderBox from '@/layout/components/PageHeader/index.vue'
+
 </script>
 <style scoped lang='scss'>
 .MainContent {

@@ -1,5 +1,6 @@
 <template>
     <div class="contentBox" ref="contentBoxRef">
+        <div id="BackTop"></div><!-- 回到顶部 -->
         <div class="cover" :style="{
             'background-image': coverImage ? 'url(' + coverImage + ')' : 'none',
             'height': coverImage ? '280px' : '70px'
