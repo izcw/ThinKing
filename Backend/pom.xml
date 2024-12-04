@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>work.zhangchengwei</groupId>
-    <artifactId>NexNote</artifactId>
+    <artifactId>ThinKing</artifactId>
     <version>1.0.0</version>
     <name>Backend</name>
     <description>Backend</description>

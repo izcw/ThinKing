@@ -16,7 +16,7 @@
           <span>{{ menu.label }}</span>
         </div>
       </div>
-      <div class="Loguut item">
+      <div class="Loguut item"  @click="LogOut">
         退出登录
       </div>
     </div>
@@ -39,6 +39,8 @@ import { ref, computed } from 'vue';
 import MyAccount from './components/MyAccount.vue';
 import Settings from './components/Settings.vue';
 import UpgradePlan from './components/UpgradePlan.vue';
+import { logoutToken } from '@/api/login/index.js'
+import { ElMessage } from 'element-plus'
 
 const activeIndex = ref(0);
 const menuList = [
@@ -51,6 +53,18 @@ const currentComponent = computed(() => menuList[activeIndex.value].component);
 
 function changeActive(index) {
   activeIndex.value = index;
+}
+
+
+
+// 退出登录
+let LogOut = () => {
+    logoutToken().then((msg) => {
+        ElMessage.success(msg)
+        return
+    }).catch((e) => {
+        console.error('注销失败', e);
+    });
 }
 </script>
 

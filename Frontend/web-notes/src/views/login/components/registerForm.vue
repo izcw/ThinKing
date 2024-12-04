@@ -1,6 +1,6 @@
 <template>
     <h2>ThinKing ｜ 注册</h2>
-    <el-form ref="ruleFormRef" class="input-box" :model="ruleForm" :rules="rules" label-width="auto" inline-message>
+    <el-form ref="ruleFormRef" class="input-box" :model="ruleForm" label-width="auto" inline-message>
         <!-- 邮箱输入项 -->
         <el-form-item prop="email" class="item" v-if="!nextCorrect">
             <el-input type="email" v-model="ruleForm.email" size="large" placeholder="请输入邮箱" clearable />
@@ -151,10 +151,8 @@ const submitForm = async () => {
         if (valid) {
             postRegister(ruleForm)
                 .then((msg) => {
-                    if (msg.code == 200) {
-                        router.push({ name: 'login' })
-                    }
-                    ElMessage.success(msg.message)
+                    router.push({ name: 'login' })
+                    ElMessage.success(msg)
                 })
                 .catch(() => {
                     ElMessage.error('注册失败')

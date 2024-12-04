@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/upload")
-public class uploadFile {
+public class uploadFileController {
 
     @Autowired
     private FileService fileService; // 注入 FileService

@@ -41,7 +41,7 @@
 import { ref, markRaw, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import { Crow, Connectdevelop, Blackberry } from '@vicons/fa'
-import { Money16Regular, Diamond16Regular, BookInformation24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
+import { Money16Regular, Diamond16Regular, Notepad24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
 
 // 弹出框
 const buttonRef = ref()
@@ -102,8 +102,9 @@ let SearchGarbage = ref()
 .dustbin {
     min-height: 200px;
     margin: 1rem 0 3rem 0;
+
     .item {
-        padding:6px 10px;
+        padding: 6px 10px;
         margin: 4px 0;
         box-sizing: border-box;
         display: flex;
@@ -111,7 +112,9 @@ let SearchGarbage = ref()
         justify-content: space-between;
         cursor: pointer;
     }
-    .item:hover,.item:active{
+
+    .item:hover,
+    .item:active {
         background-color: #E9E9E9;
     }
 }

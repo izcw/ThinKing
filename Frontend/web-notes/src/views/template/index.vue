@@ -6,22 +6,12 @@
                 <h1>模版中心</h1>
             </div>
 
+            <el-input v-model="input" style="margin-bottom: 1rem;" placeholder="请搜索模版名称" />
             <div class="template">
                 <div class="catalog">
-                    <div class="item active">
-                        全部
-                    </div>
-                    <div class="item">
-                        计划
-                    </div>
-                    <div class="item">
-                        理财
-                    </div>
-                    <div class="item">
-                        学习
-                    </div>
-                    <div class="item">
-                        打卡
+                    <div class="item" v-for="(item, index) in menuList" :key="index"
+                        :class="{ active: selectItem == index }" @click="SearchTemplate(item, index)">
+                        {{ item.label }}
                     </div>
                 </div>
                 <div class="content">
@@ -65,7 +55,24 @@
     </div>
 </template>
 <script setup>
+import { ref } from 'vue'
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
+
+let selectItem = ref(0)
+
+const menuList = ref([
+    { label: '全部', icon: '图标' },
+    { label: '计划', icon: '图标' },
+    { label: '升级方案', icon: '图标' },
+    { label: '学习', icon: '图标' },
+    { label: '打卡', icon: '图标' }
+]);
+
+
+// 搜索模版
+let SearchTemplate = (item, index) => {
+    selectItem.value = index
+}
 </script>
 <style scoped lang='scss'>
 .container {
@@ -93,7 +100,6 @@ import CollapseMenuBox from '@/components/CollapseMenu.vue';
             padding-left: 30px;
             font-size: 34px;
             color: #fff;
-            // border-bottom: 1px solid #eee;
             margin-bottom: 1rem;
             padding-bottom: 1rem;
         }
@@ -109,13 +115,15 @@ import CollapseMenuBox from '@/components/CollapseMenu.vue';
             .item {
                 cursor: pointer;
                 padding: 4px 1rem;
+                box-sizing: border-box;
                 margin-bottom: 4px;
+                border-radius: 4px;
             }
 
             .item:hover,
             .item:active,
             .item.active {
-                background-color: #DCDCDC;
+                background-color: #EFEFEE;
             }
         }
 
@@ -135,10 +143,27 @@ import CollapseMenuBox from '@/components/CollapseMenu.vue';
                     height: 200px;
                     object-fit: cover;
                     object-position: center;
-                    border: 1px solid #DCDCDC;
+                    border: 1px solid #EFEFEE;
                     box-sizing: border-box;
                 }
             }
+        }
+
+
+    }
+}
+
+@media (max-width: 768px) {
+    .template {
+        flex-direction: column;
+
+        .catalog {
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+
+        .content {
+            margin-left: 0 !important;
         }
     }
 }

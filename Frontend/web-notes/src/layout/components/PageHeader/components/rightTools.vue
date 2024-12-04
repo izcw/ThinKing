@@ -3,7 +3,7 @@
         <p class="updatetime-text text-select">上次编辑&nbsp;{{ timeAgo('2024/11/17 18:22:49') }}</p>
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
-                <div class="Tools-item"  @click="dialogTableVisible = true">
+                <div class="Tools-item" @click="dialogTableVisible = true">
                     <n-icon size="18">
                         <Search28Filled />
                     </n-icon>
@@ -47,7 +47,7 @@
         </el-popover><!-- 分享弹出框 -->
 
         <el-dialog v-model="dialogTableVisible" width="400" :show-close="false">
-            <el-input v-model="input" style="width: 100%;" placeholder="查找..." />
+            <el-input v-model="findlook" style="width: 100%;" :autofocus="true" placeholder="查找本页内容..." />
         </el-dialog><!-- 搜索对话框 -->
     </div>
 </template>
@@ -74,6 +74,10 @@ const active = ref(false);
 const activate = (place) => {
     active.value = true;
 };
+
+
+// 查找
+let findlook = ref()
 </script>
 <style scoped lang='scss'>
 .rightTools {

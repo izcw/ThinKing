@@ -1,33 +1,59 @@
 <template>
-    <div class="sidebarTree">
-        <el-tree style="background-color: transparent;" :allow-drop="allowDrop" :allow-drag="allowDrag" :data="data"
-            draggable node-key="id" :expand-on-click-node="false" @node-drag-start="handleDragStart"
-            @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-            @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']" highlight-current>
-            <template #default="{ node, data }">
-                <div class="custom-tree-node">
-                    <div class="title" @click="openPage(node)">
-                        <span class="icon">🥈</span>
-                        <el-text truncated>{{ node.label }}</el-text>
-                    </div>
-                    <div class="tools">
-                        <div class="content">
-                            <div class="item" @click="append(data)">
-                                +
+    <n-collapse :trigger-areas="['main', 'arrow']" default-expanded-names="1">
+        <template #header-extra>
+            <el-tooltip content="添加页面" placement="bottom" effect="light" :hide-after="0">
+                <n-button strong secondary size="tiny">
+                    <n-icon>
+                        <Add16Filled />
+                    </n-icon>
+                </n-button>
+            </el-tooltip>
+        </template>
+        <n-collapse-item title="我的页面" name="1">
+            <div class="sidebarTree">
+                <n-infinite-scroll style="height: 360px" :distance="10">
+                    <el-tree style="background-color: transparent;" :allow-drop="allowDrop" :allow-drag="allowDrag"
+                        :data="data" draggable node-key="id" :expand-on-click-node="false"
+                        @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
+                        @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
+                        @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']"
+                        highlight-current>
+                        <template #default="{ node, data }">
+                            <div class="custom-tree-node">
+                                <div class="title" @click="openPage(node)">
+                                    <span class="icon">🥈</span>
+                                    <el-text truncated>{{ node.label }}</el-text>
+                                </div>
+                                <div class="tools">
+                                    <div class="content">
+                                        <el-tooltip content="删除，创建副本等。" placement="bottom" effect="light"  :hide-after="0">
+                                            <n-button strong secondary size="tiny">
+                                                <n-icon>
+                                                    <MoreHorizontal24Filled />
+                                                </n-icon>
+                                            </n-button>
+                                        </el-tooltip>
+                                        <el-tooltip content="添加子页面" placement="bottom" effect="light"  :hide-after="0">
+                                            <n-button strong secondary size="tiny" style="margin-left: 4px;">
+                                                <n-icon>
+                                                    <Add16Filled />
+                                                </n-icon>
+                                            </n-button>
+                                        </el-tooltip>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="item" @click="remove(node, data)">
-                                ...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </el-tree>
-    </div>
+                        </template>
+                    </el-tree>
+                </n-infinite-scroll>
+            </div>
+        </n-collapse-item>
+    </n-collapse>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Copy16Regular } from '@vicons/fluent'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
@@ -183,7 +209,7 @@ const remove = (node, data) => {
         .icon {
             font-size: 15px !important;
             opacity: 1;
-            margin-right: 8px;
+            margin-right: 12px;
 
         }
     }
@@ -201,20 +227,20 @@ const remove = (node, data) => {
             align-items: center;
             padding-right: 4px;
 
-            .item {
-                width: 24px;
-                height: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            // .item {
+            //     width: 24px;
+            //     height: 24px;
+            //     display: flex;
+            //     align-items: center;
+            //     justify-content: center;
 
-                border-radius: 4px;
+            //     border-radius: 4px;
 
-                &:hover,
-                &:active {
-                    background-color: #DDDDDB;
-                }
-            }
+            //     &:hover,
+            //     &:active {
+            //         background-color: #DDDDDB;
+            //     }
+            // }
         }
     }
 }

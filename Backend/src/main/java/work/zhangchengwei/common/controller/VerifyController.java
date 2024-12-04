@@ -1,4 +1,4 @@
-package work.zhangchengwei.system.controller;
+package work.zhangchengwei.common.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

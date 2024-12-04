@@ -34,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CustomSaTokenInterceptor())
                 .addPathPatterns("/**") // 包含哪些路径
-                .excludePathPatterns("/note/login", "/note/register","/system/login", "/file_warehouse/**","/verify/**"); // 排除哪些路径
+                .excludePathPatterns("/note/login", "/note/register","/system/login", "/file_warehouse/**","/verify/**","/email/sendEmailCode","/email/verifyEmailCode"); // 排除哪些路径
     }
 
     // 映射静态资源路径

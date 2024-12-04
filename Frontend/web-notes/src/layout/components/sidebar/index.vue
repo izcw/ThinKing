@@ -26,7 +26,7 @@ import TreeDirectoryBox from './components/TreeDirectory.vue';
     height: 100%;
     position: relative;
     overflow: hidden;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
     box-sizing: border-box;
 }
 </style>

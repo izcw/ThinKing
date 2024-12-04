@@ -14,8 +14,8 @@
             <router-link to="/login" class="issue">账号常见问题</router-link>
             <div>
                 <router-link to="/register">立即注册</router-link>
-                <!-- <span>|</span>
-                <router-link to="/login">忘记密码</router-link> -->
+                <span>|</span>
+                <router-link to="/login">忘记密码</router-link>
             </div>
         </div>
     </el-form>

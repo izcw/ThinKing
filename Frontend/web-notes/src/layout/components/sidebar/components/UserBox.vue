@@ -2,7 +2,8 @@
     <div class="header-wrapper GMargin">
         <div class="logo-box text-select">
             <div class="logo" ref="buttonRef" v-click-outside="onClickOutside">
-                <img :src="FILE_PATH_API_URL + 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg'" alt="Yoko">
+                <img :src="FILE_PATH_API_URL + 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg'"
+                    alt="Yoko">
                 <span>Yoko</span>
             </div>
 
@@ -43,11 +44,12 @@
 <script setup>
 import { ref, inject, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
-import router from '@/router';
 import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
 import { FILE_PATH_API_URL } from "@/config/setting"
 import settingBox from "./setting/setting.vue"
-import { removeToken } from '@/utils/token-util';
+import { removeToken, getToken } from '@/utils/token-util';
+import { logoutToken } from '@/api/login/index.js'
+import { ElMessage } from 'element-plus'
 
 const centerDialogVisible = ref(false) // 设置对话框
 
@@ -69,8 +71,12 @@ const toggleSidebarStatus = () => {
 
 // 退出登录
 let LogOut = () => {
-    removeToken()
-    router.push('/login');
+    logoutToken().then((msg) => {
+        ElMessage.success(msg)
+        return
+    }).catch((e) => {
+        console.error('注销失败', e);
+    });
 }
 </script>
 <style scoped lang='scss'>

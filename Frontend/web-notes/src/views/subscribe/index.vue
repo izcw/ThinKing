@@ -7,7 +7,7 @@
             </div>
             <div class="current">
                 <p>当前方案</p>
-                <p><span class="my">个人免费板</span><span class="recommend">升级个人Plus版，支持至多5个空间</span></p>
+                <p><span class="my">个人免费版</span><span class="recommend">升级个人Plus版，支持至多5个空间</span></p>
             </div>
             <el-row :gutter="20" class="scheme">
                 <el-col :md="24" :lg="8" v-for="item in data" :key="item.id">
@@ -35,9 +35,9 @@
                                 {{ scope.row.person }}
                             </div>
                         </template>
-                    </el-table-column>
-                    <el-table-column prop="team" label="团队版" width="180">
-                        <template #default="scope">
+</el-table-column>
+<el-table-column prop="team" label="团队版" width="180">
+    <template #default="scope">
                             <div v-if="typeof scope.row.team === 'boolean'">
                                 <el-text v-if="scope.row.team" type="primary">√</el-text>
                                 <el-text v-else type="info">×</el-text>
@@ -46,9 +46,9 @@
                                 {{ scope.row.team }}
                             </div>
                         </template>
-                    </el-table-column>
-                    <el-table-column prop="enterprise" label="企业版" width="180">
-                        <template #default="scope">
+</el-table-column>
+<el-table-column prop="enterprise" label="企业版" width="180">
+    <template #default="scope">
                             <div v-if="typeof scope.row.enterprise === 'boolean'">
                                 <el-text v-if="scope.row.enterprise" type="primary">√</el-text>
                                 <el-text v-else type="info">×</el-text>
@@ -57,9 +57,9 @@
                                 {{ scope.row.enterprise }}
                             </div>
                         </template>
-                    </el-table-column>
-                </el-table>
-            </div> -->
+</el-table-column>
+</el-table>
+</div> -->
         </div>
     </div>
 
@@ -233,5 +233,4 @@ let tableData = ref([
         }
     }
 }
-
 </style>
