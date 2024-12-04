@@ -56,9 +56,9 @@ public class NoteSubscribe implements Serializable {
     private BigDecimal price;
 
     /**
-     * 单位：月、季、年
+     * 订阅天数
      */
-    private String unit;
+    private Integer unit;
 
     /**
      * 空间个数

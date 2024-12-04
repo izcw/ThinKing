@@ -81,8 +81,19 @@ public class NoteUser implements Serializable {
     @JsonProperty("update_time")  // 控制序列化时的字段名为 update_time
     private LocalDateTime updateTime;
 
+//    @TableField(exist = false) // 表示这个字段不在 note_user 表中
+//    @ApiModelProperty(value = "套餐订单")
+//    private List<NoteSubscribeOrder> noteSubscribeOrders;
 
     @TableField(exist = false) // 表示这个字段不在 note_user 表中
-    @ApiModelProperty(value = "套餐订单")
-    private List<NoteSubscribeOrder> noteSubscribeOrders;
+    @ApiModelProperty(value = "套餐订单+套餐信息")
+    private List<NoteSubscribesListInfo> noteSubscribesListInfos;
+
+    @TableField(exist = false) // 表示这个字段不在 note_user 表中
+    @ApiModelProperty(value = "当前订阅的套餐")
+    private NoteSubscribe currentSubscription;
+
+    @TableField(exist = false) // 表示这个字段不在 note_user 表中
+    @ApiModelProperty(value = "空间列表")
+    private List<NoteSpace> noteSpaces;
 }

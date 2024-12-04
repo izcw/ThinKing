@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.servlet.http.HttpServletRequest;
 import work.zhangchengwei.core.utils.EmailUtil;
 import work.zhangchengwei.core.web.ResponseResult;
-import work.zhangchengwei.note.entity.NoteSubscribe;
-import work.zhangchengwei.note.entity.NoteSubscribeOrder;
+import work.zhangchengwei.note.entity.*;
+import work.zhangchengwei.note.mapper.NoteSpaceMapper;
 import work.zhangchengwei.note.mapper.NoteSubscribeMapper;
 import work.zhangchengwei.note.mapper.NoteSubscribeOrderMapper;
 import work.zhangchengwei.note.mapper.NoteUserMapper;
@@ -15,7 +15,6 @@ import work.zhangchengwei.system.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import work.zhangchengwei.note.entity.NoteUser;
 import work.zhangchengwei.note.service.INoteUserService;
 import work.zhangchengwei.note.service.PasswordService;
 
@@ -44,6 +43,10 @@ public class NoteMainController {
     private PasswordService passwordService; // 注入密码服务
     @Autowired
     private NoteSubscribeOrderMapper noteSubscribeOrderMapper;
+    @Autowired
+    private NoteSpaceMapper noteSpaceMapper;
+    @Autowired
+    private NoteSubscribeMapper noteSubscribeMapper;
 
 
     /**
@@ -66,9 +69,31 @@ public class NoteMainController {
             return ResponseResult.fail("用户未找到");
         }
 
+//        // 根据用户 ID 查询套餐订单列表信息
+//        List<NoteSubscribeOrder> noteSubscribeOrderList = noteSubscribeOrderMapper.selectListByUserId(userId);
+//        noteUser.setNoteSubscribeOrders(noteSubscribeOrderList);
+
         // 根据用户 ID 查询套餐订单列表信息
-        List<NoteSubscribeOrder> noteSubscribeOrderList = noteSubscribeOrderMapper.selectListByUserId(userId);
-        noteUser.setNoteSubscribeOrders(noteSubscribeOrderList);
+        List<NoteSubscribesListInfo> noteSubscribesListInfos = noteSubscribeOrderMapper.selectListByUserIdSubscribesListInfo(userId);
+        noteUser.setNoteSubscribesListInfos(noteSubscribesListInfos);
+
+        // 查找当前套餐
+        NoteSubscribesListInfo noteCurrentSubscribesListInfo = noteSubscribeOrderMapper.selectListByUserIdCurrentSubscriptionListInfo(userId);
+        // 如果没有找到当前套餐，则使用默认的套餐（id = '1'）
+        NoteSubscribe noteSubscribe;
+        if (noteCurrentSubscribesListInfo == null) {
+            // 处理为空情况，选择默认套餐
+            noteSubscribe = noteSubscribeMapper.selectById("1");
+        } else {
+            // 如果找到当前套餐，则根据 subscribeId 获取套餐信息
+            noteSubscribe = noteSubscribeMapper.selectById(noteCurrentSubscribesListInfo.getSubscribeId());
+        }
+        noteUser.setCurrentSubscription(noteSubscribe);
+
+
+        // 根据用户 ID 查询用户所有空间
+        List<NoteSpace> noteSpaceList = noteSpaceMapper.selectListByUserId(userId);
+        noteUser.setNoteSpaces(noteSpaceList);
 
         return ResponseResult.success(noteUser);
     }

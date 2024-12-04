@@ -1,7 +1,9 @@
 <template>
     <div class="space text-select" ref="scrollContainer">
-        <div class="item-space" v-for="item in data" :key="item.id" :class="{ 'active': item.status }"
-            :style="{ 'background-color': item.status ? 'transparent' : item.color }" @click="toggleStatus(item)">
+        <div class="item-space" v-for="item in store.userInfoData.noteSpaces" :key="item.spaceId"
+            :class="{ 'active': item.defaultSpace == 0 }"
+            :style="{ 'background-color': item.defaultSpace == 0 ? 'transparent' : item.color }"
+            @click="toggleStatus(item)">
             <!-- 添加点击事件 -->
             <n-ellipsis style="max-width: 100px">
                 {{ item.name }}
@@ -77,6 +79,9 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router'
 import { AddCircle16Regular } from '@vicons/fluent';
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+
 const router = useRouter()
 
 let dialogTableVisible = ref(false) // 管理空间对话框
@@ -137,18 +142,25 @@ let data = ref([
     { id: 4, name: "加密", color: "#EEEBFB", status: false }
 ]);
 
-const scrollContainer = ref(null);
 
 // 切换状态的函数
 const toggleStatus = (item) => {
     // 先将所有空间项的状态设置为 false
-    data.value.forEach(i => i.status = false);
-    // 设置被点击的空间项的状态为 true
-    item.status = true;
+    store.userInfoData.noteSpaces.forEach((i) => {
+        i.defaultSpace = 1;
+        // 设置被点击的空间项的状态为 true
+    });
 
-    router.push('/space' + item.id)
+    store.userInfoData.noteSpaces.filter((i) => {
+        if (item.spaceId == i.spaceId) {
+            i.defaultSpace = 0;
+        }
+    })
+
+    router.push('/space' + item.spaceId)
 };
 
+const scrollContainer = ref(null);
 // 鼠标横向滚动
 const handleWheel = (event) => {
     event.preventDefault(); // 阻止默认的滚动行为

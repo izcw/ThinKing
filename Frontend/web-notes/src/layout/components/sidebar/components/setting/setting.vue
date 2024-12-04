@@ -4,10 +4,10 @@
     <div class="left">
       <div>
         <div class="avatar">
-          <el-avatar :size="30" :src="circleUrl" />
+          <el-avatar :size="30" :src="FILE_PATH_API_URL + store.userInfoData.avatar" />
           <div class="account">
-            <p class="nickname">Yoko</p>
-            <p>2405824084@qq.com</p>
+            <p class="nickname">{{ store.userInfoData.nickname }}</p>
+            <p>{{ store.userInfoData.email }}</p>
           </div>
         </div>
         <div class="item" v-for="(menu, index) in menuList" :key="index" :class="{ active: activeIndex === index }"
@@ -16,20 +16,22 @@
           <span>{{ menu.label }}</span>
         </div>
       </div>
-      <div class="Loguut item"  @click="LogOut">
+      <div class="Loguut item" @click="LogOut">
         退出登录
       </div>
     </div>
 
     <!-- 右侧展示内容 -->
     <div class="right">
-      <div>
+      <div style="height: 60px;">
         <span>
           {{ menuList[activeIndex].label }}
         </span>
         <el-divider />
       </div>
-      <component :is="currentComponent" />
+      <div style="height: calc(100% - 60px)">
+        <component :is="currentComponent" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,6 +43,9 @@ import Settings from './components/Settings.vue';
 import UpgradePlan from './components/UpgradePlan.vue';
 import { logoutToken } from '@/api/login/index.js'
 import { ElMessage } from 'element-plus'
+import { FILE_PATH_API_URL } from "@/config/setting"
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
 
 const activeIndex = ref(0);
 const menuList = [
@@ -59,12 +64,12 @@ function changeActive(index) {
 
 // 退出登录
 let LogOut = () => {
-    logoutToken().then((msg) => {
-        ElMessage.success(msg)
-        return
-    }).catch((e) => {
-        console.error('注销失败', e);
-    });
+  logoutToken().then((msg) => {
+    ElMessage.success(msg)
+    return
+  }).catch((e) => {
+    console.error('注销失败', e);
+  });
 }
 </script>
 

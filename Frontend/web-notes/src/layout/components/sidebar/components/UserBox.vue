@@ -2,16 +2,14 @@
     <div class="header-wrapper GMargin">
         <div class="logo-box text-select">
             <div class="logo" ref="buttonRef" v-click-outside="onClickOutside">
-                <img :src="FILE_PATH_API_URL + 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg'"
-                    alt="Yoko">
+                <img :src="FILE_PATH_API_URL + store.userInfoData.avatar" alt="Yoko">
                 <span>Yoko</span>
             </div>
 
             <el-popover ref="popoverRef" :virtual-ref="buttonRef" trigger="click" :width="300" virtual-triggering>
                 <div class="AccountBox">
                     <div class="logo">
-                        <img :src="FILE_PATH_API_URL + 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg'"
-                            alt="Yoko">
+                        <img :src="FILE_PATH_API_URL + store.userInfoData.avatar" alt="Yoko">
                         <div class="info">
                             <p class="name">Yoko</p>
                             <p class="subscribe">免费版</p>
@@ -50,6 +48,8 @@ import settingBox from "./setting/setting.vue"
 import { removeToken, getToken } from '@/utils/token-util';
 import { logoutToken } from '@/api/login/index.js'
 import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
 
 const centerDialogVisible = ref(false) // 设置对话框
 
