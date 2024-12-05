@@ -97,7 +97,7 @@ router.beforeEach(async (to, from, next) => {
   const token = getToken();
   if (token) {
     // 如果用户信息未获取，则获取用户信息
-    if (!store.info) {
+    if (!store.userInfoData) {
       await store.fetchUserInfo();
     }
     next();

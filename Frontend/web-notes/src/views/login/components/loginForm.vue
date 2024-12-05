@@ -28,6 +28,8 @@ import { getVerifyCode, Userlogin } from '@/api/login';
 import { debounce } from 'lodash';  // 防抖
 import { ElMessage } from 'element-plus'
 import loading from '@icon/loading.png';
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
 
 const router = useRouter();
 
@@ -69,7 +71,7 @@ const submitForm = async (formEl) => {
         if (valid) {
             Userlogin(ruleForm).then((msg) => {
                 console.log(msg);
-                router.push('/space1')
+                store.fetchUserInfo()
                 ElMessage.success(msg)
                 return
             }).catch((e) => {

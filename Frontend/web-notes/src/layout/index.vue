@@ -1,5 +1,5 @@
 <template>
-    <div class="layout">
+    <div class="layout" v-if="store.userInfoData" >
         <PanelSplitBox :defaultSize="320" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"
             :defaultSwitch="true">
             <template v-slot:1>
@@ -14,12 +14,17 @@
             </template>
         </PanelSplitBox>
     </div>
+    <div v-else v-loading="true" style="width: 100%;height: 100%;">
+
+    </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import SidebarBox from './components/sidebar/index.vue';
 import PanelSplitBox from './components/PanelSplit.vue'
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
 
 </script>
 
@@ -34,7 +39,7 @@ import PanelSplitBox from './components/PanelSplit.vue'
 .sidebar {
     width: 100%;
     height: 100%;
-    background-color: #FAFAFA;
+    background-color: #f7f7f7;
 }
 
 .content {

@@ -37,19 +37,9 @@ public class NoteSpace implements Serializable {
     private Long userId;
 
     /**
-     * 路由名称
-     */
-    private String route;
-
-    /**
      * 空间名称
      */
     private String name;
-
-    /**
-     * 空间图标
-     */
-    private String icon;
 
     /**
      * 空间配色

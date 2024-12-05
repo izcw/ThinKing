@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar">
+    <div class="sidebar-Box">
         <UserBox /><!-- 用户头像 -->
         <collectBox /><!-- 快速访问 收藏 -->
         <div class="text-select GMargin">
@@ -21,7 +21,7 @@ import TreeDirectoryBox from './components/TreeDirectory.vue';
 </script>
 
 <style scoped lang='scss'>
-.sidebar{
+.sidebar-Box{
     width: 100%;
     height: 100%;
     position: relative;

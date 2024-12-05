@@ -51,7 +51,7 @@ let data = ref([
 <style scoped lang='scss'>
 .RecentlyEdited {
     width: 100%;
-    height: 540px;
+    height: 500px;
     padding-right: 0;
     overflow: hidden;
     position: relative;
@@ -66,7 +66,7 @@ let data = ref([
         .item {
             padding-left: 1rem;
             box-sizing: border-box;
-            height: 120px;
+            height: 110px;
             position: relative;
             cursor: pointer;
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import work.zhangchengwei.note.service.INoteUserService;
 import work.zhangchengwei.note.service.PasswordService;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -77,7 +78,9 @@ public class NoteMainController {
 
         // 根据用户 ID 查询用户所有空间
         List<NoteSpace> noteSpaceList = noteSpaceMapper.selectListByUserId(userId);
+        noteSpaceList.sort(Comparator.comparing(NoteSpace::getSortNumber));  //  升序排序
         noteUser.setNoteSpaces(noteSpaceList);
+
 
         return ResponseResult.success(noteUser);
     }

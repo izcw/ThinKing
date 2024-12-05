@@ -30,7 +30,7 @@ service.interceptors.response.use(
     if (response.data.code === 403) {
       ElMessageBox.alert('用户状态已过期，请退出重新登录！', '系统提示', {
         confirmButtonText: 'OK',
-        callback: (action) => {
+        callback: () => {
           router.push('/login');
           removeToken()
         },

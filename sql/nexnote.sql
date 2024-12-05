@@ -11,7 +11,7 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 05/12/2024 18:55:45
+ Date: 06/12/2024 02:57:48
 */
 
 SET NAMES utf8mb4;
@@ -123,9 +123,7 @@ DROP TABLE IF EXISTS `note_space`;
 CREATE TABLE `note_space` (
   `space_id` bigint NOT NULL AUTO_INCREMENT COMMENT '空间id',
   `user_id` bigint NOT NULL COMMENT '用户id',
-  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路由名称',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'space' COMMENT '空间名称',
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '空间图标',
   `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '空间配色',
   `default_space` int NOT NULL DEFAULT '0' COMMENT '默认空间, 0默认, 1其它',
   `sort_number` int NOT NULL DEFAULT '1' COMMENT '排序号',
@@ -133,31 +131,18 @@ CREATE TABLE `note_space` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`space_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=343254365462 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='笔记空间';
+) ENGINE=InnoDB AUTO_INCREMENT=343254333365462 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='笔记空间';
 
 -- ----------------------------
 -- Records of note_space
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_space` (`space_id`, `user_id`, `route`, `name`, `icon`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (3254365461, 1859329812227633153, '1', '编程space', NULL, 'orange', 0, 1, 0, '2024-12-03 23:18:23', '2024-12-05 00:01:16');
-INSERT INTO `note_space` (`space_id`, `user_id`, `route`, `name`, `icon`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (343254365461, 1859329812227633153, '2', '生活笔记', NULL, 'yellow', 1, 2, 0, '2024-12-03 23:18:23', '2024-12-05 00:06:45');
-COMMIT;
-
--- ----------------------------
--- Table structure for note_space_collect
--- ----------------------------
-DROP TABLE IF EXISTS `note_space_collect`;
-CREATE TABLE `note_space_collect` (
-  `space_collect_id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `page_space_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '空间id',
-  `sort_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '排序号',
-  PRIMARY KEY (`space_collect_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='空间页面收藏';
-
--- ----------------------------
--- Records of note_space_collect
--- ----------------------------
-BEGIN;
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (223, 1859329812227633153, 'java', '3', 1, 3, 0, '2024-11-05 23:18:23', '2024-12-06 01:49:22');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (33242345, 1859329812227633153, 'hello', '6', 1, 6, 0, '2024-11-08 23:18:23', '2024-12-06 01:49:30');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (3254365461, 1859329812227633153, '默认颜色', '1', 1, 1, 0, '2024-11-03 23:18:23', '2024-12-06 02:56:01');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (343254365461, 1859329812227633153, '生活笔记', '2', 0, 2, 0, '2024-11-04 23:18:23', '2024-12-06 02:56:03');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (3432543365461, 1859329812227633153, 'css', '4', 1, 4, 0, '2024-11-06 23:18:23', '2024-12-06 01:49:26');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (34325436546133, 1859329812227633153, 'vue', '5', 1, 5, 0, '2024-11-07 23:18:23', '2024-12-06 01:49:28');
 COMMIT;
 
 -- ----------------------------
@@ -268,7 +253,7 @@ CREATE TABLE `note_user` (
 -- Records of note_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859329812227633153, 'xiaoli@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$eZP8YBEbLeM7NQOSRZRUPQ$9pDUvkdrXFrE5P2pZvIbJoySlXkKJHF+mXEsGLtHMco', '小丽', 'UserFiles/images/avatar/a6540470-d522-42f1-bed0-a9fb7b73d4eb.jpg', 0, '2024-11-21 04:15:46', '2024-11-21 04:15:46');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859329812227633153, 'xiaoli@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$eZP8YBEbLeM7NQOSRZRUPQ$9pDUvkdrXFrE5P2pZvIbJoySlXkKJHF+mXEsGLtHMco', 'Mary', 'UserFiles/images/avatar/a6540470-d522-42f1-bed0-a9fb7b73d4eb.jpg', 0, '2024-11-21 04:15:46', '2024-12-06 01:33:27');
 INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859329962681511937, 'tianxiang@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$dzKkxYHuHWkuIfjte3QRMw$lRrnCd1CBy/YV2G0F1bNaRV2qJk/yZgsNS1zluCfUkM', '天线宝宝', 'UserFiles/images/avatar/13549b95-c562-4e76-8887-25bfffe7f75f.jpg', 3, '2024-11-21 04:16:22', '2024-11-21 04:23:18');
 INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330063948787713, 'mu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$jpq6HipmtzNNj0Z3ZrBkGw$vX6rNTFtaCLGa992QT/iJ8+VwayReyhiBi8jxIjGbsk', '34', 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg', 0, '2024-11-21 04:16:46', '2024-11-23 20:38:39');
 INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330240466071553, 'hello@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$f4a5fVafHq4eILipD6EM3Q$Xmz9b6uJQnCDi4BoYT/+c0PcRKKrdKkB1ceksRoMrVY', 'Nex笔记', 'UserFiles/images/avatar/9959db3c-5233-4340-8a9f-052b16ea6746.jpg', 0, '2024-11-21 04:17:28', '2024-11-21 04:17:28');
@@ -640,10 +625,9 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (123, 1, '2405824084@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Yoko', '17877059806', '男', 'SystemDefaultFiles/images/avatar/avatar-admin1.png', '这个人很懒', 0, 0, '2024-11-09 23:16:54', '2024-11-21 03:29:09');
-INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (244, 2, 'zhang3@qq.com', 0, '123456', 'world', '17877059804', '男', 'SystemDefaultFiles/images/avatar/avatar-admin3.png', '这个人很懒', 0, 0, '2024-11-23 02:42:52', '2024-11-23 02:43:18');
-INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (456, 2, 'zhang@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Izcw', '18269328567', '女', 'SystemDefaultFiles/images/avatar/avatar-admin2.png', '这个人很懒', 0, 0, '2024-11-09 23:57:30', '2024-11-21 03:33:41');
-INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (789, 3, 'zhang2@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'nike', '13472583897', '男', 'SystemDefaultFiles/images/avatar/avatar-admin3.png', '这个人很懒', 0, 0, '2024-11-09 23:57:30', '2024-11-21 03:33:42');
+INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (123, 1, '2405824084@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Yoko', '17877059806', '男', 'SystemDefaultFiles/images/avatar/avatar-admin1.png', '最高权限', 0, 0, '2024-11-09 23:16:54', '2024-12-05 19:03:42');
+INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (456, 2, 'zhang@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'Izcw', '18269328567', '女', 'SystemDefaultFiles/images/avatar/avatar-admin2.png', '高级权限', 0, 0, '2024-11-09 23:57:30', '2024-12-05 19:03:47');
+INSERT INTO `sys_user` (`user_id`, `role_id`, `email`, `email_verified`, `password`, `nickname`, `phone`, `sex`, `avatar`, `introduction`, `status`, `deleted`, `create_time`, `update_time`) VALUES (789, 3, 'zhang2@qq.com', 0, '$argon2i$v=19$m=65536,t=2,p=1$zNCXciWe2RiG16IEJcTDcA$SKaCzqNex1uBZOHO61pGNedZ3ZOfyU4x4WMFvJy+ffc', 'nike', '13472583897', '男', 'SystemDefaultFiles/images/avatar/avatar-admin3.png', '普通管理权限', 0, 0, '2024-11-09 23:57:30', '2024-12-05 19:03:14');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

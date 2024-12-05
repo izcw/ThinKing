@@ -68,11 +68,21 @@
     box-shadow: 0 0 4px #ccc !important;
 }
 
-// 单选按钮
+// 选择的色彩单选框
 .space-radio {
     width: 40px !important;
     height: 40px !important;
     border-radius: 50% !important;
+
+    .is-checked {
+        border: 3px solid #5a9cf8 !important;
+        box-sizing: border-box;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50% !important;
+    }
 }
 .space-radio .el-radio__inner {
     opacity: 0;

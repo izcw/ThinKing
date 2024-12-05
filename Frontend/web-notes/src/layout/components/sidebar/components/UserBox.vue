@@ -108,10 +108,10 @@ let LogOut = () => {
         align-items: center;
 
         img {
-            width: 24px;
-            height: 24px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            border: 1px solid #eee;
+            border: 1px solid #f5f5f7;
         }
 
         span {

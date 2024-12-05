@@ -11,18 +11,66 @@
                 <div class="catalog">
                     <div class="item" v-for="(item, index) in menuList" :key="index"
                         :class="{ active: selectItem == index }" @click="SearchTemplate(item, index)">
-                        {{ item.label }}
+                        <el-text truncated>{{ item.label }}</el-text>
                     </div>
                 </div>
                 <div class="content">
                     <el-row :gutter="20">
-                        <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8">
+                        <el-col :span="12" :md="12" :lg="8" :xl="6">
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img src="@/assets/images/template-item1.png" alt="">
                                     <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
                                 </div>
-                                <h3>旅行计划</h3>
+                                <h3><el-text truncated>旅行计划</el-text></h3>
+                                <p><el-text type="info" size="small"
+                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
+                                </p>
+                            </div>
+                        </el-col>
+                        <el-col :span="12" :md="12" :lg="8" :xl="6">
+                            <div class="item">
+                                <div class="PreviewBox">
+                                    <img src="@/assets/images/template-item1.png" alt="">
+                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                </div>
+                                <h3><el-text truncated>旅行计划</el-text></h3>
+                                <p><el-text type="info" size="small"
+                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
+                                </p>
+                            </div>
+                        </el-col>
+                        <el-col :span="12" :md="12" :lg="8" :xl="6">
+                            <div class="item">
+                                <div class="PreviewBox">
+                                    <img src="@/assets/images/template-item1.png" alt="">
+                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                </div>
+                                <h3><el-text truncated>旅行计划</el-text></h3>
+                                <p><el-text type="info" size="small"
+                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
+                                </p>
+                            </div>
+                        </el-col>
+                        <el-col :span="12" :md="12" :lg="8" :xl="6">
+                            <div class="item">
+                                <div class="PreviewBox">
+                                    <img src="@/assets/images/template-item1.png" alt="">
+                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                </div>
+                                <h3><el-text truncated>旅行计划</el-text></h3>
+                                <p><el-text type="info" size="small"
+                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
+                                </p>
+                            </div>
+                        </el-col>
+                        <el-col :span="12" :md="12" :lg="8" :xl="6">
+                            <div class="item">
+                                <div class="PreviewBox">
+                                    <img src="@/assets/images/template-item1.png" alt="">
+                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                </div>
+                                <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
                                         line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
                                 </p>
@@ -43,7 +91,6 @@ let selectItem = ref(0)
 const menuList = ref([
     { label: '全部', icon: '图标' },
     { label: '计划', icon: '图标' },
-    { label: '升级方案', icon: '图标' },
     { label: '学习', icon: '图标' },
     { label: '打卡', icon: '图标' }
 ]);
@@ -90,21 +137,36 @@ let SearchTemplate = (item, index) => {
         display: flex;
 
         .catalog {
-            width: 300px;
+            width: 240px;
             height: 100%;
+            border-left: 1px solid #eee;
+            box-sizing: border-box;
 
             .item {
                 cursor: pointer;
-                padding: 4px 1rem;
+                padding: 6px 1rem;
                 box-sizing: border-box;
                 margin-bottom: 4px;
                 border-radius: 4px;
+
+                display: flex;
+                align-items: center;
+
+                span {
+                    max-width: 240px;
+                }
             }
 
             .item:hover,
             .item:active,
             .item.active {
                 background-color: #EFEFEE;
+            }
+
+            .item:hover span,
+            .item:active span,
+            .item.active span {
+                color: #444;
             }
         }
 
@@ -142,14 +204,20 @@ let SearchTemplate = (item, index) => {
                     }
 
                 }
-                &:hover,&:active{
+
+                &:hover,
+                &:active {
                     .el-button {
                         opacity: 1;
                     }
                 }
 
-                h3{
+                h3 {
                     margin-top: 6px;
+
+                    span {
+                        color: #444;
+                    }
                 }
 
             }
@@ -159,7 +227,7 @@ let SearchTemplate = (item, index) => {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .template {
         flex-direction: column;
 

@@ -33,23 +33,11 @@
     }
 
     // 文本选中时的背景颜色
-    p::selection,
-    span::selection,
-    mark::selection {
+    ::selection {
         background: #ceeafe !important;
         color: #444 !important;
     }
-
-    p::-moz-selection,
-    span::selection,
-    mark::selection {
-        background: #ceeafe !important;
-        color: #444 !important;
-    }
-
-    p::-webkit-selection,
-    span::selection,
-    mark::selection {
+    ::-webkit-selection {
         background: #ceeafe !important;
         color: #444 !important;
     }

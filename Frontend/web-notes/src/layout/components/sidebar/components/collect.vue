@@ -43,7 +43,8 @@
 
             <n-grid-item style="width: 100%;" v-for="(item, index) in data" :key="item.id">
                 <el-tooltip :hide-after="0" placement="top" effect="light">
-                    <template #content><el-text truncated style="max-width: 150px;">收藏页：{{ item.title }}</el-text></template>
+                    <template #content><el-text truncated style="max-width: 150px;">收藏页：{{ item.title
+                            }}</el-text></template>
                     <router-link :to="item.link">
                         <div class="Tools-item item">
                             <n-icon size="20">
@@ -158,7 +159,9 @@ let toggleFullScreen = () => {
     position: relative;
     width: calc(100% - 10px);
     height: 40px;
-    background-color: #f0f0f0;
+    // background-color: #f0f0f0;
+    background-color: rgba(255, 255, 255, 80%);
+    box-shadow: 0 0 5px #eee;
     margin: 0 auto;
 
     img {
@@ -171,12 +174,12 @@ let toggleFullScreen = () => {
     }
 }
 
-.item.official {
-    background-color: #eeeeee;
-}
+// .item.official {
+//     background-color: #eeeeee;
+// }
 
 .item:hover,
 .item:active {
-    background-color: #E9E9E9;
+    background-color: rgba(255, 255, 255, 100%);
 }
 </style>

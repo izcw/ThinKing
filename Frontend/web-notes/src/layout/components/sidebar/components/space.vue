@@ -1,11 +1,11 @@
 <template>
     <div class="space text-select" ref="scrollContainer">
         <div class="item-space" v-for="item in store.userInfoData.noteSpaces" :key="item.spaceId"
-            :class="{ 'active': item.defaultSpace == 0 }"
-            :style="{ 'background-color': item.defaultSpace == 0 ? 'transparent' : item.color }"
+            :class="{ 'active': item.spaceId == storeCloud.cloudData.space }"
+            :style="{ 'background-color': item.spaceId == storeCloud.cloudData.space ? 'transparent' : getThemeSpace(item.color).spaceTab }"
             @click="toggleStatus(item)">
             <!-- 添加点击事件 -->
-            <n-ellipsis style="max-width: 100px">
+            <n-ellipsis style="max-width: 80px">
                 {{ item.name }}
             </n-ellipsis>
         </div>
@@ -22,25 +22,30 @@
 
         <el-dialog v-model="dialogTableVisible" width="600" style="min-height: 400px;" :show-close="false" align-center>
             <div style="padding:1rem;box-sizing: border-box;">
-                <el-table :data="data" style="width: 100%;">
+                <el-table :data="store.userInfoData.noteSpaces" style="width: 100%;">
                     <el-table-column prop="name" label="空间" />
                     <el-table-column prop="color" label="色彩">
                         <template #default="scope">
-                            <div style="width: 25px;height: 25px;border-radius: 50%"
-                                :style="{ 'background-color': scope.row.color }">
+                            <div style="width: 30px;height: 30px;border-radius: 50%;border:2px solid #eee;box-sizing: border-box;"
+                                :style="{ 'background-color': getThemeSpace(scope.row.color).spaceTab }">
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="color" label="默认空间">
+                    <el-table-column prop="defaultSpace" label="默认空间">
                         <template #default="scope">
-                            <el-switch v-model="value1" />
+                            <el-switch v-model="scope.row.defaultSpace" :active-value="0" :inactive-value="1" />
                         </template>
                     </el-table-column>
                     <el-table-column fixed="right" width="100" label="操作">
-                        <template #default>
-                            <el-button link type="danger" size="small" @click="handleClick">
-                                删除
-                            </el-button>
+                        <template #default="scope">
+                            <el-popconfirm title="确定删除?" @confirm="DeleteSpace(scope.row)">
+                                <template #reference>
+                                    <el-button link type="danger" size="small" >
+                                        删除
+                                    </el-button>
+                                </template>
+                            </el-popconfirm>
+
                             <el-button link type="primary" size="small">修改</el-button>
                         </template>
                     </el-table-column>
@@ -57,10 +62,9 @@
                         </el-form-item>
                         <el-form-item label="选择色彩">
                             <el-radio-group v-model="form.color">
-                                <el-radio size="large" border v-for="(item, index) in colorSpace" :key="index"
-                                    :value="item.name" :style="{ 'background-color': item.colora }"
-                                    class="space-radio">{{
-                                        item.color1 }}</el-radio>
+                                <el-radio size="large" v-for="(item, index) in storeCloud.ThemeSpace" :key="index"
+                                    style="border:1px solid #f7f7f7;box-sizing: border-box;" :value="item.id"
+                                    :style="{ 'background-color': item.spaceTab }" class="space-radio"></el-radio>
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item>
@@ -79,7 +83,10 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router'
 import { AddCircle16Regular } from '@vicons/fluent';
+import { useOperatingcloudStore } from '@/stores/OperatingCloud'
 import { useUserStore } from '@/stores/modules/user'
+import { ElMessage } from 'element-plus'
+const storeCloud = useOperatingcloudStore()
 const store = useUserStore()
 
 const router = useRouter()
@@ -88,45 +95,14 @@ let dialogTableVisible = ref(false) // 管理空间对话框
 const innerVisible = ref(false) // 新建空间对话框
 import { reactive } from 'vue'
 
-let colorSpace = ref([
-    {
-        name: "orange",
-        colora: "#FCECE4",
-        colorb: "#FCECE4",
-        colorc: "#FCECE4",
-        colord: "#FCECE4",
-        colore: "#FCECE4"
-    },
-    {
-        name: "yellow",
-        colora: "#FEFBF0",
-        colorb: "#FEFBF0",
-        colorc: "#FEFBF0",
-        colord: "#FEFBF0",
-        colore: "#FEFBF0"
-    },
-    {
-        name: "blue",
-        colora: "#EBF7FC",
-        colorb: "#EBF7FC",
-        colorc: "#EBF7FC",
-        colord: "#EBF7FC",
-        colore: "#EBF7FC"
-    },
-    {
-        name: "purple",
-        colora: "#EEEBFB",
-        colorb: "#EEEBFB",
-        colorc: "#EEEBFB",
-        colord: "#EEEBFB",
-        colore: "#EEEBFB"
-    }
-])
+
+
+
 
 // 添加表单
 const form = reactive({
     name: '',
-    color: '',
+    color: 1,
     status: true,
 })
 
@@ -134,32 +110,37 @@ const onSubmit = () => {
     console.log('submit!')
 }
 
-
-let data = ref([
-    { id: 1, name: "主空间", color: "#FCECE4", status: false },
-    { id: 2, name: "生活笔记", color: "#FEFBF0", status: true },
-    { id: 3, name: "编程学习", color: "#EBF7FC", status: false },
-    { id: 4, name: "加密", color: "#EEEBFB", status: false }
-]);
+// 获取主题色
+let getThemeSpace = (val) => {
+    return storeCloud.ThemeSpace.find((item) => item.id == val)
+}
 
 
 // 切换状态的函数
 const toggleStatus = (item) => {
-    // 先将所有空间项的状态设置为 false
-    store.userInfoData.noteSpaces.forEach((i) => {
-        i.defaultSpace = 1;
-        // 设置被点击的空间项的状态为 true
-    });
-
-    store.userInfoData.noteSpaces.filter((i) => {
-        if (item.spaceId == i.spaceId) {
-            i.defaultSpace = 0;
-        }
-    })
-
+    console.log(item);
+    storeCloud.cloudData.space = item.spaceId
     router.push('/space' + item.spaceId)
 };
 
+
+
+// 删除空间爱你
+let DeleteSpace = (item) => {
+    console.log(item);
+
+    if (item.defaultSpace == 0) {
+        console.log("默认空间不可删除");
+        ElMessage({
+            message: '默认空间不可删除',
+            type: 'warning',
+        })
+    }
+}
+
+
+
+// 横向滚动
 const scrollContainer = ref(null);
 // 鼠标横向滚动
 const handleWheel = (event) => {
@@ -188,13 +169,14 @@ onBeforeUnmount(() => {
 
     .item-space {
         color: #666;
-        font-size: 13px;
-        padding: 8px 1rem;
+        font-size: 12px;
+        padding: 10px 1rem;
         cursor: pointer;
         border-right: 1px solid #DCDCDC;
         border-top: 1px solid #DCDCDC;
         border-bottom: 1px solid #DCDCDC;
         opacity: 0.9;
+        background-color: #fff;
     }
 
     .item-space:hover,
