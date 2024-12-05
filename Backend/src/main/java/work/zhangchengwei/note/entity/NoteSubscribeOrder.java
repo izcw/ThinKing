@@ -1,10 +1,13 @@
 package work.zhangchengwei.note.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -41,15 +44,7 @@ public class NoteSubscribeOrder implements Serializable {
      */
     private Long subscribeId;
 
-    /**
-     * 创建时间
-     */
+    @TableField("create_time")  // 映射到数据库的 create_time 列
+    @JsonProperty("create_time")  // 控制序列化时的字段名为 create_time
     private LocalDateTime createTime;
-
-    /**
-     * 修改时间
-     */
-    private LocalDateTime updateTime;
-
-
 }

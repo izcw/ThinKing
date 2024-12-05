@@ -74,11 +74,11 @@ public class NoteMainController {
 //        noteUser.setNoteSubscribeOrders(noteSubscribeOrderList);
 
         // 根据用户 ID 查询套餐订单列表信息
-        List<NoteSubscribesListInfo> noteSubscribesListInfos = noteSubscribeOrderMapper.selectListByUserIdSubscribesListInfo(userId);
-        noteUser.setNoteSubscribesListInfos(noteSubscribesListInfos);
+//        List<NoteSubscribesListInfo> noteSubscribesListInfos = noteSubscribeOrderMapper.selectListByUserIdSubscribesListInfo(userId);
+//        noteUser.setNoteSubscribesListInfos(noteSubscribesListInfos);
 
         // 查找当前套餐
-        NoteSubscribesListInfo noteCurrentSubscribesListInfo = noteSubscribeOrderMapper.selectListByUserIdCurrentSubscriptionListInfo(userId);
+        NoteSubscribeCurrentInfo noteCurrentSubscribesListInfo = noteSubscribeOrderMapper.selectListByUserIdCurrentSubscriptionListInfo(userId);
         // 如果没有找到当前套餐，则使用默认的套餐（id = '1'）
         NoteSubscribe noteSubscribe;
         if (noteCurrentSubscribesListInfo == null) {

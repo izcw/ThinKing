@@ -3,8 +3,9 @@
         <CollapseMenuBox />
         <div class="container">
             <div class="banner">
-                <h1>加入或续费 ThinKing会员</h1>
+                <h1>加入ThinKing会员</h1>
             </div>
+            <MySubscribeInfoBox />
             <suggestBox />
             <!-- <div>
                 <el-table :data="tableData" style="width: 100%">
@@ -52,6 +53,7 @@
 import { ref } from 'vue';
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
 import suggestBox from '@/views/subscribe/components/suggest.vue';
+import MySubscribeInfoBox from '@/views/subscribe/components/MySubscribeInfo.vue';
 
 let tableData = ref([
     {
@@ -102,7 +104,7 @@ let tableData = ref([
 
     .banner {
         width: 100%;
-        height: 350px;
+        height: 300px;
         background-image: url("/src/assets/images/subscribe-banner.png");
         background-position: center;
         background-repeat: no-repeat;

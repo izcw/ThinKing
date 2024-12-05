@@ -12,7 +12,11 @@
         </div>
         <div class="item" v-for="(menu, index) in menuList" :key="index" :class="{ active: activeIndex === index }"
           @click="changeActive(index)">
-          <span class="icon">{{ menu.icon }}</span>
+          <div class="icon">
+            <n-icon size="20">
+              <component :is="menu.icon" />
+            </n-icon>
+          </div>
           <span>{{ menu.label }}</span>
         </div>
       </div>
@@ -37,21 +41,28 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, markRaw } from 'vue';
 import MyAccount from './components/MyAccount.vue';
 import Settings from './components/Settings.vue';
 import UpgradePlan from './components/UpgradePlan.vue';
 import { logoutToken } from '@/api/login/index.js'
 import { ElMessage } from 'element-plus'
+import { WindowArrowUp16Filled, Settings24Regular } from '@vicons/fluent'
+import { UserOutlined } from '@vicons/antd'
 import { FILE_PATH_API_URL } from "@/config/setting"
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
 
+// 使用 markRaw 来标记组件
+const UserOutlinedIcon = markRaw(UserOutlined);
+const Settings24RegularIcon = markRaw(Settings24Regular);
+const WindowArrowUp16FilledIcon = markRaw(WindowArrowUp16Filled);
+
 const activeIndex = ref(0);
 const menuList = [
-  { label: '我的账号', icon: '图标', component: MyAccount },
-  { label: '设置', icon: '图标', component: Settings },
-  { label: '升级方案', icon: '图标', component: UpgradePlan }
+  { label: '我的账号', icon: UserOutlinedIcon, component: MyAccount },
+  { label: '设置', icon: Settings24RegularIcon, component: Settings },
+  { label: '升级方案', icon: WindowArrowUp16FilledIcon, component: UpgradePlan }
 ];
 
 const currentComponent = computed(() => menuList[activeIndex.value].component);
@@ -93,11 +104,11 @@ let LogOut = () => {
       padding: 6px 1rem;
       box-sizing: border-box;
       display: flex;
-      align-items: center;
       margin-bottom: 1rem;
 
       .account {
         margin-left: 6px;
+        align-items: center;
 
         p {
           font-size: 12px;
@@ -118,6 +129,9 @@ let LogOut = () => {
     }
 
     .item {
+      display: flex;
+      margin-right: 10px;
+
       padding: 6px 1rem;
       box-sizing: border-box;
       border-radius: 4px;

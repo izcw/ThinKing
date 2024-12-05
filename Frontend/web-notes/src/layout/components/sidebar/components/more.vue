@@ -41,7 +41,7 @@
 import { ref, markRaw, onMounted, onBeforeUnmount } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import { Crow, Connectdevelop, Blackberry } from '@vicons/fa'
-import { Money16Regular, Diamond16Regular, Notepad24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
+import { WindowArrowUp16Filled, Diamond16Regular, Notepad24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
 
 // 弹出框
 const buttonRef = ref()
@@ -52,7 +52,7 @@ const onClickOutside = () => {
 
 // 使用 markRaw 来标记组件
 const Diamond16RegularIcon = markRaw(Diamond16Regular);
-const Money16RegularIcon = markRaw(Money16Regular);
+const WindowArrowUp16FilledIcon = markRaw(WindowArrowUp16Filled);
 
 let data = ref([
     {
@@ -67,7 +67,7 @@ let data = ref([
         name: "会员中心",
         link: '/vip',
         describe: "升级享受更好的体验，点击了解》",
-        icon: Money16RegularIcon
+        icon: WindowArrowUp16FilledIcon
     }
 ])
 

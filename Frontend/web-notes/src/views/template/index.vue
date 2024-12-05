@@ -84,7 +84,7 @@ let SearchTemplate = (item, index) => {
 
     .banner {
         width: 100%;
-        height: 350px;
+        height: 300px;
         background-color: #d7c3e8;
         background-image: url("/src/assets/images/template-banner2.png");
         background-position: center;
