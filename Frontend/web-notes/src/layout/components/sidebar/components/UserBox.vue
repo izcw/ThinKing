@@ -3,7 +3,7 @@
         <div class="logo-box text-select">
             <div class="logo" ref="buttonRef" v-click-outside="onClickOutside">
                 <img :src="FILE_PATH_API_URL + store.userInfoData.avatar" alt="Yoko">
-                <span>Yoko</span>
+                <span>{{ store.userInfoData.nickname }}</span>
             </div>
 
             <el-popover ref="popoverRef" :virtual-ref="buttonRef" trigger="click" :width="300" virtual-triggering>
@@ -11,13 +11,20 @@
                     <div class="logo">
                         <img :src="FILE_PATH_API_URL + store.userInfoData.avatar" alt="Yoko">
                         <div class="info">
-                            <p class="name">Yoko</p>
-                            <p class="subscribe">免费版</p>
+                            <p class="name" style="display: flex;align-items: center;">
+                                {{ store.userInfoData.nickname }}
+                                <el-text style="max-width:170px;margin-left: 4px;"  truncated type="info" size="small">{{ store.userInfoData.email }}</el-text>
+                            </p>
+                            <p class="subscribe">
+                                {{ store.userInfoData.currentSubscription.noteSubscribe.subscribeName}}
+                            </p>
                         </div>
                     </div>
                     <el-divider />
-                    <p @click="centerDialogVisible = true"><span>设置</span></p>
-                    <p @click="LogOut"><span>退出登录</span></p>
+                    <div class="operate">
+                        <p @click="centerDialogVisible = true"><span>设置</span></p>
+                        <p @click="LogOut"><span>退出登录</span></p>
+                    </div>
                 </div>
             </el-popover><!-- 弹出框 -->
 
@@ -123,21 +130,6 @@ let LogOut = () => {
 }
 
 .AccountBox {
-    p span {
-        display: block;
-        font-size: 14px;
-        color: #999;
-        width: 100%;
-        padding: 4px 8px;
-        box-sizing: border-box;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    p span:hover {
-        background-color: #E9E9E9;
-        color: #333;
-    }
 
     .logo {
         display: flex;
@@ -161,7 +153,27 @@ let LogOut = () => {
 
             .subscribe {
                 color: #999;
+                font-size: 12px;
             }
+        }
+    }
+
+    // 操作
+    .operate {
+        p span {
+            display: block;
+            font-size: 14px;
+            color: #999;
+            width: 100%;
+            padding: 4px 8px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        p span:hover {
+            background-color: #E9E9E9;
+            color: #333;
         }
     }
 }

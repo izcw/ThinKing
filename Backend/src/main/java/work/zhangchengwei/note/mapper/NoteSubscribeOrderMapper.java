@@ -1,16 +1,9 @@
 package work.zhangchengwei.note.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import work.zhangchengwei.note.entity.NoteSubscribe;
-import work.zhangchengwei.note.entity.NoteSubscribeCurrentInfo;
 import work.zhangchengwei.note.entity.NoteSubscribeOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import work.zhangchengwei.note.entity.NoteSubscribesListInfo;
-
-import java.util.List;
 
 /**
  * <p>
@@ -49,13 +42,11 @@ public interface NoteSubscribeOrderMapper extends BaseMapper<NoteSubscribeOrder>
 
 
     // 根据用户ID查询当前的套餐，为空则没有订阅
-    @Select("SELECT \n" +
-            "ns.*,\n" +
-            "nsorder.*\n" +
+    @Select("SELECT nsorder.*\n" +
             "FROM note_subscribe_order AS nsorder\n" +
             "LEFT JOIN note_subscribe AS ns ON nsorder.subscribe_id = ns.subscribe_id\n" +
             "WHERE nsorder.user_id = #{userId}\n" +
-            "  AND DATEDIFF(CURRENT_DATE, nsorder.create_time) < ns.unit\n" +
-            "LIMIT 1;\n")
-    NoteSubscribeCurrentInfo selectListByUserIdCurrentSubscriptionListInfo(@Param("userId") Long userId);
+            "AND DATEDIFF(CURRENT_DATE, nsorder.create_time) < ns.unit\n" +
+            "LIMIT 1")
+    NoteSubscribeOrder selectByUserIdSubscribeOrder(@Param("userId") Long userId);
 }

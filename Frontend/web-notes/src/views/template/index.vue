@@ -6,7 +6,7 @@
                 <h1>模版中心</h1>
             </div>
 
-            <el-input v-model="input" style="margin-bottom: 1rem;" placeholder="请搜索模版名称" />
+            <el-input v-model="SearchValue" size="large" style="margin-bottom: 1rem;" placeholder="请搜索模版名称" />
             <div class="template">
                 <div class="catalog">
                     <div class="item" v-for="(item, index) in menuList" :key="index"
@@ -18,34 +18,14 @@
                     <el-row :gutter="20">
                         <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8">
                             <div class="item">
-                                <img src="@/assets/images/template-item1.png" alt="">
-                                <h2>旅行计划</h2>
-                                <p><el-text
+                                <div class="PreviewBox">
+                                    <img src="@/assets/images/template-item1.png" alt="">
+                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                </div>
+                                <h3>旅行计划</h3>
+                                <p><el-text type="info" size="small"
                                         line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
                                 </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8">
-                            <div class="item">
-                                <img src="@/assets/images/template-item1.png" alt="">
-                                <h2>旅行计划</h2>
-                                <p><el-text
-                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
-                                </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8">
-                            <div class="item">
-                                <img src="@/assets/images/template-item1.png" alt="">
-                                <h2>旅行计划</h2>
-                                <p><el-text line-clamp="2">哈哈哈</el-text></p>
-                            </div>
-                        </el-col>
-                        <el-col :span="8" :xs="24" :sm="24" :md="12" :lg="8">
-                            <div class="item">
-                                <img src="@/assets/images/template-item1.png" alt="">
-                                <h2>旅行计划</h2>
-                                <p><el-text line-clamp="2">议记录模板可最大限度地提高会议效率</el-text></p>
                             </div>
                         </el-col>
                     </el-row>
@@ -70,6 +50,7 @@ const menuList = ref([
 
 
 // 搜索模版
+let SearchValue = ref()
 let SearchTemplate = (item, index) => {
     selectItem.value = index
 }
@@ -138,14 +119,39 @@ let SearchTemplate = (item, index) => {
                 margin-bottom: 30px;
                 cursor: pointer;
 
-                img {
+                .PreviewBox {
                     width: 100%;
-                    height: 200px;
-                    object-fit: cover;
-                    object-position: center;
-                    border: 1px solid #EFEFEE;
-                    box-sizing: border-box;
+                    height: 180px;
+                    position: relative;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                        border: 1px solid #EFEFEE;
+                        box-sizing: border-box;
+                    }
+
+                    .el-button {
+                        position: absolute;
+                        bottom: 1rem;
+                        right: 1rem;
+                        opacity: 0;
+                        transition: all 0.3s ease;
+                    }
+
                 }
+                &:hover,&:active{
+                    .el-button {
+                        opacity: 1;
+                    }
+                }
+
+                h3{
+                    margin-top: 6px;
+                }
+
             }
         }
 

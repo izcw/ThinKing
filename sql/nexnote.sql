@@ -11,7 +11,7 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 05/12/2024 01:21:46
+ Date: 05/12/2024 18:55:45
 */
 
 SET NAMES utf8mb4;
@@ -170,6 +170,7 @@ CREATE TABLE `note_subscribe` (
   `subscribe_code` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '套餐标识',
   `comments` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
   `price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '价格',
+  `oldprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '原价',
   `unit` int NOT NULL DEFAULT '30' COMMENT '套餐订阅天数，0为无限',
   `space` int DEFAULT '3' COMMENT '空间个数',
   `recycle` int DEFAULT '30' COMMENT '回收站最大天数',
@@ -188,10 +189,10 @@ CREATE TABLE `note_subscribe` (
 -- Records of note_subscribe
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (1, '普通', 'Lite', '普通用户Lite', 0.00, 0, 3, 30, 30, 10000, 5, 0, 0, 0, '2024-11-21 23:49:51', '2024-12-05 00:56:10');
-INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (2, '个人Plus+', 'Plus', '个人Plus版', 12.00, 30, 5, 30, 30, 100000, 10, 0, 0, 0, '2024-11-21 23:50:47', '2024-12-05 00:38:20');
-INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (3, '团队版', 'Team', '团队版', 36.00, 90, 10, 90, 90, 0, 100, 1, 0, 0, '2024-11-21 23:51:35', '2024-12-05 00:38:22');
-INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (4, '企业版', 'Business', '企业版：AI、字数不限', 48.00, 120, 20, 365, 365, 0, 0, 0, 1, 0, '2024-11-21 23:54:11', '2024-12-05 00:38:25');
+INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `oldprice`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (1, '个人普通版', 'Lite', '普通用户Lite', 0.00, 0.00, 0, 3, 30, 30, 10000, 5, 0, 0, 0, '2024-11-21 23:49:51', '2024-12-05 17:03:02');
+INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `oldprice`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (2, '个人Plus+', 'Plus', '个人Plus版', 12.00, 24.00, 30, 5, 30, 30, 100000, 10, 1, 0, 0, '2024-11-21 23:50:47', '2024-12-05 18:40:24');
+INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `oldprice`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (3, '团队版', 'Team', '团队版', 48.00, 68.00, 90, 10, 90, 90, 0, 100, 0, 0, 0, '2024-11-21 23:51:35', '2024-12-05 18:41:23');
+INSERT INTO `note_subscribe` (`subscribe_id`, `subscribe_name`, `subscribe_code`, `comments`, `price`, `oldprice`, `unit`, `space`, `recycle`, `page_history`, `page_wordage`, `ai`, `recommend`, `status`, `deleted`, `create_time`, `update_time`) VALUES (4, '企业版', 'Business', '企业版：AI、字数不限', 88.00, 120.00, 366, 20, 365, 365, 0, 0, 0, 0, 0, '2024-11-21 23:54:11', '2024-12-05 18:41:20');
 COMMIT;
 
 -- ----------------------------
@@ -202,8 +203,8 @@ CREATE TABLE `note_subscribe_order` (
   `subscribe_order_id` bigint NOT NULL AUTO_INCREMENT COMMENT '套餐订单id',
   `user_id` bigint NOT NULL COMMENT '用户id',
   `subscribe_id` bigint NOT NULL COMMENT '套餐id',
+  `status` int NOT NULL DEFAULT '0' COMMENT '状态, 0订单完成, 1订单异常，2已退款、3支付失败',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`subscribe_order_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=53453645766 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户套餐订单';
 
@@ -211,8 +212,10 @@ CREATE TABLE `note_subscribe_order` (
 -- Records of note_subscribe_order
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_subscribe_order` (`subscribe_order_id`, `user_id`, `subscribe_id`, `create_time`, `update_time`) VALUES (32425, 1859329812227633153, 3, '2024-02-15 11:28:29', '2024-12-05 00:52:04');
-INSERT INTO `note_subscribe_order` (`subscribe_order_id`, `user_id`, `subscribe_id`, `create_time`, `update_time`) VALUES (53453645765, 1859329812227633153, 2, '2024-10-04 11:28:29', '2024-12-05 00:54:59');
+INSERT INTO `note_subscribe_order` (`subscribe_order_id`, `user_id`, `subscribe_id`, `status`, `create_time`) VALUES (32425, 1859329812227633153, 3, 0, '2024-02-15 11:28:29');
+INSERT INTO `note_subscribe_order` (`subscribe_order_id`, `user_id`, `subscribe_id`, `status`, `create_time`) VALUES (43523, 1859329812227633153, 3, 0, '2024-11-05 10:46:50');
+INSERT INTO `note_subscribe_order` (`subscribe_order_id`, `user_id`, `subscribe_id`, `status`, `create_time`) VALUES (43557657, 1859329962681511937, 4, 0, '2024-10-16 11:28:29');
+INSERT INTO `note_subscribe_order` (`subscribe_order_id`, `user_id`, `subscribe_id`, `status`, `create_time`) VALUES (53453645765, 1859329812227633153, 2, 1, '2024-10-04 11:28:29');
 COMMIT;
 
 -- ----------------------------
@@ -254,7 +257,6 @@ CREATE TABLE `note_user` (
   `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
   `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'Nex笔记' COMMENT '昵称',
   `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'SystemDefaultFiles/images/avatar/avatar-default.png' COMMENT '头像',
-  `subscribe_id` bigint NOT NULL DEFAULT '0' COMMENT '订阅套餐',
   `status` int NOT NULL DEFAULT '0' COMMENT '状态, 0正常, 1冻结，2异常，3注销',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -266,19 +268,19 @@ CREATE TABLE `note_user` (
 -- Records of note_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859329812227633153, 'xiaoli@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$eZP8YBEbLeM7NQOSRZRUPQ$9pDUvkdrXFrE5P2pZvIbJoySlXkKJHF+mXEsGLtHMco', '小丽', 'UserFiles/images/avatar/a6540470-d522-42f1-bed0-a9fb7b73d4eb.jpg', 0, 0, '2024-11-21 04:15:46', '2024-11-21 04:15:46');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859329962681511937, 'tianxiang@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$dzKkxYHuHWkuIfjte3QRMw$lRrnCd1CBy/YV2G0F1bNaRV2qJk/yZgsNS1zluCfUkM', '天线宝宝', 'UserFiles/images/avatar/13549b95-c562-4e76-8887-25bfffe7f75f.jpg', 0, 3, '2024-11-21 04:16:22', '2024-11-21 04:23:18');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859330063948787713, 'mu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$jpq6HipmtzNNj0Z3ZrBkGw$vX6rNTFtaCLGa992QT/iJ8+VwayReyhiBi8jxIjGbsk', '34', 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg', 0, 0, '2024-11-21 04:16:46', '2024-11-23 20:38:39');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859330240466071553, 'hello@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$f4a5fVafHq4eILipD6EM3Q$Xmz9b6uJQnCDi4BoYT/+c0PcRKKrdKkB1ceksRoMrVY', 'Nex笔记', 'UserFiles/images/avatar/9959db3c-5233-4340-8a9f-052b16ea6746.jpg', 0, 0, '2024-11-21 04:17:28', '2024-11-21 04:17:28');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859330354152681474, '123@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$gpC4GwVRXdFhNdIACy8LOw$c794g7ddJ2gpP2ynjWEWyImBhXFotlF0Yj7FO1kHDLU', 'hai', 'UserFiles/images/avatar/dfd93a19-9deb-4e20-8439-7822d34e2f64.png', 0, 2, '2024-11-21 04:17:55', '2024-11-21 04:23:11');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859330498411573249, 'huo@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$1ytWsbBIDAQ1KCUyNaUzUA$uH3MT+/FhoXWbJ1WuFPm1Jrif+eJeWrMHS3mYBJBPo0', 'sadness and sorrow', 'UserFiles/images/avatar/9b812e3a-cedf-4a39-8d9a-f27c84987811.jpg', 0, 0, '2024-11-21 04:18:30', '2024-11-21 04:18:30');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859330612005908481, '456@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$4SmDSzBZ1q1k/VUzebzd9Q$Tp7k1DA3mIyX4JzqmRu6w1m9vBg5XGIDkfcuMoYde1M', '静静的', 'UserFiles/images/avatar/782146e7-ed97-443f-9c72-7cccbb5e527e.png', 0, 0, '2024-11-21 04:18:57', '2024-11-21 04:18:57');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859331362777935873, 'haha@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$rt5zwtlasrlNqywKELpwTQ$FUH8nqWDWygpQh+HlAyC58uIIvFE7d5H40ra0puBoyo', 'HaHa', 'UserFiles/images/avatar/81fd04de-0421-4f31-95b3-dffb717d5576.jpeg', 0, 0, '2024-11-21 04:21:56', '2024-11-21 04:21:56');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859331453530091521, 'lanqiu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$plXw9J3v4ynmUZu0nWLt1A$aeJCXTu0h8eb+NKL5/ltWJTsqvDge0y79YFS/KIasjE', 'Nex笔记', 'UserFiles/images/avatar/7eba530c-498d-4ede-98f7-c4a406e832cf.png', 0, 0, '2024-11-21 04:22:17', '2024-11-21 04:22:17');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859331507322040322, 'ikun@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$LCAZtgq43BFmQIoY9kvifA$KriA2fpY5rsi9W5ErIw86JE9ek8yYt8YpajPRv4zDlY', 'Nex笔记', 'UserFiles/images/avatar/17561444-e861-48c5-9a28-6fc2b6df93b7.png', 0, 1, '2024-11-21 04:22:30', '2024-11-21 14:55:29');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859331602964754433, 'gou@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$H6AyQ4DX5Z5wO5OwrMeFZg$UEKkizA8853ibIpdS3W+e1WW1BqbgInNxTDq6pyeTFA', '小狗儿', 'UserFiles/images/avatar/5d18bbf9-1d3d-47d2-aa1a-78e8733f4829.jpg', 0, 0, '2024-11-21 04:22:53', '2024-11-21 04:22:53');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1859490692863156226, 'zhezie@qq.om', '$argon2i$v=19$m=65536,t=2,p=1$WvPRTi2speeVhdJ2wCIFYQ$BdeQ9IVbKBZE3SOrSEuOKu0gtQC+7jHsNBc8iidfqQY', '紫则', 'UserFiles/images/avatar/7d20b48a-0ce3-4035-b939-e1b8dbc9aed6.png', 0, 0, '2024-11-21 14:55:03', '2024-11-21 14:55:03');
-INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `subscribe_id`, `status`, `create_time`, `update_time`) VALUES (1864112813100064770, '2405824084@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$43mI6ZBKGx8gYjUVQZxRFw$sNJHBwefq7OZxwhm0BTlZ20GMyppniG6VxkRWaufhZU', 'Nex笔记', 'SystemDefaultFiles/images/avatar/avatar-default.png', 0, 0, '2024-12-04 09:01:42', '2024-12-04 09:01:42');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859329812227633153, 'xiaoli@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$eZP8YBEbLeM7NQOSRZRUPQ$9pDUvkdrXFrE5P2pZvIbJoySlXkKJHF+mXEsGLtHMco', '小丽', 'UserFiles/images/avatar/a6540470-d522-42f1-bed0-a9fb7b73d4eb.jpg', 0, '2024-11-21 04:15:46', '2024-11-21 04:15:46');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859329962681511937, 'tianxiang@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$dzKkxYHuHWkuIfjte3QRMw$lRrnCd1CBy/YV2G0F1bNaRV2qJk/yZgsNS1zluCfUkM', '天线宝宝', 'UserFiles/images/avatar/13549b95-c562-4e76-8887-25bfffe7f75f.jpg', 3, '2024-11-21 04:16:22', '2024-11-21 04:23:18');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330063948787713, 'mu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$jpq6HipmtzNNj0Z3ZrBkGw$vX6rNTFtaCLGa992QT/iJ8+VwayReyhiBi8jxIjGbsk', '34', 'UserFiles/images/avatar/7d3290e6-3492-4fef-8e3a-33635f16de95.jpeg', 0, '2024-11-21 04:16:46', '2024-11-23 20:38:39');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330240466071553, 'hello@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$f4a5fVafHq4eILipD6EM3Q$Xmz9b6uJQnCDi4BoYT/+c0PcRKKrdKkB1ceksRoMrVY', 'Nex笔记', 'UserFiles/images/avatar/9959db3c-5233-4340-8a9f-052b16ea6746.jpg', 0, '2024-11-21 04:17:28', '2024-11-21 04:17:28');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330354152681474, '123@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$gpC4GwVRXdFhNdIACy8LOw$c794g7ddJ2gpP2ynjWEWyImBhXFotlF0Yj7FO1kHDLU', 'hai', 'UserFiles/images/avatar/dfd93a19-9deb-4e20-8439-7822d34e2f64.png', 2, '2024-11-21 04:17:55', '2024-11-21 04:23:11');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330498411573249, 'huo@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$1ytWsbBIDAQ1KCUyNaUzUA$uH3MT+/FhoXWbJ1WuFPm1Jrif+eJeWrMHS3mYBJBPo0', 'sadness and sorrow', 'UserFiles/images/avatar/9b812e3a-cedf-4a39-8d9a-f27c84987811.jpg', 0, '2024-11-21 04:18:30', '2024-11-21 04:18:30');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859330612005908481, '456@gmail.com', '$argon2i$v=19$m=65536,t=2,p=1$4SmDSzBZ1q1k/VUzebzd9Q$Tp7k1DA3mIyX4JzqmRu6w1m9vBg5XGIDkfcuMoYde1M', '静静的', 'UserFiles/images/avatar/782146e7-ed97-443f-9c72-7cccbb5e527e.png', 0, '2024-11-21 04:18:57', '2024-11-21 04:18:57');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859331362777935873, 'haha@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$rt5zwtlasrlNqywKELpwTQ$FUH8nqWDWygpQh+HlAyC58uIIvFE7d5H40ra0puBoyo', 'HaHa', 'UserFiles/images/avatar/81fd04de-0421-4f31-95b3-dffb717d5576.jpeg', 0, '2024-11-21 04:21:56', '2024-11-21 04:21:56');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859331453530091521, 'lanqiu@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$plXw9J3v4ynmUZu0nWLt1A$aeJCXTu0h8eb+NKL5/ltWJTsqvDge0y79YFS/KIasjE', 'Nex笔记', 'UserFiles/images/avatar/7eba530c-498d-4ede-98f7-c4a406e832cf.png', 0, '2024-11-21 04:22:17', '2024-11-21 04:22:17');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859331507322040322, 'ikun@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$LCAZtgq43BFmQIoY9kvifA$KriA2fpY5rsi9W5ErIw86JE9ek8yYt8YpajPRv4zDlY', 'Nex笔记', 'UserFiles/images/avatar/17561444-e861-48c5-9a28-6fc2b6df93b7.png', 1, '2024-11-21 04:22:30', '2024-11-21 14:55:29');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859331602964754433, 'gou@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$H6AyQ4DX5Z5wO5OwrMeFZg$UEKkizA8853ibIpdS3W+e1WW1BqbgInNxTDq6pyeTFA', '小狗儿', 'UserFiles/images/avatar/5d18bbf9-1d3d-47d2-aa1a-78e8733f4829.jpg', 0, '2024-11-21 04:22:53', '2024-11-21 04:22:53');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1859490692863156226, 'zhezie@qq.om', '$argon2i$v=19$m=65536,t=2,p=1$WvPRTi2speeVhdJ2wCIFYQ$BdeQ9IVbKBZE3SOrSEuOKu0gtQC+7jHsNBc8iidfqQY', '紫则', 'UserFiles/images/avatar/7d20b48a-0ce3-4035-b939-e1b8dbc9aed6.png', 0, '2024-11-21 14:55:03', '2024-11-21 14:55:03');
+INSERT INTO `note_user` (`user_id`, `email`, `password`, `nickname`, `avatar`, `status`, `create_time`, `update_time`) VALUES (1864112813100064770, '2405824084@qq.com', '$argon2i$v=19$m=65536,t=2,p=1$43mI6ZBKGx8gYjUVQZxRFw$sNJHBwefq7OZxwhm0BTlZ20GMyppniG6VxkRWaufhZU', 'Nex笔记', 'SystemDefaultFiles/images/avatar/avatar-default.png', 0, '2024-12-04 09:01:42', '2024-12-04 09:01:42');
 COMMIT;
 
 -- ----------------------------
@@ -411,10 +413,10 @@ INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `m
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (160, 152, '敏感词库管理', '/feedback/sensitivelibrary', '', 0, 3, '', 'DocumentRemove', 0, '', 0, '2024-10-14 00:24:12', '2024-11-01 10:16:41');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (161, 130, '文件存储管理', '/data/file', '', 0, 2, '', 'MessageBox', 0, '', 0, '2024-10-14 00:30:22', '2024-11-01 10:15:37');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (162, 99, '增值服务条款管理', '/subscribe/term', '', 0, 2, '', 'Warning', 0, '', 0, '2024-10-14 00:48:10', '2024-11-19 23:20:57');
-INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (163, 0, '模板与插件', '/templateplugin', '', 0, 40, '', 'Orange', 0, '', 0, '2024-10-14 00:52:18', '2024-10-14 00:52:18');
+INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (163, 0, '模板管理', '/templateplugin', '', 0, 50, '', 'Orange', 0, '', 0, '2024-10-14 00:52:18', '2024-12-05 18:51:42');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (164, 152, '笔记发布管理', '/release/notespublicly', '', 0, 1, '', 'Compass', 0, '', 0, '2024-10-14 00:57:59', '2024-11-01 10:16:31');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (165, 157, '意见反馈中心', '/feedback/opinion', '', 0, 2, '', 'InfoFilled', 0, '', 0, '2024-10-14 01:07:58', '2024-11-01 10:16:59');
-INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (166, 101, '订单管理', '/order/orderlist', '', 0, 1, '', 'GoodsFilled', 0, '', 0, '2024-10-14 01:18:37', '2024-11-01 10:16:05');
+INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (166, 101, '订单管理', '/order/orderlist', '/order/orderlist', 0, 1, '', 'GoodsFilled', 0, '', 0, '2024-10-14 01:18:37', '2024-12-05 17:46:40');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (167, 101, '订单统计', '/order/statistics', '/dashboard/analysis', 0, 2, '', 'PieChart', 0, '', 0, '2024-10-14 01:19:47', '2024-11-23 18:12:04');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (168, 150, '用户管理', '/customer/user', '/customer/user', 0, 1, '', 'Avatar', 0, '', 0, '2024-11-01 10:13:21', '2024-11-20 01:26:45');
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `title`, `path`, `component`, `menu_type`, `sort_number`, `authority`, `icon`, `hide`, `meta`, `deleted`, `create_time`, `update_time`) VALUES (169, 150, '用户统计分析', '/customer/analysis', '/dashboard/monitor', 0, 2, '', 'Aim', 0, '', 0, '2024-11-01 10:19:51', '2024-11-23 18:11:27');
@@ -563,17 +565,17 @@ INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1534, 1, 151, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1535, 1, 99, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1536, 1, 100, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
-INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1537, 1, 162, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
+INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1537, 2, 162, '2024-11-01 10:51:28', '2024-12-05 18:53:34');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1538, 1, 101, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1539, 1, 166, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1540, 1, 167, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1541, 1, 163, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1542, 1, 140, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
-INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1543, 1, 120, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
-INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1544, 1, 152, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
-INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1545, 1, 164, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
-INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1546, 1, 159, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
-INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1547, 1, 160, '2024-11-01 10:51:28', '2024-11-01 10:51:28');
+INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1543, 2, 120, '2024-11-01 10:51:28', '2024-12-05 18:52:05');
+INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1544, 2, 152, '2024-11-01 10:51:28', '2024-12-05 18:50:15');
+INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1545, 2, 164, '2024-11-01 10:51:28', '2024-12-05 18:49:01');
+INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1546, 2, 159, '2024-11-01 10:51:28', '2024-12-05 18:49:41');
+INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1547, 2, 160, '2024-11-01 10:51:28', '2024-12-05 18:48:24');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1548, 2, 157, '2024-11-01 10:51:28', '2024-11-19 23:09:51');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1549, 2, 158, '2024-11-01 10:51:28', '2024-11-19 23:09:25');
 INSERT INTO `sys_role_menu` (`role_menu_id`, `role_id`, `menu_id`, `create_time`, `update_time`) VALUES (1550, 2, 165, '2024-11-01 10:51:28', '2024-11-19 23:09:11');

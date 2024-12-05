@@ -3,7 +3,7 @@
         <div style="margin-bottom: 3rem;">
             <MySubscribeInfoBox />
         </div>
-        <div class="suggest" v-if="store.userInfoData.subscribeId > 1">
+        <div class="suggest" v-if="store.userInfoData.currentSubscription.noteSubscribeOrder == null">
             <suggestBox />
         </div>
         <div>
@@ -56,11 +56,10 @@ const query = reactive({
 })
 
 PageSubscribeOrder(query).then((val) => {
-    console.log(val);
     subscribeorder.value = val;
     return
 }).catch((e) => {
-    console.error('登录失败', e);
+    console.error('获取失败', e);
 });
 </script>
 <style scoped lang='scss'>

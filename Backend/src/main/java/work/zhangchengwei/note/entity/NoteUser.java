@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import work.zhangchengwei.system.entity.SysRole;
+import work.zhangchengwei.note.param.NoteSubscribesListInfo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -60,11 +60,6 @@ public class NoteUser implements Serializable {
     private String avatar;
 
     /**
-     * 订阅套餐：默认0（普通）
-     */
-    private Integer subscribeId;
-
-    /**
      * 状态, 0正常, 1冻结
      */
     private Integer status;
@@ -84,7 +79,7 @@ public class NoteUser implements Serializable {
 
     @TableField(exist = false) // 表示这个字段不在 note_user 表中
     @ApiModelProperty(value = "当前订阅的套餐")
-    private NoteSubscribe currentSubscription;
+    private NoteSubscribesListInfo currentSubscription;
 
     @TableField(exist = false) // 表示这个字段不在 note_user 表中
     @ApiModelProperty(value = "空间列表")

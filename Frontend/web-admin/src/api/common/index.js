@@ -41,3 +41,18 @@ export async function SnitListStatus() {
     ]);
   });
 }
+
+
+/**
+ * 订单状态
+ */
+export async function SubscribeOrderListStatus() {
+  return new Promise((resolve) => {
+    resolve([
+      { code: 0, describe: '订单完成', type: 'primary', ripple: false },
+      { code: 1, describe: '订单异常', type: 'info', ripple: false },
+      { code: 2, describe: '已退款', type: 'info', ripple: false },
+      { code: 3, describe: '支付失败', type: 'info', ripple: false },
+    ]);
+  });
+}

@@ -80,6 +80,12 @@ public class NoteSubscribeController {
             queryWrapper.orderByAsc("create_time"); // 默认为按创建时间升序排序
         }
 
+        // 默认过滤逻辑删除字段
+        queryWrapper.eq("status", 0);
+
+        // 默认过滤逻辑删除字段
+        queryWrapper.eq("deleted", 0);
+
         // 执行分页查询
         Page<NoteSubscribe> pageResult;
         try {

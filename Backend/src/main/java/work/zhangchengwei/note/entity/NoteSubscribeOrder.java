@@ -44,6 +44,11 @@ public class NoteSubscribeOrder implements Serializable {
      */
     private Long subscribeId;
 
+    /**
+     * 状态, 0订单完成, 1订单异常，2退款、3支付失败
+     */
+    private Integer status;
+
     @TableField("create_time")  // 映射到数据库的 create_time 列
     @JsonProperty("create_time")  // 控制序列化时的字段名为 create_time
     private LocalDateTime createTime;

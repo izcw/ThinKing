@@ -131,6 +131,7 @@ export const zh_CN = {
         code: '套餐标识',
         comments: '描述',
         price: '价格',
+        oldprice: '原价',
         unit: '单位',
         space : '空间',
         recycle : '回收站(天)',
@@ -138,8 +139,19 @@ export const zh_CN = {
         pagewordage : '最大字数(单页)',
         ai : 'AI(天/次)',
         recommend:'是否推荐',
-        createTime: '注册时间',
+        createTime: '创建时间',
         updateTime:'更新时间',
+        status: '状态',
+        action: '操作'
+      }
+    },
+    subscribeorder: {
+      table: {
+        id:'订单id',
+        name: '套餐名称',
+        user: '用户id',
+        price: '实付金额',
+        createTime: '下单时间',
         status: '状态',
         action: '操作'
       }

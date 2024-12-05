@@ -9,9 +9,22 @@
                     </el-text></p>
                 <div class="price">
                     <p>折扣价：<span class="Current">￥{{ item.price }}</span><span>&nbsp;/&nbsp;月</span></p>
-                    <p>原&emsp;价：<del>￥{{ item.price }}<span>&nbsp;/&nbsp;月</span></del></p>
+                    <p>原&emsp;价：<del>￥{{ item.oldprice }}<span>&nbsp;/&nbsp;月</span></del>
+                        <span class="economize">立省{{item.oldprice - item.price}}¥</span>
+                    </p>
                 </div>
-                <el-button type="primary" @click="upgrade(item)">升级</el-button>
+                <el-button type="primary" @click="upgrade(item)"
+                    v-if="store.userInfoData.currentSubscription.noteSubscribeOrder == null">升级</el-button>
+                <div v-else style="display: flex;flex-direction: column;">
+                    <el-button type="primary" @click="upgrade(item)" disabled>升级</el-button>
+                    <div
+                        style="transform: scale(0.8);display: flex;align-items: center;justify-content: center;color: #999;font-size: 12px;">
+                        <n-icon>
+                            <component :is="Info20RegularIcon" />
+                        </n-icon>
+                        <p>不可升级！当前套餐未过期</p>
+                    </div>
+                </div>
             </div>
         </el-col>
     </el-row>
@@ -45,14 +58,20 @@
     </el-dialog>
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, markRaw } from 'vue'
 import WeChatImages from '@/assets/images/WeChat.png'
 import AlipayImages from '@/assets/images/Alipay.png'
 import { PageSubscribe } from '@/api/subscribe/index'
 import { AlipayOutlined, WechatOutlined } from '@vicons/antd'
+import { Info20Regular } from '@vicons/fluent'
 import QrcodeVue from 'qrcode.vue'
 import { ElMessage } from 'element-plus'
-let centerDialogVisible = ref(false)
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+
+// 使用 markRaw 来标记组件
+const Info20RegularIcon = markRaw(Info20Regular);
+
 
 const query = reactive({
     page: 1,
@@ -67,9 +86,6 @@ const query = reactive({
 let data = ref()
 
 PageSubscribe(query).then((val) => {
-    console.log(999);
-
-    console.log(val);
     data.value = val.filter((item) => item.subscribeId != 1);
     return
 }).catch((e) => {
@@ -101,6 +117,7 @@ let QrcodeData = reactive(
 )
 
 // 模拟支付加载
+let centerDialogVisible = ref(false)
 let loading = ref(false)
 let paymentStatus = ref(true) // 支付状态，是否可以关闭弹窗
 
@@ -112,7 +129,7 @@ let PaymentOrder = () => {
     setTimeout(() => {
         centerDialogVisible.value = false
         loading.value = false
-        paymentStatus.value = true  
+        paymentStatus.value = true
         ElMessage({
             message: '支付成功',
             type: 'success',
@@ -127,8 +144,8 @@ let PaymentOrder = () => {
     margin: 3rem 0;
 
     .item {
-        min-height: 270px;
-        max-height: 270px;
+        min-height: 280px;
+        max-height: 280px;
         padding: 1rem;
         box-sizing: border-box;
         border: 1px solid #eee;
@@ -146,6 +163,7 @@ let PaymentOrder = () => {
 
             .hot {
                 font-size: 12px;
+                transform: scale(0.7);
                 color: #ED6C7B;
                 padding: 4px;
                 border-radius: 2px;
@@ -172,6 +190,14 @@ let PaymentOrder = () => {
                 font-weight: bold;
                 font-size: 30px;
                 color: #0355E3;
+
+
+            }
+            // 节省
+            .economize {
+                margin-left: 10px;
+                font-size: 12px;
+                color: #ED6C7B;
             }
         }
     }

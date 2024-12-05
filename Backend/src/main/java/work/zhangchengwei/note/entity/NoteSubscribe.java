@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("note_subscribe")
-@JsonIgnoreProperties(value = { "create_time","update_time" }, allowGetters = false, allowSetters = true) // 序列化忽略
+//@JsonIgnoreProperties(value = { "create_time","update_time" }, allowGetters = false, allowSetters = true) // 序列化忽略
 public class NoteSubscribe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +56,11 @@ public class NoteSubscribe implements Serializable {
      * 价格
      */
     private BigDecimal price;
+
+    /**
+     * 原价
+     */
+    private BigDecimal oldprice;
 
     /**
      * 订阅天数

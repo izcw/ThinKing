@@ -3,10 +3,10 @@
         <CollapseMenuBox />
         <div class="container">
             <div class="title text-select">
-                <h1>晚上好呀，Yoko</h1>
+                <h1>晚上好呀，{{ store.userInfoData.nickname }}</h1>
             </div>
             <el-row :gutter="30">
-                <el-col :span="15" :xs="24" :sm="24" :md="24" :lg="14" :xl="15">
+                <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="16">
                     <el-row :gutter="30">
                         <el-col :span="24">
                             <el-input v-model="search" size="large" style="width:320px;" placeholder="全局搜索，请输入..."
@@ -23,7 +23,7 @@
                         </el-col>
                     </el-row>
                 </el-col>
-                <el-col :span="9" :xs="24" :sm="24" :md="24" :lg="10" :xl="9">
+                <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="8">
                     <!-- <calendarBox /> -->
                     <RecentlyEditedBox />
                     <RelationshipDiagramBox />
@@ -40,9 +40,9 @@ import RelationshipDiagramBox from './components/RelationshipDiagram.vue';
 import contributeBox from './components/contribute.vue';
 import recommendBox from './components/recommend.vue';
 import searchItemBox from '@/components/searchItem.vue';
-
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
-
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
 
 let search = ref()
 </script>
@@ -60,7 +60,7 @@ let search = ref()
 
 .container {
     // width: 1200px;
-    padding: 0 150px;
+    padding: 0 80px;
     box-sizing: border-box;
     height: 100%;
     margin: 0 auto;

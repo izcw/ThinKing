@@ -32,7 +32,7 @@ let data = ref([
         id: "2",
         title: "文字的力量：文学的启示",
         time: "2024/11/17 9:07:03",
-        article: "文学作品如何影响我们的情感和思想，分析经典文学作品中的主题和象征，以及它们在现代社会中的相关性和启示。"
+        article: "文学作品如何影响我们的情感和思想，分析经典文学作品中的主题和象征，以及它们在现代社会中的相关性和启示。文学作品如何影响我们的情感和思想，分析经典文学作品中的主题和象征，以及它们在现代社会中的相关性和启示。"
     },
     {
         id: "2",
@@ -51,7 +51,7 @@ let data = ref([
 <style scoped lang='scss'>
 .RecentlyEdited {
     width: 100%;
-    height: 500px;
+    height: 540px;
     padding-right: 0;
     overflow: hidden;
     position: relative;
@@ -66,7 +66,7 @@ let data = ref([
         .item {
             padding-left: 1rem;
             box-sizing: border-box;
-            height: 110px;
+            height: 120px;
             position: relative;
             cursor: pointer;
 
@@ -75,7 +75,8 @@ let data = ref([
                 bottom: -10px;
                 right: -10px;
 
-                width: 230px;
+                max-width: 280px;
+                margin-left: 120px;
                 height: calc(100% + 30px);
                 background-color: #fff;
                 border: 1px solid #e3e2e4;
@@ -100,17 +101,20 @@ let data = ref([
                 }
             }
 
+
             .time {
                 position: relative;
-                padding-left: 2.5rem;
+                padding-left: 16px;
                 transition: all 0.2s ease;
                 color: #999;
                 font-size: 12px;
+                z-index: 20;
+                transform: scale(0.9);
             }
 
             .time::after {
                 position: absolute;
-                left: 0;
+                left: -20px;
                 top: 10px;
                 display: block;
                 content: "";

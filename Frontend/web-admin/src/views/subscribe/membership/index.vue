@@ -50,12 +50,17 @@
         </template>
         <!-- 价格 -->
         <template #price="{ row }">
-          <el-tag type="success">{{ row.price.toFixed(2) }}￥</el-tag>
+          <el-tag type="warning">{{ row.price.toFixed(2) }}￥</el-tag>
+        </template>
+        <!-- 原价 -->
+        <template #oldprice="{ row }">
+          <el-tag type="info">{{ row.oldprice.toFixed(2) }}￥</el-tag>
         </template>
         <!-- 单位 -->
         <template #unit="{ row }">
-          <el-text v-for="(itemUnit, index) in unitListData" :key="index" v-show="row.unit == itemUnit.unit">{{
-            itemUnit.describe }}</el-text>
+          <!-- <el-text v-for="(itemUnit, index) in unitListData" :key="index" v-show="row.unit == itemUnit.unit">{{
+            itemUnit.describe }}</el-text> -->
+          {{ row.unit }}天
         </template>
         <!-- 推荐 -->
         <template #recommend="{ row }">
@@ -90,6 +95,7 @@
         </template>
         <!-- 客户名表头 -->
       </ele-pro-table>
+
     </ele-card>
 
     <!-- 编辑弹窗 -->
@@ -140,7 +146,7 @@ const columns = computed(() => {
     {
       prop: 'subscribeName',
       label: t('list.subscribe.table.name'),
-      minWidth: 50,
+      minWidth: 80,
       showOverflowTooltip: true
     },
     {
@@ -152,22 +158,30 @@ const columns = computed(() => {
     {
       prop: 'price',
       label: t('list.subscribe.table.price'),
-      minWidth: 40,
+      minWidth: 100,
       sortable: 'custom',
       slot: 'price',
       showOverflowTooltip: true
     },
     {
+      prop: 'oldprice',
+      label: t('list.subscribe.table.oldprice'),
+      minWidth: 100,
+      sortable: 'custom',
+      slot: 'oldprice',
+      showOverflowTooltip: true
+    },
+    {
       prop: 'unit',
       label: t('list.subscribe.table.unit'),
-      minWidth: 60,
+      minWidth: 80,
       slot: 'unit',
       showOverflowTooltip: true
     },
     {
       prop: 'space',
       label: t('list.subscribe.table.space'),
-      minWidth: 20,
+      minWidth: 50,
       showOverflowTooltip: true
     },
     {

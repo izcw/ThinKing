@@ -77,7 +77,7 @@
     "electron-builder": "^25.1.8",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^17.1.2",
-    "naive-ui": "^2.40.1",
+    "naive-ui": "^2.40.3",
     "sass-embedded": "^1.79.5",
     "vite": "^5.4.8"
   },

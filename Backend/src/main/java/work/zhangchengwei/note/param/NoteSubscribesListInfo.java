@@ -1,14 +1,10 @@
-package work.zhangchengwei.note.entity;
+package work.zhangchengwei.note.param;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import work.zhangchengwei.note.entity.NoteSubscribe;
+import work.zhangchengwei.note.entity.NoteSubscribeOrder;
 
 /**
  * @Author：izcw
