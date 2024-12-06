@@ -35,6 +35,6 @@ import footerBox from "./components/footer.vue";
     left: 0;
     right: 0;
     margin: auto;
-    z-index: 9999;
+    z-index: 999;
 }
 </style>

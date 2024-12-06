@@ -73,6 +73,7 @@ const submitForm = async (formEl) => {
                 console.log(msg);
                 store.fetchUserInfo()
                 ElMessage.success(msg)
+                router.push('/space')
                 return
             }).catch((e) => {
                 console.error('登录失败', e);

@@ -1,10 +1,9 @@
 // src/utils/request.js
 import axios from 'axios';
 import { API_BASE_URL } from '@/config/setting';
-import { setToken, getToken, removeToken } from '@/utils/token-util';
+import { getToken, removeToken } from '@/utils/token-util';
 import router from '@/router';
-import { ElMessage, ElMessageBox } from 'element-plus'
-
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 axios.defaults.withCredentials = true; // 添加此行以支持跨域携带 Cookies
 const service = axios.create({
@@ -12,6 +11,7 @@ const service = axios.create({
   timeout: 5000,
 });
 
+// 添加请求拦截器
 service.interceptors.request.use(
   (config) => {
     const token = getToken();
@@ -25,6 +25,7 @@ service.interceptors.request.use(
   }
 );
 
+// 添加响应拦截器
 service.interceptors.response.use(
   (response) => {
     if (response.data.code === 403) {
@@ -32,24 +33,16 @@ service.interceptors.response.use(
         confirmButtonText: 'OK',
         callback: () => {
           router.push('/login');
-          removeToken()
+          removeToken();
         },
-      })
+      });
+      return Promise.reject(new Error(response.data.message));
     }
-
     return response.data;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
-
-export const get = (url, params = {}) => {
-  return service.get(url, { params });
-};
-
-export const post = (url, data = {}) => {
-  return service.post(url, data);
-};
 
 export default service;

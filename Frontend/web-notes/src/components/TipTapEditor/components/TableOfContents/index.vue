@@ -122,5 +122,4 @@ const onItemClick = (id) => {
 
     }
 }
-
 </script>

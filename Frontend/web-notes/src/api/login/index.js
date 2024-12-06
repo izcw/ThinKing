@@ -1,10 +1,10 @@
 import { setToken, removeToken } from '@/utils/token-util';
-import { get, post } from '@/utils/request';
+import service from '@/utils/request';
 import router from '@/router';
 
 // 注册
 export async function postRegister(data) {
-  const res = await post('/note/register', data);
+  const res = await service.post('/note/register', data);
   if (res.code === 201) {
     return res.message;
   }
@@ -13,10 +13,7 @@ export async function postRegister(data) {
 
 // 登录
 export async function Userlogin(data) {
-  const res = await post('/note/login', data);
-  console.log("登录");
-  console.log(res);
-
+  const res = await service.post('/note/login', data);
   if (res.code === 200) {
     setToken(res.data?.tokenValue, true);
     return res.message;
@@ -26,29 +23,29 @@ export async function Userlogin(data) {
 
 // 获邮箱验证码
 export function getEmailCode(data) {
-  return get('/email/sendEmailCode', data);
+  return service.get('/email/sendEmailCode', data);
 }
 
 // 验证邮箱验证码
 export function postVerifyEmailCode(data) {
-  return post('/email/verifyEmailCode', data);
+  return service.post('/email/verifyEmailCode', data);
 }
 
 
 // 获取图片验证码
 export function getVerifyCode() {
-  return get('/verify/getcode');
+  return service.get('/verify/getcode');
 }
 
 // 验证图片验证码
 export function postCheckVerifyCode(data) {
-  return post('/verify/checkcode', data);
+  return service.post('/verify/checkcode', data);
 }
 
 
 // 退出登录
 export async function logoutToken() {
-  const res = await post('/note/logout');
+  const res = await service.post('/note/logout');
   if (res.code === 200) {
     router.push('/login');
     removeToken()

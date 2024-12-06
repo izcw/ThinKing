@@ -1,39 +1,45 @@
 <template>
     <n-collapse :trigger-areas="['main', 'arrow']" default-expanded-names="1">
+
+        <!-- 添加 -->
         <template #header-extra>
             <el-tooltip content="添加页面" placement="bottom" effect="light" :hide-after="0">
-                <n-button strong secondary size="tiny">
+                <n-button strong secondary size="tiny" @click="addPageFun">
                     <n-icon>
                         <Add16Filled />
                     </n-icon>
                 </n-button>
             </el-tooltip>
         </template>
+
+        <!-- 树形目录 -->
         <n-collapse-item title="我的页面" name="1">
             <div class="sidebarTree">
                 <n-infinite-scroll style="height: 360px" :distance="10">
-                    <el-tree style="background-color: transparent;" :allow-drop="allowDrop" :allow-drag="allowDrag"
-                        :data="data" draggable node-key="id" :expand-on-click-node="false"
+                    <el-tree v-if="treeData" style="background-color: transparent;" :allow-drop="allowDrop"
+                        :allow-drag="allowDrag" :data="treeData" draggable node-key="id" :expand-on-click-node="false"
                         @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
                         @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
                         @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']"
                         highlight-current>
                         <template #default="{ node, data }">
-                            <div class="custom-tree-node">
-                                <div class="title" @click="openPage(node)">
+                            <div class="custom-tree-node"
+                                :style="{ 'background-color': storeCloud.cloudData.noteId == node.data.pageId ? '#efefed' : 'transparent' }">
+                                <div class="title" @click="openPage(node.data)">
                                     <span class="icon">🥈</span>
-                                    <el-text truncated>{{ node.label }}</el-text>
+                                    <el-text truncated>{{ node.data.title }}</el-text>
                                 </div>
                                 <div class="tools">
                                     <div class="content">
-                                        <el-tooltip content="删除，创建副本等。" placement="bottom" effect="light"  :hide-after="0">
+                                        <el-tooltip content="删除，创建副本等。" placement="bottom" effect="light"
+                                            :hide-after="0">
                                             <n-button strong secondary size="tiny">
                                                 <n-icon>
                                                     <MoreHorizontal24Filled />
                                                 </n-icon>
                                             </n-button>
                                         </el-tooltip>
-                                        <el-tooltip content="添加子页面" placement="bottom" effect="light"  :hide-after="0">
+                                        <el-tooltip content="添加子页面" placement="bottom" effect="light" :hide-after="0">
                                             <n-button strong secondary size="tiny" style="margin-left: 4px;">
                                                 <n-icon>
                                                     <Add16Filled />
@@ -52,97 +58,87 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Copy16Regular } from '@vicons/fluent'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { ElMessage } from 'element-plus'
+import { addPage } from '@/api/note/index.js'
+import { useRouter, useRoute } from 'vue-router'
+import { useOperatingcloudStore } from '@/stores/OperatingCloud'
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+const storeCloud = useOperatingcloudStore()
 
+// 获取当前路由参数
+const router = useRouter()
+// const route = useRoute();
+// const spaceId = ref(route.params.spaceId);
+
+// watch(() => spaceId, (newVal, oldVal) => {
+//     console.log("路由改变"+newVal);
+//     if (newVal !== oldVal) {
+//         spaceId.value = newVal
+//     }
+// });
+
+// 打开页面
 let openPage = (val) => {
-    router.push('/space1/' + val.label)
+    console.log("wsm");
+    console.log(val);
+    router.push('/space/' + val.pageId)
 }
 
-// Data
-const data = ref([
-    {
-        id: '1',
-        label: '欢迎来到ThinKing笔记',
-        children: [
-            {
-                id: '1.2',
-                label: '我能用ThinKing来干什么？',
-            },
-            {
-                id: '1.3',
-                label: '入门教程',
-            },
-        ],
-    },
-    {
-        id: '2',
-        label: '莎士比亚笔下的爱情观',
-        children: [
-            {
-                id: '2.1',
-                label: 'Level two 1-1',
-                children: [
-                    {
-                        id: '2.1.1',
-                        label: 'Level three 1-1-1',
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        id: '3',
-        label: 'Java',
-        children: [
-            {
-                id: '3.1',
-                label: '探索Java世界的奥秘',
-                children: [
-                    {
-                        label: '第一章学习',
-                    },
-                    {
-                        label: '第二章学习',
-                    },
-                ],
-            },
-            {
-                label: 'Springboot',
-                children: [
-                    {
-                        label: 'Level three 2-2-1',
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        label: '文字的力量',
-        children: [
-            {
-                label: '文学的启示',
-                children: [
-                    {
-                        label: 'Level three 3-1-1',
-                    },
-                ],
-            },
-            {
-                label: 'Level two 3-2',
-                children: [
-                    {
-                        label: 'Level three 3-2-1',
-                    },
-                ],
-            },
-        ],
-    },
-]);
 
-// Methods
+// 添加页面
+let addPageFun = () => {
+    console.log("添加页面");
+    addPage({ spaceId: storeCloud.cloudData.space }).then((data) => {
+        console.log("添加成功", data);
+        ElMessage({
+            message: '添加成功',
+            type: 'success',
+        });
+    }).catch((e) => {
+        console.error('添加失败', e);
+    });
+}
+
+
+
+// 将笔记数据构建树形结构的函数
+function buildTree(data) {
+    const tree = [];
+    const map = new Map();
+
+    if (data) {
+        data.forEach(item => {
+            const node = { ...item, children: [] };
+            map.set(item.pageId, node);
+        });
+
+        data.forEach(item => {
+            const node = map.get(item.pageId);
+            if (item.parentId === '0') {
+                tree.push(node);
+            } else {
+                const parentNode = map.get(item.parentId);
+                if (parentNode) {
+                    parentNode.children.push(node);
+                }
+            }
+        });
+    }
+
+    return tree;
+}
+
+const treeData = computed(() => {
+    return buildTree(store.spacePageData);
+});
+
+
+
+
+// 树形目录的操作
 const handleDragStart = (node, ev) => {
     console.log('drag start', node);
 };

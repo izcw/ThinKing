@@ -81,7 +81,6 @@ public class NoteMainController {
         noteSpaceList.sort(Comparator.comparing(NoteSpace::getSortNumber));  //  升序排序
         noteUser.setNoteSpaces(noteSpaceList);
 
-
         return ResponseResult.success(noteUser);
     }
 
@@ -92,9 +91,10 @@ public class NoteMainController {
      */
     @PostMapping("/login")
     public ResponseResult<SaTokenInfo> login(@RequestBody NoteUser noteUser) {
+        System.out.println(noteUser);
         // 检查用户是否已存在
         NoteUser existingUser = noteUserService.getOne(new QueryWrapper<NoteUser>().eq("email", noteUser.getEmail()));
-
+        System.out.println(existingUser);
         if (existingUser != null) {
             // 如果用户已存在，验证密码
             if (passwordService.verifyPassword(noteUser.getPassword(), existingUser.getPassword())) {

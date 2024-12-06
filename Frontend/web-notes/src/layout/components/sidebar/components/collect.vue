@@ -3,7 +3,7 @@
         <n-grid cols="3 200:4 300:5 400:6 500:7 600:8" :y-gap="8" style="justify-items: center;">
             <n-grid-item style="width: 100%;">
                 <el-tooltip :hide-after="0" content="主页" placement="top" effect="light">
-                    <router-link to="/space1">
+                    <router-link to="/space">
                         <div class="Tools-item item official">
                             <n-icon size="20">
                                 <Home48Regular />
@@ -89,43 +89,43 @@ let data = ref([
     {
         title: 'link1',
         id: 4,
-        link: '/space1/345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg',
+        link: '/space/345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg',
         icon: Star
     },
     {
         title: 'link2',
         id: 5,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }, {
         title: 'link3',
         id: 6,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }, {
         title: '你好Hello!!. ',
         id: 7,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }, {
         title: '探索java世界的奥秘',
         id: 8,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }, {
         title: 'link6',
         id: 9,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }, {
         title: 'link5',
         id: 8,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }, {
         title: 'link6',
         id: 9,
-        link: '/space1/345rsdsdfg',
+        link: '/space/345rsdsdfg',
         icon: Star
     }
 ])

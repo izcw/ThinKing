@@ -1,6 +1,6 @@
 <template>
     <div class="rightTools">
-        <p class="updatetime-text text-select">上次编辑&nbsp;{{ timeAgo('2024/11/17 18:22:49') }}</p>
+        <p class="updatetime-text text-select">上次编辑&nbsp;{{ timeAgo(StorePage.pageData.updateTime) }}</p>
         <n-tooltip placement="bottom" trigger="hover">
             <template #trigger>
                 <div class="Tools-item" @click="dialogTableVisible = true">
@@ -57,6 +57,8 @@ import { timeAgo } from '@/utils/timeAgo'
 import { StarRegular } from '@vicons/fa'
 import { MoreHorizontal32Filled, Search28Filled, ChevronDoubleRight16Filled } from '@vicons/fluent'
 import PageSettingsBox from '@/components/PageSettings.vue'
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
 
 // 分享弹出框
 const buttonRef = ref()
@@ -86,6 +88,7 @@ let findlook = ref()
 
     .updatetime-text {
         font-size: 12px;
+        transform: scale(0.9);
         color: #999;
         padding: 4px 8px;
         box-sizing: border-box;

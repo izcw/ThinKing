@@ -47,16 +47,16 @@ const router = createRouter({
       ],
     },
     {
-      path: '/space:spaceId',
+      path: '/space',
       component: Layout,
       children: [
         {
-          path: '/space:spaceId/',
+          path: '',
           component: () => import('../views/index/index.vue'),
           meta: { title: '主页' },
         },
         {
-          path: '/space:spaceId/:noteId',
+          path: '/space/:noteId',
           component: NoteLayout,
           meta: { title: '笔记详情' },
         },
@@ -84,27 +84,28 @@ const router = createRouter({
 
 // 检查是否需要跳转到登录页面
 const checkLogin = (to, next) => {
+
+};
+
+router.beforeEach(async (to, from, next) => {
   const publicRoutes = ['/login', '/register', '/home', '/lock'];
   if (publicRoutes.includes(to.path)) {
     next();
   } else {
-    next({ path: '/login' });
-  }
-};
-
-router.beforeEach(async (to, from, next) => {
-  const store = useUserStore();
-  const token = getToken();
-  if (token) {
-    // 如果用户信息未获取，则获取用户信息
-    if (!store.userInfoData) {
-      await store.fetchUserInfo();
+    const store = useUserStore();
+    const token = getToken();
+    if (token) {
+      // 如果用户信息未获取，则获取用户信息
+      if (!store.userInfoData) {
+        await store.fetchUserInfo();
+      }
+      next();
+    }else{
+      next({ path: '/login' });
     }
-    next();
-  } else {
-    checkLogin(to, next);
   }
 });
+
 
 router.afterEach((to) => {
   // 动态设置页面标题，仅在导航完成后设置

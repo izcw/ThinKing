@@ -62,9 +62,9 @@
         <div class="Settings-item">
             <p class="settingsTitle">其它</p>
             <div class="contentBox">
-                <div class="item select">
+                <!-- <div class="item select">
                     <p>标题自动编号</p><n-switch size="small" />
-                </div>
+                </div> -->
                 <div class="item select">
                     <p>页面底部信息</p> <n-switch size="small" />
                 </div>
@@ -77,9 +77,9 @@
                 <div class="item select">
                     <p>转为模板</p><n-switch size="small" />
                 </div>
-                <div class="item select">
+                <!-- <div class="item select">
                     <p>页面背景</p>
-                </div>
+                </div> -->
                 <div class="item select">
                     <p>导入</p>
                 </div>

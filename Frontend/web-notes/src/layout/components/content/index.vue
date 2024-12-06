@@ -1,5 +1,8 @@
 <template>
-    <div class="MainContent">
+    <div v-if="loading" v-loading="loading" style="width: 100%;height: 100%;">
+
+    </div>
+    <div v-else class="MainContent">
         <div class="PageHeader">
             <PageHeaderBox />
         </div><!-- 页头 -->
@@ -14,7 +17,7 @@
                 <template v-slot:2>
                     <main class="content">
                         <ContentBox />
-                        <levitatedSphereBox/>
+                        <levitatedSphereBox />
                     </main>
                 </template>
             </PanelSplitBox><!-- 分割面板 -->
@@ -23,12 +26,51 @@
 
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import PanelSplitBox from '@/layout/components/PanelSplit.vue'
 import ToolSidebarBox from '@/layout/components/toolSidebar/index.vue'
 import ContentBox from './contentPage.vue'
 import levitatedSphereBox from '@/layout/components/levitatedSphere.vue'
 import PageHeaderBox from '@/layout/components/PageHeader/index.vue'
+import { useRoute } from 'vue-router';
+import { getPageId } from '@/api/note/index.js'
+import { usePageStore } from '@/stores/page'
+import { useOperatingcloudStore } from '@/stores/OperatingCloud'
+const storeCloud = useOperatingcloudStore()
+const StorePage = usePageStore()
+
+// 获取当前路由参数
+const route = useRoute();
+const noteId = route.params.noteId;
+
+const loading = ref(true);
+
+// 监听 noteId 的变化
+watch(() => route.params.noteId, (newNoteId, oldNoteId) => {
+    console.log("路由改变"+newNoteId);
+    if (newNoteId !== oldNoteId) {
+        fetchData(newNoteId);
+        storeCloud.cloudData.noteId = route.params.noteId
+    }
+});
+
+// 获取数据的函数
+const fetchData = (id) => {
+    loading.value = true;
+    console.log("获取页面数据" + noteId);
+    getPageId(id).then((data) => {
+        console.log("获取页面数据成功", data);
+        loading.value = false;
+        StorePage.pageData = data
+    }).catch((e) => {
+        console.error('获取页面数据失败', e);
+    });
+}
+
+// 在组件挂载时获取数据
+onMounted(() => {
+    fetchData(noteId)
+});
 
 </script>
 <style scoped lang='scss'>

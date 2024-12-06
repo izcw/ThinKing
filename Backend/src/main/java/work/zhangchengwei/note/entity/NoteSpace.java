@@ -28,7 +28,7 @@ public class NoteSpace implements Serializable {
     /**
      * 空间id
      */
-    @TableId(value = "space_id", type = IdType.AUTO)
+    @TableId(value = "space_id", type = IdType.ASSIGN_ID)
     private Long spaceId;
 
     /**
@@ -44,7 +44,7 @@ public class NoteSpace implements Serializable {
     /**
      * 空间配色
      */
-    private String color;
+    private Integer color;
 
     /**
      * 默认空间, 0默认, 1其它

@@ -11,7 +11,7 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 06/12/2024 02:57:48
+ Date: 07/12/2024 04:15:53
 */
 
 SET NAMES utf8mb4;
@@ -23,26 +23,38 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `note_page`;
 CREATE TABLE `note_page` (
   `page_id` bigint NOT NULL AUTO_INCREMENT COMMENT '空间id',
-  `page_space_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '空间id',
+  `space_id` bigint NOT NULL COMMENT '空间id',
   `user_id` bigint NOT NULL COMMENT '用户id',
-  `parent_id` bigint DEFAULT NULL COMMENT '上级id，0是顶级',
+  `parent_id` bigint DEFAULT '0' COMMENT '上级id，0是顶级',
   `sort_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '排序号',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'space' COMMENT '页面标题',
   `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '页面图标',
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '笔记内容',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'New Page' COMMENT '页面标题',
   `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '页面封面',
-  `collect` int DEFAULT NULL COMMENT '收藏：0否，1收藏',
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '笔记内容',
+  `collect` int DEFAULT '0' COMMENT '收藏：0否，1收藏',
+  `layout` enum('big','default','small','mobile') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'default' COMMENT '页面布局',
+  `font` enum('默认','衬线体','等宽体') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '默认' COMMENT '字体',
+  `size` enum('12','14','16','18','20') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '16' COMMENT '字体大小',
+  `readonly` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '只读：0可以编辑，1只读',
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '密码：NULL不加密',
+  `bottominfo` int DEFAULT '0' COMMENT '底部信息，0默认开启，1关闭',
+  `template` int DEFAULT '0' COMMENT '模板：0普通页面，1~n 模板',
   `deleted` int NOT NULL DEFAULT '0' COMMENT '是否删除, 0否, 1回收站',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`page_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='页面';
+) ENGINE=InnoDB AUTO_INCREMENT=1864991406103945219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='页面';
 
 -- ----------------------------
 -- Records of note_page
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_page` (`page_id`, `page_space_id`, `user_id`, `parent_id`, `sort_number`, `title`, `icon`, `content`, `cover`, `collect`, `deleted`, `create_time`, `update_time`) VALUES (123, '1', 3254365461, 0, '1', 'Hello', NULL, '的说法各的风格', NULL, 1, 0, '2024-12-03 23:19:13', '2024-12-03 23:19:45');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1864975123333472257, 23, 1859329812227633153, 0, NULL, NULL, '欢迎来到', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-06 18:08:13', '2024-11-15 19:21:17');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1864975873375690753, 23, 1859329812227633153, 1864975123333472257, NULL, NULL, 'New Page1', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-06 18:11:12', '2024-12-04 19:21:20');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1864975889678950402, 1864975846142074882, 1859329812227633153, 0, NULL, NULL, 'New Page2', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-06 18:11:16', '2024-12-05 19:21:22');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1864989580021424129, 23, 1859329812227633153, 1864975873375690753, NULL, NULL, 'New Page3', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-06 19:05:40', '2024-12-06 19:19:25');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1864989582475091970, 23, 1859329812227633153, 1864989580021424129, NULL, NULL, 'New Page4', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-06 19:05:40', '2024-12-06 19:21:28');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1864991406103945218, 23, 1859329812227633153, 0, NULL, NULL, 'hello', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-06 19:12:55', '2024-12-06 19:21:31');
 COMMIT;
 
 -- ----------------------------
@@ -123,26 +135,27 @@ DROP TABLE IF EXISTS `note_space`;
 CREATE TABLE `note_space` (
   `space_id` bigint NOT NULL AUTO_INCREMENT COMMENT '空间id',
   `user_id` bigint NOT NULL COMMENT '用户id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'space' COMMENT '空间名称',
-  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '空间配色',
-  `default_space` int NOT NULL DEFAULT '0' COMMENT '默认空间, 0默认, 1其它',
-  `sort_number` int NOT NULL DEFAULT '1' COMMENT '排序号',
-  `deleted` int NOT NULL DEFAULT '0' COMMENT '是否删除, 0否, 1回收站',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'New Space' COMMENT '空间名称',
+  `color` int DEFAULT '1' COMMENT '空间配色',
+  `default_space` int DEFAULT '1' COMMENT '默认空间, 0默认, 1其它',
+  `sort_number` int DEFAULT '1' COMMENT '排序号',
+  `deleted` int DEFAULT '0' COMMENT '是否删除, 0否, 1回收站',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`space_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=343254333365462 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='笔记空间';
+) ENGINE=InnoDB AUTO_INCREMENT=1865127522755346435 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='笔记空间';
 
 -- ----------------------------
 -- Records of note_space
 -- ----------------------------
 BEGIN;
-INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (223, 1859329812227633153, 'java', '3', 1, 3, 0, '2024-11-05 23:18:23', '2024-12-06 01:49:22');
-INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (33242345, 1859329812227633153, 'hello', '6', 1, 6, 0, '2024-11-08 23:18:23', '2024-12-06 01:49:30');
-INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (3254365461, 1859329812227633153, '默认颜色', '1', 1, 1, 0, '2024-11-03 23:18:23', '2024-12-06 02:56:01');
-INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (343254365461, 1859329812227633153, '生活笔记', '2', 0, 2, 0, '2024-11-04 23:18:23', '2024-12-06 02:56:03');
-INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (3432543365461, 1859329812227633153, 'css', '4', 1, 4, 0, '2024-11-06 23:18:23', '2024-12-06 01:49:26');
-INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (34325436546133, 1859329812227633153, 'vue', '5', 1, 5, 0, '2024-11-07 23:18:23', '2024-12-06 01:49:28');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (23, 1859329812227633153, '默认空间5', 6, 0, 1, 0, '2024-12-06 18:06:09', '2024-12-07 04:13:52');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (1865114974245064705, 1859329812227633153, '34', 1, 1, 9, 0, '2024-12-07 03:23:56', '2024-12-07 04:13:23');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (1865120210800046081, 1859329812227633153, '是对方', 4, 1, 9, 0, '2024-12-07 04:08:49', '2024-12-07 04:13:34');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (1865127025155702785, 1859329812227633153, '4354543', 1, 1, 9, 0, '2024-12-07 04:11:49', '2024-12-07 04:13:52');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (1865127394644525057, 1859329812227633153, '34', 1, 1, 9, 0, '2024-12-07 04:13:17', '2024-12-07 04:13:17');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (1865127493261000706, 1859329812227633153, '425', 5, 1, 9, 0, '2024-12-07 04:13:41', '2024-12-07 04:13:41');
+INSERT INTO `note_space` (`space_id`, `user_id`, `name`, `color`, `default_space`, `sort_number`, `deleted`, `create_time`, `update_time`) VALUES (1865127522755346434, 1859329812227633153, '444', 1, 1, 9, 0, '2024-12-07 04:13:48', '2024-12-07 04:13:48');
 COMMIT;
 
 -- ----------------------------

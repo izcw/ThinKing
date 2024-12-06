@@ -1,16 +1,18 @@
 <template>
     <div class="contentPage">
         <div class="pageIcon">😀</div>
-        <el-input v-model.trim="title" :resize="'none'" style="width: 100%" autosize type="textarea" placeholder="未命名页面" />
+        <el-input v-model.trim="title" :resize="'none'" style="width: 100%" autosize type="textarea"
+            placeholder="未命名页面" />
         <TipTapEditor />
     </div>
 </template>
 <script setup>
 import { ref, watch } from 'vue';
 import TipTapEditor from '@/components/TipTapEditor/index.vue'
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
 
-
-let title = ref('你好Hello!!. ')
+let title = ref(StorePage.pageData.title)
 watch(title, (newValue, oldValue) => {
     console.log('标题发生变化了');
     console.log('新值:', newValue);
