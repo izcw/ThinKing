@@ -26,7 +26,7 @@
                             <div class="custom-tree-node"
                                 :style="{ 'background-color': storeCloud.cloudData.noteId == node.data.pageId ? '#efefed' : 'transparent' }">
                                 <div class="title" @click="openPage(node.data)">
-                                    <span class="icon">🥈</span>
+                                    <span class="icon">{{ node.data.icon }}</span>
                                     <el-text truncated>{{ node.data.title }}</el-text>
                                 </div>
                                 <div class="tools">

@@ -2,7 +2,7 @@
 <template>
   <div class="dropdown-menu">
     <template v-if="items.length">
-      <n-tabs type="line" trigger="hover" style="min-width: 300px; min-height: 360px;">
+      <n-tabs type="line" trigger="click" style="min-width: 300px; min-height: 360px;">
         <n-tab-pane name="tabP1" tab="基本">
           <n-infinite-scroll style="height: 360px;" :distance="10">
             <div class="item" v-for="(item, index) in items" :key="index" text @click="selectItem(index)">

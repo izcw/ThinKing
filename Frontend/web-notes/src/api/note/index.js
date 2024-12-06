@@ -14,7 +14,7 @@ export async function getPageId(id) {
  * 获取空间笔记
  */
 export async function getSpacePage(params) {
-  const res = await service.get('/note/page/spacePage', params);
+  const res = await service.get('/note/page/spacePage', { params });
   if (res.code === 200) {
     return res.data;
   }

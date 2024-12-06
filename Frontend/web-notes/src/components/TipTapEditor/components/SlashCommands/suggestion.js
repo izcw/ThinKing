@@ -2,9 +2,8 @@ import { VueRenderer } from '@tiptap/vue-3'
 import tippy from 'tippy.js'
 
 import CommandsList from './index.vue'
-
 import { markRaw } from 'vue';
-import { TextCaseTitle16Regular, TextHeader124Filled, TextHeader224Filled, TextHeader320Filled, Table24Regular, AppsList20Filled, TextNumberListLtr20Filled, AppsList20Regular, Code24Filled, EmojiSparkle24Regular, LineHorizontal120Filled, TextQuote20Filled, Mention20Filled } from '@vicons/fluent'
+import { TextCaseTitle16Regular, TextHeader124Filled, TextHeader224Filled, TextHeader320Filled, Spacebar24Filled, Table24Regular, AppsList20Filled, TextNumberListLtr20Filled, AppsList20Regular, Code24Filled, EmojiSparkle24Regular, LineHorizontal120Filled, TextQuote20Filled, Mention20Filled } from '@vicons/fluent'
 // 使用 markRaw 来标记组件
 const TextCaseTitle16RegularIcon = markRaw(TextCaseTitle16Regular);
 const TextHeader124FilledIcon = markRaw(TextHeader124Filled);
@@ -19,23 +18,20 @@ const EmojiSparkle24RegularIcon = markRaw(EmojiSparkle24Regular);
 const LineHorizontal120FilledIcon = markRaw(LineHorizontal120Filled);
 const TextQuote20FilledIcon = markRaw(TextQuote20Filled);
 const Mention20FilledIcon = markRaw(Mention20Filled);
+const Spacebar24FilledIcon = markRaw(Spacebar24Filled);
 
 export default {
   items: ({ query }) => {
     return [
-      {
-        title: '文本',
-        describe: '从纯文本开始编写',
-        icon: TextCaseTitle16RegularIcon,
-        command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setNode('heading', { level: 1 })
-            .run()
-        },
-      },
+      // {
+      //   title: '文本',
+      //   describe: '从纯文本开始编写',
+      //   icon: TextCaseTitle16RegularIcon,
+      //   command: ({ editor, range }) => {
+      //     editor.chain().focus().toggleBold().run()
+
+      //   },
+      // },
       {
         title: '标题1',
         describe: '大标题',
@@ -80,12 +76,7 @@ export default {
         describe: '添加一个简易的内容表格',
         icon: Table24RegularIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('bold')
-            .run()
+          editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
         },
       },
       {
@@ -93,12 +84,7 @@ export default {
         describe: '使用代办清单',
         icon: AppsList20RegularIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
+          editor.chain().focus().toggleTaskList().run()
         },
       },
       {
@@ -106,12 +92,7 @@ export default {
         describe: '创建一个简易的项目符号列表',
         icon: AppsList20FilledIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
+          editor.chain().focus().toggleBulletList().run()
         },
       },
       {
@@ -119,12 +100,7 @@ export default {
         describe: '创建一个带序号的列表',
         icon: TextNumberListLtr20FilledIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
+          editor.chain().focus().toggleOrderedList().run()
         },
       },
       {
@@ -132,12 +108,7 @@ export default {
         describe: '高亮显示代码',
         icon: Code24FilledIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
+          editor.chain().focus().toggleCodeBlock().run()
         },
       },
       {
@@ -171,12 +142,7 @@ export default {
         describe: '摘取引用',
         icon: TextQuote20FilledIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
+          editor.chain().focus().toggleBlockquote().run()
         },
       },
       {
@@ -184,12 +150,7 @@ export default {
         describe: '在视觉上创建分隔',
         icon: LineHorizontal120FilledIcon,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
+          editor.chain().focus().setHorizontalRule().run()
         },
       },
       {
@@ -217,8 +178,16 @@ export default {
             .setMark('italic')
             .run()
         },
+      },
+      {
+        title: '空格',
+        describe: '插入一个空格',
+        icon: Spacebar24FilledIcon,
+        command: ({ editor, range }) => {
+          editor.chain().focus().setHardBreak().run()
+        },
       }
-    ].filter(item => item.title.toLowerCase().startsWith(query.toLowerCase())).slice(0, 10)
+    ].filter(item => item.title.toLowerCase().startsWith(query.toLowerCase()))
   },
 
   render: () => {

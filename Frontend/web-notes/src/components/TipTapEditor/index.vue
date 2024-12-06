@@ -9,18 +9,24 @@
             </el-button>
         </div> -->
         <!-- 编辑器 -->
-        <editor-content :editor="editor" />
+        <editor-content :editor="editor" style="min-height: 400px;" />
 
         <!-- 浮动菜单 -->
         <bubbleMenuBox v-if="editor" :editor="editor" />
 
         <!-- 为空时显示 -->
         <div v-if="store.content.length == null || store.content == '<p></p>'" class="EmptyPrompt">
-            <el-button v-if="editor">
+            <el-button v-if="editor"
+                @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" size="small">
+                标题H1
+            </el-button>
+            <el-button v-if="editor"
+                @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()"
+                size="small">
                 表格
             </el-button>
-            <el-button v-if="editor">
-                列表
+            <el-button v-if="editor" @click=editor.chain().focus().toggleTaskList().run() size="small">
+                清单列表
             </el-button>
         </div>
 
@@ -38,7 +44,7 @@ import { ElButton } from 'element-plus'
 import 'element-plus/dist/index.css'
 import bubbleMenuBox from './components/bubbleMenu/index.vue'
 import NumberWordsBox from './components/NumberWords/index.vue'
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
+import { useEditor, EditorContent, BubbleMenu, VueNodeViewRenderer } from '@tiptap/vue-3'
 import { Editor } from '@tiptap/core'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
@@ -64,6 +70,32 @@ import Code from '@tiptap/extension-code' // 标记为代码
 import Link from '@tiptap/extension-link' // 链接
 import Subscript from '@tiptap/extension-subscript' // 下标
 import Superscript from '@tiptap/extension-superscript' // 上标
+// 节点
+import Blockquote from '@tiptap/extension-blockquote' // 引用
+import ListItem from '@tiptap/extension-list-item' // 符号列表
+import OrderedList from '@tiptap/extension-ordered-list' // 有序列表
+import BulletList from '@tiptap/extension-bullet-list'
+import CodeBlock from '@tiptap/extension-code-block'// 代码
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight' // 代码高亮
+import { all, createLowlight } from 'lowlight'
+import CodeBlockComponent from './components/CodeBlockComponent/index.vue'
+const lowlight = createLowlight(all)
+
+import HardBreak from '@tiptap/extension-hard-break' // 空格
+import HorizontalRule from '@tiptap/extension-horizontal-rule' // 水平线
+
+// 表格
+import Gapcursor from '@tiptap/extension-gapcursor'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
+
+// 任务项
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
+
+
 // 离线支持
 import { createYDoc, initYjsStore, fetchServerData, updateServerData } from '@/utils/yjsSync'
 
@@ -154,10 +186,37 @@ const editor = useEditor({
             onUpdate: content => {
                 store.catalog = content
             }
+        }),
+        Blockquote,
+        BulletList,
+        OrderedList,
+        ListItem,
+        CodeBlock,
+        CodeBlockLowlight
+            .extend({
+                addNodeView() {
+                    return VueNodeViewRenderer(CodeBlockComponent)
+                },
+            })
+            .configure({ lowlight }),
+        HardBreak,
+        HorizontalRule,
+        Gapcursor,
+        Table.configure({
+            resizable: true,
+        }),
+        TableRow,
+        TableHeader,
+        TableCell,
+        TaskList,
+        TaskItem.configure({
+            nested: true,
         })
     ],
     onUpdate: ({ editor }) => {
-        store.content = editor.getHTML();
+        store.content = editor.getJSON();
+        console.log(store.content);
+        
     },
 })
 
@@ -176,7 +235,11 @@ onBeforeUnmount(() => {
 
 <style scoped lang='scss'>
 .ThinKing-Editor-Box {
+    width: 100%;
+    height: 100%;
     padding: 0.5rem 0;
+    box-sizing: border-box;
+    position: relative;
 
     // 为空的提示
     .EmptyPrompt {
@@ -186,6 +249,14 @@ onBeforeUnmount(() => {
         left: 0;
         right: 0;
         bottom: 3rem;
+        margin: auto;
+        // width: 140px;
+
+
+        position: absolute;
+        bottom: 1rem;
+        left: 0;
+        right: 0;
         margin: auto;
     }
 }
