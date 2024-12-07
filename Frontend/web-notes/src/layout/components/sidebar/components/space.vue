@@ -3,8 +3,8 @@
 
         <!-- 空间列表 -->
         <div class="item-space" v-for="item in store.userInfoData.noteSpaces" :key="item.spaceId"
-            :class="{ 'active': item.spaceId == storeCloud.cloudData.space }"
-            :style="{ 'background-color': item.spaceId == storeCloud.cloudData.space ? 'transparent' : getThemeSpace(item.color).spaceTab }"
+            :class="{ 'active': item.spaceId == store.routerParamsId.spaceId }"
+            :style="{ 'background-color': item.spaceId == store.routerParamsId.spaceId ? 'transparent' : ThemeSpaceFind(item.color) }"
             @click="toggleStatus(item)">
             <n-ellipsis style="max-width: 80px">
                 {{ item.name }}
@@ -33,7 +33,7 @@
                     <el-table-column prop="color" label="空间主题">
                         <template #default="scope">
                             <div style="width: 30px;height: 30px;border-radius: 50%;border:2px solid #eee;box-sizing: border-box;"
-                                :style="{ 'background-color': getThemeSpace(scope.row.color).spaceTab }">
+                                :style="{ 'background-color': ThemeSpaceFind(scope.row.color) }">
                             </div>
                         </template>
                     </el-table-column>
@@ -68,8 +68,8 @@
             </div>
 
             <!-- 添加或修改对话框 -->
-            <el-dialog v-model="innerVisible" width="600" style="height: 400px;" :title="addAndUpdateStatus ? '修改' : '添加'" :show-close="false"
-                align-center append-to-body>
+            <el-dialog v-model="innerVisible" width="600" style="height: 400px;"
+                :title="addAndUpdateStatus ? '修改' : '添加'" :show-close="false" align-center append-to-body>
                 <div style="padding:1rem;box-sizing: border-box;">
                     <el-form ref="ruleFormRef" :model="form" :rules="rules" label-width="auto" style="max-width: 600px">
                         <el-form-item label="空间名称" prop="name">
@@ -77,14 +77,15 @@
                         </el-form-item>
                         <el-form-item label="选择色彩">
                             <el-radio-group v-model="form.color">
-                                <el-radio size="large" v-for="(item, index) in storeCloud.ThemeSpace" :key="index"
+                                <el-radio size="large" v-for="(item, index) in spaceTheme" :key="index"
                                     style="border:1px solid #f7f7f7;box-sizing: border-box;" :value="item.id"
                                     :style="{ 'background-color': item.spaceTab }" class="space-radio"></el-radio>
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item>
                             <el-button @click="innerVisible = false">取消</el-button>
-                            <el-button type="primary" v-if="addAndUpdateStatus" @click="updateSpaceSubmit">保存</el-button>
+                            <el-button type="primary" v-if="addAndUpdateStatus"
+                                @click="updateSpaceSubmit">保存</el-button>
                             <el-button type="primary" v-else @click="onSubmit">确定</el-button>
                         </el-form-item>
                     </el-form>
@@ -96,14 +97,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, reactive } from 'vue';
+import { ref, onMounted, onBeforeUnmount, reactive, computed } from 'vue';
 import { useRouter } from 'vue-router'
 import { addSpace, deleteSpace, defaultSpace, updateSpace } from '@/api/space/index.js'
+import { getSpaceTheme } from '@/api/common/Theme/index.js'
 import { AddCircle16Regular } from '@vicons/fluent';
 import { useUserStore } from '@/stores/modules/user'
 import { ElMessage } from 'element-plus'
-import { useOperatingcloudStore } from '@/stores/OperatingCloud'
-const storeCloud = useOperatingcloudStore()
 const store = useUserStore()
 
 const router = useRouter()
@@ -132,17 +132,29 @@ const form = reactive({
     sortNumber: 9,
 })
 
-// 获取主题色
-let getThemeSpace = (val) => {
-    return storeCloud.ThemeSpace.find((item) => item.id == val)
+// 空间主题色
+let spaceTheme = ref()
+
+let ThemeSpaceFind = (val) => {
+    if (spaceTheme.value) {
+        return spaceTheme.value.find((item) => item.id == val).spaceTab
+    }
 }
+
+// 获取空间颜色
+onMounted(() => {
+    getSpaceTheme().then((data) => {
+        spaceTheme.value = data
+    }).catch((e) => {
+        console.error(e);
+    });
+})
 
 
 // 切换状态的函数
 const toggleStatus = (item) => {
     console.log(item);
-    storeCloud.cloudData.space = item.spaceId
-    router.push('/space/'+item.spaceId)
+    router.push('/space/' + item.spaceId)
 };
 
 let addAndUpdateStatus = ref(false)
@@ -242,11 +254,11 @@ let modifySpace = (val) => {
             form[key] = val[key];
         }
     }
-    
+
 }
 
 // 修改空间
-let updateSpaceSubmit = ()=>{
+let updateSpaceSubmit = () => {
     updateSpace(form).then((msg) => {
         console.log("修改成功", msg);
         ElMessage({

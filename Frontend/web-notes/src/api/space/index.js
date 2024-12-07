@@ -1,10 +1,21 @@
 import service from '@/utils/request';
 
 /**
- * 获取用户空间
+ * 获取用户所有空间
  */
 export async function getSpaceAll() {
     const res = await service.get('/note/space/all');
+    if (res.code === 200) {
+        return res.data;
+    }
+    return Promise.reject(new Error(res.message));
+}
+
+/**
+ * 获取用户默认空间
+ */
+export async function getDefaultSpace() {
+    const res = await service.get('/note/space/defaultSpace');
     if (res.code === 200) {
         return res.data;
     }

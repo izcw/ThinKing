@@ -58,11 +58,15 @@ const UserOutlinedIcon = markRaw(UserOutlined);
 const Settings24RegularIcon = markRaw(Settings24Regular);
 const WindowArrowUp16FilledIcon = markRaw(WindowArrowUp16Filled);
 
+const MyAccountComponent = markRaw(MyAccount);
+const SettingsComponent = markRaw(Settings);
+const UpgradePlanComponent = markRaw(UpgradePlan);
+
 const activeIndex = ref(0);
 const menuList = [
-  { label: '我的账号', icon: UserOutlinedIcon, component: MyAccount },
-  { label: '设置', icon: Settings24RegularIcon, component: Settings },
-  { label: '升级方案', icon: WindowArrowUp16FilledIcon, component: UpgradePlan }
+  { label: '我的账号', icon: UserOutlinedIcon, component: MyAccountComponent },
+  { label: '设置', icon: Settings24RegularIcon, component: SettingsComponent },
+  { label: '升级方案', icon: WindowArrowUp16FilledIcon, component: UpgradePlanComponent }
 ];
 
 const currentComponent = computed(() => menuList[activeIndex.value].component);

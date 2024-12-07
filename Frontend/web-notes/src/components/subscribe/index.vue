@@ -52,8 +52,8 @@
 <script setup>
 import { ref } from 'vue';
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
-import suggestBox from '@/views/subscribe/components/suggest.vue';
-import MySubscribeInfoBox from '@/views/subscribe/components/MySubscribeInfo.vue';
+import suggestBox from '@/components/subscribe/components/suggest.vue';
+import MySubscribeInfoBox from '@/components/subscribe/components/MySubscribeInfo.vue';
 
 let tableData = ref([
     {
@@ -96,7 +96,6 @@ let tableData = ref([
 </script>
 <style scoped lang='scss'>
 .container {
-    padding: 0 150px;
     box-sizing: border-box;
     height: 100%;
     margin: 0 auto;

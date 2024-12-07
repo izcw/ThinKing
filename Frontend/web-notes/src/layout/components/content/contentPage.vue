@@ -42,7 +42,7 @@
             </el-popover>
         </div> <!-- 封面 -->
 
-        <div class="pagebox" :style="pageBoxStyle" style="max-width:920px;">
+        <div class="pagebox" style="max-width:720px;">
             <contentPageBox />
         </div> <!-- 页面 -->
 
@@ -82,39 +82,39 @@ const toggleSidebarStatus = () => {
     updateParentSidebarStatus(!parentSidebarStatus.value);
 };
 
-const contentBoxRef = ref(null); // 获取 contentBox 的引用
-const pageBoxStyle = ref({ padding: '0 100px' }); // 默认的 padding
+// const contentBoxRef = ref(null); // 获取 contentBox 的引用
+// const pageBoxStyle = ref({ padding: '0 100px' }); // 默认的 padding
 
-// 使用 ResizeObserver 实时监听 contentBox 的宽度变化
-const updatePadding = () => {
-    if (contentBoxRef.value && contentBoxRef.value.offsetWidth < 768) {
-        pageBoxStyle.value = { padding: '0 1.5rem' };
-    } else {
-        pageBoxStyle.value = { padding: '0 100px' };
-    }
-};
+// // 使用 ResizeObserver 实时监听 contentBox 的宽度变化
+// const updatePadding = () => {
+//     if (contentBoxRef.value && contentBoxRef.value.offsetWidth < 768) {
+//         pageBoxStyle.value = { padding: '0 1.5rem' };
+//     } else {
+//         pageBoxStyle.value = { padding: '0 100px' };
+//     }
+// };
 
-onMounted(() => {
-    // 初始化时检测一次
-    updatePadding();
+// onMounted(() => {
+//     // 初始化时检测一次
+//     updatePadding();
 
-    // 创建 ResizeObserver 来监听 contentBox 宽度变化
-    const resizeObserver = new ResizeObserver(() => {
-        updatePadding(); // 每次宽度变化时更新 padding
-    });
+//     // 创建 ResizeObserver 来监听 contentBox 宽度变化
+//     const resizeObserver = new ResizeObserver(() => {
+//         updatePadding(); // 每次宽度变化时更新 padding
+//     });
 
-    // 观察 contentBox 元素
-    if (contentBoxRef.value) {
-        resizeObserver.observe(contentBoxRef.value);
-    }
+//     // 观察 contentBox 元素
+//     if (contentBoxRef.value) {
+//         resizeObserver.observe(contentBoxRef.value);
+//     }
 
-    // 在组件卸载时停止监听
-    onBeforeUnmount(() => {
-        if (contentBoxRef.value) {
-            resizeObserver.unobserve(contentBoxRef.value);
-        }
-    });
-});
+//     // 在组件卸载时停止监听
+//     onBeforeUnmount(() => {
+//         if (contentBoxRef.value) {
+//             resizeObserver.unobserve(contentBoxRef.value);
+//         }
+//     });
+// });
 
 
 // 搜索封面
@@ -221,7 +221,7 @@ const hidePopover = () => {
 
 .pagebox {
     margin: 0 auto;
-    padding: 0 100px;
+    padding: 0 1.5rem;
     box-sizing: border-box;
 }
 </style>

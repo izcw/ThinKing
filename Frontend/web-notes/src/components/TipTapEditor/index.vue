@@ -9,15 +9,15 @@
             </el-button>
         </div> -->
         <!-- 编辑器 -->
-        <editor-content :editor="editor" style="min-height: 400px;" />
+        <editor-content :editor="editor" />
 
         <!-- 浮动菜单 -->
         <bubbleMenuBox v-if="editor" :editor="editor" />
 
         <!-- 为空时显示 -->
-        <div v-if="store.content.length == null || store.content == '<p></p>'" class="EmptyPrompt">
-            <el-button v-if="editor"
-                @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" size="small">
+        <div v-if="StorePage.pageData.content.length == null || StorePage.pageData.content == '<p></p>'"
+            class="EmptyPrompt">
+            <el-button v-if="editor" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" size="small">
                 标题H1
             </el-button>
             <el-button v-if="editor"
@@ -31,7 +31,7 @@
         </div>
 
         <!-- 字符数 -->
-        <div v-else>
+        <div v-else class="Editor-footer">
             <NumberWordsBox v-if="editor" :editor="editor" :setting="store.setting" />
         </div>
     </div>
@@ -219,7 +219,7 @@ const editor = useEditor({
     onUpdate: ({ editor }) => {
         store.content = editor.getJSON();
         console.log(store.content);
-        
+
     },
 })
 
@@ -261,6 +261,13 @@ onBeforeUnmount(() => {
         left: 0;
         right: 0;
         margin: auto;
+    }
+
+    .Editor-footer {
+        margin-top: 1rem;
+        border-top: 1px solid #eee;
+        padding: 1rem 0;
+        box-sizing: border-box;
     }
 }
 </style>

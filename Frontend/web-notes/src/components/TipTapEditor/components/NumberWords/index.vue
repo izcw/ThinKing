@@ -22,7 +22,6 @@ const props = defineProps({
 </script>
 <style scoped lang='scss'>
 .numberWords {
-    margin-top: 400px;
     font-size: 12px;
     color: #666;
     line-height: 24px;

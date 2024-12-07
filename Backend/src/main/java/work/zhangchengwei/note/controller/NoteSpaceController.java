@@ -58,6 +58,30 @@ public class NoteSpaceController {
         }
     }
 
+
+    /**
+     * 获取默认的空间
+     * @return 用户默认的空间
+     */
+    @GetMapping("/defaultSpace")
+    public ResponseResult<NoteSpace> getDefaultSpace() {
+        // 获取当前登录用户的 ID
+        String userIdStr = StpUtil.getLoginIdAsString();
+        Long userId = Long.parseLong(userIdStr);
+
+        QueryWrapper<NoteSpace> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .eq(NoteSpace::getUserId, userId)
+                .eq(NoteSpace::getDefaultSpace, 0);
+        queryWrapper.last("LIMIT 1");
+
+        System.out.println(queryWrapper);
+
+        // 执行查询并获取默认空间
+        NoteSpace defaultNoteSpace = noteSpaceMapper.selectOne(queryWrapper);
+        return ResponseResult.success("查询成功", defaultNoteSpace);
+    }
+
     /**
      * 添加空间
      * @return

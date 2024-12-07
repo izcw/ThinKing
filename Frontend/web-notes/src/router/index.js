@@ -56,51 +56,34 @@ const router = createRouter({
           meta: { title: '主页' },
         },
         {
-          path: '/space/:spaceId/:noteId',
+          path: '/space/:spaceId/:pageId',
           component: NoteLayout,
           meta: { title: '笔记详情' },
         },
       ],
-    },
-    {
-      path: '/other',
-      component: Layout,
-      children: [
-        {
-          path: '/vip',
-          component: () => import('../views/subscribe/index.vue'),
-          meta: { title: 'VIP 订阅' },
-        },
-        {
-          path: '/template',
-          component: () => import('../views/template/index.vue'),
-          meta: { title: '模板中心' },
-        },
-      ],
-    },
+    }
   ],
 });
 
-
-// 检查是否需要跳转到登录页面
-const checkLogin = (to, next) => {
-
-};
-
 router.beforeEach(async (to, from, next) => {
+
   const publicRoutes = ['/login', '/register', '/home', '/lock'];
   if (publicRoutes.includes(to.path)) {
     next();
   } else {
     const store = useUserStore();
     const token = getToken();
+
+    // 将当前路由id存储到pinia
+    store.routerParamsId = to.params
+
     if (token) {
       // 如果用户信息未获取，则获取用户信息
       if (!store.userInfoData) {
         await store.fetchUserInfo();
       }
       next();
-    }else{
+    } else {
       next({ path: '/login' });
     }
   }

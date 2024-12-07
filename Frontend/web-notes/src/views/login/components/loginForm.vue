@@ -5,7 +5,8 @@
             <el-input v-model="ruleForm.email" size="large" placeholder="请输入邮箱" clearable />
         </el-form-item>
         <el-form-item prop="password" class="item">
-            <el-input v-model="ruleForm.password" size="large" type="password" show-password placeholder="请输入密码" clearable />
+            <el-input v-model="ruleForm.password" size="large" type="password" show-password placeholder="请输入密码"
+                clearable />
         </el-form-item>
         <el-form-item>
             <el-button class="item submit" color="#000" size="large" @click="submitForm(ruleFormRef)">登录</el-button>
@@ -25,6 +26,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { getVerifyCode, Userlogin } from '@/api/login';
+import { getDefaultSpace } from '@/api/space';
 import { debounce } from 'lodash';  // 防抖
 import { ElMessage } from 'element-plus'
 import loading from '@icon/loading.png';
@@ -70,9 +72,8 @@ const submitForm = async (formEl) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             Userlogin(ruleForm).then((msg) => {
-                console.log(msg);
-                store.fetchUserInfo()
                 ElMessage.success(msg)
+                getDefaultSpaceFun()
                 return
             }).catch((e) => {
                 console.error('登录失败', e);
@@ -81,6 +82,17 @@ const submitForm = async (formEl) => {
             console.log('error submit!', fields)
         }
     })
+}
+
+let getDefaultSpaceFun = () => {
+    getDefaultSpace().then((data) => {
+        console.log("默认空间");
+        console.log(data);
+        router.push('/space/' + data.spaceId)
+        return
+    }).catch((e) => {
+        console.error('获取失败', e);
+    });
 }
 
 // // 获取图片验证码

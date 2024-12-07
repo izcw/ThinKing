@@ -3,7 +3,7 @@
         <n-grid cols="3 200:4 300:5 400:6 500:7 600:8" :y-gap="8" style="justify-items: center;">
             <n-grid-item style="width: 100%;">
                 <el-tooltip :hide-after="0" content="主页" placement="top" effect="light">
-                    <router-link :to="'/space/'+storeCloud.cloudData.space">
+                    <router-link :to="'/space/' + store.routerParamsId.spaceId">
                         <div class="Tools-item item official">
                             <n-icon size="20">
                                 <Home48Regular />
@@ -45,16 +45,16 @@
                 <el-tooltip :hide-after="0" placement="top" effect="light">
                     <template #content><el-text truncated style="max-width: 150px;">收藏页(未实现)：{{ item.title
                             }}</el-text></template>
-                    <router-link :to="item.link">
-                        <div class="Tools-item item">
-                            <n-icon size="20">
-                                <component :is="item.icon" />
-                            </n-icon>
-                            <n-icon size="10" color="#F6C050cc" style="position: absolute;top: 4px;left: 4px;">
-                                <Star />
-                            </n-icon>
-                        </div>
-                    </router-link>
+                    <!-- <router-link :to="item.link"> -->
+                    <div class="Tools-item item">
+                        <n-icon size="20">
+                            <component :is="item.icon" />
+                        </n-icon>
+                        <n-icon size="10" color="#F6C050cc" style="position: absolute;top: 4px;left: 4px;">
+                            <Star />
+                        </n-icon>
+                    </div>
+                    <!-- </router-link> -->
                 </el-tooltip>
             </n-grid-item>
         </n-grid>
@@ -76,8 +76,8 @@ import searchItemBox from '@/components/searchItem.vue';
 import { Home48Regular, Search28Filled, FullScreenMaximize16Filled, LockClosed32Regular } from '@vicons/fluent'
 import { BellRegular, Star, Lock } from '@vicons/fa'
 import screenfull from "screenfull";
-import { useOperatingcloudStore } from '@/stores/OperatingCloud'
-const storeCloud = useOperatingcloudStore()
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
 
 
 import { useRouter } from 'vue-router';

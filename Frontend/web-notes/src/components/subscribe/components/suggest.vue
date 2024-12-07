@@ -9,8 +9,8 @@
                     </el-text></p>
                 <div class="price">
                     <p>折扣价：<span class="Current">￥{{ item.price }}</span><span>&nbsp;/&nbsp;月</span></p>
-                    <p>原&emsp;价：<del>￥{{ item.oldprice }}<span>&nbsp;/&nbsp;月</span></del>
-                        <span class="economize">立省{{item.oldprice - item.price}}¥</span>
+                    <p class="oldprice">原&emsp;价：<del>￥{{ item.oldprice }}<span>&nbsp;/&nbsp;月</span></del>
+                        <span class="economize">立省{{ item.oldprice - item.price }}¥</span>
                     </p>
                 </div>
                 <el-button type="primary" @click="upgrade(item)"
@@ -144,8 +144,8 @@ let PaymentOrder = () => {
     margin: 3rem 0;
 
     .item {
-        min-height: 280px;
-        max-height: 280px;
+        min-height: 290px;
+        max-height: 290px;
         padding: 1rem;
         box-sizing: border-box;
         border: 1px solid #eee;
@@ -182,7 +182,7 @@ let PaymentOrder = () => {
             margin: 1rem 0;
 
             p {
-                font-size: 14px;
+                font-size: 12px;
                 color: #999;
             }
 
@@ -193,12 +193,18 @@ let PaymentOrder = () => {
 
 
             }
-            // 节省
-            .economize {
-                margin-left: 10px;
+
+            // 原价
+            .oldprice {
                 font-size: 12px;
-                color: #ED6C7B;
+
+                // 节省
+                .economize {
+                    margin-left: 10px;
+                    color: #ED6C7B;
+                }
             }
+
         }
     }
 }

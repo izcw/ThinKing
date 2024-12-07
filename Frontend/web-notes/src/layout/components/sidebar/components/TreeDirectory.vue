@@ -24,7 +24,7 @@
                         highlight-current>
                         <template #default="{ node, data }">
                             <div class="custom-tree-node"
-                                :style="{ 'background-color': storeCloud.cloudData.noteId == node.data.pageId ? '#efefed' : 'transparent' }">
+                                :style="{ 'background-color': store.routerParamsId.spaceId == node.data.pageId ? '#efefed' : 'transparent' }">
                                 <div class="title" @click="openPage(node.data)">
                                     <span class="icon">{{ node.data.icon }}</span>
                                     <el-text truncated>{{ node.data.title }}</el-text>
@@ -64,47 +64,44 @@ import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Copy16Regul
 import { ElMessage } from 'element-plus'
 import { addPage, getSpacePage } from '@/api/note/index.js'
 import { useRouter, useRoute } from 'vue-router'
-import { useOperatingcloudStore } from '@/stores/OperatingCloud'
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
-const storeCloud = useOperatingcloudStore()
 
 // 获取当前路由参数
 const router = useRouter()
 const route = useRoute();
 
-watch(() => route.params.spaceId, (newVal, oldVal) => {
-    console.log("路由改变");
-    console.log(newVal);
 
-    // if (newVal !== oldVal) {
-    getSpaceData(newVal)
-    // }
+// 空间路由改变获取当前空间笔记
+watch(() => store.routerParamsId.spaceId, (newVal, oldVal) => {
+    if (newVal !== oldVal && newVal != undefined) {
+        getSpaceData(newVal)
+    }
 });
 
 let getSpaceData = (val) => {
     getSpacePage({ spaceId: val }).then((data) => {
-        console.log("获取当前空间的所有笔记222333", data);
-        storeCloud.spacePageData = data;
+        console.log("获取当前空间的所有笔记");
+        console.log(data);
+
         treeData.value = buildTree(data)
     }).catch((e) => {
         console.error('获取失败', e);
     });
 }
-getSpaceData(storeCloud.cloudData.space)
+getSpaceData(store.routerParamsId.spaceId)
 
 // 打开页面
 let openPage = (val) => {
-    console.log("wsm");
-    console.log(val);
-    router.push('/space/' + storeCloud.cloudData.space + '/' + val.pageId)
+    console.log("打开页面");
+    router.push('/space/' + store.routerParamsId.spaceId + '/' + val.pageId)
 }
 
 
 // 添加页面
 let addPageFun = (val) => {
     console.log("添加页面" + val);
-    addPage({ spaceId: storeCloud.cloudData.space, parentId: val }).then((data) => {
+    addPage({ spaceId: store.routerParamsId.spaceId, parentId: val }).then((data) => {
         console.log("添加成功", data);
         ElMessage({
             message: '添加成功',

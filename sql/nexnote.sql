@@ -11,7 +11,7 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 07/12/2024 08:01:52
+ Date: 08/12/2024 07:33:42
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `note_page` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`page_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1865180814776672259 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='页面';
+) ENGINE=InnoDB AUTO_INCREMENT=1865522217968902147 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='页面';
 
 -- ----------------------------
 -- Records of note_page
@@ -59,8 +59,9 @@ INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_nu
 INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865172440588689409, 1865162594686513153, 1859329812227633153, 0, NULL, '🥣', 'New Page', 'SystemDefaultFiles/images/cover/2.jpg', '{\n    \"type\": \"doc\",\n    \"content\": [\n        {\n            \"type\": \"paragraph\",\n            \"content\": [\n                {\n                    \"type\": \"text\",\n                    \"text\": \"开始你的笔记之旅！\"\n                }\n            ]\n        }\n    ]\n}', 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-07 07:12:17', '2024-12-07 07:53:47');
 INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865174933133533186, 1865162594686513153, 1859329812227633153, 0, NULL, '🧊', 'New Page', 'SystemDefaultFiles/images/cover/3.jpg', '{\n    \"type\": \"doc\",\n    \"content\": [\n        {\n            \"type\": \"paragraph\",\n            \"content\": [\n                {\n                    \"type\": \"text\",\n                    \"text\": \"开始你的笔记之旅！\"\n                }\n            ]\n        }\n    ]\n}', 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-07 07:22:11', '2024-12-07 07:53:50');
 INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865174957473079298, 1865162594686513153, 1859329812227633153, 1865174933133533186, NULL, '🧂', 'New Page', 'SystemDefaultFiles/images/cover/4.jpg', '{\n    \"type\": \"doc\",\n    \"content\": [\n        {\n            \"type\": \"paragraph\",\n            \"content\": [\n                {\n                    \"type\": \"text\",\n                    \"text\": \"开始你的笔记之旅！\"\n                }\n            ]\n        }\n    ]\n}', 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-07 07:22:17', '2024-12-07 07:53:53');
-INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865180787660496897, 1865162644590342145, 1859329812227633153, 0, NULL, NULL, 'New Page', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-07 07:45:27', '2024-12-07 07:45:27');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865180787660496897, 1865162644590342145, 1859329812227633153, 0, NULL, NULL, '你好', NULL, '{\n    \"type\": \"doc\",\n    \"content\": [\n        {\n            \"type\": \"paragraph\",\n            \"content\": [\n                {\n                    \"type\": \"text\",\n                    \"text\": \"开始你的笔记之旅！\"\n                }\n            ]\n        }\n    ]\n}', 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-07 07:45:27', '2024-12-08 06:22:26');
 INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865180814776672258, 1865162461555109890, 1859329812227633153, 1865163315842560002, NULL, NULL, 'New Page', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-07 07:45:34', '2024-12-07 07:45:34');
+INSERT INTO `note_page` (`page_id`, `space_id`, `user_id`, `parent_id`, `sort_number`, `icon`, `title`, `cover`, `content`, `collect`, `layout`, `font`, `size`, `readonly`, `password`, `bottominfo`, `template`, `deleted`, `create_time`, `update_time`) VALUES (1865522217968902146, 1865162644590342145, 1859329812227633153, 1865180787660496897, NULL, NULL, 'New Page', NULL, NULL, 0, 'default', '默认', '16', '0', NULL, 0, 0, 0, '2024-12-08 06:22:11', '2024-12-08 06:22:11');
 COMMIT;
 
 -- ----------------------------

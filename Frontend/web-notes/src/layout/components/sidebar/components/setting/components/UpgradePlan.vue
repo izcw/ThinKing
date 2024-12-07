@@ -31,8 +31,8 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { calculateExpiryDays } from '@/utils/dateUtils';
-import suggestBox from '@/views/subscribe/components/suggest.vue';
-import MySubscribeInfoBox from '@/views/subscribe/components/MySubscribeInfo.vue';
+import suggestBox from '@/components/subscribe/components/suggest.vue';
+import MySubscribeInfoBox from '@/components/subscribe/components/MySubscribeInfo.vue';
 import { PageSubscribeOrder } from '@/api/subscribe/order'
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()

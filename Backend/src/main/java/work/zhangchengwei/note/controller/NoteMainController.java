@@ -76,20 +76,6 @@ public class NoteMainController {
         nsListInfo.setNoteSubscribe(noteSubscribe);
         noteUser.setCurrentSubscription(nsListInfo);
 
-        // 获取默认的空间
-        QueryWrapper<NoteSpace> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda()
-                .eq(NoteSpace::getUserId, userId)
-                .eq(NoteSpace::getDefaultSpace, 0);
-        queryWrapper.last("LIMIT 1");
-
-        System.out.println(queryWrapper);
-
-        // 执行查询并获取默认空间
-        NoteSpace defaultNoteSpace = noteSpaceMapper.selectOne(queryWrapper);
-        noteUser.setNoteDefaultSpaces(defaultNoteSpace);
-
-
         // 根据用户 ID 查询用户所有空间
         List<NoteSpace> noteSpaceList = noteSpaceMapper.selectListByUserId(userId);
         noteSpaceList.sort(Comparator.comparing(NoteSpace::getSortNumber));  //  升序排序

@@ -15,7 +15,7 @@ import { ref } from "vue";
 import UserBox from './components/UserBox.vue';
 import collectBox from './components/collect.vue';
 import spaceBox from './components/space.vue';
-import moreBox from './components/more.vue';
+import moreBox from './components/more/index.vue';
 import TreeDirectoryBox from './components/TreeDirectory.vue';
 
 </script>

@@ -40,7 +40,7 @@
             </n-tooltip>
         </div>
 
-        <el-dialog v-model="centerDialogVisible" width="1000" class="HideTitle" style="height:650px;" lign-center
+        <el-dialog v-model="centerDialogVisible" width="1000" class="HideTitle" style="height:650px;" align-center
             :show-close="false">
             <settingBox />
         </el-dialog><!-- 设置 -->
@@ -48,11 +48,9 @@
 </template>
 <script setup>
 import { ref, inject, onMounted, onBeforeUnmount } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
 import { ChevronDoubleLeft16Filled } from '@vicons/fluent'
 import { FILE_PATH_API_URL } from "@/config/setting"
 import settingBox from "./setting/setting.vue"
-import { removeToken, getToken } from '@/utils/token-util';
 import { logoutToken } from '@/api/login/index.js'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/modules/user'

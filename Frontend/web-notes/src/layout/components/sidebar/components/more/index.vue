@@ -1,15 +1,13 @@
 <template>
     <div class="more text-select GMargin">
-        <n-tooltip placement="right" trigger="hover" v-for="item in data" :key="item.id">
+        <n-tooltip placement="right" trigger="hover" v-for="(item, index) in data" :key="item.id">
             <template #trigger>
-                <router-link :to="item.link">
-                    <div class="item-more">
-                        <n-icon size="20">
-                            <component :is="item.icon" />
-                        </n-icon>
-                        <span>{{ item.name }}</span>
-                    </div>
-                </router-link>
+                <div class="item-more" @click="changeActive(index)">
+                    <n-icon size="20">
+                        <component :is="item.icon" />
+                    </n-icon>
+                    <span>{{ item.name }}</span>
+                </div>
             </template>
             <span>{{ item.describe }}</span>
         </n-tooltip>
@@ -35,44 +33,69 @@
             </div>
             <el-alert title="垃圾箱中超过30天的页面将自动删除" type="info" :closable="false" />
         </el-popover>
+
+
+        <!-- 弹出框 -->
+        <el-dialog v-model="centerDialogVisible" width="1200" align-center>
+            <div style="height:800px; overflow-y: auto;">
+                <component :is="currentComponent" />
+            </div>
+        </el-dialog><!-- 设置 -->
     </div>
 </template>
 <script setup>
-import { ref, markRaw, onMounted, onBeforeUnmount } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
-import { Crow, Connectdevelop, Blackberry } from '@vicons/fa'
+import { ref, markRaw, computed, onBeforeUnmount } from 'vue';
 import { WindowArrowUp16Filled, Diamond16Regular, Notepad24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
+import templateBox from '@/components/template/index.vue'
+import subscribeBox from '@/components/subscribe/index.vue'
 
-// 弹出框
+
+// 使用 markRaw 来标记组件
+const Diamond16RegularIcon = markRaw(Diamond16Regular);
+const WindowArrowUp16FilledIcon = markRaw(WindowArrowUp16Filled);
+
+const templateBoxComponent = markRaw(templateBox);
+const subscribeBoxComponent = markRaw(subscribeBox);
+
+let data = ref([
+    {
+        id: 1,
+        name: " 模板中心",
+        describe: "查找精美的模板",
+        icon: Diamond16RegularIcon,
+        component: templateBoxComponent
+    },
+    {
+        id: 2,
+        name: "会员中心",
+        describe: "升级享受更好的体验，点击了解》",
+        icon: WindowArrowUp16FilledIcon,
+        component: subscribeBoxComponent
+    }])
+
+
+// 居中对话框
+const centerDialogVisible = ref(false) // 对话框
+const activeIndex = ref(0);
+const currentComponent = computed(() => data.value[activeIndex.value].component);
+
+function changeActive(index) {
+    console.log(index);
+
+    centerDialogVisible.value = true
+    activeIndex.value = index;
+}
+
+
+
+// 垃圾箱弹出框
 const buttonRef = ref()
 const popoverRef = ref()
 const onClickOutside = () => {
     unref(popoverRef).popperRef?.delayHide?.()
 }
 
-// 使用 markRaw 来标记组件
-const Diamond16RegularIcon = markRaw(Diamond16Regular);
-const WindowArrowUp16FilledIcon = markRaw(WindowArrowUp16Filled);
-
-let data = ref([
-    {
-        id: 2,
-        name: "模板中心",
-        link: '/template',
-        describe: "查找精美的模板",
-        icon: Diamond16RegularIcon
-    },
-    {
-        id: 1,
-        name: "会员中心",
-        link: '/vip',
-        describe: "升级享受更好的体验，点击了解》",
-        icon: WindowArrowUp16FilledIcon
-    }
-])
-
-
-// 搜索垃圾箱
+// 垃圾箱搜索
 let SearchGarbage = ref()
 </script>
 <style scoped lang='scss'>

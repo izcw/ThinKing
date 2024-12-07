@@ -1,4 +1,3 @@
-import { setToken } from '@/utils/token-util';
 import service from '@/utils/request';
 
 // 根据id获取笔记

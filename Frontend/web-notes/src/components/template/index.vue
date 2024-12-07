@@ -20,7 +20,7 @@
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                    <el-button color="#626aef" size="small" >使用</el-button>
                                 </div>
                                 <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
@@ -32,7 +32,7 @@
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                    <el-button color="#626aef" size="small" >使用</el-button>
                                 </div>
                                 <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
@@ -44,7 +44,7 @@
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                    <el-button color="#626aef" size="small" >使用</el-button>
                                 </div>
                                 <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
@@ -56,7 +56,7 @@
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                    <el-button color="#626aef" size="small" >使用</el-button>
                                 </div>
                                 <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
@@ -68,7 +68,7 @@
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" :dark="isDark">使用</el-button>
+                                    <el-button color="#626aef" size="small" >使用</el-button>
                                 </div>
                                 <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
@@ -104,7 +104,6 @@ let SearchTemplate = (item, index) => {
 </script>
 <style scoped lang='scss'>
 .container {
-    padding: 0 150px;
     box-sizing: border-box;
     height: 100%;
     margin: 0 auto;
