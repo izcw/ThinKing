@@ -3,7 +3,7 @@
         <n-grid cols="3 200:4 300:5 400:6 500:7 600:8" :y-gap="8" style="justify-items: center;">
             <n-grid-item style="width: 100%;">
                 <el-tooltip :hide-after="0" content="主页" placement="top" effect="light">
-                    <router-link to="/space">
+                    <router-link :to="'/space/'+storeCloud.cloudData.space">
                         <div class="Tools-item item official">
                             <n-icon size="20">
                                 <Home48Regular />
@@ -43,7 +43,7 @@
 
             <n-grid-item style="width: 100%;" v-for="(item, index) in data" :key="item.id">
                 <el-tooltip :hide-after="0" placement="top" effect="light">
-                    <template #content><el-text truncated style="max-width: 150px;">收藏页：{{ item.title
+                    <template #content><el-text truncated style="max-width: 150px;">收藏页(未实现)：{{ item.title
                             }}</el-text></template>
                     <router-link :to="item.link">
                         <div class="Tools-item item">
@@ -76,6 +76,9 @@ import searchItemBox from '@/components/searchItem.vue';
 import { Home48Regular, Search28Filled, FullScreenMaximize16Filled, LockClosed32Regular } from '@vicons/fluent'
 import { BellRegular, Star, Lock } from '@vicons/fa'
 import screenfull from "screenfull";
+import { useOperatingcloudStore } from '@/stores/OperatingCloud'
+const storeCloud = useOperatingcloudStore()
+
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -89,7 +92,7 @@ let data = ref([
     {
         title: 'link1',
         id: 4,
-        link: '/space/345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg345rsdsdfg',
+        link: '/space/32432',
         icon: Star
     },
     {

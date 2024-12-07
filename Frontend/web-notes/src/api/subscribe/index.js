@@ -4,7 +4,7 @@ import service from '@/utils/request';
  * 分页查询套餐
  */
 export async function PageSubscribe(params) {    
-    const res = await service.get('/note/subscribe/page',params);
+    const res = await service.get('/note/subscribe/page',{params});
     if (res.code === 200) {
         return res.data.records;
     }

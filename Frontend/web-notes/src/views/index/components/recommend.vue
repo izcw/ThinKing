@@ -13,19 +13,22 @@
 <script setup>
 import { ref } from 'vue';
 import { timeAgo } from '@/utils/timeAgo'
+import images1 from '@/assets/images/cover/recommend-item1.png'
+import images2 from '@/assets/images/cover/recommend-item2.jpg'
+import images3 from '@/assets/images/cover/recommend-item3.jpg'
 
 let data = ref([
     {
         id: "1",
         title: "莎士比亚笔下的爱情观",
         time: "2024/10/06",
-        cover: "/src/assets/images/cover/recommend-item1.png"
+        cover: images1
     },
     {
         id: "1",
         title: "开始弄人",
         time: "2024/9/06",
-        cover: "/src/assets/images/cover/recommend-item2.jpg"
+        cover: images2
     },
     {
         id: "1",
@@ -37,7 +40,7 @@ let data = ref([
         id: "1",
         title: "人士需要浮士德精神",
         time: "2023/4/19",
-        cover: "/src/assets/images/cover/recommend-item3.jpg"
+        cover: images3
     }
 ])
 </script>

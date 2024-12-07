@@ -35,17 +35,17 @@
         <div class="Breadcrumb text-select">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/space1' }">
-                    <el-text style="width: 120px;" truncated size="small">
-                        发十分拓展性sdfds 、用户体验和编辑灵活性上仍存在一定不足，难以满足用户个性化需求
+                    <el-text style="max-width: 120px;" truncated size="small">
+                        面包屑
                     </el-text>
                 </el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path: './pfdgg' }">
-                    <el-text style="width: 120px;" truncated size="small">
-                        发十分拓展性sdfds
+                    <el-text style="max-width: 120px;" truncated size="small">
+                        面包屑
                     </el-text>
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>
-                    <el-text style="width: 120px;" truncated size="small">
+                    <el-text style="max-width: 120px;" truncated size="small">
                         欢迎来到ThinKing笔记
                     </el-text></el-breadcrumb-item>
             </el-breadcrumb>

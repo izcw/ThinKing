@@ -3,6 +3,7 @@ package work.zhangchengwei.note.controller;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import work.zhangchengwei.core.web.ResponseResult;
 import work.zhangchengwei.note.entity.*;
 import work.zhangchengwei.note.mapper.NoteSpaceMapper;
@@ -74,6 +75,19 @@ public class NoteMainController {
         nsListInfo.setNoteSubscribeOrder(noteSubscribeOrder);
         nsListInfo.setNoteSubscribe(noteSubscribe);
         noteUser.setCurrentSubscription(nsListInfo);
+
+        // 获取默认的空间
+        QueryWrapper<NoteSpace> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .eq(NoteSpace::getUserId, userId)
+                .eq(NoteSpace::getDefaultSpace, 0);
+        queryWrapper.last("LIMIT 1");
+
+        System.out.println(queryWrapper);
+
+        // 执行查询并获取默认空间
+        NoteSpace defaultNoteSpace = noteSpaceMapper.selectOne(queryWrapper);
+        noteUser.setNoteDefaultSpaces(defaultNoteSpace);
 
 
         // 根据用户 ID 查询用户所有空间

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import work.zhangchengwei.core.web.ResponseResult;
 import work.zhangchengwei.note.entity.NotePage;
 import work.zhangchengwei.note.entity.NoteSpace;
+import work.zhangchengwei.note.entity.NoteSubscribe;
 import work.zhangchengwei.note.mapper.NotePageMapper;
 import work.zhangchengwei.note.service.INotePageService;
 import work.zhangchengwei.note.service.INoteSpaceService;
@@ -52,11 +53,11 @@ public class NotePageController {
         List<NotePage> list = notePageService.list(queryWrapper);
 
         // 返回查询结果
-        if (list != null && !list.isEmpty()) {
+//        if (list != null && !list.isEmpty()) {
             return ResponseResult.success("查询成功", list);
-        } else {
-            return ResponseResult.error("没有找到数据");
-        }
+//        } else {
+//            return ResponseResult.error("没有找到数据");
+//        }
     }
 
     /**
@@ -91,6 +92,24 @@ public class NotePageController {
             return ResponseResult.success("添加成功",null);
         } else {
             return ResponseResult.fail("添加失败");
+        }
+    }
+
+    /**
+     * 更新信息
+     * @return 更新结果
+     */
+    @PutMapping("/update")
+    public ResponseResult<NotePage> update(@RequestBody NotePage notePage) {
+        // 执行更新操作，传入实体对象和更新条件
+        boolean updated = notePageMapper.updateById(notePage) > 0;
+
+        if (updated) {
+            // 更新成功，直接返回传入的实体对象即可，因为 updateById 已更新
+            return ResponseResult.success("修改成功", notePage);
+        } else {
+            // 更新失败，返回失败消息
+            return ResponseResult.error("修改失败");
         }
     }
 }

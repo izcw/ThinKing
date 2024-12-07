@@ -4,7 +4,7 @@
         <!-- 添加 -->
         <template #header-extra>
             <el-tooltip content="添加页面" placement="bottom" effect="light" :hide-after="0">
-                <n-button strong secondary size="tiny" @click="addPageFun">
+                <n-button strong secondary size="tiny" @click="addPageFun(0)">
                     <n-icon>
                         <Add16Filled />
                     </n-icon>
@@ -40,7 +40,8 @@
                                             </n-button>
                                         </el-tooltip>
                                         <el-tooltip content="添加子页面" placement="bottom" effect="light" :hide-after="0">
-                                            <n-button strong secondary size="tiny" style="margin-left: 4px;">
+                                            <n-button strong secondary size="tiny" style="margin-left: 4px;"
+                                                @click="addPageFun(node.data.pageId)">
                                                 <n-icon>
                                                     <Add16Filled />
                                                 </n-icon>
@@ -61,7 +62,7 @@
 import { onMounted, ref, computed, watch } from 'vue';
 import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Copy16Regular } from '@vicons/fluent'
 import { ElMessage } from 'element-plus'
-import { addPage } from '@/api/note/index.js'
+import { addPage, getSpacePage } from '@/api/note/index.js'
 import { useRouter, useRoute } from 'vue-router'
 import { useOperatingcloudStore } from '@/stores/OperatingCloud'
 import { useUserStore } from '@/stores/modules/user'
@@ -70,38 +71,55 @@ const storeCloud = useOperatingcloudStore()
 
 // 获取当前路由参数
 const router = useRouter()
-// const route = useRoute();
-// const spaceId = ref(route.params.spaceId);
+const route = useRoute();
 
-// watch(() => spaceId, (newVal, oldVal) => {
-//     console.log("路由改变"+newVal);
-//     if (newVal !== oldVal) {
-//         spaceId.value = newVal
-//     }
-// });
+watch(() => route.params.spaceId, (newVal, oldVal) => {
+    console.log("路由改变");
+    console.log(newVal);
+
+    // if (newVal !== oldVal) {
+    getSpaceData(newVal)
+    // }
+});
+
+let getSpaceData = (val) => {
+    getSpacePage({ spaceId: val }).then((data) => {
+        console.log("获取当前空间的所有笔记222333", data);
+        storeCloud.spacePageData = data;
+        treeData.value = buildTree(data)
+    }).catch((e) => {
+        console.error('获取失败', e);
+    });
+}
+getSpaceData(storeCloud.cloudData.space)
 
 // 打开页面
 let openPage = (val) => {
     console.log("wsm");
     console.log(val);
-    router.push('/space/' + val.pageId)
+    router.push('/space/' + storeCloud.cloudData.space + '/' + val.pageId)
 }
 
 
 // 添加页面
-let addPageFun = () => {
-    console.log("添加页面");
-    addPage({ spaceId: storeCloud.cloudData.space }).then((data) => {
+let addPageFun = (val) => {
+    console.log("添加页面" + val);
+    addPage({ spaceId: storeCloud.cloudData.space, parentId: val }).then((data) => {
         console.log("添加成功", data);
         ElMessage({
             message: '添加成功',
             type: 'success',
         });
+        store.fetchUserInfo();
     }).catch((e) => {
         console.error('添加失败', e);
     });
 }
 
+
+
+// 笔记数据
+const treeData = ref()
 
 
 // 将笔记数据构建树形结构的函数
@@ -131,9 +149,6 @@ function buildTree(data) {
     return tree;
 }
 
-const treeData = computed(() => {
-    return buildTree(store.spacePageData);
-});
 
 
 

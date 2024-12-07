@@ -67,10 +67,12 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
+import { FILE_PATH_API_URL } from "@/config/setting"
 import { ChevronLeft16Filled, ChevronRight16Filled, ImageGlobe24Regular } from '@vicons/fluent';
 import contentPageBox from '@/views/note/index.vue';
-
-let coverImage = ref('https://www.notion.so/images/page-cover/rijksmuseum_jansz_1649.jpg')
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
+let coverImage = ref(FILE_PATH_API_URL + StorePage.pageData.cover)
 
 // 父组件的侧边栏状态
 const parentSidebarStatus = inject('parentSidebarStatus');

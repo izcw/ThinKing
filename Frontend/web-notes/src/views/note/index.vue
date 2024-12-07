@@ -1,7 +1,7 @@
 <template>
     <div class="contentPage">
-        <div class="pageIcon">😀</div>
-        <el-input v-model.trim="title" :resize="'none'" style="width: 100%" autosize type="textarea"
+        <div class="pageIcon">{{ StorePage.pageData.icon }}</div>
+        <el-input v-model.trim="title" :resize="'none'" @blur="updateTitle" style="width: 100%" autosize type="textarea"
             placeholder="未命名页面" />
         <TipTapEditor />
     </div>
@@ -9,14 +9,27 @@
 <script setup>
 import { ref, watch } from 'vue';
 import TipTapEditor from '@/components/TipTapEditor/index.vue'
+import { update } from '@/api/note/index.js'
 import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
 
+
 let title = ref(StorePage.pageData.title)
-watch(title, (newValue, oldValue) => {
-    console.log('标题发生变化了');
-    console.log('新值:', newValue);
-});
+// watch(title, (newValue, oldValue) => {
+//     console.log('标题发生变化了');
+//     console.log('新值:', newValue);
+// });
+
+
+let updateTitle = () => {
+    console.log("jiao");
+    update({ pageId: StorePage.pageData.pageId, title: title.value }).then((data) => {
+        console.log("修改成功", data);
+        StorePage.pageData.title = data.title
+    }).catch((e) => {
+        console.error('修改失败', e);
+    });
+}
 </script>
 <style lang='scss'>
 .contentPage {

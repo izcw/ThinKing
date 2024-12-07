@@ -103,6 +103,9 @@ import { createYDoc, initYjsStore, fetchServerData, updateServerData } from '@/u
 import { useEditorPageStore } from '@/stores/EditorPage'
 const store = useEditorPageStore()
 
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
+
 
 //为Y文档的本地存储设置IndexedDB
 // 在组件加载时同步数据
@@ -124,7 +127,7 @@ const store = useEditorPageStore()
 
 
 const editor = useEditor({
-    content: store.content,
+    content: JSON.parse(StorePage.pageData.content),
     autofocus: false, // 自动焦点
     editable: true, // 可编辑
     injectCSS: true, // 禁用默认css

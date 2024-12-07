@@ -142,7 +142,7 @@ let getThemeSpace = (val) => {
 const toggleStatus = (item) => {
     console.log(item);
     storeCloud.cloudData.space = item.spaceId
-    router.push('/space')
+    router.push('/space/'+item.spaceId)
 };
 
 let addAndUpdateStatus = ref(false)

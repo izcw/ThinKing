@@ -84,4 +84,8 @@ public class NoteUser implements Serializable {
     @TableField(exist = false) // 表示这个字段不在 note_user 表中
     @ApiModelProperty(value = "空间列表")
     private List<NoteSpace> noteSpaces;
+
+    @TableField(exist = false) // 表示这个字段不在 note_user 表中
+    @ApiModelProperty(value = "默认的空间")
+    private NoteSpace noteDefaultSpaces;
 }

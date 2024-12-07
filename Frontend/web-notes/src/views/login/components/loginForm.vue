@@ -5,7 +5,7 @@
             <el-input v-model="ruleForm.email" size="large" placeholder="请输入邮箱" clearable />
         </el-form-item>
         <el-form-item prop="password" class="item">
-            <el-input v-model="ruleForm.password" size="large" placeholder="请输入密码" clearable />
+            <el-input v-model="ruleForm.password" size="large" type="password" show-password placeholder="请输入密码" clearable />
         </el-form-item>
         <el-form-item>
             <el-button class="item submit" color="#000" size="large" @click="submitForm(ruleFormRef)">登录</el-button>
@@ -73,7 +73,6 @@ const submitForm = async (formEl) => {
                 console.log(msg);
                 store.fetchUserInfo()
                 ElMessage.success(msg)
-                router.push('/space')
                 return
             }).catch((e) => {
                 console.error('登录失败', e);

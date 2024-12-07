@@ -3,7 +3,7 @@
         <div class="ChatHistory">
             <div class="Session-item" v-for="item in data" :key="item.id">
                 <div class="chat problem">
-                    <img  class="profilePic" :src="API_BASE_URL + '/file_warehouse/images/avatar/default/avatar-default.png'" alt="Yoko">
+                    <img class="profilePic" :src="FILE_PATH_API_URL + store.userInfoData.avatar" alt="Yoko">
                     <div class="chatcontent">
                         {{ item.user }}
                     </div>
@@ -60,23 +60,21 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { API_BASE_URL } from "@/config/setting"
+import { FILE_PATH_API_URL } from "@/config/setting"
 import { Home48Regular, Search28Filled } from '@vicons/fluent'
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+
 let data = ref([
     {
         id: 1,
-        user: '请帮我优化文章你的代码实现了一个可以横向滚动的空间列表，使用了 Vue 3 的语法。这段代码结构清晰，功',
-        answer: '你的代码实现了一个可以横向滚动的空间列表，使用了 Vue 3 的\\n语法。这段代码结构清晰，功能实现也很完整。为了实现点击切换的功能，可以考虑在每个空间项上添加一个点击事件处理函数，以切换其状态\n我会在你提供的代码基础上进行修改，增加点击切换空间的功能。\n修改后的代码'
+        user: `请帮我总结文章`,
+        answer: `ThinKing 是一款创新的在线笔记应用，旨在帮助用户以更高效、更有组织的方式记录和管理他们的想法、笔记和任务。它支持多种笔记类型，包括文本、图片、链接和代码片段，满足不同用户的需求。用户可以通过创建不同的空间和使用标签来分类和管理笔记，便于检索。ThinKing 提供了快速记录的环境，确保灵感和想法不会丢失。此外，应用还在不断开发中，将推出更多功能以增强用户体验。`
     },
     {
         id: 2,
-        user: '请帮我优化文章你的代码实现了一个可以横向滚动的空间列表，使用了 Vue 3 的语法。这段代码结构清晰，功',
-        answer: '你的代码实现了一个可以横向滚动的空间列表，使用了 Vue 3 的\\n语法。这段代码结构清晰，功能实现也很完整。为了实现点击切换的功能，可以考虑在每个空间项上添加一个点击事件处理函数，以切换其状态\n我会在你提供的代码基础上进行修改，增加点击切换空间的功能。\n修改后的代码'
-    },
-    {
-        id: 3,
-        user: '请帮我优化文章你的代码实现了一个可以横向滚动的空间列表，使用了 Vue 3 的语法。这段代码结构清晰，功',
-        answer: '你的代码实现了一个可以横向滚动的空间列表，使用了 Vue 3 的\\n语法。这段代码结构清晰，功能实现也很完整。为了实现点击切换的功能，可以考虑在每个空间项上添加一个点击事件处理函数，以切换其状态\n我会在你提供的代码基础上进行修改，增加点击切换空间的功能。\n修改后的代码'
+        user: `请帮我翻译以下内容：Node Positions ( NodePos) describe the specific position of a node, its children, and its parent, providing easy navigation between them. Node Positions are heavily inspired by the DOM and are based on ProseMirror's ResolvedPos implementation.`,
+        answer: `节点位置（Node Positions，缩写为 NodePos）描述了一个节点、其子节点以及其父节点的具体位置，便于在它们之间进行轻松导航。节点位置在很大程度上受到文档对象模型（DOM）的启发，并基于 ProseMirror 的已解析位置（ResolvedPos）实现方式。`
     }
 ])
 </script>

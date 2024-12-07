@@ -31,3 +31,15 @@ export async function addPage(data) {
   }
   return Promise.reject(new Error(res.message));
 }
+
+
+/**
+ * 修改
+ */
+export async function update(data) {
+  const res = await service.put('/note/page/update', data);
+  if (res.code === 200) {
+      return res.data;
+  }
+  return Promise.reject(new Error(res.message));
+}

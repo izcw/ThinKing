@@ -47,16 +47,16 @@ const router = createRouter({
       ],
     },
     {
-      path: '/space',
+      path: '/space/:spaceId',
       component: Layout,
       children: [
         {
-          path: '',
+          path: '/space/:spaceId',
           component: () => import('../views/index/index.vue'),
           meta: { title: '主页' },
         },
         {
-          path: '/space/:noteId',
+          path: '/space/:spaceId/:noteId',
           component: NoteLayout,
           meta: { title: '笔记详情' },
         },
