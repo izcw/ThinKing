@@ -3,6 +3,8 @@ package work.zhangchengwei.note.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,6 +89,24 @@ public class NotePageController {
         Long userId = Long.parseLong(userIdStr);
         notePage.setUserId(userId);
 
+        String jsonContent = "{\n" +
+                "    \"type\": \"doc\",\n" +
+                "    \"content\": [\n" +
+                "        {\n" +
+                "            \"type\": \"paragraph\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+        // 使用 Jackson 的 ObjectMapper 将 String 转换为 JsonNode
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(jsonContent);
+            notePage.setContent(jsonNode);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("保存失败：" + e.getMessage());
+        }
+
         boolean inserted = notePageService.save(notePage); // 保存
         if (inserted) {
             return ResponseResult.success("添加成功",null);
@@ -105,11 +125,13 @@ public class NotePageController {
         boolean updated = notePageMapper.updateById(notePage) > 0;
 
         if (updated) {
-            // 更新成功，直接返回传入的实体对象即可，因为 updateById 已更新
-            return ResponseResult.success("修改成功", notePage);
+            // 更新成功后，重新从数据库中查询完整的记录
+            NotePage updatedNotePage = notePageMapper.selectById(notePage.getPageId());
+            return ResponseResult.success("修改成功", updatedNotePage);
         } else {
             // 更新失败，返回失败消息
             return ResponseResult.error("修改失败");
         }
     }
+
 }

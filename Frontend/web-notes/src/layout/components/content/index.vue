@@ -30,13 +30,16 @@ import { ref, onMounted, watch } from 'vue'
 import PanelSplitBox from '@/layout/components/PanelSplit.vue'
 import ToolSidebarBox from '@/layout/components/toolSidebar/index.vue'
 import ContentBox from './contentPage.vue'
+import { ElMessage } from 'element-plus'
 import levitatedSphereBox from '@/layout/components/levitatedSphere.vue'
 import PageHeaderBox from '@/layout/components/PageHeader/index.vue'
+import { useRouter } from 'vue-router'
 import { getPageId } from '@/api/note/index.js'
 import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
+const router = useRouter()
 
 
 const loading = ref(true);
@@ -57,6 +60,11 @@ const fetchData = (id) => {
         loading.value = false;
         StorePage.pageData = data
     }).catch((e) => {
+        ElMessage({
+            message: '没有这个页面',
+            type: 'warning',
+        });
+        router.push('/space/' + store.routerParamsId.spaceId)
         console.error('获取页面数据失败', e);
     });
 }

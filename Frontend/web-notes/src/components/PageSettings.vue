@@ -1,5 +1,6 @@
 <template>
     <div class="PageSettings text-select">
+        {{ StorePage.pageData }}
         <div class="Settings-item">
             <p class="settingsTitle">字体</p>
             <div class="contentBox fontBox">
@@ -14,7 +15,8 @@
         <div class="Settings-item">
             <p class="settingsTitle">字体大小</p>
             <div class="contentBox fontSizeBox">
-                <div class="item" v-for="(item, index) in data.fontsize" :key="index">
+                <div class="item" v-for="(item, index) in data.fontsize" :key="index"
+                    :class="{ 'active': item == StorePage.pageData.size }">
                     {{ item }}px
                 </div>
             </div>
@@ -52,10 +54,10 @@
             <p class="settingsTitle">页面权限</p>
             <div class="contentBox">
                 <div class="item select">
-                    <p>只读</p> <n-switch size="small" />
+                    <p>只读</p> <el-switch v-model="StorePage.pageData.readonly" />
                 </div>
                 <div class="item select">
-                    <p>加密</p> <n-switch size="small" />
+                    <p>加密</p><el-switch v-model="value1" />
                 </div>
             </div>
         </div>
@@ -66,7 +68,7 @@
                     <p>标题自动编号</p><n-switch size="small" />
                 </div> -->
                 <div class="item select">
-                    <p>页面底部信息</p> <n-switch size="small" />
+                    <p>页面底部信息</p><el-switch v-model="value1" />
                 </div>
                 <div class="item select">
                     <p>页面历史</p>
@@ -75,7 +77,7 @@
                     <p>删除</p>
                 </div>
                 <div class="item select">
-                    <p>转为模板</p><n-switch size="small" />
+                    <p>转为模板</p><el-switch v-model="value1" />
                 </div>
                 <!-- <div class="item select">
                     <p>页面背景</p>
@@ -118,8 +120,10 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-
 import { ReadingModeMobile24Regular, ArrowAutofitWidth20Regular, PhoneSpanIn16Regular, Phone16Regular } from '@vicons/fluent'
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
+
 
 let data = ref({
     font: [
@@ -139,7 +143,7 @@ let data = ref({
             select: false
         }
     ],
-    fontsize: [12, 14, 16, 18, 20]
+    fontsize: ['12', '14', '16', '18', '20']
 })
 </script>
 <style scoped lang='scss'>
@@ -225,6 +229,14 @@ let data = ref({
                 border: 1px solid #DCDCDC;
                 border-radius: 4px;
                 cursor: pointer;
+            }
+
+            .item.active {
+                color: #18A0FB;
+            }
+
+            .item:hover {
+                background-color: #F7F7FA;
             }
         }
 

@@ -1,10 +1,14 @@
 package work.zhangchengwei.note.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,7 +24,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("note_page")
+@TableName(autoResultMap = true) // 映射注解
+
 public class NotePage implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,7 +74,10 @@ public class NotePage implements Serializable {
     /**
      * 笔记内容
      */
-    private String content;
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private JsonNode content;
+
+
 
     /**
      * 收藏：0否，1收藏

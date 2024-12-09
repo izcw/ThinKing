@@ -7,39 +7,39 @@
         }">
             <div class="SelectCover">
                 <el-button plain size="small" ref="buttonCoverRef" v-click-outside="onClickOutside">更换封面</el-button>
+                <el-popover ref="popoverCoverRef" :virtual-ref="buttonCoverRef" placement="bottom" trigger="click"
+                    @show="showPopover" @hide="hidePopover" :hide-after="0" :width="600" virtual-triggering>
+                    <n-tabs type="line" animated>
+                        <n-tab-pane name="oasis" tab="画廊">
+                            <div style="height: 360px;">
+                                <n-infinite-scroll :distance="10">
+                                    <el-input v-model="SearchCover" style="width: 100%;margin-bottom: 1rem;"
+                                        placeholder="筛选" />
+
+                                    <el-space direction="vertical" alignment="normal" style="margin-bottom: 1rem">
+                                        <el-text size="small">渐变</el-text>
+                                        <el-row :gutter="20">
+                                            <el-col :span="6" v-for="(item, index) in 20" :key="index">
+                                                <el-image style="width: 100%; height: 70px;"
+                                                    src="https://picserver.duoyu.link/picfile/image/202403/31-1711877892472.jpg"
+                                                    loading="lazy" fit="cover">
+                                                </el-image>
+                                            </el-col>
+                                        </el-row>
+                                    </el-space>
+
+                                </n-infinite-scroll>
+                            </div>
+                        </n-tab-pane>
+                        <n-tab-pane name="the beatles" tab="上传">
+                            上传
+                        </n-tab-pane>
+                        <n-tab-pane name="jay chou" tab="链接">
+                            链接
+                        </n-tab-pane>
+                    </n-tabs>
+                </el-popover>
             </div>
-            <el-popover ref="popoverCoverRef" :virtual-ref="buttonCoverRef" placement="bottom" trigger="click"
-                @show="showPopover" @hide="hidePopover" :hide-after="0" :width="600" virtual-triggering>
-                <n-tabs type="line" animated>
-                    <n-tab-pane name="oasis" tab="画廊">
-                        <div style="height: 360px;">
-                            <n-infinite-scroll :distance="10">
-                                <el-input v-model="SearchCover" style="width: 100%;margin-bottom: 1rem;"
-                                    placeholder="筛选" />
-
-                                <el-space direction="vertical" alignment="normal" style="margin-bottom: 1rem">
-                                    <el-text size="small">渐变</el-text>
-                                    <el-row :gutter="20">
-                                        <el-col :span="6" v-for="(item, index) in 20" :key="index">
-                                            <el-image style="width: 100%; height: 70px;"
-                                                src="https://picserver.duoyu.link/picfile/image/202403/31-1711877892472.jpg"
-                                                loading="lazy" fit="cover">
-                                            </el-image>
-                                        </el-col>
-                                    </el-row>
-                                </el-space>
-
-                            </n-infinite-scroll>
-                        </div>
-                    </n-tab-pane>
-                    <n-tab-pane name="the beatles" tab="上传">
-                        上传
-                    </n-tab-pane>
-                    <n-tab-pane name="jay chou" tab="链接">
-                        链接
-                    </n-tab-pane>
-                </n-tabs>
-            </el-popover>
         </div> <!-- 封面 -->
 
         <div class="pagebox" style="max-width:720px;">
@@ -82,7 +82,7 @@ const toggleSidebarStatus = () => {
     updateParentSidebarStatus(!parentSidebarStatus.value);
 };
 
-// const contentBoxRef = ref(null); // 获取 contentBox 的引用
+const contentBoxRef = ref(null); // 获取 contentBox 的引用
 // const pageBoxStyle = ref({ padding: '0 100px' }); // 默认的 padding
 
 // // 使用 ResizeObserver 实时监听 contentBox 的宽度变化

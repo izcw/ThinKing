@@ -16,17 +16,22 @@
         <n-collapse-item title="我的页面" name="1">
             <div class="sidebarTree">
                 <n-infinite-scroll style="height: 360px" :distance="10">
-                    <el-tree v-if="treeData" style="background-color: transparent;" :allow-drop="allowDrop"
-                        :allow-drag="allowDrag" :data="treeData" draggable node-key="id" :expand-on-click-node="false"
-                        @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
-                        @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-                        @node-drag-end="handleDragEnd" @node-drop="handleDrop" :default-expanded-keys="['1']"
-                        highlight-current>
+                    <n-skeleton v-if="!store.treeData || !store.spacePageData" :repeat="5" style="width: 100%; height: 20px;margin-bottom: 10px;"
+                        :sharp="false" size="medium" />
+                    <el-tree v-else style="background-color: transparent;" :allow-drop="allowDrop"
+                        :allow-drag="allowDrag" :data="store.treeData" draggable node-key="id"
+                        :expand-on-click-node="false" @node-drag-start="handleDragStart"
+                        @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave"
+                        @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd" @node-drop="handleDrop"
+                        :default-expanded-keys="['1']" highlight-current>
                         <template #default="{ node, data }">
                             <div class="custom-tree-node"
                                 :style="{ 'background-color': store.routerParamsId.spaceId == node.data.pageId ? '#efefed' : 'transparent' }">
                                 <div class="title" @click="openPage(node.data)">
-                                    <span class="icon">{{ node.data.icon }}</span>
+                                    <span class="icon" v-if="node.data.icon">{{ node.data.icon }}</span>
+                                    <n-icon class="icon" size="16" v-else>
+                                        <FileTextOutlined />
+                                    </n-icon>
                                     <el-text truncated>{{ node.data.title }}</el-text>
                                 </div>
                                 <div class="tools">
@@ -61,40 +66,30 @@
 <script setup>
 import { onMounted, ref, computed, watch } from 'vue';
 import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Copy16Regular } from '@vicons/fluent'
+import { FileTextOutlined } from '@vicons/antd'
 import { ElMessage } from 'element-plus'
 import { addPage, getSpacePage } from '@/api/note/index.js'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
 
-// 获取当前路由参数
 const router = useRouter()
-const route = useRoute();
 
 
 // 空间路由改变获取当前空间笔记
 watch(() => store.routerParamsId.spaceId, (newVal, oldVal) => {
+    console.log("切换"+newVal);
     if (newVal !== oldVal && newVal != undefined) {
-        getSpaceData(newVal)
+        store.getSpaceData(newVal)
     }
 });
 
-let getSpaceData = (val) => {
-    getSpacePage({ spaceId: val }).then((data) => {
-        console.log("获取当前空间的所有笔记");
-        console.log(data);
-
-        treeData.value = buildTree(data)
-    }).catch((e) => {
-        console.error('获取失败', e);
-    });
-}
-getSpaceData(store.routerParamsId.spaceId)
+store.getSpaceData(store.routerParamsId.spaceId)
 
 // 打开页面
 let openPage = (val) => {
     console.log("打开页面");
-    router.push('/space/' + store.routerParamsId.spaceId + '/' + val.pageId)
+    router.push('/space/' + val.spaceId + '/' + val.pageId)
 }
 
 
@@ -107,45 +102,11 @@ let addPageFun = (val) => {
             message: '添加成功',
             type: 'success',
         });
-        store.fetchUserInfo();
+        store.getSpaceData(store.routerParamsId.spaceId)
     }).catch((e) => {
         console.error('添加失败', e);
     });
 }
-
-
-
-// 笔记数据
-const treeData = ref()
-
-
-// 将笔记数据构建树形结构的函数
-function buildTree(data) {
-    const tree = [];
-    const map = new Map();
-
-    if (data) {
-        data.forEach(item => {
-            const node = { ...item, children: [] };
-            map.set(item.pageId, node);
-        });
-
-        data.forEach(item => {
-            const node = map.get(item.pageId);
-            if (item.parentId === '0') {
-                tree.push(node);
-            } else {
-                const parentNode = map.get(item.parentId);
-                if (parentNode) {
-                    parentNode.children.push(node);
-                }
-            }
-        });
-    }
-
-    return tree;
-}
-
 
 
 

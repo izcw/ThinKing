@@ -26,7 +26,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { getVerifyCode, Userlogin } from '@/api/login';
-import { getDefaultSpace } from '@/api/space';
+
 import { debounce } from 'lodash';  // 防抖
 import { ElMessage } from 'element-plus'
 import loading from '@icon/loading.png';
@@ -73,7 +73,7 @@ const submitForm = async (formEl) => {
         if (valid) {
             Userlogin(ruleForm).then((msg) => {
                 ElMessage.success(msg)
-                getDefaultSpaceFun()
+                store.getDefaultSpaceFun()
                 return
             }).catch((e) => {
                 console.error('登录失败', e);
@@ -84,16 +84,7 @@ const submitForm = async (formEl) => {
     })
 }
 
-let getDefaultSpaceFun = () => {
-    getDefaultSpace().then((data) => {
-        console.log("默认空间");
-        console.log(data);
-        router.push('/space/' + data.spaceId)
-        return
-    }).catch((e) => {
-        console.error('获取失败', e);
-    });
-}
+
 
 // // 获取图片验证码
 // let captchaUrl = ref(loading); // 验证码图片

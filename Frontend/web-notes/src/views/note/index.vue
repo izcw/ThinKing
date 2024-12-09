@@ -21,11 +21,12 @@ let title = ref(StorePage.pageData.title)
 // });
 
 
+// 更新title
 let updateTitle = () => {
     console.log("jiao");
     update({ pageId: StorePage.pageData.pageId, title: title.value }).then((data) => {
         console.log("修改成功", data);
-        StorePage.pageData.title = data.title
+        StorePage.pageData = data
     }).catch((e) => {
         console.error('修改失败', e);
     });

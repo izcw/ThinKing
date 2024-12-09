@@ -1,9 +1,33 @@
 .ThinKing-Editor-Box {
+
+    .highlight {
+        background-color: yellow !important;
+    }
+
     // 拖拽光标
     .ThinKing-Dropcursor {
     }
 
     // 占位符提示
+    // 为空时显示
+    .ContentEmpty{
+        p.is-editor-empty:first-child::before {
+            color: #adb5bd;
+            content: attr(data-placeholder);
+            float: left;
+            height: 0;
+            pointer-events: none;
+        }
+
+        p.is-empty::before {
+            color: #adb5bd;
+            content: attr(data-placeholder);
+            float: left;
+            height: 0;
+            pointer-events: none;
+        }
+    }
+    // 获取焦点时
     .ProseMirror-focused {
         p.is-editor-empty:first-child::before {
             color: #adb5bd;
@@ -22,6 +46,9 @@
         }
     }
 }
+
+
+
 
 .ThinKing-Editor {
     outline: none;

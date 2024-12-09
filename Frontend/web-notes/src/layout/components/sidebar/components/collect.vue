@@ -41,20 +41,22 @@
             </n-grid-item>
 
 
-            <n-grid-item style="width: 100%;" v-for="(item, index) in data" :key="item.id">
+            <n-grid-item v-if="store.filterCollect" style="width: 100%;" v-for="(item, index) in store.filterCollect"
+                :key="index">
                 <el-tooltip :hide-after="0" placement="top" effect="light">
-                    <template #content><el-text truncated style="max-width: 150px;">收藏页(未实现)：{{ item.title
+                    <template #content><el-text truncated style="max-width: 150px;">收藏页：{{ item.title
                             }}</el-text></template>
-                    <!-- <router-link :to="item.link"> -->
-                    <div class="Tools-item item">
-                        <n-icon size="20">
-                            <component :is="item.icon" />
-                        </n-icon>
-                        <n-icon size="10" color="#F6C050cc" style="position: absolute;top: 4px;left: 4px;">
-                            <Star />
-                        </n-icon>
-                    </div>
-                    <!-- </router-link> -->
+                    <router-link :to="'/space/' + item.spaceId + '/' + item.pageId">
+                        <div class="Tools-item item">
+                            <span class="icon" v-if="item.icon"> {{ item.icon }}</span>
+                            <n-icon class="icon" size="16" v-else>
+                                <FileTextOutlined />
+                            </n-icon>
+                            <n-icon size="10" color="#F6C050cc" style="position: absolute;top: 4px;left: 4px;">
+                                <Star />
+                            </n-icon>
+                        </div>
+                    </router-link>
                 </el-tooltip>
             </n-grid-item>
         </n-grid>
@@ -75,6 +77,7 @@ import { ref, markRaw } from 'vue';
 import searchItemBox from '@/components/searchItem.vue';
 import { Home48Regular, Search28Filled, FullScreenMaximize16Filled, LockClosed32Regular } from '@vicons/fluent'
 import { BellRegular, Star, Lock } from '@vicons/fa'
+import { FileTextOutlined } from '@vicons/antd'
 import screenfull from "screenfull";
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
@@ -85,53 +88,6 @@ const router = useRouter();
 
 let dialogTableVisible = ref(false) // 搜索对话框
 
-// 使用 markRaw 来标记组件
-const StarIcon = markRaw(Star);
-
-let data = ref([
-    {
-        title: 'link1',
-        id: 4,
-        link: '/space/32432',
-        icon: Star
-    },
-    {
-        title: 'link2',
-        id: 5,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }, {
-        title: 'link3',
-        id: 6,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }, {
-        title: '你好Hello!!. ',
-        id: 7,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }, {
-        title: '探索java世界的奥秘',
-        id: 8,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }, {
-        title: 'link6',
-        id: 9,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }, {
-        title: 'link5',
-        id: 8,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }, {
-        title: 'link6',
-        id: 9,
-        link: '/space/345rsdsdfg',
-        icon: Star
-    }
-])
 
 let searchFor = () => {
     console.log("搜索");
@@ -162,7 +118,6 @@ let toggleFullScreen = () => {
     position: relative;
     width: calc(100% - 10px);
     height: 40px;
-    // background-color: #f0f0f0;
     background-color: rgba(255, 255, 255, 80%);
     box-shadow: 0 0 5px #eee;
     margin: 0 auto;
@@ -175,11 +130,11 @@ let toggleFullScreen = () => {
     i {
         color: #999;
     }
-}
 
-// .item.official {
-//     background-color: #eeeeee;
-// }
+    .icon {
+        font-size: 18px;
+    }
+}
 
 .item:hover,
 .item:active {

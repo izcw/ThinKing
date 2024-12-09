@@ -9,14 +9,13 @@
             </el-button>
         </div> -->
         <!-- 编辑器 -->
-        <editor-content :editor="editor" />
+        <editor-content :editor="editor" :class="{ 'ContentEmpty': StorePage.isContentEmpty }" />
 
         <!-- 浮动菜单 -->
         <bubbleMenuBox v-if="editor" :editor="editor" />
 
         <!-- 为空时显示 -->
-        <div v-if="StorePage.pageData.content.length == null || StorePage.pageData.content == '<p></p>'"
-            class="EmptyPrompt">
+        <div v-show="StorePage.isContentEmpty" class="EmptyPrompt">
             <el-button v-if="editor" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" size="small">
                 标题H1
             </el-button>
@@ -31,7 +30,7 @@
         </div>
 
         <!-- 字符数 -->
-        <div v-else class="Editor-footer">
+        <div v-show="!StorePage.isContentEmpty" class="Editor-footer">
             <NumberWordsBox v-if="editor" :editor="editor" :setting="store.setting" />
         </div>
     </div>
@@ -39,6 +38,7 @@
 
 <script setup>
 import { ref, onBeforeUnmount, onMounted } from 'vue'
+import { update } from '@/api/note/index.js'
 import './components/css/style.scss'
 import { ElButton } from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -127,7 +127,7 @@ const StorePage = usePageStore()
 
 
 const editor = useEditor({
-    content: JSON.parse(StorePage.pageData.content),
+    content: StorePage.pageData.content,
     autofocus: false, // 自动焦点
     editable: true, // 可编辑
     injectCSS: true, // 禁用默认css
@@ -217,9 +217,9 @@ const editor = useEditor({
         })
     ],
     onUpdate: ({ editor }) => {
-        store.content = editor.getJSON();
-        console.log(store.content);
-
+        updateContent(editor.getJSON())
+        // console.log("更新内容");
+        // console.log(StorePage.pageData.content);
     },
 })
 
@@ -234,6 +234,17 @@ onBeforeUnmount(() => {
     }
 });
 
+
+// 更新数据
+let updateContent = (val) => {
+    console.log("jiao");
+    update({ pageId: StorePage.pageData.pageId, content: val }).then((data) => {
+        console.log("修改成功", data);
+        StorePage.pageData = data
+    }).catch((e) => {
+        console.error('修改失败', e);
+    });
+}
 </script>
 
 <style scoped lang='scss'>
