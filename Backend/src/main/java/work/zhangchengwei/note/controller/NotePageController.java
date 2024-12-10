@@ -77,6 +77,20 @@ public class NotePageController {
     }
 
     /**
+     * 根据ID获取页面(分享的)
+     * @param id 笔记ID
+     * @return 笔记
+     */
+    @GetMapping("/sharepage/{id}")
+    public ResponseResult<NotePage> getSharePageById(@PathVariable String id) {
+        NotePage notePage = notePageMapper.selectById(id);
+        if (notePage == null) {
+            return ResponseResult.fail("未找到该笔记");
+        }
+        return ResponseResult.success(notePage);
+    }
+
+    /**
      * 添加笔记
      * @return
      */

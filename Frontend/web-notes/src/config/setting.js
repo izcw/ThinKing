@@ -2,6 +2,9 @@
 export const API_BASE_URL = import.meta.env.VITE_API_URL;
 export const FILE_PATH_API_URL = import.meta.env.VITE_API_URL + '/file_warehouse/';
 
+// 官网链接
+export const WEBSITE_LINK_URl = import.meta.env.VITE_WEBSITE_LINK;
+
 // 项目名称
 export const PROJECT_NAME = import.meta.env.VITE_APP_NAME;
 

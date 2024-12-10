@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="container">
         <router-link to="/home">
             <div class="logo">
                 <img src="@/assets/images/logo.png" alt="">
@@ -26,12 +26,11 @@
 <style scoped lang='scss'>
 header {
     width: 100%;
-    padding:1rem 1.5rem;
+    padding:1rem 1.5rem !important;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #fff;
 }
 
 @media (max-width: 992px) {

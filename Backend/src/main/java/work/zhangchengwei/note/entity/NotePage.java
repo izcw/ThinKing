@@ -120,6 +120,11 @@ public class NotePage implements Serializable {
     private Integer template;
 
     /**
+     * 分享: 0默认不分享，1公开分享
+     */
+    private Integer share;
+
+    /**
      * 是否删除, 0否, 1回收站
      */
     private Integer deleted;

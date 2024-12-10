@@ -113,7 +113,7 @@ const StorePage = usePageStore()
 //     // 尝试从服务器获取数据并初始化
 //     const serverData = await fetchServerData()
 //     if (serverData) {
-//         store.content = serverData.content
+//         StorePage.pageData = serverData.content
 //     }
 
 //     // 启动数据同步
@@ -129,7 +129,7 @@ const StorePage = usePageStore()
 const editor = useEditor({
     content: StorePage.pageData.content,
     autofocus: false, // 自动焦点
-    editable: true, // 可编辑
+    editable: StorePage.pageData.readonly == '0' ? true : false, // 可编辑
     injectCSS: true, // 禁用默认css
     editorProps: {
         attributes: {

@@ -1,10 +1,10 @@
 <template>
     <div class="homePage">
-        <div class="container herder-top">
+        <div class="herder-top">
             <herderBox />
         </div>
         <div class="container" style="margin-top: 72px;">
-            <box1Box />
+            <router-view></router-view>
         </div>
         <div class="container">
             <footerBox />
@@ -13,13 +13,11 @@
 </template>
 <script setup>
 import herderBox from "./components/herder.vue";
-import box1Box from "./components/box1.vue";
 import footerBox from "./components/footer.vue";
 </script>
 <style scoped lang='scss'>
 .homePage {
     width: 100%;
-    height: 100%;
     padding: 0 1.5rem;
     box-sizing: border-box;
 }
@@ -30,11 +28,13 @@ import footerBox from "./components/footer.vue";
 }
 
 .herder-top {
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     margin: auto;
     z-index: 999;
+    background-color: #fff;
 }
 </style>

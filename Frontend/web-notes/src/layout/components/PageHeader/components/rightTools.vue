@@ -44,9 +44,11 @@
         </el-drawer>
 
 
-        <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="bottom" trigger="click" :width="500"
+        <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="bottom" trigger="click" :width="400"
             virtual-triggering>
-            <div class="sharebox"></div>
+            <div class="sharebox">
+                <SharePageBox/>
+            </div>
         </el-popover><!-- 分享弹出框 -->
 
         <div v-if="dialogTableVisible" class="searchHighlight" tabindex="0" @focus="onFocus" @blur="onBlur">
@@ -61,6 +63,7 @@ import { highlightText } from '@/utils/searchHighlightText.js'
 import { StarRegular, Star } from '@vicons/fa'
 import { MoreHorizontal32Filled, Search28Filled, ChevronDoubleRight16Filled } from '@vicons/fluent'
 import PageSettingsBox from '@/components/PageSettings.vue'
+import SharePageBox from '@/components/SharePage.vue'
 import { update } from '@/api/note/index.js'
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
@@ -150,13 +153,6 @@ const updateRate = () => {
     .Tools-item {
         margin-left: 6px;
     }
-}
-
-// 分享
-.sharebox {
-    min-height: 200px;
-    margin: 1rem 0 3rem 0;
-
 }
 
 

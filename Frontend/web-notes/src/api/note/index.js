@@ -9,6 +9,15 @@ export async function getPageId(id) {
   return Promise.reject(new Error(res.message));
 }
 
+// 根据id获取笔记(不需要登录)
+export async function getSharePageId(id) {
+  const res = await service.get('/note/page/sharepage/' + id);
+  if (res.code === 200) {
+    return res.data;
+  }
+  return Promise.reject(new Error(res.message));
+}
+
 /**
  * 获取空间笔记
  */
