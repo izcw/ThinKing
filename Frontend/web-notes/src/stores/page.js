@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 export const usePageStore = defineStore('pagestore', () => {
     let pageData = ref(null) // 笔记数据
+    let pageDataParent = ref([]) // 当前页的父级
 
     // 检测数据是否为空
     const isContentEmpty = computed(() => {
@@ -16,5 +17,5 @@ export const usePageStore = defineStore('pagestore', () => {
         return true; // 如果 parsedContent 不存在或内容为空数组，也视为“空”
     })
 
-    return { pageData, isContentEmpty }
+    return { pageData, pageDataParent, isContentEmpty }
 })

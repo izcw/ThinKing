@@ -16,16 +16,17 @@
         <n-collapse-item title="我的页面" name="1">
             <div class="sidebarTree">
                 <n-infinite-scroll style="height: 360px" :distance="10">
-                    <n-skeleton v-if="!store.treeData || !store.spacePageData" :repeat="5" style="width: 100%; height: 20px;margin-bottom: 10px;"
-                        :sharp="false" size="medium" />
+                    <n-skeleton v-if="!store.treeData || !store.spacePageData" :repeat="5"
+                        style="width: 100%; height: 20px;margin-bottom: 10px;" :sharp="false" size="medium" />
                     <el-tree v-else style="background-color: transparent;" :allow-drop="allowDrop"
-                        :allow-drag="allowDrag" :data="store.treeData" draggable node-key="id"
-                        :expand-on-click-node="false" @node-drag-start="handleDragStart"
-                        @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave"
-                        @node-drag-over="handleDragOver" @node-drag-end="handleDragEnd" @node-drop="handleDrop"
-                        :default-expanded-keys="['1']" highlight-current>
+                        :allow-drag="allowDrag" :data="store.treeData" draggable :expand-on-click-node="false"
+                        @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
+                        @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
+                        @node-drag-end="handleDragEnd" @node-drop="handleDrop" accordion node-key="pageId"
+                        :default-expanded-keys="[store.routerParamsId.pageId]" highlight-current>
                         <template #default="{ node, data }">
                             <div class="custom-tree-node"
+                                :class="{ 'Current-Open-Page': store.routerParamsId.pageId == node.data.pageId }"
                                 :style="{ 'background-color': store.routerParamsId.spaceId == node.data.pageId ? '#efefed' : 'transparent' }">
                                 <div class="title" @click="openPage(node.data)">
                                     <span class="icon" v-if="node.data.icon">{{ node.data.icon }}</span>
@@ -78,7 +79,7 @@ const router = useRouter()
 
 // 空间路由改变获取当前空间笔记
 watch(() => store.routerParamsId.spaceId, (newVal, oldVal) => {
-    console.log("切换"+newVal);
+    console.log("切换" + newVal);
     if (newVal !== oldVal && newVal != undefined) {
         store.getSpaceData(newVal)
     }
@@ -195,21 +196,6 @@ const remove = (node, data) => {
             display: flex;
             align-items: center;
             padding-right: 4px;
-
-            // .item {
-            //     width: 24px;
-            //     height: 24px;
-            //     display: flex;
-            //     align-items: center;
-            //     justify-content: center;
-
-            //     border-radius: 4px;
-
-            //     &:hover,
-            //     &:active {
-            //         background-color: #DDDDDB;
-            //     }
-            // }
         }
     }
 }

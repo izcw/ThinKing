@@ -51,14 +51,31 @@ watch(() => store.routerParamsId.pageId, (newVal, oldVal) => {
     }
 });
 
+watch(() => store.spacePageData, (newVal) => {
+    if (store.spacePageData) {
+        StorePage.pageDataParent = []
+        findParents(getid.value, store.spacePageData);
+    }
+})
+
+let getid = ref()
 // 获取数据的函数
 const fetchData = (id) => {
+    getid.value = id
     loading.value = true;
     getPageId(id).then((data) => {
         console.log("获取当前页面数据");
         console.log(data);
         loading.value = false;
-        StorePage.pageData = data
+        StorePage.pageData = data;
+
+        // console.log("当方法-------");
+        // findParents(id, store.spacePageData);
+        if (store.spacePageData) {
+            StorePage.pageDataParent = []
+            findParents(getid.value, store.spacePageData);
+        }
+
     }).catch((e) => {
         ElMessage({
             message: '没有这个页面',
@@ -73,6 +90,27 @@ const fetchData = (id) => {
 onMounted(() => {
     fetchData(store.routerParamsId.pageId)
 });
+
+
+
+// 递归查找父级
+function findParents(pageId, pagesArray) {
+    for (const page of pagesArray) {
+        if (page.pageId === pageId) {
+            // 当前页加入结果，保留完整 children 结构
+            StorePage.pageDataParent.unshift({ ...page });
+            // 如果存在父级，继续递归查找
+            if (page.parentId && page.parentId !== '0') {
+                findParents(page.parentId, pagesArray);
+            }
+            break;
+        }
+        // 如果当前页有子级，递归查找
+        if (page.children && page.children.length > 0) {
+            findParents(pageId, page.children);
+        }
+    }
+}
 
 </script>
 <style scoped lang='scss'>

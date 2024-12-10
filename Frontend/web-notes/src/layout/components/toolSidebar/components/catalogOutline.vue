@@ -11,12 +11,12 @@
 
         <!-- 其它 -->
         <n-collapse default-expanded-names="1" arrow-placement="right">
-            <n-collapse-item title="标签" name="1">
+            <!-- <n-collapse-item title="标签" name="1">
                 <el-space wrap>
                     <el-tag type="info">Vue</el-tag>
                     <el-tag type="info">Java</el-tag>
                 </el-space>
-            </n-collapse-item>
+            </n-collapse-item> -->
             <n-collapse-item title="文件目录" name="2">
                 <n-space vertical :size="12">
                     <n-alert type="default" :show-icon="false">
