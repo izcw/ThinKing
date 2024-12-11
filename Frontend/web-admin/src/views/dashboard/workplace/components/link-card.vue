@@ -44,13 +44,6 @@ const DEFAULT = [
     url: '/order/statistics',
     color: '#95de64'
   },
-  
-  {
-    icon: 'Coin',
-    title: '数据管理',
-    url: '/data/notesdata',
-    color: '#ffd666'
-  },
   {
     icon: 'MostlyCloudy',
     title: '数据备份',
@@ -63,6 +56,12 @@ const DEFAULT = [
     title: '套餐管理',
     url: '/subscribe/membership',
     color: '#5cdbd3'
+  },
+    {
+    icon: 'Orange',
+    title: '模版管理',
+    url: '/templateplugin/template',
+    color: '#ffd666'
   },
   {
     icon: 'operation',

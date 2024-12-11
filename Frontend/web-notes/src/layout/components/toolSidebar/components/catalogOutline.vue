@@ -17,7 +17,7 @@
                     <el-tag type="info">Java</el-tag>
                 </el-space>
             </n-collapse-item> -->
-            <n-collapse-item title="文件目录" name="2">
+            <!-- <n-collapse-item title="文件目录" name="2">
                 <n-space vertical :size="12">
                     <n-alert type="default" :show-icon="false">
                         <div style="display: flex;align-items: center;">
@@ -36,7 +36,6 @@
                                         </n-icon>
                                     </n-button>
                                 </template>
-                                <!--  -->
                                 <n-button quaternary size="small">
                                     <n-icon size="18" style="color:#333;">
                                         <Share48Regular />
@@ -59,7 +58,7 @@
             </n-collapse-item>
             <n-collapse-item title="双向链接" name="3">
                 <RelationshipDiagramBox />
-            </n-collapse-item>
+            </n-collapse-item> -->
         </n-collapse>
     </div>
 </template>

@@ -22,8 +22,9 @@
                         :allow-drag="allowDrag" :data="store.treeData" draggable :expand-on-click-node="false"
                         @node-drag-start="handleDragStart" @node-drag-enter="handleDragEnter"
                         @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-                        @node-drag-end="handleDragEnd" @node-drop="handleDrop" accordion node-key="pageId"
-                        :default-expanded-keys="[store.routerParamsId.pageId]" highlight-current>
+                        @node-drag-end="handleDragEnd" @node-drop="handleDrop" node-key="pageId"
+                        :default-expanded-keys="[store.routerParamsId.pageId ? store.routerParamsId.pageId : '']"
+                        highlight-current>
                         <template #default="{ node, data }">
                             <div class="custom-tree-node"
                                 :class="{ 'Current-Open-Page': store.routerParamsId.pageId == node.data.pageId }"
@@ -37,14 +38,29 @@
                                 </div>
                                 <div class="tools">
                                     <div class="content">
-                                        <el-tooltip content="删除，创建副本等。" placement="bottom" effect="light"
-                                            :hide-after="0">
+                                        <!-- <el-tooltip placement="bottom" effect="light">
                                             <n-button strong secondary size="tiny">
                                                 <n-icon>
                                                     <MoreHorizontal24Filled />
                                                 </n-icon>
                                             </n-button>
-                                        </el-tooltip>
+                                        </el-tooltip> -->
+                                        <el-popover placement="top" trigger="click">
+                                            <template #reference>
+                                                <n-button strong secondary size="tiny">
+                                                    <n-icon>
+                                                        <MoreHorizontal24Filled />
+                                                    </n-icon>
+                                                </n-button>
+                                            </template>
+                                            <!-- 删除 -->
+                                            <n-button strong secondary size="small">
+                                                <n-icon>
+                                                    <Delete48Filled />
+                                                </n-icon>
+                                            </n-button>
+                                        </el-popover>
+
                                         <el-tooltip content="添加子页面" placement="bottom" effect="light" :hide-after="0">
                                             <n-button strong secondary size="tiny" style="margin-left: 4px;"
                                                 @click="addPageFun(node.data.pageId)">
@@ -66,7 +82,7 @@
 
 <script setup>
 import { onMounted, ref, computed, watch } from 'vue';
-import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Copy16Regular } from '@vicons/fluent'
+import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Delete48Filled } from '@vicons/fluent'
 import { FileTextOutlined } from '@vicons/antd'
 import { ElMessage } from 'element-plus'
 import { addPage, getSpacePage } from '@/api/note/index.js'

@@ -1,6 +1,11 @@
 <template>
     <div class="contentPage">
-        <div class="pageIcon">{{ StorePage.pageData.icon }}</div>
+        <div class="pageIcon">
+            <span class="icon" v-if="StorePage.pageData.icon">{{ StorePage.pageData.icon }}</span>
+            <n-icon class="icon" v-else color="#666">
+                <FileTextOutlined />
+            </n-icon>
+        </div>
         <el-input v-model.trim="title" :resize="'none'" @blur="updateTitle" style="width: 100%" autosize type="textarea"
             placeholder="未命名页面" />
         <TipTapEditor />
@@ -9,6 +14,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import TipTapEditor from '@/components/TipTapEditor/index.vue'
+import { FileTextOutlined } from '@vicons/antd'
 import { update } from '@/api/note/index.js'
 import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
@@ -43,10 +49,8 @@ let updateTitle = () => {
     // 页面图标
     .pageIcon {
         position: absolute;
-        top: -52px;
+        top: -65px;
         left: 0;
-        width: 70px;
-        height: 70px;
         font-size: 60px;
         display: flex;
         align-items: center;
