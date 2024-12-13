@@ -3,14 +3,17 @@
 -->
 <template>
     <div class="toolSidebar">
-        <n-tabs type="segment" v-model:value="store.TabsStatus" animated @before-leave="handleBeforeLeave">
+        <div style="padding: 1rem 0;box-sizing: border-box;">
+            <catalogOutlineBox />
+        </div>
+        <!-- <n-tabs type="segment" v-model:value="store.TabsStatus" animated @before-leave="handleBeforeLeave">
             <n-tab-pane name="tabP1" tab="目录">
                 <catalogOutlineBox />
             </n-tab-pane>
             <n-tab-pane name="tabP2" tab="AI">
                 <AIStormBox />
             </n-tab-pane>
-        </n-tabs>
+        </n-tabs> -->
     </div>
 </template>
 <script setup>

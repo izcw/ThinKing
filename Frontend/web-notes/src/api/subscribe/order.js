@@ -10,3 +10,18 @@ export async function PageSubscribeOrder(params) {
     }
     return Promise.reject(new Error(res.message));
 }
+
+/**
+ * 升级套餐（支付）
+ */
+export async function paymentOrder(data) {
+    const res = await service.post('/note/subscribeorder/payment', data);
+    console.log("支付");
+    
+    console.log(res);
+    
+    if (res.code === 200 || res.code === 500) {
+        return res;
+    }
+    return Promise.reject(new Error(res.message));
+}

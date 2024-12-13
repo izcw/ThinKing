@@ -1,14 +1,19 @@
 package work.zhangchengwei.note.controller;
 
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import work.zhangchengwei.core.web.ResponseResult;
+import work.zhangchengwei.note.entity.NotePage;
 import work.zhangchengwei.note.entity.NoteSubscribe;
 import work.zhangchengwei.note.entity.NoteSubscribeOrder;
+import work.zhangchengwei.note.mapper.NoteSubscribeOrderMapper;
 import work.zhangchengwei.note.param.NoteSubscribesListInfo;
 import work.zhangchengwei.note.mapper.NoteTemplateMapper;
 import work.zhangchengwei.note.service.INoteSubscribeOrderService;
@@ -32,6 +37,8 @@ public class NoteSubscribeOrderController {
     private NoteTemplateMapper noteTemplateMapper;
     @Autowired
     private INoteSubscribeOrderService noteSubscribeOrderService;
+    @Autowired
+    private NoteSubscribeOrderMapper noteSubscribeOrderMapper;
     @Autowired
     private INoteSubscribeService noteSubscribeService;
 
@@ -104,4 +111,30 @@ public class NoteSubscribeOrderController {
         }
     }
 
+
+    /**
+     * 添加订单
+     * @return
+     */
+    @PostMapping("/payment")
+    public ResponseResult<String> add(@RequestBody NoteSubscribeOrder noteSubscribeOrder) {
+        // 获取当前登录用户的 ID
+        String userIdStr = StpUtil.getLoginIdAsString();
+        Long userId = Long.parseLong(userIdStr);
+        noteSubscribeOrder.setUserId(userId);
+
+        // 查找当前套餐
+        NoteSubscribesListInfo nsListInfo = new NoteSubscribesListInfo();
+        NoteSubscribeOrder SubscribeOrder = noteSubscribeOrderMapper.selectByUserIdSubscribeOrder(userId);
+        if(SubscribeOrder != null) {
+            return ResponseResult.fail("当前已有套餐！不可再次支付！");
+        }
+
+        boolean inserted = noteSubscribeOrderService.save(noteSubscribeOrder); // 保存
+        if (inserted) {
+            return ResponseResult.success("支付成功",null);
+        } else {
+            return ResponseResult.fail("支付失败");
+        }
+    }
 }

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -43,6 +45,16 @@ public class NoteSubscribeOrder implements Serializable {
      * 套餐id
      */
     private Long subscribeId;
+
+    /**
+     * 实付价格
+     */
+    private BigDecimal price;
+
+    /**
+     * 交易方式
+     */
+    private String transactions;
 
     /**
      * 状态, 0订单完成, 1订单异常，2退款、3支付失败

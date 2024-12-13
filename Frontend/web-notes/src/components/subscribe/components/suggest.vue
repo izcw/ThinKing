@@ -16,7 +16,7 @@
                 <el-button type="primary" @click="upgrade(item)"
                     v-if="store.userInfoData.currentSubscription.noteSubscribeOrder == null">升级</el-button>
                 <div v-else style="display: flex;flex-direction: column;">
-                    <el-button type="primary" @click="upgrade(item)" disabled>升级</el-button>
+                    <el-button type="primary" disabled>升级</el-button>
                     <div
                         style="transform: scale(0.8);display: flex;align-items: center;justify-content: center;color: #999;font-size: 12px;">
                         <n-icon>
@@ -34,8 +34,8 @@
         :close-on-click-modal="paymentStatus">
         <div style="display: flex;display: flex;flex-direction: column;align-items: center;margin: 1rem 0;"
             v-loading="loading">
-            <qrcode-vue :value="QrcodeData.url" :size="QrcodeData.size" :image-settings="QrcodeData.iconImage" level="H"
-                render-as="svg" />
+            <qrcode-vue :value="QrcodeData.url + PendingPayment.transactions" :size="QrcodeData.size"
+                :image-settings="QrcodeData.iconImage" level="H" render-as="svg" />
             <el-text class="mx-1" size="small" style="margin-top: 10px;">支付宝支付</el-text>
             <div class="price">
                 {{ PendingPayment.price }}¥
@@ -45,14 +45,17 @@
             </el-button>
             <el-divider />
             <el-text class="mx-1" size="small" style="margin-bottom: 10px;">其他支付</el-text>
-            <div>
-                <n-icon size="30">
-                    <WechatOutlined style="color:#65da78;" />
-                </n-icon>
-                &emsp;
-                <n-icon size="30">
-                    <AlipayOutlined style="color:#469de2;" />
-                </n-icon>
+            <div class="other">
+                <el-space wrap size="50">
+                    <n-icon size="30" @click="PaymentMethod('Alipay')" class="item"
+                        :class="{ 'active': PendingPayment.transactions == 'Alipay' }">
+                        <AlipayOutlined style="color:#469de2;" />
+                    </n-icon>
+                    <n-icon size="30" @click="PaymentMethod('Wechat')" class="item"
+                        :class="{ 'active': PendingPayment.transactions == 'Wechat' }">
+                        <WechatOutlined style="color:#65da78;" />
+                    </n-icon>
+                </el-space>
             </div>
         </div>
     </el-dialog>
@@ -62,6 +65,7 @@ import { ref, reactive, markRaw } from 'vue'
 import WeChatImages from '@/assets/images/WeChat.png'
 import AlipayImages from '@/assets/images/Alipay.png'
 import { PageSubscribe } from '@/api/subscribe/index'
+import { paymentOrder } from '@/api/subscribe/order'
 import { AlipayOutlined, WechatOutlined } from '@vicons/antd'
 import { Info20Regular } from '@vicons/fluent'
 import QrcodeVue from 'qrcode.vue'
@@ -85,20 +89,32 @@ const query = reactive({
 
 let data = ref()
 
-PageSubscribe(query).then((val) => {
-    data.value = val.filter((item) => item.subscribeId != 1);
-    return
-}).catch((e) => {
-    console.error('获取失败', e);
-});
+let getsubscribeorder = () => {
+    PageSubscribe(query).then((val) => {
+        data.value = val.filter((item) => item.subscribeId != 1);
+        return
+    }).catch((e) => {
+        console.error('获取失败', e);
+    });
+}
+getsubscribeorder()
 
 
-let PendingPayment = ref()
+// 交易参数
+let PendingPayment = ref({
+    price: 0.00,
+    transactions: "Alipay",
+    subscribeId: ''
+})
+
+let centerDialogVisible = ref(false)
 
 // 点击升级
 let upgrade = (item) => {
+    console.log(item);
     centerDialogVisible.value = true
-    PendingPayment.value = item
+    PendingPayment.value.price = item.price
+    PendingPayment.value.subscribeId = item.subscribeId
 }
 
 
@@ -117,24 +133,46 @@ let QrcodeData = reactive(
 )
 
 // 模拟支付加载
-let centerDialogVisible = ref(false)
 let loading = ref(false)
 let paymentStatus = ref(true) // 支付状态，是否可以关闭弹窗
 
 // 支付订单
 let PaymentOrder = () => {
-    loading.value = true
-    paymentStatus.value = false
+    loading.value = true;
+    paymentStatus.value = false;
+    console.log(PendingPayment.value);
 
     setTimeout(() => {
-        centerDialogVisible.value = false
-        loading.value = false
-        paymentStatus.value = true
-        ElMessage({
-            message: '支付成功',
-            type: 'success',
-        })
+        paymentOrder(PendingPayment.value).then((val) => {
+
+            if (val.code == 200) {
+                ElMessage({
+                    message: val.message,
+                    type: 'success',
+                })
+            } else {
+                ElMessage({
+                    message: val.message,
+                    type: 'warning',
+                })
+            }
+            store.fetchUserInfo();
+            centerDialogVisible.value = false
+            loading.value = false
+            paymentStatus.value = true
+            return
+        }).catch((e) => {
+            console.error('支付失败', e);
+        });
+
+
     }, 2000);
+}
+
+// 切换支付方式
+let PaymentMethod = (val) => {
+    PendingPayment.value.transactions = val;
+    QrcodeData.iconImage.src = val == 'Alipay' ? AlipayImages : WeChatImages;
 }
 </script>
 <style scoped lang='scss'>
@@ -214,5 +252,19 @@ let PaymentOrder = () => {
     font-size: 22px;
     color: #333;
     margin-bottom: 10px;
+}
+
+// 其他支付
+.other .item {
+    border: 2px solid transparent;
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.other .item:hover,
+.other .item:active,
+.other .item.active {
+    border: 2px solid #eee;
 }
 </style>
