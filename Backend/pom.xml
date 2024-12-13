@@ -67,6 +67,12 @@
             <version>3.5.9</version>
         </dependency>
 
+        <!-- Spring Boot默认的日志框架（Logback） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
         <!--mybatis-plus-jsqlparser分页-->
         <dependency>
             <groupId>com.baomidou</groupId>

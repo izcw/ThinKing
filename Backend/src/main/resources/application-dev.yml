@@ -11,6 +11,7 @@ custom:
   warehouse:
     path: F:\MyFile\Work\ThinKing\FileWarehouse\  # 指定静态资源的物理位置（与web.resources.static-locations一致）
   agreement-host: http://127.0.0.1 # 请求的协议+主机
+  publicaddress: 127.0.0.1 # 地址
 
 spring:
   web:

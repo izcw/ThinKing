@@ -21,6 +21,9 @@ spring:
       location: src/static/images/file
       max-file-size: 100MB
       max-request-size: 1000MB
+  scheduler:
+    pool:
+      size: 2  # 定时任务线程池的大小
 
   #邮箱验证码配置
   mail:
