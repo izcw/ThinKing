@@ -103,5 +103,5 @@ export const useUserStore = defineStore('userinfo', () => {
   
 
 
-  return { userInfoData, spacePageData, defaultSpace, routerParamsId, treeData, filterCollect, getSpaceData, fetchUserInfo, getDefaultSpaceFun };
+  return { userInfoData, spacePageData, defaultSpace, routerParamsId, treeData, filterCollect, getSpaceData, fetchUserInfo, getDefaultSpaceFun,buildTree };
 });

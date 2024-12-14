@@ -2,7 +2,17 @@
 * @FileDescription: 悬浮球
 -->
 <template>
-    <n-flex>
+    <n-tooltip trigger="hover" placement="right">
+        <template #trigger>
+            <n-float-button @click="scrollIntoViewUp" style="position:absolute;bottom:2.5rem ;right:2.5rem ;">
+                <n-icon>
+                    <ArrowCircleUp16Filled />
+                </n-icon>
+            </n-float-button>
+        </template>
+        回到顶部
+    </n-tooltip>
+    <!-- <n-flex>
         <n-tooltip trigger="hover" placement="right">
             <template #trigger>
                 <n-float-button class="levitatedSphere" position="absolute" bottom="2.5rem" right="2.5rem"
@@ -48,7 +58,7 @@
             </template>
             使用AI、模板等
         </n-tooltip>
-    </n-flex>
+    </n-flex> -->
 </template>
 
 <script setup>

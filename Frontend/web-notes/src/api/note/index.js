@@ -47,7 +47,43 @@ export async function addPage(data) {
 export async function update(data) {
   const res = await service.put('/note/page/update', data);
   if (res.code === 200) {
-      return res.data;
+    return res.data;
+  }
+  return Promise.reject(new Error(res.message));
+}
+
+
+/**
+ * 逻辑删除
+ */
+export async function upRecycle(params) {
+  const res = await service.put('/note/page/recycle', null, { params });
+  if (res.code === 200) {
+    return res.message;
+  }
+  return Promise.reject(new Error(res.message));
+}
+
+
+/**
+ * 删除（彻底删除）
+ */
+export async function deletePage(params) {
+  const res = await service.delete('/note/page/delete', { params });
+  if (res.code === 200) {
+    return res.message;
+  }
+  return Promise.reject(new Error(res.message));
+}
+
+
+/**
+ * 获取回收站笔记
+ */
+export async function getRecyclePage() {
+  const res = await service.get('/note/page/RecyclePage');
+  if (res.code === 200) {
+    return res.data;
   }
   return Promise.reject(new Error(res.message));
 }

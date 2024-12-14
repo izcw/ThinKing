@@ -54,11 +54,16 @@
                                                 </n-button>
                                             </template>
                                             <!-- 删除 -->
-                                            <n-button strong secondary size="small">
-                                                <n-icon>
-                                                    <Delete48Filled />
-                                                </n-icon>
-                                            </n-button>
+                                            <el-popconfirm title="你确定要删除?" @confirm="DeletePage(node.data.pageId)">
+                                                <template #reference>
+                                                    <n-button strong secondary size="small">
+                                                        <n-icon>
+                                                            <Delete48Filled />
+                                                        </n-icon>
+                                                    </n-button>
+                                                </template>
+                                            </el-popconfirm>
+
                                         </el-popover>
 
                                         <el-tooltip content="添加子页面" placement="bottom" effect="light" :hide-after="0">
@@ -85,7 +90,7 @@ import { onMounted, ref, computed, watch } from 'vue';
 import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Delete48Filled } from '@vicons/fluent'
 import { FileTextOutlined } from '@vicons/antd'
 import { ElMessage } from 'element-plus'
-import { addPage, getSpacePage } from '@/api/note/index.js'
+import { addPage, getSpacePage, deletePage, upRecycle } from '@/api/note/index.js'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
@@ -122,6 +127,31 @@ let addPageFun = (val) => {
         store.getSpaceData(store.routerParamsId.spaceId)
     }).catch((e) => {
         console.error('添加失败', e);
+    });
+}
+
+
+// 删除页面
+let DeletePage = (val) => {
+    console.log(val);
+
+    upRecycle({ pageId: val, status: 1 }).then((msg) => {
+        console.log("删除成功", msg);
+        if (store.routerParamsId.pageId == val) {
+            router.push('/space/' + val.spaceId)
+        }
+        ElMessage({
+            message: msg,
+            type: 'success',
+        });
+        getSpacePage({ spaceId: store.routerParamsId.spaceId }).then((data) => {
+            console.log("获取当前空间的所有笔记");
+            store.spacePageData = data;
+        }).catch((e) => {
+            console.error('获取失败', e);
+        });
+    }).catch((e) => {
+        console.error(e);
     });
 }
 

@@ -12,7 +12,7 @@
             <span>{{ item.describe }}</span>
         </n-tooltip>
 
-        <div class="item-more" ref="buttonRef" v-click-outside="onClickOutside">
+        <div class="item-more" ref="buttonRef" v-click-outside="onClickOutside" @click="RecycleContentFun">
             <n-icon size="20">
                 <Broom16Regular />
             </n-icon>
@@ -21,13 +21,28 @@
 
         <el-popover ref="popoverRef" :virtual-ref="buttonRef" placement="right" trigger="click" :width="500"
             virtual-triggering>
-            <el-input v-model="SearchGarbage" style="width: 100%;" placeholder="搜索被移入垃圾箱的页面" />
+            <el-input v-model="SearchGarbage" style="width: 100%;" placeholder="搜索被移入垃圾箱的页面" clearable />
             <div class="dustbin">
-                <div class="item">
-                    <p>mysql</p>
+                <div class="item" v-for="(item, index) in filteredRecycleData" :key="index">
+                    <div style="display: flex;align-items: center;">
+                        <span class="icon" v-if="item.icon">{{ item.icon }}</span>
+                        <n-icon class="icon" size="16" v-else>
+                            <FileTextOutlined />
+                        </n-icon>
+                        <p style="margin-left: 10px;">{{ item.title }}</p>
+                    </div>
                     <div class="tool">
-                        <span>恢复&emsp;</span>
-                        <span>彻底删除</span>
+                        <el-button text size="small" @click="restorePage(item)">
+                            恢复
+                        </el-button>
+                        <el-popconfirm title="删除将不能恢复?" @confirm="deletePageFun(item.pageId)">
+                            <template #reference>
+                                <el-button text size="small" type="danger">
+                                    彻底删除
+                                </el-button>
+                            </template>
+                        </el-popconfirm>
+
                     </div>
                 </div>
             </div>
@@ -44,10 +59,19 @@
     </div>
 </template>
 <script setup>
-import { ref, markRaw, computed, onBeforeUnmount } from 'vue';
+import { ref, markRaw, computed, watch } from 'vue';
 import { WindowArrowUp16Filled, Diamond16Regular, Notepad24Regular, Box20Regular, Broom16Regular, BookCoins24Regular } from '@vicons/fluent'
+import { FileTextOutlined } from '@vicons/antd'
+import { getRecyclePage } from '@/api/note/index.js'
 import templateBox from '@/components/template/index.vue'
 import subscribeBox from '@/components/subscribe/index.vue'
+import { addPage, getSpacePage, deletePage, upRecycle } from '@/api/note/index.js'
+import { ElMessage } from 'element-plus'
+
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 
 // 使用 markRaw 来标记组件
@@ -93,10 +117,70 @@ const buttonRef = ref()
 const popoverRef = ref()
 const onClickOutside = () => {
     unref(popoverRef).popperRef?.delayHide?.()
+
 }
 
-// 垃圾箱搜索
-let SearchGarbage = ref()
+
+// 回收站内容
+// 数据绑定
+let RecycleData = ref([]);
+let SearchGarbage = ref("");
+
+// 过滤后的数据
+const filteredRecycleData = computed(() => {
+  return RecycleData.value.filter(item => 
+    item.title.toLowerCase().includes(SearchGarbage.value.toLowerCase())
+  );
+});
+
+let RecycleContentFun = () => {
+    console.log("顶级");
+    getRecyc()
+}
+let getRecyc = () => {
+    getRecyclePage().then((data) => {
+        console.log("获取当前回收站笔记");
+        console.log(data);
+        RecycleData.value = data
+    }).catch((e) => {
+        console.error('获取失败', e);
+    });
+}
+
+// 恢复页面
+let restorePage = (val) => {
+    console.log(val);
+    upRecycle({ pageId: val.pageId, status: 0 }).then((msg) => {
+        ElMessage({
+            message: msg,
+            type: 'success',
+        });
+        getRecyc()
+        getSpacePage({ spaceId: store.routerParamsId.spaceId }).then((data) => {
+            console.log("获取当前空间的所有笔记");
+            store.spacePageData = data;
+            router.push('/space/' + val.spaceId + '/' + val.pageId)
+        }).catch((e) => {
+            console.error('获取失败', e);
+        });
+    }).catch((e) => {
+        console.error(e);
+    });
+}
+
+// 彻底删除及其子页面
+let deletePageFun = (val) => {
+    deletePage({ pageId: val}).then((msg) => {
+        ElMessage({
+            message: msg,
+            type: 'success',
+        });
+        getRecyc()
+    }).catch((e) => {
+        console.error(e);
+    });
+}
+
 </script>
 <style scoped lang='scss'>
 .more {
@@ -134,6 +218,7 @@ let SearchGarbage = ref()
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
+        border-bottom: 1px solid #eee;
     }
 
     .item:hover,
