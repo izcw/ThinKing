@@ -54,7 +54,7 @@ public class NotePage implements Serializable {
     /**
      * 排序号
      */
-    private String sortNumber;
+    private Integer sortNumber;
 
     /**
      * 页面图标
@@ -109,10 +109,6 @@ public class NotePage implements Serializable {
      */
     private String password;
 
-    /**
-     * 底部信息，0默认开启，1关闭
-     */
-    private Integer bottominfo;
 
     /**
      * 模板：0普通页面，1~n 模板

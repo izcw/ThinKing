@@ -2,6 +2,7 @@ package work.zhangchengwei.common.controller;
 
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -84,12 +85,15 @@ public class BackupController {
     }
 
 
+    @Value("${custom.backup-dir}")
+    private String BACKUP_DIR; // 备份存放的地址
+
     // 下载所有备份文件（包括增量和全量备份文件）
     @PostMapping("/downloadAll")
     public ResponseEntity<UrlResource> downloadAllBackups() {
         try {
             // 备份文件存放目录
-            String backupDir = "/Users/izcw/MyFiles/Work/我的项目/note/ThinKing/sql/backups/";
+            String backupDir = BACKUP_DIR;
 
             // 创建一个临时文件，用于保存压缩的备份文件
             Path zipFilePath = Paths.get(backupDir + "all_backups.zip");

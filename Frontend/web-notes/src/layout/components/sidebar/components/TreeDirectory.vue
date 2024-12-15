@@ -144,12 +144,14 @@ let DeletePage = (val) => {
             message: msg,
             type: 'success',
         });
-        getSpacePage({ spaceId: store.routerParamsId.spaceId }).then((data) => {
-            console.log("获取当前空间的所有笔记");
-            store.spacePageData = data;
-        }).catch((e) => {
-            console.error('获取失败', e);
-        });
+        setTimeout(() => {
+            getSpacePage({ spaceId: store.routerParamsId.spaceId }).then((data) => {
+                console.log("获取当前空间的所有笔记");
+                store.spacePageData = data;
+            }).catch((e) => {
+                console.error('获取失败', e);
+            });
+        }, 100);
     }).catch((e) => {
         console.error(e);
     });

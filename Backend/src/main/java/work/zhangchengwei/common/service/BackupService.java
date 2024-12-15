@@ -13,10 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +25,7 @@ public class BackupService {
 //    private static final String MYSQL_HOST = "localhost";
     private static final String MYSQL_PORT = "3306";
     private static final String DATABASE_NAME = "nexnote";
-    private static final String BACKUP_DIR = "/Users/izcw/MyFiles/Work/我的项目/note/ThinKing/sql/backups/"; // 备份存放的地址
+//    private static final String BACKUP_DIR = "/Users/izcw/MyFiles/Work/我的项目/note/ThinKing/sql/backups/"; // 备份存放的地址
     private static final Integer MAX_NUM = 3; // 最大备份数
     // 定义 cron 表达式为常量
 //    private static final String CRON_INCREMENTAL_BACKUP = "0 * * * * ?"; // 每分钟执行一次
@@ -50,11 +47,17 @@ public class BackupService {
     @Value("${custom.publicaddress}")
     private String MYSQL_HOST; // 地址
 
+    @Value("${custom.backup-dir}")
+    private String BACKUP_DIR; // 备份存放的地址
+
 
     // 增量备份
     @Scheduled(cron = CRON_INCREMENTAL_BACKUP)
     public void incrementalBackup() throws Exception {
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        String timestamp = sdf.format(new Date());
+
         String backupFile = BACKUP_DIR + "incremental_backup_" + timestamp + ".sql";
 
         // 检查当前增量备份文件数量
@@ -85,7 +88,10 @@ public class BackupService {
     // 全量备份
     @Scheduled(cron = CRON_FULL_BACKUP)
     public void fullBackup() throws Exception {
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        String timestamp = sdf.format(new Date());
+
         String backupFile = BACKUP_DIR + "full_backup_" + timestamp + ".sql";
 
         // 检查当前全量备份文件数量

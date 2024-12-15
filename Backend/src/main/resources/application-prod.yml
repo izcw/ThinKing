@@ -12,6 +12,7 @@ custom:
     path: /www/wwwroot/ThinKing/Backend/FileWarehouse/  # 指定静态资源的物理位置（与web.resources.static-locations一致）
   agreement-host: https://www.api.note.zhangchengwei.work # 请求的协议+主机
   publicaddress: 43.136.33.54 # 地址
+  backup-dir: /www/wwwroot/ThinKing/Backend/sql-backups/
 
 spring:
   web:

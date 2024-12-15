@@ -56,16 +56,16 @@
             </ele-ellipsis>
             <ele-ellipsis style="margin-top: 16px">
               <el-button-group>
-                <el-button type="success" plain @click="IncrementalFun">
+                <el-button type="success" plain @click="IncrementalFun" :disabled="incrementalStatus" v-loading="incrementalStatus">
                   <el-icon><Plus /></el-icon>执行（增量备份）
                 </el-button>
-                <el-button type="success" plain @click="FullFun">
+                <el-button type="success" plain @click="FullFun"  :disabled="fullStatus" v-loading="fullStatus">
                   <el-icon><CirclePlusFilled /></el-icon>执行（全量备份）
                 </el-button>
               </el-button-group>
             </ele-ellipsis>
             <ele-ellipsis style="margin-top: 16px">
-              <el-button type="primary" plain text bg @click="ExportCompressedFile"><el-icon><Download /></el-icon>导出备份压缩包</el-button>
+              <el-button type="primary" plain text bg @click="ExportCompressedFile"  :disabled="downloadStatus" v-loading="downloadStatus"><el-icon><Download /></el-icon>导出备份压缩包</el-button>
               <el-button type="warning" plain text bg @click="ImportDataFun"><el-icon><Upload /></el-icon>导入</el-button>
             </ele-ellipsis>
             <ele-ellipsis style="margin-top: 16px">
@@ -173,11 +173,14 @@ let showlog = () => {
 }
 
 // 增量备份
+let incrementalStatus = ref(false)
 let IncrementalFun = () => {
+  incrementalStatus.value = true
   PostIncremental()
     .then((msg) => {
       EleMessage.success(msg);
-      showbackupInfo()
+      showbackupInfo();
+      incrementalStatus.value = false
     })
     .catch((e) => {
       EleMessage.error(e);
@@ -185,11 +188,14 @@ let IncrementalFun = () => {
 }
 
 // 全备份
+let fullStatus = ref(false)
 let FullFun = () => {
+  fullStatus.value = true
   PostFull()
     .then((msg) => {
       EleMessage.success(msg);
       showbackupInfo()
+      fullStatus.value = false
     })
     .catch((e) => {
       EleMessage.error(e);
@@ -197,10 +203,13 @@ let FullFun = () => {
 }
 
 // 导出压缩包
+let downloadStatus = ref(false)
 let ExportCompressedFile = ()=>{
+  downloadStatus.value = true
   PostDownloadAll()
     .then((msg) => {
       EleMessage.success(msg);
+      downloadStatus.value = false
     })
     .catch((e) => {
       EleMessage.error(e);

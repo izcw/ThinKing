@@ -50,17 +50,11 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "头像")
     private String avatar;
 
-    @ApiModelProperty(value = "性别")
-    private String sex;
-
     @ApiModelProperty(value = "手机号")
     private String phone;
 
     @ApiModelProperty(value = "邮箱")
     private String email;
-
-    @ApiModelProperty(value = "邮箱是否验证, 0否, 1是")
-    private Integer emailVerified;
 
     @ApiModelProperty(value = "个人简介")
     private String introduction;
