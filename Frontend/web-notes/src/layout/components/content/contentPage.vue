@@ -2,8 +2,8 @@
     <div class="contentBox" ref="contentBoxRef">
         <div id="BackTop"></div><!-- 回到顶部 -->
         <div class="cover" :style="{
-            'background-image': coverImage ? 'url(' + coverImage + ')' : 'none',
-            'height': coverImage ? '280px' : '70px'
+            'background-image': StorePage.pageData.cover ? 'url(' + FILE_PATH_API_URL + StorePage.pageData.cover + ')' : 'none',
+            'height': StorePage.pageData.cover ? '280px' : '150px'
         }">
             <div class="SelectCover">
                 <el-button plain size="small" ref="buttonCoverRef" v-click-outside="onClickOutside">更换封面</el-button>
@@ -17,16 +17,18 @@
                                         placeholder="筛选" />
 
                                     <el-space direction="vertical" alignment="normal" style="margin-bottom: 1rem">
-                                        <el-text size="small">渐变</el-text>
+                                        <el-text size="small">默认</el-text>
                                         <el-row :gutter="20">
-                                            <el-col :span="6" v-for="(item, index) in 20" :key="index">
+                                            <el-col :span="6" v-for="(item, index) in 20" :key="index"
+                                                @click="changeCover(item)" style="cursor: pointer;">
                                                 <el-image style="width: 100%; height: 70px;"
-                                                    src="https://picserver.duoyu.link/picfile/image/202403/31-1711877892472.jpg"
+                                                    :src="FILE_PATH_API_URL + 'SystemDefaultFiles/images/cover/' + item + '.jpg'"
                                                     loading="lazy" fit="cover">
                                                 </el-image>
                                             </el-col>
                                         </el-row>
                                     </el-space>
+                                    <el-button size="small" @click="changeCover('')">移除封面</el-button>
 
                                 </n-infinite-scroll>
                             </div>
@@ -66,13 +68,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, inject } from 'vue';
+import { ref, watch, onBeforeUnmount, inject } from 'vue';
 import { FILE_PATH_API_URL } from "@/config/setting"
 import { ChevronLeft16Filled, ChevronRight16Filled, ImageGlobe24Regular } from '@vicons/fluent';
 import contentPageBox from '@/views/note/index.vue';
+import { update } from '@/api/note/index.js'
 import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
-let coverImage = ref(FILE_PATH_API_URL + StorePage.pageData.cover)
+
+
 
 // 父组件的侧边栏状态
 const parentSidebarStatus = inject('parentSidebarStatus');
@@ -138,6 +142,23 @@ const hidePopover = () => {
     // 恢复页面滚动
     contentBoxRef.value.style.overflow = '';
 }
+
+
+// 更换封面
+let changeCover = (val) => {
+    if (val != '') {
+        val = 'SystemDefaultFiles/images/cover/' + val + '.jpg'
+    }
+    update({ pageId: StorePage.pageData.pageId, cover: val }).then((data) => {
+        console.log("修改成功888", data);
+        StorePage.pageData = data
+    }).catch((e) => {
+        console.error('修改失败', e);
+    });
+}
+
+
+
 </script>
 
 <style scoped lang="scss">

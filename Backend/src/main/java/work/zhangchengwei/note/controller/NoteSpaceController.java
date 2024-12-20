@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import work.zhangchengwei.core.web.ResponseResult;
+import work.zhangchengwei.note.entity.NotePage;
 import work.zhangchengwei.note.entity.NoteSpace;
 import work.zhangchengwei.note.entity.NoteSubscribe;
 import work.zhangchengwei.note.mapper.NoteSpaceMapper;
 import work.zhangchengwei.note.mapper.NoteSubscribeMapper;
 import work.zhangchengwei.note.mapper.NoteUserMapper;
+import work.zhangchengwei.note.service.INotePageService;
 import work.zhangchengwei.note.service.INoteSpaceService;
 
 import java.util.List;
@@ -32,6 +34,8 @@ public class NoteSpaceController {
     private INoteSpaceService noteSpaceService;
     @Autowired
     private NoteSpaceMapper noteSpaceMapper;
+    @Autowired
+    private INotePageService notePageService;
 
     /**
      * 获取用户列表
@@ -174,9 +178,20 @@ public class NoteSpaceController {
                 .eq("default_space", 0); // 假设0表示默认空间
         Long count = noteSpaceMapper.selectCount(queryWrapper);
 
+
+        // 如果该空间下有笔记，则也不能删除
+        QueryWrapper<NotePage> queryPageWrapper = new QueryWrapper<>();
+        queryPageWrapper.eq("space_id", spaceId);
+
+        // 执行查询，假设你有一个 noteSpaceService 可以执行数据库查询
+        List<NotePage> list = notePageService.list(queryPageWrapper);
+        System.out.println(list+"list");
+
         if (count > 0) {
             // 是默认空间，不允许删除
             return ResponseResult.error("删除失败，不能删除默认空间");
+        } else if (list != null && !list.isEmpty()) {
+            return ResponseResult.error("删除失败，该空间下有笔记，若要删除此空间，必须先删除该空间的所有笔记，以及回收站中的笔记");
         }
 
         // 不是默认空间，执行删除操作

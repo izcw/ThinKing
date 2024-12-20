@@ -54,7 +54,7 @@
                                                 </n-button>
                                             </template>
                                             <!-- 删除 -->
-                                            <el-popconfirm title="你确定要删除?" @confirm="DeletePage(node.data.pageId)">
+                                            <el-popconfirm title="你确定要删除?" @confirm="DeletePageFun(node.data)">
                                                 <template #reference>
                                                     <n-button strong secondary size="small">
                                                         <n-icon>
@@ -90,12 +90,18 @@ import { onMounted, ref, computed, watch } from 'vue';
 import { Add16Filled, MoreHorizontal24Filled, ArrowDownload20Filled, Delete48Filled } from '@vicons/fluent'
 import { FileTextOutlined } from '@vicons/antd'
 import { ElMessage } from 'element-plus'
-import { addPage, getSpacePage, deletePage, upRecycle } from '@/api/note/index.js'
+import { addPage, getSpacePage, upRecycle } from '@/api/note/index.js'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
 
 const router = useRouter()
+
+// 目录标题改变
+watch(() => store.treeData.value, (newVal) => {
+    console.log("标题改变");
+
+})
 
 
 // 空间路由改变获取当前空间笔记
@@ -132,14 +138,14 @@ let addPageFun = (val) => {
 
 
 // 删除页面
-let DeletePage = (val) => {
+let DeletePageFun = (val) => {
     console.log(val);
 
-    upRecycle({ pageId: val, status: 1 }).then((msg) => {
+    upRecycle({ pageId: val.pageId, status: 1 }).then((msg) => {
         console.log("删除成功", msg);
-        if (store.routerParamsId.pageId == val) {
-            router.push('/space/' + val.spaceId)
-        }
+        // if (store.routerParamsId.pageId == val) {
+        router.push('/space/' + val.spaceId)
+        // }
         ElMessage({
             message: msg,
             type: 'success',

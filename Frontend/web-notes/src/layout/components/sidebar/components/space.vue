@@ -212,13 +212,24 @@ let DeleteSpace = (val) => {
         return
     }
 
-    deleteSpace({ spaceId: val.spaceId }).then((msg) => {
-        console.log("修改成功", msg);
-        ElMessage({
-            message: msg,
-            type: 'success',
-        });
-        store.fetchUserInfo();
+    deleteSpace({ spaceId: val.spaceId }).then((data) => {
+        if (data.code === 200) {
+            ElMessage({
+                message: data.message,
+                type: 'success',
+            });
+            if (store.routerParamsId.spaceId == val.spaceId) {
+                store.getDefaultSpaceFun()
+            }
+
+            store.fetchUserInfo();
+        } else {
+            ElMessage({
+                message: data.message,
+                type: 'warning',
+            });
+        }
+
     }).catch((e) => {
         console.error(e);
     });

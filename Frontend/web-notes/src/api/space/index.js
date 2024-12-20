@@ -62,8 +62,6 @@ export async function updateSpace(data) {
  */
 export async function deleteSpace(params) {
     const res = await service.delete('/note/space/delete', { params });
-    if (res.code === 200) {
-        return res.message;
-    }
+    return res;
     return Promise.reject(new Error(res.message));
 }

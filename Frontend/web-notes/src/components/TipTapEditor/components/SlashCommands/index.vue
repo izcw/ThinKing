@@ -106,6 +106,7 @@ const selectItem = (index) => {
   box-shadow: 0 2px 10px #ccc;
   padding: 6px 1rem;
   position: relative;
+  z-index: 99999999999;
 
   .item {
     width: 100%;

@@ -1,5 +1,5 @@
 <template>
-    <div class="layout" v-if="store.userInfoData" >
+    <div class="layout" v-if="store.userInfoData">
         <PanelSplitBox :defaultSize="320" :minPanelSize="200" :maxPanelSize="800" contentPanel="left"
             :defaultSwitch="true">
             <template v-slot:1>
@@ -9,6 +9,7 @@
             </template>
             <template v-slot:2>
                 <main class="content">
+
                     <router-view></router-view>
                 </main>
             </template>
@@ -23,8 +24,11 @@
 import { ref } from 'vue';
 import SidebarBox from './components/sidebar/index.vue';
 import PanelSplitBox from './components/PanelSplit.vue'
+
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
+
+
 
 </script>
 

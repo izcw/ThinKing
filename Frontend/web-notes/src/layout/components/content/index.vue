@@ -6,7 +6,7 @@
         <div class="PageHeader">
             <PageHeaderBox />
         </div><!-- 页头 -->
-        <div class="mainbox">
+        <div class="mainbox" ref="pageContentRef">
             <PanelSplitBox :defaultSize="300" :minPanelSize="250" :maxPanelSize="800" contentPanel="right"
                 :defaultSwitch="true">
                 <template v-slot:1>
@@ -16,8 +16,10 @@
                 </template>
                 <template v-slot:2>
                     <main class="content">
+                        <el-button size="small" style="position: fixed;top: 1rem;left: 1rem;z-index: 9999;"
+                            v-if="FullDocumentStatus" @click="exitFullScreen">退出全屏预览</el-button>
                         <ContentBox />
-                        <levitatedSphereBox />
+                        <levitatedSphereBox @requestFullScreen="requestFullScreen" />
                     </main>
                 </template>
             </PanelSplitBox><!-- 分割面板 -->
@@ -31,10 +33,14 @@ import PanelSplitBox from '@/layout/components/PanelSplit.vue'
 import ToolSidebarBox from '@/layout/components/toolSidebar/index.vue'
 import ContentBox from './contentPage.vue'
 import { ElMessage } from 'element-plus'
+import screenfull from "screenfull";
+
 import levitatedSphereBox from '@/layout/components/levitatedSphere.vue'
 import PageHeaderBox from '@/layout/components/PageHeader/index.vue'
 import { useRouter } from 'vue-router'
 import { getPageId } from '@/api/note/index.js'
+import { useEditorPageStore } from '@/stores/EditorPage'
+const storeEditor = useEditorPageStore()
 import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
 import { useUserStore } from '@/stores/modules/user'
@@ -112,6 +118,26 @@ function findParents(pageId, pagesArray) {
     }
 }
 
+
+
+// 文档全屏
+let FullDocumentStatus = ref(false)
+let pageContentRef = ref(null)
+let requestFullScreen = () => {
+    if (screenfull.isEnabled) {
+        screenfull.request(pageContentRef.value);
+        FullDocumentStatus.value = true
+        storeEditor.editor.setEditable(false)
+    }
+}
+
+let exitFullScreen = () => {
+    if (screenfull.isEnabled) {
+        screenfull.exit(pageContentRef.value);
+        FullDocumentStatus.value = false;
+        storeEditor.editor.setEditable(true)
+    }
+}
 </script>
 <style scoped lang='scss'>
 .MainContent {
@@ -130,6 +156,8 @@ function findParents(pageId, pagesArray) {
 .mainbox {
     width: 100%;
     height: calc(100% - 50px);
+    background-color: #fff;
+
 
     .sidebar {
         width: 100%;
