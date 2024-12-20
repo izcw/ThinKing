@@ -34,7 +34,7 @@
                                     <n-icon class="icon" size="16" v-else>
                                         <FileTextOutlined />
                                     </n-icon>
-                                    <el-text truncated>{{ node.data.title }}</el-text>
+                                    <el-text truncated>{{ node.data.title ? node.data.title : '未命名页面' }}</el-text>
                                 </div>
                                 <div class="tools">
                                     <div class="content">

@@ -9,7 +9,13 @@
             </el-button>
         </div> -->
         <!-- 编辑器 -->
-        <editor-content :editor="editor" :class="{ 'ContentEmpty': StorePage.isContentEmpty }" />
+        <editor-content :editor="editor" :class="{
+            'ContentEmpty': StorePage.isContentEmpty, 'font-serif': StorePage.pageData.font == 'serif', 'font-monospace': StorePage.pageData.font == 'monospace',
+            'font-size-12': StorePage.pageData.size == '12',
+            'font-size-14': StorePage.pageData.size == '14',
+            'font-size-16': StorePage.pageData.size == '16',
+            'font-size-18': StorePage.pageData.size == '18'
+        }" />
 
         <!-- 浮动菜单 -->
         <bubbleMenuBox v-if="editor" :editor="editor" />

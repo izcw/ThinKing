@@ -1,10 +1,11 @@
 <template>
     <div class="PageSettings text-select">
-        {{ StorePage.pageData }}
         <div class="Settings-item">
             <p class="settingsTitle">字体</p>
             <div class="contentBox fontBox">
-                <div class="item" v-for="(item, index) in data.font" :key="index" :class="{ 'active': item.select }">
+                <div class="item" v-for="(item, index) in data.font" :key="index"
+                    :class="{ 'active': item.value == StorePage.pageData.font }"
+                    @click="updateSetting({ font: item.value })">
                     <div class="PreviewText">
                         Ag汉
                     </div>
@@ -16,7 +17,7 @@
             <p class="settingsTitle">字体大小</p>
             <div class="contentBox fontSizeBox">
                 <div class="item" v-for="(item, index) in data.fontsize" :key="index"
-                    :class="{ 'active': item == StorePage.pageData.size }">
+                    :class="{ 'active': item == StorePage.pageData.size }" @click="updateSetting({ size: item })">
                     {{ item }}px
                 </div>
             </div>
@@ -24,29 +25,13 @@
         <div class="Settings-item">
             <p class="settingsTitle">页面布局</p>
             <div class="contentBox layout">
-                <div class="item">
+                <div class="item" v-for="(item, index) in data.layout" :key="index"
+                    :class="{ 'active': item.value == StorePage.pageData.layout }"
+                    @click="updateSetting({ layout: item.value })">
                     <n-icon size="30">
-                        <ArrowAutofitWidth20Regular />
+                        <component :is="item.icon" />
                     </n-icon>
-                    <p class="PreviewText">全宽</p>
-                </div>
-                <div class="item active">
-                    <n-icon size="30">
-                        <ReadingModeMobile24Regular />
-                    </n-icon>
-                    <p class="PreviewText">默认</p>
-                </div>
-                <div class="item">
-                    <n-icon size="30">
-                        <PhoneSpanIn16Regular />
-                    </n-icon>
-                    <p class="PreviewText">紧密</p>
-                </div>
-                <div class="item">
-                    <n-icon size="30">
-                        <Phone16Regular />
-                    </n-icon>
-                    <p class="PreviewText">手机</p>
+                    <p class="PreviewText">{{ item.name }}</p>
                 </div>
             </div>
         </div>
@@ -54,11 +39,12 @@
             <p class="settingsTitle">页面权限</p>
             <div class="contentBox">
                 <div class="item select">
-                    <p>只读</p> <el-switch v-model="StorePage.pageData.readonly" />
+                    <p>只读</p> <el-switch v-model="StorePage.pageData.readonly" :active-value="'1'" :inactive-value="'0'"
+                        @change="SetReadOnly" />
                 </div>
-                <div class="item select">
+                <!-- <div class="item select">
                     <p>加密</p><el-switch v-model="value1" />
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="Settings-item">
@@ -67,17 +53,15 @@
                 <!-- <div class="item select">
                     <p>标题自动编号</p><n-switch size="small" />
                 </div> -->
-                <div class="item select">
+                <!-- <div class="item select">
                     <p>页面底部信息</p><el-switch v-model="value1" />
+                </div> -->
+                <div class="item select">
+                    <p>转为模板</p><el-switch v-model="StorePage.pageData.template" :active-value="1" :inactive-value="0"
+                        @change="updateSetting({ template: StorePage.pageData.template == 0 ? 0 : 1 })" />
                 </div>
                 <div class="item select">
                     <p>页面历史</p>
-                </div>
-                <div class="item select">
-                    <p>删除</p>
-                </div>
-                <div class="item select">
-                    <p>转为模板</p><el-switch v-model="value1" />
                 </div>
                 <!-- <div class="item select">
                     <p>页面背景</p>
@@ -88,41 +72,55 @@
                 <div class="item select">
                     <p>导出&nbsp;/&nbsp;下载</p>
                 </div>
+                <div class="item select">
+                    <p>删除</p>
+                </div>
             </div>
         </div>
         <div class="Settings-item">
             <p class="settingsTitle">页面信息</p>
             <div class="contentBox info">
                 <div class="item">
-                    创建时间：2024/10/26 22:21:05
+                    创建时间：{{ StorePage.pageData.createTime }}
                 </div>
-                <div class="item">
+                <!-- <div class="item">
                     创建者：Yoko
-                </div>
+                </div> -->
                 <div class="item">
-                    最后编辑于：2024/10/26 22:21:05
+                    最后编辑于：{{ StorePage.pageData.updateTime }}
                 </div>
-                <div class="item">
+                <!-- <div class="item">
                     编辑者：Yoko
-                </div>
-                <div class="item">
+                </div> -->
+                <!-- <div class="item">
                     页面引用：2
-                </div>
-                <div class="item">
+                </div> -->
+                <!-- <div class="item">
                     字数：400
                 </div>
                 <div class="item">
                     块数统计：20
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, markRaw } from 'vue';
 import { ReadingModeMobile24Regular, ArrowAutofitWidth20Regular, PhoneSpanIn16Regular, Phone16Regular } from '@vicons/fluent'
+import { update } from '@/api/note/index.js'
+import { useEditorPageStore } from '@/stores/EditorPage'
+const storeEditor = useEditorPageStore()
 import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+
+// 使用 markRaw 来标记组件
+const ArrowAutofitWidth20RegularIcon = markRaw(ArrowAutofitWidth20Regular);
+const ReadingModeMobile24RegularIcon = markRaw(ReadingModeMobile24Regular);
+const PhoneSpanIn16RegularIcon = markRaw(PhoneSpanIn16Regular);
+const Phone16RegularIcon = markRaw(Phone16Regular);
 
 
 let data = ref({
@@ -130,21 +128,62 @@ let data = ref({
         {
             name: '默认',
             font: 'moren',
-            select: true
+            value: 'default'
         },
         {
             name: '衬线体',
             font: 'cehng',
-            select: false
+            value: 'serif'
         },
         {
             name: '等宽体',
             font: 'deng',
-            select: false
+            value: 'monospace'
         }
     ],
-    fontsize: ['12', '14', '16', '18', '20']
+    fontsize: ['12', '14', '16', '18'],
+    layout: [
+        {
+            icon: ArrowAutofitWidth20RegularIcon,
+            name: "全宽",
+            value: 'big'
+        },
+        {
+            icon: ReadingModeMobile24RegularIcon,
+            name: "默认",
+            value: 'default'
+        },
+        {
+            icon: PhoneSpanIn16RegularIcon,
+            name: "紧密",
+            value: 'small'
+        },
+        {
+            icon: Phone16RegularIcon,
+            name: "手机",
+            value: 'mobile'
+        },
+    ]
 })
+
+
+// 更新设置
+let updateSetting = (val) => {
+    update({ pageId: StorePage.pageData.pageId, ...val }).then((data) => {
+        console.log("修改成功", data);
+        StorePage.pageData = data
+        store.getSpaceData(StorePage.pageData.spaceId)
+    }).catch((e) => {
+        console.error('修改失败', e);
+    });
+}
+
+
+// 设置只读
+let SetReadOnly = () => {
+    updateSetting({ readonly: StorePage.pageData.readonly == '0' ? '0' : '1' })
+    storeEditor.editor.setEditable(StorePage.pageData.readonly == '0' ? true : false)
+}
 </script>
 <style scoped lang='scss'>
 .PageSettings {
@@ -260,8 +299,8 @@ let data = ref({
                 cursor: pointer;
             }
 
-            .item.active .PreviewText {
-                color: #18A0FB;
+            .item.active {
+                color: #18A0FB !important;
             }
 
             .item:hover {

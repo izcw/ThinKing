@@ -1,11 +1,15 @@
 <template>
-    <div class="recommend text-select" v-if="!data.length == 0">
+    <div class="recommend text-select" v-if="!store.filterCollect.length == 0">
         <p><el-text class="mx-1" type="primary">收藏</el-text></p>
         <div class="content">
-            <div class="item" v-for="item in data" :key="item.id" :class="{ 'bgNot': item.cover == null }"
-                :style="{ 'background-image': 'URL(' + item.cover + ')' }">
-                <p class="time">{{ timeAgo(item.time) }}</p>
-                <p class="title"><el-text truncated>{{ item.title }}</el-text></p>
+            <div class="item" v-for="item in store.filterCollect" :key="item.pageId"
+                :class="{ 'bgNot': item.cover == null }"
+                :style="{ 'background-image': 'URL(' + FILE_PATH_API_URL + item.cover + ')' }"
+                @click="openPage(item.pageId)">
+                <div class="info">
+                    <p class="time">{{ timeAgo(item.updateTime) }}</p>
+                    <p class="title"><el-text truncated>{{ item.title }}</el-text></p>
+                </div>
             </div>
         </div>
     </div>
@@ -13,36 +17,16 @@
 <script setup>
 import { ref } from 'vue';
 import { timeAgo } from '@/utils/timeAgo'
-import images1 from '@/assets/images/cover/recommend-item1.png'
-import images2 from '@/assets/images/cover/recommend-item2.jpg'
-import images3 from '@/assets/images/cover/recommend-item3.jpg'
+import { FILE_PATH_API_URL } from "@/config/setting"
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-let data = ref([
-    {
-        id: "1",
-        title: "莎士比亚笔下的爱情观",
-        time: "2024/10/06",
-        cover: images1
-    },
-    {
-        id: "1",
-        title: "开始弄人",
-        time: "2024/9/06",
-        cover: images2
-    },
-    {
-        id: "1",
-        title: "半生荒唐 只因有你",
-        time: "2023/4/19",
-        cover: null
-    },
-    {
-        id: "1",
-        title: "人士需要浮士德精神",
-        time: "2023/4/19",
-        cover: images3
-    }
-])
+let openPage = (val) => {
+    router.push('/space/' + store.routerParamsId.spaceId + '/' + val)
+}
+
 </script>
 <style scoped lang='scss'>
 .recommend {
@@ -59,26 +43,58 @@ let data = ref([
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            position: relative;
+
+
 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 2rem;
             box-sizing: border-box;
             // transition: all 0.3s ease;
             cursor: pointer;
 
+            .info {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                padding: 0 2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
 
-            .time {
-                font-size: 14px;
-                color: #fff;
+
+                .time {
+                    font-size: 14px;
+                    color: #333;
+                    // mix-blend-mode: difference;
+                    // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                }
+
+                .title span {
+                    padding: 1rem 0;
+                    font-size: 26px;
+                    color: #333;
+                    font-weight: bold;
+                    // mix-blend-mode: difference;
+                    // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                }
             }
 
-            .title span {
-                padding: 1rem 0;
-                font-size: 26px;
-                color: #fff;
-            }
+
+        }
+
+        .item::after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3);
+            z-index: 1;
         }
 
         .item:hover,

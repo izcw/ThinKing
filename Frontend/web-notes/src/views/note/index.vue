@@ -41,9 +41,6 @@ let title = ref(StorePage.pageData.title)
 // 更新title
 let updateTitle = () => {
     console.log("jiao");
-    if (title.value == '') {
-        title.value = '未命名页面'
-    }
     update({ pageId: StorePage.pageData.pageId, title: title.value }).then((data) => {
         console.log("修改成功", data);
         StorePage.pageData = data

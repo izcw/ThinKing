@@ -8,9 +8,22 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import RelationGraph from 'relation-graph-vue3';
 import type { RGJsonData, RGNode, RGLine, RGLink, RGUserEvent, RGOptions, RelationGraphComponent } from 'relation-graph-vue3';
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore();
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const nodes = ref([])
+const lines = ref([])
+
+watch(() => store.spacePageData, (newVal) => {
+  console.log("hhh");
+  showGraph();
+})
+
 
 // 定义 graphRef 引用
 const graphRef = ref<RelationGraphComponent>();
@@ -31,60 +44,52 @@ const graphOptions: RGOptions = {
 
 // 初始化图谱数据
 const showGraph = () => {
+  nodes.value = store.spacePageData.map(page => ({
+    id: page.pageId,
+    text: page.title
+  }));
+  lines.value = store.spacePageData.filter(page => page.parentId !== '0').map(page => ({
+    from: page.pageId,
+    to: page.parentId
+  }));
   const __graph_json_data: RGJsonData = {
     rootId: '',
-    nodes: [
-      { id: 'a', text: 'a' },
-      { id: 'b', text: 'b' },
-      { id: 'b1', text: 'b1' },
-      { id: 'b2', text: 'ww' },
-      { id: 'b3', text: 'b3' },
-      { id: 'b4', text: '探索java' },
-      { id: 'b5', text: 'b5' },
-      { id: 'b6', text: 'b6' },
-      { id: 'c', text: 'c' },
-      { id: 'c1', text: 'c1' },
-      { id: 'c2', text: 'c2' },
-      { id: 'c3', text: 'c3' },
-      { id: 'd', text: 'd' },
-      { id: 'd1', text: 'd1' },
-      { id: 'd2', text: 'd2' },
-      { id: 'd3', text: '文学的力量' },
-      { id: 'd4', text: 'd4' },
-      { id: 'e', text: 'SpringBoot' },
-      { id: 'e1', text: 'e1' },
-      { id: 'e2', text: 'java' },
-    ],
-    lines: [
-      { from: 'd4', to: 'b1' },
-      { from: 'd3', to: 'b2' },
-      { from: 'd', to: 'd1' },
-      { from: 'd', to: 'd2' },
-      { from: 'e2', to: 'e1' },
-    ],
+    nodes: nodes.value,
+    lines: lines.value,
   };
 
-  // 设置根节点 ID
-  const rootId = __graph_json_data.nodes[0].id;
-  __graph_json_data.rootId = rootId;
+  if (nodes.value.length > 0) {
+    // 设置根节点 ID
+    const rootId = __graph_json_data.nodes[0].id;
+    __graph_json_data.rootId = rootId;
 
-  // 添加连接根节点的透明线
-  __graph_json_data.nodes.forEach((n) => {
-    if (n.id !== rootId) {
-      __graph_json_data.lines.push({ from: rootId, to: n.id, opacity: 0 });
-    }
-  });
+    // 添加连接根节点的透明线
+    __graph_json_data.nodes.forEach((n) => {
+      if (n.id !== rootId) {
+        __graph_json_data.lines.push({ from: rootId, to: n.id, opacity: 0 });
+      }
+    });
 
+  }
   // 加载图谱数据
   graphRef.value?.setJsonData(__graph_json_data, async (graphInstance) => {
     await graphInstance.moveToCenter();
     await graphInstance.zoomToFit();
   });
+
+
 };
+
+onMounted(() => {
+  if (store.spacePageData) {
+    showGraph();
+  }
+})
 
 // 节点点击事件处理
 const onNodeClick = (nodeObject: RGNode, $event: RGUserEvent) => {
   console.log('onNodeClick:', nodeObject);
+  router.push('/space/' + store.routerParamsId.spaceId + '/' + nodeObject.id);
 };
 
 // 线条点击事件处理
@@ -92,18 +97,17 @@ const onLineClick = (lineObject: RGLine, linkObject: RGLink, $event: RGUserEvent
   console.log('onLineClick:', lineObject);
 };
 
-// 挂载后初始化图谱
-onMounted(() => {
-  showGraph();
-});
+
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .RelationshipDiagramBox {
   width: 100%;
-  height:400px;
+  height: 400px;
   // margin-top: 500px;
 }
 
-
+.c-node-text span {
+  font-size: 14px !important;
+}
 </style>

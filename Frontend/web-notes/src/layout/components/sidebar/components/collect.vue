@@ -92,7 +92,7 @@ let dialogTableVisible = ref(false) // 搜索对话框
 let searchFor = () => {
     console.log("搜索");
 
-} 
+}
 
 // 锁屏
 let LockScreen = () => {

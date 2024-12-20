@@ -44,7 +44,7 @@
             </div>
         </div> <!-- 封面 -->
 
-        <div class="pagebox" style="max-width:720px;">
+        <div class="pagebox" :style="{ 'max-width': layoutwidth }">
             <contentPageBox />
         </div> <!-- 页面 -->
 
@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onBeforeUnmount, inject } from 'vue';
+import { ref, computed, onBeforeUnmount, inject } from 'vue';
 import { FILE_PATH_API_URL } from "@/config/setting"
 import { ChevronLeft16Filled, ChevronRight16Filled, ImageGlobe24Regular } from '@vicons/fluent';
 import contentPageBox from '@/views/note/index.vue';
@@ -157,8 +157,18 @@ let changeCover = (val) => {
     });
 }
 
-
-
+// 计算页面布局宽度
+let layoutwidth = computed(() => {
+    if (StorePage.pageData.layout == 'big') {
+        return '100%';
+    } else if (StorePage.pageData.layout == 'default') {
+        return '780px';
+    } else if (StorePage.pageData.layout == 'small') {
+        return '576px';
+    } else {
+        return '450px';
+    }
+});
 </script>
 
 <style scoped lang="scss">
