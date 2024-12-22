@@ -13,14 +13,14 @@
                                 clearable />
                         </el-col>
                         <el-col :span="24">
-                            <searchItemBox />
+                            <searchItemBox :search="search" />
                         </el-col>
                         <el-col :span="24">
                             <recommendBox />
                         </el-col>
-                        <el-col :span="24">
+                        <!-- <el-col :span="24">
                             <contributeBox />
-                        </el-col>
+                        </el-col> -->
                     </el-row>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="8">
@@ -33,7 +33,7 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import RecentlyEditedBox from './components/RecentlyEdited.vue';
 import calendarBox from './components/calendar.vue';
 import RelationshipDiagramBox from './components/RelationshipDiagram.vue';
@@ -44,7 +44,7 @@ import CollapseMenuBox from '@/components/CollapseMenu.vue';
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
 
-let search = ref()
+let search = ref();
 </script>
 <style scoped lang='scss'>
 .title {

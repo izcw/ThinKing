@@ -19,7 +19,7 @@ export function timeAgo(time) {
   } else if (diffInMinutes < 1440) {  // 小于一天
     return `${now.diff(targetTime, 'hour')}小时前`
   } else if (diffInMinutes < 2880) {  // 小于两天
-    return '一天前'
+    return '1天前'
   } else if (diffInMinutes < 10080) {  // 小于一周
     return `${now.diff(targetTime, 'day')}天前`
   } else if (diffInMinutes < 43200) {  // 小于一个月

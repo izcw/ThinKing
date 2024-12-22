@@ -3,13 +3,15 @@
         <p><el-text class="mx-1" type="primary">最近编辑</el-text></p>
         <div class="time-base-mark"></div>
         <div class="content">
-            <div class="item" v-for="item in data" :key="item.id">
-                <div class="time">{{ timeAgo(item.time) }}</div>
+            <div class="item" v-for="item in recentPages" :key="item.id" @click="openPage(item.pageId)">
+                <div class="time">{{ timeAgo(item.updateTime) }}</div>
                 <div class="recentPage">
                     <div class="title">{{ item.title }}</div>
                     <p>
-                        <el-text line-clamp="4">
-                            {{ item.article }}
+                        <el-text line-clamp="4" v-if="isContentEmpty(item.content)">
+                            <span v-if="item.content?.content[0].content">
+                                {{ item.content?.content[0]?.content[0]?.text }}
+                            </span>
                         </el-text>
                     </p>
                 </div>
@@ -18,35 +20,41 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { timeAgo } from '@/utils/timeAgo'
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore();
+import { useRouter } from 'vue-router'
+const router = useRouter()
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
 
-let data = ref([
-    {
-        id: "1",
-        title: "探索Java世界的奥秘",
-        time: "2024/11/28 13:07:03",
-        article: "本文将深入探讨Java编程语言的核心概念，包括面向对象编程、异常处理和多线程编程，以及它们如何帮助开发者构建高效、可扩展的应用程序。"
-    },
-    {
-        id: "2",
-        title: "文字的力量：文学的启示",
-        time: "2024/11/17 9:07:03",
-        article: "文学作品如何影响我们的情感和思想，分析经典文学作品中的主题和象征，以及它们在现代社会中的相关性和启示。文学作品如何影响我们的情感和思想，分析经典文学作品中的主题和象征，以及它们在现代社会中的相关性和启示。"
-    },
-    {
-        id: "2",
-        title: "日常生活的哲学思考",
-        time: "2024/11/13 13:07:03",
-        article: "日常活动找到快乐和满足感，以及如何将哲学应用于个人成长和自我提升。"
-    },
-    {
-        id: "2",
-        title: "计算机毕设：从构思到实现",
-        time: "2023/1/11 9:07:03",
-        article: "如何规划和实施一个计算机科学毕业设计项目，从选题、研究、设计到最终的实现和答辩，提供实用的建议和技巧。"
+
+// 计算属性：按 updateTime 排序并取出最近的 4 条数据
+const recentPages = computed(() => {
+    if (store.spacePageData) {
+        return store.spacePageData
+            .sort((a, b) => new Date(b.updateTime) - new Date(a.updateTime))  // 按照 updateTime 降序排序
+            .slice(0, 4);  // 取出前 4 条
     }
-])
+});
+
+let openPage = (val) => {
+    router.push('/space/' + store.routerParamsId.spaceId + '/' + val)
+}
+
+
+// 检测数据是否为空
+const isContentEmpty = (val) => {
+    if (val && val.content && val.content.content) {
+        console.log("LLL");
+        if (val.content.content.length <= 1) {
+            return val.content.content[0].content === undefined
+        }
+        return false;
+    }
+    return true; // 如果 parsedContent 不存在或内容为空数组，也视为“空”
+}
 </script>
 <style scoped lang='scss'>
 .RecentlyEdited {
@@ -75,6 +83,7 @@ let data = ref([
                 bottom: -10px;
                 right: -10px;
 
+                width: 100%;
                 max-width: 280px;
                 margin-left: 120px;
                 height: calc(100% + 30px);

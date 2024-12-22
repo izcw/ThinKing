@@ -63,10 +63,10 @@
 
         <el-dialog v-model="dialogTableVisible" width="800" :show-close="false">
             <template #header>
-                <el-input v-model="input" style="width: 100%;padding: 1rem;box-sizing: border-box;"
+                <el-input v-model="search" style="width: 100%;padding: 1rem;box-sizing: border-box;"
                     placeholder="全局搜索，请输入..." />
                 <div style="padding:1rem;box-sizing: border-box;">
-                    <searchItemBox />
+                    <searchItemBox :search="search" />
                 </div>
             </template>
         </el-dialog><!-- 搜索对话框 -->
@@ -106,6 +106,9 @@ let toggleFullScreen = () => {
         screenfull.toggle();
     }
 }
+
+// 搜索
+let search = ref();
 </script>
 <style scoped lang='scss'>
 .collect {
