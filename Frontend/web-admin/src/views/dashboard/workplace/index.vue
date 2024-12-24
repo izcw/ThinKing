@@ -49,7 +49,7 @@ const DEFAULT = [
   {
     name: 'user-list',
     title: '小组成员',
-    md: 8,
+    md: 6,
     sm: 24,
     xs: 24
   },
@@ -62,8 +62,15 @@ const DEFAULT = [
   },
   {
     name: 'orderstatistics-card',
-    title: '订单统计',
-    md: 8,
+    title: new Date().getFullYear() + '订单统计',
+    md: 10,
+    sm: 24,
+    xs: 24
+  },
+  {
+    name: 'statistics-card',
+    title: new Date().getFullYear() + '订单统计',
+    md: 24,
     sm: 24,
     xs: 24
   },
@@ -191,6 +198,7 @@ import TemplateCard from './components/template-card.vue';
 import ProjectCard from './components/project-card.vue';
 import UserList from './components/user-list.vue';
 import OrderstatisticsCard from './components/orderstatistics-card.vue';
+import statisticsCard from '@/views/dashboard/analysis/components/statistics-card.vue';
 
 export default {
   name: 'DashboardWorkplace',
@@ -200,7 +208,8 @@ export default {
     TemplateCard,
     ProjectCard,
     UserList,
-    OrderstatisticsCard
+    OrderstatisticsCard,
+    statisticsCard
   }
 };
 </script>

@@ -107,7 +107,7 @@
 </template>
 <script setup>
 import { ref, markRaw } from 'vue';
-import { ReadingModeMobile24Regular, ArrowAutofitWidth20Regular, PhoneSpanIn16Regular, Phone16Regular } from '@vicons/fluent'
+import { ReadingModeMobile24Regular, ArrowAutofitWidth20Regular, PhoneSpanIn16Regular, Phone16Regular, AutoFitWidth20Regular } from '@vicons/fluent'
 import { update } from '@/api/note/index.js'
 import { useEditorPageStore } from '@/stores/EditorPage'
 const storeEditor = useEditorPageStore()
@@ -117,9 +117,9 @@ import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
 
 // 使用 markRaw 来标记组件
+const AutoFitWidth20RegularIcon = markRaw(AutoFitWidth20Regular);
 const ArrowAutofitWidth20RegularIcon = markRaw(ArrowAutofitWidth20Regular);
 const ReadingModeMobile24RegularIcon = markRaw(ReadingModeMobile24Regular);
-const PhoneSpanIn16RegularIcon = markRaw(PhoneSpanIn16Regular);
 const Phone16RegularIcon = markRaw(Phone16Regular);
 
 
@@ -144,19 +144,19 @@ let data = ref({
     fontsize: ['12', '14', '16', '18'],
     layout: [
         {
-            icon: ArrowAutofitWidth20RegularIcon,
+            icon: AutoFitWidth20RegularIcon,
             name: "全宽",
             value: 'big'
+        },
+        {
+            icon: ArrowAutofitWidth20RegularIcon,
+            name: "宽松",
+            value: 'loose'
         },
         {
             icon: ReadingModeMobile24RegularIcon,
             name: "默认",
             value: 'default'
-        },
-        {
-            icon: PhoneSpanIn16RegularIcon,
-            name: "紧密",
-            value: 'small'
         },
         {
             icon: Phone16RegularIcon,

@@ -9,7 +9,7 @@
                 <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="16">
                     <el-row :gutter="30">
                         <el-col :span="24">
-                            <el-input v-model="search" size="large" style="width:320px;" placeholder="全局搜索，请输入..."
+                            <el-input v-model="search" size="large" style="width:320px;" placeholder="全局搜索此空间，请输入..."
                                 clearable />
                         </el-col>
                         <el-col :span="24">

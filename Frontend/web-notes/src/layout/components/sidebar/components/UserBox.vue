@@ -146,7 +146,8 @@ let LogOut = () => {
             color: #333;
 
             .name {
-                font-size: 16px;
+                font-size: 14px;
+                font-weight: bold;
             }
 
             .subscribe {

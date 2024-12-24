@@ -17,6 +17,7 @@ import work.zhangchengwei.note.mapper.NoteUserMapper;
 import work.zhangchengwei.note.service.INotePageService;
 import work.zhangchengwei.note.service.INoteSpaceService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -73,18 +74,69 @@ public class NoteSpaceController {
         String userIdStr = StpUtil.getLoginIdAsString();
         Long userId = Long.parseLong(userIdStr);
 
+        // 创建查询条件，检查当前用户是否有默认空间
         QueryWrapper<NoteSpace> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
                 .eq(NoteSpace::getUserId, userId)
-                .eq(NoteSpace::getDefaultSpace, 0);
-        queryWrapper.last("LIMIT 1");
+                .eq(NoteSpace::getDefaultSpace, 0);  // 查询默认空间标识为0的记录
+        queryWrapper.last("LIMIT 1");  // 限制查询结果为1条
 
-        System.out.println(queryWrapper);
+        // 执行查询
+        NoteSpace noteSpace = noteSpaceService.getOne(queryWrapper);
 
-        // 执行查询并获取默认空间
-        NoteSpace defaultNoteSpace = noteSpaceMapper.selectOne(queryWrapper);
-        return ResponseResult.success("查询成功", defaultNoteSpace);
+        // 如果没有找到默认空间，则创建一个新的默认空间
+        if (noteSpace == null) {
+            // 创建新的默认空间
+            NoteSpace newNoteSpace = new NoteSpace();
+            newNoteSpace.setUserId(userId);
+            newNoteSpace.setDefaultSpace(0);  // 默认空间标识
+            newNoteSpace.setName("默认空间");  // 设置默认空间的名称
+            newNoteSpace.setCreateTime(LocalDateTime.now());  // 设置创建时间
+            // 添加其他必要的字段
+
+            // 保存新空间
+            boolean inserted = noteSpaceService.save(newNoteSpace);
+
+            if (inserted) {
+                // 没有默认空间，已成功创建默认空间
+
+                // 在 NotePage 表中插入一条新数据
+                QueryWrapper<NotePage> pageQueryWrapper = new QueryWrapper<>();
+                pageQueryWrapper.lambda()
+                        .eq(NotePage::getPageId, "1865163315842560002");  // 查找特定的 page_id
+
+                NotePage existingPage = notePageService.getOne(pageQueryWrapper);
+
+                if (existingPage != null) {
+                    // 在 NotePage 表中插入一条新手教程笔记数据
+                    existingPage.setSpaceId(newNoteSpace.getSpaceId());  // 设置新 space_id
+                    existingPage.setUserId(userId);  // 设置当前用户的 user_id
+                    existingPage.setPageId(null);
+                    existingPage.setUpdateTime(null);
+                    boolean insertedPage = notePageService.save(existingPage);  // 插入新数据
+                    if (insertedPage) {
+                        // 成功插入新 NotePage，返回成功结果
+                        return ResponseResult.success("没有默认空间，已创建默认空间并插入新 NotePage", newNoteSpace);
+                    } else {
+                        // 插入新 NotePage 失败
+                        return ResponseResult.fail("插入新 NotePage 失败，请联系客服");
+                    }
+                } else {
+                    // 未找到指定的 NotePage，无法插入
+                    return ResponseResult.fail("未找到指定的 NotePage，无法插入");
+                }
+            } else {
+                // 创建默认空间失败
+                return ResponseResult.fail("创建默认空间失败，请联系客服");
+            }
+        } else {
+            // 找到了默认空间，返回结果
+            return ResponseResult.success("默认空间", noteSpace);
+        }
     }
+
+
+
 
     /**
      * 添加空间

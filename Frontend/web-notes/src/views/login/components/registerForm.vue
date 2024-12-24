@@ -151,11 +151,11 @@ const submitForm = async () => {
         if (valid) {
             postRegister(ruleForm)
                 .then((msg) => {
-                    router.push({ name: 'login' })
+                    router.push('/login')
                     ElMessage.success(msg)
                 })
                 .catch(() => {
-                    ElMessage.error('注册失败')
+                    ElMessage.warning('注册失败?')
                 })
         }
     })

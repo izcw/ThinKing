@@ -1,7 +1,12 @@
 <!-- 统计卡片 -->
 <template>
   <el-row :gutter="16">
-    <el-col :md="6" :sm="12" :xs="24">
+    <el-col :md="12" :sm="12" :xs="24">
+      <ele-card class="monitor-count">
+        <el-empty description="无" />
+      </ele-card>
+    </el-col>
+    <!-- <el-col :md="6" :sm="12" :xs="24">
       <ele-card class="monitor-count">
         <el-tag size="large" :disable-transitions="true">
           <el-icon>
@@ -91,106 +96,106 @@
           />
         </ele-tooltip>
       </ele-card>
-    </el-col>
+    </el-col> -->
   </el-row>
 </template>
 
 <script setup>
-  import { ref } from 'vue';
-  import {
-    UserFilled,
-    Opportunity,
-    Flag,
-    Share,
-    Warning,
-    ArrowUpBold,
-    ArrowDownBold
-  } from '@element-plus/icons-vue';
+import { ref } from 'vue';
+import {
+  UserFilled,
+  Opportunity,
+  Flag,
+  Share,
+  Warning,
+  ArrowUpBold,
+  ArrowDownBold
+} from '@element-plus/icons-vue';
 
-  // 访问人数
-  const visitUsers = ref([
-    {
-      key: 1,
-      label: 'SunSmile',
-      value:
-        'https://cdn.eleadmin.com/20200609/c184eef391ae48dba87e3057e70238fb.jpg'
-    },
-    {
-      key: 2,
-      label: '你的名字很好听',
-      value:
-        'https://cdn.eleadmin.com/20200609/b6a811873e704db49db994053a5019b2.jpg'
-    },
-    {
-      key: 3,
-      label: '全村人的希望',
-      value:
-        'https://cdn.eleadmin.com/20200609/948344a2a77c47a7a7b332fe12ff749a.jpg'
-    },
-    {
-      key: 4,
-      label: 'Jasmine',
-      value:
-        'https://cdn.eleadmin.com/20200609/f6bc05af944a4f738b54128717952107.jpg'
-    },
-    {
-      key: 5,
-      label: '酷酷的大叔',
-      value:
-        'https://cdn.eleadmin.com/20200609/2d98970a51b34b6b859339c96b240dcd.jpg'
-    },
-    {
-      key: 6,
-      label: '管理员',
-      value: 'https://cdn.eleadmin.com/20200610/avatar.jpg'
-    }
-  ]);
+// 访问人数
+const visitUsers = ref([
+  {
+    key: 1,
+    label: 'SunSmile',
+    value:
+      'https://cdn.eleadmin.com/20200609/c184eef391ae48dba87e3057e70238fb.jpg'
+  },
+  {
+    key: 2,
+    label: '你的名字很好听',
+    value:
+      'https://cdn.eleadmin.com/20200609/b6a811873e704db49db994053a5019b2.jpg'
+  },
+  {
+    key: 3,
+    label: '全村人的希望',
+    value:
+      'https://cdn.eleadmin.com/20200609/948344a2a77c47a7a7b332fe12ff749a.jpg'
+  },
+  {
+    key: 4,
+    label: 'Jasmine',
+    value:
+      'https://cdn.eleadmin.com/20200609/f6bc05af944a4f738b54128717952107.jpg'
+  },
+  {
+    key: 5,
+    label: '酷酷的大叔',
+    value:
+      'https://cdn.eleadmin.com/20200609/2d98970a51b34b6b859339c96b240dcd.jpg'
+  },
+  {
+    key: 6,
+    label: '管理员',
+    value: 'https://cdn.eleadmin.com/20200610/avatar.jpg'
+  }
+]);
 </script>
 
 <style lang="scss" scoped>
-  .monitor-count {
-    position: relative;
-    text-align: center;
+.monitor-count {
+  position: relative;
+  text-align: center;
 
-    .el-tag {
-      width: 34px;
-      height: 34px;
-      line-height: 34px;
-      border-radius: 50%;
-      font-size: 15px;
-      padding: 0;
+  .el-tag {
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 50%;
+    font-size: 15px;
+    padding: 0;
 
-      .el-icon {
-        font-size: 16px;
-        border-radius: 0;
-        cursor: default;
-      }
-
-      :deep(.el-tag__content) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-
-    .monitor-count-value {
-      margin-top: 8px;
-    }
-
-    .monitor-count-text {
-      margin: 4px 0 8px 0;
-    }
-
-    .monitor-count-trend {
-      line-height: 26px;
-    }
-
-    .monitor-count-tip {
-      position: absolute;
-      top: 16px;
-      right: 16px;
+    .el-icon {
       font-size: 16px;
-      cursor: help;
+      border-radius: 0;
+      cursor: default;
+    }
+
+    :deep(.el-tag__content) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
+
+  .monitor-count-value {
+    margin-top: 8px;
+  }
+
+  .monitor-count-text {
+    margin: 4px 0 8px 0;
+  }
+
+  .monitor-count-trend {
+    line-height: 26px;
+  }
+
+  .monitor-count-tip {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 16px;
+    cursor: help;
+  }
+}
 </style>

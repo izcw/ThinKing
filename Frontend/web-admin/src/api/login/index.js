@@ -4,8 +4,8 @@ import { setToken } from '@/utils/token-util';
 /**
  * 登录
  */
-export async function login(data) {
-  const res = await request.post('/system/login', data);
+export async function login(data, params) {
+  const res = await request.post('/system/login', data, { params });
   if (res.data.code === 200) {
     setToken(res.data.data?.tokenValue, data.remember);
     return res.data.message;
@@ -18,6 +18,8 @@ export async function login(data) {
  */
 export async function getCaptcha() {
   const res = await request.get('/verify/captcha');
+  console.log(res);
+
   if (res.data.code === 200 && res.data.data) {
     return res.data.data;
   }

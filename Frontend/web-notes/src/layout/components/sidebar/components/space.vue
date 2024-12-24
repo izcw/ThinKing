@@ -166,7 +166,7 @@ let addspaceFun = () => {
     form.spaceId = null;
     form.name = '';
     form.color = 1;
-    form.sortNumber = 9;
+    form.sortNumber = 0;
 }
 
 // 添加空间

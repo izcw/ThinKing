@@ -24,10 +24,10 @@
             <span class="profile-count-name">数据备份</span>
           </div>
           <ele-text size="xl" type="heading" style="font-weight: normal">
-            2 / 3
+            {{ detailsData?.full.length }}/3
           </ele-text>
         </div>
-        <div class="profile-count-item">
+        <!-- <div class="profile-count-item">
           <div class="profile-count-header">
             <el-tag size="large" type="success" :disable-transitions="true">
               <el-icon>
@@ -39,7 +39,7 @@
           <ele-text size="xl" type="heading" style="font-weight: normal">
             0
           </ele-text>
-        </div>
+        </div> -->
       </div>
     </div>
   </ele-card>
@@ -58,6 +58,7 @@ import {
 import { useUserStore } from '@/store/modules/user';
 import { FILE_PATH_API_URL } from "@/config/setting"
 import { getGreeting } from "@/utils/timeGreeting.js"
+import { getBackupdetails} from '@/api/data/Backup/index.js';
 
 const userStore = useUserStore();
 
@@ -70,6 +71,23 @@ const greeting = ref('');
 onMounted(() => {
   greeting.value = getGreeting();
 });
+
+
+// 获取当前备份信息
+let detailsData = ref()
+let showbackupInfo = () => {
+  getBackupdetails()
+    .then((data) => {
+      console.log("获取当前备份信息");
+      console.log(data);
+      detailsData.value = data;
+    })
+    .catch((e) => {
+      console.log("错误" + e);
+
+    });
+}
+showbackupInfo()
 </script>
 
 <style lang="scss" scoped>

@@ -5,14 +5,23 @@ import request from '@/utils/request';
  */
 export async function PageSubscribeOrder(params) {
   const res = await request.get('/note/subscribeorder/page', { params });
-  console.log("订单");
-  console.log(res);
-
   if (res.data.code === 200) {
     return {
       list: res.data.data.records,
       count: res.data.data.total
     };
+  }
+
+  return Promise.reject(new Error(res.data.data.message));
+}
+
+/**
+ * 获取全部
+ */
+export async function PageSubscribeOrderALL() {
+  const res = await request.get('/note/subscribeorder/all');
+  if (res.data.code === 200) {
+    return res.data.data
   }
 
   return Promise.reject(new Error(res.data.data.message));

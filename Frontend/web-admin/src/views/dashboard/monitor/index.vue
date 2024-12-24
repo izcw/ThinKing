@@ -1,7 +1,7 @@
 <template>
   <ele-page>
     <statistics-card />
-    <el-row :gutter="16">
+    <!-- <el-row :gutter="16">
       <el-col :md="18" :sm="24" :xs="24">
         <map-card />
       </el-col>
@@ -9,8 +9,8 @@
         <online-num />
         <browser-card />
       </el-col>
-    </el-row>
-    <el-row :gutter="16">
+    </el-row> -->
+    <!-- <el-row :gutter="16">
       <el-col :lg="12" :md="24" :sm="24" :xs="24">
         <user-rate />
       </el-col>
@@ -20,7 +20,7 @@
       <el-col :lg="6" :md="24" :sm="24" :xs="24">
         <user-liveness />
       </el-col>
-    </el-row>
+    </el-row> -->
   </ele-page>
 </template>
 

@@ -13,6 +13,8 @@ import work.zhangchengwei.note.mapper.NoteUserMapper;
 import work.zhangchengwei.note.param.NoteSubscribesListInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import work.zhangchengwei.note.service.INotePageService;
+import work.zhangchengwei.note.service.INoteSpaceService;
 import work.zhangchengwei.note.service.INoteUserService;
 import work.zhangchengwei.note.service.PasswordService;
 
@@ -41,6 +43,8 @@ public class NoteMainController {
     private NoteSpaceMapper noteSpaceMapper;
     @Autowired
     private NoteSubscribeMapper noteSubscribeMapper;
+    @Autowired
+    private INoteSpaceService noteSpaceService;
 
 
     /**
@@ -78,6 +82,10 @@ public class NoteMainController {
 
         // 根据用户 ID 查询用户所有空间
         List<NoteSpace> noteSpaceList = noteSpaceMapper.selectListByUserId(userId);
+        noteSpaceList.forEach(noteSpace -> {
+            System.out.println(noteSpace.getSortNumber());
+        });
+
         noteSpaceList.sort(Comparator.comparing(NoteSpace::getSortNumber));  //  升序排序
         noteUser.setNoteSpaces(noteSpaceList);
 
@@ -103,6 +111,7 @@ public class NoteMainController {
 
                 // 第2步，获取 Token  相关参数
                 SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+
                 // 密码验证成功，返回用户信息
                 return ResponseResult.success("登录成功", tokenInfo);
             } else {
@@ -128,8 +137,12 @@ public class NoteMainController {
         } else {
             // 如果用户不存在，注册新用户
             noteUser.setPassword(passwordService.hashPassword(noteUser.getPassword())); // 散列密码
+
             boolean inserted = noteUserService.save(noteUser); // 保存新用户
+
+            // 注册成功后我需要打印用户的id
             if (inserted) {
+//                System.out.println("新用户注册成功，用户ID：" + noteUser.getUserId());
                 return ResponseResult.success("注册成功",null);
             } else {
                 return ResponseResult.fail("注册失败");

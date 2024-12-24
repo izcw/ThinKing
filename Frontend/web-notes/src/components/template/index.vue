@@ -16,59 +16,14 @@
                 </div>
                 <div class="content">
                     <el-row :gutter="20">
-                        <el-col :span="12" :md="12" :lg="8" :xl="6">
+                        <el-col :span="12" :md="12" :lg="8" :xl="6" v-for="(item, index) in 5" :key="index">
                             <div class="item">
                                 <div class="PreviewBox">
-                                    <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" >使用</el-button>
-                                </div>
-                                <h3><el-text truncated>旅行计划</el-text></h3>
-                                <p><el-text type="info" size="small"
-                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
-                                </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="12" :md="12" :lg="8" :xl="6">
-                            <div class="item">
-                                <div class="PreviewBox">
-                                    <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" >使用</el-button>
-                                </div>
-                                <h3><el-text truncated>旅行计划</el-text></h3>
-                                <p><el-text type="info" size="small"
-                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
-                                </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="12" :md="12" :lg="8" :xl="6">
-                            <div class="item">
-                                <div class="PreviewBox">
-                                    <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" >使用</el-button>
-                                </div>
-                                <h3><el-text truncated>旅行计划</el-text></h3>
-                                <p><el-text type="info" size="small"
-                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
-                                </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="12" :md="12" :lg="8" :xl="6">
-                            <div class="item">
-                                <div class="PreviewBox">
-                                    <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" >使用</el-button>
-                                </div>
-                                <h3><el-text truncated>旅行计划</el-text></h3>
-                                <p><el-text type="info" size="small"
-                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
-                                </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="12" :md="12" :lg="8" :xl="6">
-                            <div class="item">
-                                <div class="PreviewBox">
-                                    <img src="@/assets/images/template-item1.png" alt="">
-                                    <el-button color="#626aef" size="small" >使用</el-button>
+                                    <img :src="FILE_PATH_API_URL + 'SystemDefaultFiles/images/template/template' + (index + 1) + '.jpg'"
+                                        alt="">
+                                    <el-tooltip class="box-item" content="未实现" placement="top">
+                                        <el-button color="#626aef" size="small">使用</el-button>
+                                    </el-tooltip>
                                 </div>
                                 <h3><el-text truncated>旅行计划</el-text></h3>
                                 <p><el-text type="info" size="small"
@@ -85,6 +40,7 @@
 <script setup>
 import { ref } from 'vue'
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
+import { FILE_PATH_API_URL } from "@/config/setting"
 
 let selectItem = ref(0)
 

@@ -74,6 +74,8 @@ let openPage = (val) => {
 
                 .title span {
                     padding: 1rem 0;
+                    width: calc(100% - 3rem);
+                    box-sizing: border-box;
                     font-size: 26px;
                     color: #333;
                     font-weight: bold;

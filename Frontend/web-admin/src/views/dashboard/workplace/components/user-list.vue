@@ -13,10 +13,10 @@
         </ele-ellipsis>
       </div>
       <div style="flex-shrink: 0">
-        <el-tag v-for="rolesitem in item.roles" :key="rolesitem.roleId" size="small" :disable-transitions="true"
+        <!-- <el-tag v-for="rolesitem in item.roles" :key="rolesitem.roleId" size="small" :disable-transitions="true"
           :type="rolesitem.roleCode === 'admin' ? 'danger' : rolesitem.roleCode === 'senior' ? 'primary' : rolesitem.roleCode === 'user' ? 'success' : 'info'">
           {{ rolesitem.roleName }}
-        </el-tag>
+        </el-tag> -->
       </div>
     </div>
   </ele-card>

@@ -1,20 +1,21 @@
 <template>
-  <ele-page :multi-card="false">
-    <el-row :gutter="16">
-      <el-col v-for="(item, index) in data" :key="item.id" :lg="24" :md="24" :sm="24" :xs="24">
-        <ele-card :body-style="{ padding: 0 }" style="margin-top: 16px">
-          <div style="padding: 24px">
-            <div style="display: flex; align-items: center">
-              <el-avatar :size="40" :src="item.cover" style="flex-shrink: 0;background-color: transparent;" />
-              <ele-text size="md" style="flex: 1; padding-left: 12px">
-                {{ item.title }}
-              </ele-text>
-              <!-- <ele-dot text="正常" type="primary" :ripple="false" size="8px" /> -->
-            </div>
-            <!-- <ele-ellipsis style="margin-top: 16px">
+  <div>
+    <ele-page :multi-card="false">
+      <el-row :gutter="16">
+        <el-col v-for="(item, index) in data" :key="item.id" :lg="24" :md="24" :sm="24" :xs="24">
+          <ele-card :body-style="{ padding: 0 }" style="margin-top: 16px">
+            <div style="padding: 24px">
+              <div style="display: flex; align-items: center">
+                <el-avatar :size="40" :src="item.cover" style="flex-shrink: 0;background-color: transparent;" />
+                <ele-text size="md" style="flex: 1; padding-left: 12px">
+                  {{ item.title }}
+                </ele-text>
+                <!-- <ele-dot text="正常" type="primary" :ripple="false" size="8px" /> -->
+              </div>
+              <!-- <ele-ellipsis style="margin-top: 16px">
               <el-text type="info">备份到：</el-text> <el-text>{{ item.whereto }}</el-text>
             </ele-ellipsis> -->
-            <!-- <ele-ellipsis style="margin-top: 16px">
+              <!-- <ele-ellipsis style="margin-top: 16px">
               <el-text type="info">IP：</el-text> <el-text>{{ item.PublicIP }}</el-text>
             </ele-ellipsis>
             <ele-ellipsis>
@@ -27,93 +28,106 @@
               </el-text>
             </ele-ellipsis> -->
 
-            <ele-ellipsis style="margin-top: 16px">
-              <el-text style="display: flex;align-items: center;">
-                <ele-text :icon="UploadFilled" type="placeholder" class="list-item-tool"
-                  style="margin-right: 2px;" /><el-text type="info">增量备份：</el-text>
-                <el-text>
-                  {{ detailsData?.incremental[0]?.backupTime ? timeAgo(detailsData?.incremental[0]?.backupTime) : "暂无备份"}}</el-text>
-              </el-text>
-            </ele-ellipsis>
-            <ele-ellipsis>
-              <el-text style="display: flex;align-items: center;">
-                <ele-text :icon="Timer" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
-                <el-text type="info">计划周期（增量）：</el-text> <el-text>每小时的第0分钟执行一次</el-text>
-              </el-text>
-            </ele-ellipsis>
+              <ele-ellipsis style="margin-top: 16px">
+                <el-text style="display: flex;align-items: center;">
+                  <ele-text :icon="UploadFilled" type="placeholder" class="list-item-tool"
+                    style="margin-right: 2px;" /><el-text type="info">增量备份：</el-text>
+                  <el-text>
+                    {{ detailsData?.incremental[0]?.backupTime ? timeAgo(detailsData?.incremental[0]?.backupTime) :
+                      "暂无备份" }}</el-text>
+                </el-text>
+              </ele-ellipsis>
+              <ele-ellipsis>
+                <el-text style="display: flex;align-items: center;">
+                  <ele-text :icon="Timer" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
+                  <el-text type="info">计划周期（增量）：</el-text> <el-text>每小时的第0分钟执行一次</el-text>
+                </el-text>
+              </ele-ellipsis>
 
-            <ele-ellipsis style="margin-top: 16px">
-              <el-text style="display: flex;align-items: center;">
-                <ele-text :icon="Coin" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
-                <el-text type="info">全量备份数量：</el-text> <el-text>{{ detailsData?.full.length }}/3</el-text>
-              </el-text>
-            </ele-ellipsis>
-            <ele-ellipsis>
-              <el-text style="display: flex;align-items: center;">
-                <ele-text :icon="Timer" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
-                <el-text type="info">计划周期（全量）：</el-text> <el-text>每天的00:00执行一次</el-text>
-              </el-text>
-            </ele-ellipsis>
-            <ele-ellipsis style="margin-top: 16px">
-              <el-button-group>
-                <el-button type="success" plain @click="IncrementalFun" :disabled="incrementalStatus" v-loading="incrementalStatus">
-                  <el-icon><Plus /></el-icon>执行（增量备份）
-                </el-button>
-                <el-button type="success" plain @click="FullFun"  :disabled="fullStatus" v-loading="fullStatus">
-                  <el-icon><CirclePlusFilled /></el-icon>执行（全量备份）
-                </el-button>
-              </el-button-group>
-            </ele-ellipsis>
-            <ele-ellipsis style="margin-top: 16px">
-              <el-button type="primary" plain text bg @click="ExportCompressedFile"  :disabled="downloadStatus" v-loading="downloadStatus"><el-icon><Download /></el-icon>导出备份压缩包</el-button>
-              <el-button type="warning" plain text bg @click="ImportDataFun"><el-icon><Upload /></el-icon>导入</el-button>
-            </ele-ellipsis>
-            <ele-ellipsis style="margin-top: 16px">
-              <el-alert title="导入数据时，请删除sql文件第一行：" type="info"
-                description="mysqldump: [Warning] Using a password on the command line interface can be insecure."
-                show-icon />
-            </ele-ellipsis>
-          </div>
-          <el-divider style="margin: 0; opacity: 0.6" />
-          <div class="list-item-footer">
-            <!-- <ele-tooltip placement="top" content="编辑" :offset="-8">
+              <ele-ellipsis style="margin-top: 16px">
+                <el-text style="display: flex;align-items: center;">
+                  <ele-text :icon="Coin" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
+                  <el-text type="info">全量备份数量：</el-text> <el-text>{{ detailsData?.full.length }}/3</el-text>
+                </el-text>
+              </ele-ellipsis>
+              <ele-ellipsis>
+                <el-text style="display: flex;align-items: center;">
+                  <ele-text :icon="Timer" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
+                  <el-text type="info">计划周期（全量）：</el-text> <el-text>每天的00:00执行一次</el-text>
+                </el-text>
+              </ele-ellipsis>
+              <ele-ellipsis style="margin-top: 16px">
+                <el-button-group>
+                  <el-button type="success" plain @click="IncrementalFun" :disabled="incrementalStatus"
+                    v-loading="incrementalStatus">
+                    <el-icon>
+                      <Plus />
+                    </el-icon>执行（增量备份）
+                  </el-button>
+                  <el-button type="success" plain @click="FullFun" :disabled="fullStatus" v-loading="fullStatus">
+                    <el-icon>
+                      <CirclePlusFilled />
+                    </el-icon>执行（全量备份）
+                  </el-button>
+                </el-button-group>
+              </ele-ellipsis>
+              <ele-ellipsis style="margin-top: 16px">
+                <el-button type="primary" plain text bg @click="ExportCompressedFile" :disabled="downloadStatus"
+                  v-loading="downloadStatus"><el-icon>
+                    <Download />
+                  </el-icon>导出备份压缩包</el-button>
+                <el-button type="warning" plain text bg @click="ImportDataFun"><el-icon>
+                    <Upload />
+                  </el-icon>导入</el-button>
+              </ele-ellipsis>
+              <ele-ellipsis style="margin-top: 16px">
+                <el-alert title="导入数据时，请删除sql文件第一行：" type="info"
+                  description="mysqldump: [Warning] Using a password on the command line interface can be insecure."
+                  show-icon />
+              </ele-ellipsis>
+            </div>
+            <el-divider style="margin: 0; opacity: 0.6" />
+            <div class="list-item-footer">
+              <!-- <ele-tooltip placement="top" content="编辑" :offset="-8">
               <ele-text :icon="EditPen" type="placeholder" class="list-item-tool" />
             </ele-tooltip> -->
-            <ele-tooltip placement="top" content="日志" :offset="-8">
-              <ele-text :icon="Warning" @click="showlog" type="placeholder" class="list-item-tool" />
-            </ele-tooltip>
-            <el-divider direction="vertical" style="margin: 0" />
-            <!-- <ele-dropdown :items="[
+              <ele-tooltip placement="top" content="日志" :offset="-8">
+                <ele-text :icon="Warning" @click="showlog" type="placeholder" class="list-item-tool" />
+              </ele-tooltip>
+              <el-divider direction="vertical" style="margin: 0" />
+              <!-- <ele-dropdown :items="[
               { title: '编辑', command: '2nd' }
             ]" class="list-item-tool" style="padding: 0" :popper-options="{
               modifiers: [{ name: 'offset', options: { offset: [0, -4] } }]
             }">
               <ele-text :icon="MoreFilled" type="placeholder" class="list-item-tool-trigger" />
             </ele-dropdown> -->
-          </div>
-        </ele-card>
-      </el-col>
-    </el-row>
+            </div>
+          </ele-card>
+        </el-col>
+      </el-row>
 
 
-  </ele-page>
+    </ele-page>
 
 
-  <!-- 日志 -->
-  <el-dialog v-model="centerDialogVisible" title="日志" width="1400" align-center>
-    <el-scrollbar height="700px"
-      style="background-color: #333333;color:#fff;line-height: 28px; padding: 1rem;box-sizing: border-box;">
-      <p v-if="logdata">暂无日志</p>
-      <div v-else>
-        <p v-for="item in logdata">{{ item }}</p>
-      </div>
-    </el-scrollbar>
-  </el-dialog>
+    <!-- 日志 -->
+    <el-dialog v-model="centerDialogVisible" title="日志" width="1400" align-center>
+      <el-scrollbar height="700px"
+        style="background-color: #333333;color:#fff;line-height: 28px; padding: 1rem;box-sizing: border-box;">
+        <p v-if="logdata">暂无日志</p>
+        <div v-else>
+          <p v-for="item in logdata">{{ item }}</p>
+        </div>
+      </el-scrollbar>
+    </el-dialog>
 
     <!-- 导入 -->
     <el-dialog v-model="centerimport" title="导入" width="500" align-center>
-      <el-input v-model="input" style="width: 240px" placeholder="Please input" />
-  </el-dialog>
+      <el-input v-model="dataUrl" style="width: 240px" placeholder="Please input" />
+    </el-dialog>
+  </div>
+
 </template>
 
 
@@ -138,8 +152,8 @@ import {
   Plus,
   CirclePlusFilled
 } from '@element-plus/icons-vue';
-import TopSearch from '../project/components/top-search.vue';
-import { getBackupdetails, getBackuplogs, PostIncremental, PostFull ,PostDownloadAll} from '@/api/data/Backup/index.js';
+// import TopSearch from '../project/components/top-search.vue';
+import { getBackupdetails, getBackuplogs, PostIncremental, PostFull, PostDownloadAll } from '@/api/data/Backup/index.js';
 
 // 获取当前备份信息
 let detailsData = ref()
@@ -204,7 +218,7 @@ let FullFun = () => {
 
 // 导出压缩包
 let downloadStatus = ref(false)
-let ExportCompressedFile = ()=>{
+let ExportCompressedFile = () => {
   downloadStatus.value = true
   PostDownloadAll()
     .then((msg) => {
@@ -218,7 +232,7 @@ let ExportCompressedFile = ()=>{
 
 // 导入数据
 let centerimport = ref(false)
-let ImportDataFun = ()=>{
+let ImportDataFun = () => {
   centerimport.value = true
 }
 
@@ -263,13 +277,11 @@ query();
 
 // 日志弹窗
 let centerDialogVisible = ref(false)
+
+
+let dataUrl = ref()
 </script>
 
-<script>
-export default {
-  name: 'ListCardApplication'
-};
-</script>
 
 <style lang="scss" scoped>
 .list-item-footer {
@@ -280,7 +292,7 @@ export default {
     flex: 1;
     display: flex;
     justify-content: center;
-    transition: color 0.2s;
+    // transition: color 0.2s;
     box-sizing: border-box;
     font-size: 16px;
     padding: 16px 0;

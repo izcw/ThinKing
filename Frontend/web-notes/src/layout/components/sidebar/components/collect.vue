@@ -64,7 +64,7 @@
         <el-dialog v-model="dialogTableVisible" width="800" :show-close="false">
             <template #header>
                 <el-input v-model="search" style="width: 100%;padding: 1rem;box-sizing: border-box;"
-                    placeholder="全局搜索，请输入..." />
+                    placeholder="全局搜索此空间，请输入..." />
                 <div style="padding:1rem;box-sizing: border-box;">
                     <searchItemBox :search="search" />
                 </div>

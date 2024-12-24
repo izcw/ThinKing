@@ -71,12 +71,17 @@ const submitForm = async (formEl) => {
     if (!formEl) return
     await formEl.validate((valid, fields) => {
         if (valid) {
-            Userlogin(ruleForm).then((msg) => {
-                ElMessage.success(msg)
-                store.getDefaultSpaceFun()
-                return
+            Userlogin(ruleForm).then((res) => {
+                if (res.code === 200) {
+                    ElMessage.success(res.message)
+                    store.getDefaultSpaceFun()
+                    return
+                }
+                ElMessage.warning(res.message)
             }).catch((e) => {
-                console.error('登录失败', e);
+                console.log(e);
+
+                console.error('登录失败?', e);
             });
         } else {
             console.log('error submit!', fields)

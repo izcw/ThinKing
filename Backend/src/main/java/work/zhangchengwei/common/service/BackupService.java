@@ -13,6 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,9 +57,10 @@ public class BackupService {
     // 增量备份
     @Scheduled(cron = CRON_INCREMENTAL_BACKUP)
     public void incrementalBackup() throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-        String timestamp = sdf.format(new Date());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("Asia/Shanghai"));
+        String timestamp = formatter.format(zdt);
+        System.out.println(timestamp);
 
         String backupFile = BACKUP_DIR + "incremental_backup_" + timestamp + ".sql";
 
@@ -88,9 +92,10 @@ public class BackupService {
     // 全量备份
     @Scheduled(cron = CRON_FULL_BACKUP)
     public void fullBackup() throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-        String timestamp = sdf.format(new Date());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("Asia/Shanghai"));
+        String timestamp = formatter.format(zdt);
+        System.out.println(timestamp);
 
         String backupFile = BACKUP_DIR + "full_backup_" + timestamp + ".sql";
 

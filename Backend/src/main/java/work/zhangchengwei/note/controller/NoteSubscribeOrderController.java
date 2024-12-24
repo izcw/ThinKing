@@ -113,6 +113,23 @@ public class NoteSubscribeOrderController {
 
 
     /**
+     * 获取全部订单
+     * @return 所有订单的列表
+     */
+    @GetMapping("/all")
+    public ResponseResult<List<NoteSubscribeOrder>> getAllOrders() {
+        try {
+            // 查询所有的 NoteSubscribeOrder 数据
+            List<NoteSubscribeOrder> allOrders = noteSubscribeOrderService.list();
+            // 返回订单列表
+            return ResponseResult.success("获取所有订单成功", allOrders);
+        } catch (Exception e) {
+            return ResponseResult.error("获取所有订单失败：" + e.getMessage());
+        }
+    }
+
+
+    /**
      * 添加订单
      * @return
      */

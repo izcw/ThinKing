@@ -19,7 +19,7 @@
                                     <el-space direction="vertical" alignment="normal" style="margin-bottom: 1rem">
                                         <el-text size="small">默认</el-text>
                                         <el-row :gutter="20">
-                                            <el-col :span="6" v-for="(item, index) in 20" :key="index"
+                                            <el-col :span="6" v-for="(item, index) in 27" :key="index"
                                                 @click="changeCover(item)" style="cursor: pointer;">
                                                 <el-image style="width: 100%; height: 70px;"
                                                     :src="FILE_PATH_API_URL + 'SystemDefaultFiles/images/cover/' + item + '.jpg'"
@@ -161,10 +161,10 @@ let changeCover = (val) => {
 let layoutwidth = computed(() => {
     if (StorePage.pageData.layout == 'big') {
         return '100%';
+    } else if (StorePage.pageData.layout == 'loose') {
+        return '992px';
     } else if (StorePage.pageData.layout == 'default') {
         return '780px';
-    } else if (StorePage.pageData.layout == 'small') {
-        return '576px';
     } else {
         return '450px';
     }

@@ -20,26 +20,28 @@
           <el-form-item prop="password">
             <el-input show-password v-model="form.password" :placeholder="t('login.password')" :prefix-icon="Lock" />
           </el-form-item>
-          <el-form-item prop="code">
+          <!-- <el-form-item prop="verifycode">
             <div class="login-captcha-group">
-              <el-input clearable v-model="form.code" :placeholder="t('login.code')" :prefix-icon="ProtectOutlined" />
+              <el-input clearable v-model="form.verifycode" :placeholder="t('login.code')"
+                :prefix-icon="ProtectOutlined" />
               <div class="login-captcha" @click="changeCaptcha">
                 <img v-if="captcha" :src="captcha" />
               </div>
             </div>
-          </el-form-item>
-          <el-form-item>
+          </el-form-item> -->
+          <!-- <el-form-item>
             <el-checkbox v-model="form.remember">
               {{ t('login.remember') }}
             </el-checkbox>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
-            <el-button size="large" type="primary" :loading="loading" style="width: 100%;margin-top: 1.5rem;" @click="submit">
+            <el-button size="large" type="primary" :loading="loading" style="width: 100%;margin-top: 1.5rem;"
+              @click="submit">
               {{ t('login.login') }}
             </el-button>
           </el-form-item>
         </el-form>
-          <!-- <div v-else class="login-qrcode-group">
+        <!-- <div v-else class="login-qrcode-group">
             <ele-qr-code-svg :size="180" :margin="2" :value="qrcode" class="login-qrcode" />
             <div style="margin-top: 16px; cursor: pointer" @click="refreshQrCode">
               <el-icon :size="17" style="vertical-align: -3px; margin-right: 6px">
@@ -81,7 +83,7 @@ const loading = ref(false);
 const form = reactive({
   email: '2405824084@qq.com',
   password: '123456',
-  code: '123456',
+  verifycode: '333444',
   remember: true
 });
 
@@ -104,7 +106,7 @@ const rules = computed(() => {
         trigger: 'blur'
       }
     ],
-    code: [
+    verifycode: [
       {
         required: true,
         message: t('login.code'),
@@ -135,7 +137,7 @@ const submit = () => {
     //   return;
     // }
     loading.value = true;
-    login(form)
+    login(form, { verifycode: form.verifycode })
       .then((msg) => {
         EleMessage.success(msg);
         cleanPageTabs();
@@ -190,7 +192,7 @@ const goHome = () => {
 if (getToken()) {
   goHome();
 } else {
-  changeCaptcha();
+  // changeCaptcha();
 }
 </script>
 
@@ -243,6 +245,9 @@ if (getToken()) {
   flex-shrink: 0;
   padding: 32px 48px 0 48px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   :deep(.el-checkbox) {
     height: auto;

@@ -16,8 +16,11 @@
                 </template>
                 <template v-slot:2>
                     <main class="content">
-                        <el-button size="small" style="position: fixed;top: 1rem;left: 1rem;z-index: 9999;"
-                            v-if="FullDocumentStatus" @click="exitFullScreen">退出全屏预览</el-button>
+                        <el-button size="small" style="position: absolute;top: 1rem;left: 1rem;z-index: 9999;"
+                            v-if="FullDocumentStatus" @click="exitFullScreen">
+                            <n-icon size="12">
+                                <ArrowLeft12Filled />
+                            </n-icon>退出预览模式</el-button>
                         <ContentBox />
                         <levitatedSphereBox @requestFullScreen="requestFullScreen" />
                     </main>
@@ -29,6 +32,7 @@
 </template>
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { ArrowLeft12Filled } from '@vicons/fluent'
 import PanelSplitBox from '@/layout/components/PanelSplit.vue'
 import ToolSidebarBox from '@/layout/components/toolSidebar/index.vue'
 import ContentBox from './contentPage.vue'
@@ -119,7 +123,6 @@ function findParents(pageId, pagesArray) {
 }
 
 
-
 // 文档全屏
 let FullDocumentStatus = ref(false)
 let pageContentRef = ref(null)
@@ -131,6 +134,7 @@ let requestFullScreen = () => {
     }
 }
 
+// 退出全屏
 let exitFullScreen = () => {
     if (screenfull.isEnabled) {
         screenfull.exit(pageContentRef.value);

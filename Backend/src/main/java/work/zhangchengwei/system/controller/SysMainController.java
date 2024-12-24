@@ -3,6 +3,8 @@ package work.zhangchengwei.system.controller;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import jakarta.servlet.http.HttpServletRequest;
+import work.zhangchengwei.common.service.CaptchaService;
 import work.zhangchengwei.core.config.RoleConstants;
 import work.zhangchengwei.core.web.ResponseResult;
 import work.zhangchengwei.note.service.PasswordService;
@@ -41,6 +43,8 @@ public class SysMainController {
     private ISysUserService sysUserService; // 注入NoteUserService
     @Autowired
     private PasswordService passwordService; // 注入密码服务
+    @Autowired
+    private CaptchaService captchaService;
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
@@ -98,12 +102,30 @@ public class SysMainController {
      * @return 创建或登录结果
      */
     @PostMapping("/login")
-    public ResponseResult<SaTokenInfo> login(@RequestBody SysUser sysUser) {
+    public ResponseResult<SaTokenInfo> login(@RequestBody SysUser sysUser,@RequestParam("verifycode") String verifycode, HttpServletRequest request) {
+        // 验证验证码
+//        System.out.println(verifycode);
+//        if(verifycode == null || verifycode.isEmpty()) {
+//            return ResponseResult.fail("验证码不能为空!");
+//        }
+//        // 调用 CaptchaService 进行验证码验证
+//        boolean isCaptchaValid = captchaService.validateCaptcha(verifycode, request);
+//
+//        // 如果验证码无效，返回失败
+//        if (!isCaptchaValid) {
+//            return ResponseResult.fail("验证码错误或已失效，请重新获取!");
+//        }
+//        // 验证通过后清除验证码的尝试次数
+//        captchaService.clearCaptchaAttempts(request);
+
+
         // 检查用户是否已存在
         SysUser existingUser = sysUserService.getOne(new QueryWrapper<SysUser>().eq("email", sysUser.getEmail()));
 
         if (existingUser != null) {
-            // 如果用户已存在，验证密码
+            // 如果用户已存在
+
+            // 验证密码
             if (passwordService.verifyPassword(sysUser.getPassword(), existingUser.getPassword())) {
                 // 第1步 设置登录账号id
                 StpUtil.login(existingUser.getUserId());
