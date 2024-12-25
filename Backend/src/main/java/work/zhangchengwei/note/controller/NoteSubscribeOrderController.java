@@ -4,18 +4,14 @@ package work.zhangchengwei.note.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import work.zhangchengwei.core.web.ResponseResult;
-import work.zhangchengwei.note.entity.NotePage;
 import work.zhangchengwei.note.entity.NoteSubscribe;
 import work.zhangchengwei.note.entity.NoteSubscribeOrder;
 import work.zhangchengwei.note.mapper.NoteSubscribeOrderMapper;
 import work.zhangchengwei.note.param.NoteSubscribesListInfo;
-import work.zhangchengwei.note.mapper.NoteTemplateMapper;
 import work.zhangchengwei.note.service.INoteSubscribeOrderService;
 import work.zhangchengwei.note.service.INoteSubscribeService;
 
@@ -33,8 +29,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/note/subscribeorder")
 public class NoteSubscribeOrderController {
-    @Autowired
-    private NoteTemplateMapper noteTemplateMapper;
     @Autowired
     private INoteSubscribeOrderService noteSubscribeOrderService;
     @Autowired

@@ -175,6 +175,26 @@ let iconData = ref([
         name: "绿色的心",
         icon: "💚"
     },
+    {
+        name: "完成",
+        icon: "✅"
+    },
+    {
+        name: "蛋糕",
+        icon: "🎂"
+    },
+    {
+        name: "钱",
+        icon: "💰"
+    },
+    {
+        name: "自由女神",
+        icon: "🗽"
+    },
+    {
+        name: "书",
+        icon: "📖"
+    },
 ])
 </script>
 <style lang='scss'>

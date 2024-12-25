@@ -126,10 +126,6 @@ public class NoteUserController {
 
     /**
      * 更新用户信息
-     * @param avatar 头像
-     * @param email 邮箱
-     * @param nickname 昵称
-     * @param status 状态
      * @return 更新结果
      */
     @PutMapping("/update")

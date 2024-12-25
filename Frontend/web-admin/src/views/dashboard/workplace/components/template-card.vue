@@ -1,4 +1,3 @@
-<!-- 模板数量 -->
 <template>
   <ele-card :header="title" :body-style="{ height: '370px' }">
     <template #extra>
@@ -11,8 +10,14 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import MoreIcon from './more-icon.vue';
+import * as echarts from 'echarts/core';
+import { TooltipComponent, LegendComponent } from 'echarts/components';
+import { PieChart } from 'echarts/charts';
+import { LabelLayout } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+import { AllTemplate } from '@/api/note/templateplugin/template/index';
 
 defineProps({
   title: String
@@ -24,13 +29,17 @@ const onCommand = (command) => {
   emit('command', command);
 };
 
-
 // ECharts 配置
-import * as echarts from 'echarts/core';
-import { TooltipComponent, LegendComponent } from 'echarts/components';
-import { PieChart } from 'echarts/charts';
-import { LabelLayout } from 'echarts/features';
-import { CanvasRenderer } from 'echarts/renderers';
+let TemplateData = ref([]);
+let myChart = null;
+
+AllTemplate()
+  .then((val) => {
+    TemplateData.value = val;
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 
 echarts.use([
   TooltipComponent,
@@ -40,13 +49,12 @@ echarts.use([
   LabelLayout
 ]);
 
-let myChart = null;
-
 onMounted(() => {
   const chartDom = document.getElementById('echarts-main');
   if (chartDom) {
     myChart = echarts.init(chartDom);
 
+    // 初始图表配置
     const option = {
       tooltip: {
         trigger: 'item'
@@ -64,8 +72,8 @@ onMounted(() => {
           startAngle: 180,
           endAngle: 360,
           data: [
-            { value: 10, name: '官方模板' },
-            { value: 120, name: '用户模板' }
+            { value: TemplateData.value.length, name: '官方模板' },
+            { value: 0, name: '用户模板' },
           ]
         }
       ]
@@ -96,7 +104,17 @@ const resizeChart = () => {
     myChart.resize();
   }
 };
+
+// 监听 TemplateData 的变化，更新 ECharts 数据
+watch(TemplateData, (newData) => {
+  if (myChart) {
+    const option = myChart.getOption();
+    option.series[0].data[0].value = newData.length; // 更新官方模板数量
+    myChart.setOption(option);
+  }
+});
 </script>
+
 
 <style lang="scss" scoped>
 .workplace-goal {

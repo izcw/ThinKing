@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import work.zhangchengwei.core.web.ResponseResult;
 import work.zhangchengwei.note.entity.NotePage;
 import work.zhangchengwei.note.entity.NoteSpace;
-import work.zhangchengwei.note.entity.NoteSubscribe;
 import work.zhangchengwei.note.mapper.NoteSpaceMapper;
-import work.zhangchengwei.note.mapper.NoteSubscribeMapper;
-import work.zhangchengwei.note.mapper.NoteUserMapper;
 import work.zhangchengwei.note.service.INotePageService;
 import work.zhangchengwei.note.service.INoteSpaceService;
 
@@ -92,7 +89,6 @@ public class NoteSpaceController {
             newNoteSpace.setDefaultSpace(0);  // 默认空间标识
             newNoteSpace.setName("默认空间");  // 设置默认空间的名称
             newNoteSpace.setCreateTime(LocalDateTime.now());  // 设置创建时间
-            // 添加其他必要的字段
 
             // 保存新空间
             boolean inserted = noteSpaceService.save(newNoteSpace);

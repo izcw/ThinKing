@@ -48,15 +48,8 @@ const CACHE_KEY = 'workplace-layout';
 const DEFAULT = [
   {
     name: 'user-list',
-    title: '小组成员',
+    title: '管理员成员',
     md: 6,
-    sm: 24,
-    xs: 24
-  },
-  {
-    name: 'template-card',
-    title: '模板数量',
-    md: 8,
     sm: 24,
     xs: 24
   },
@@ -67,6 +60,21 @@ const DEFAULT = [
     sm: 24,
     xs: 24
   },
+  {
+    name: 'template-card',
+    title: '模板数量',
+    md: 8,
+    sm: 24,
+    xs: 24
+  },
+  // {
+  //   name: 'online-num',
+  //   title: '总人数',
+  //   md: 8,
+  //   sm: 24,
+  //   xs: 24
+  // },
+
   {
     name: 'statistics-card',
     title: new Date().getFullYear() + '订单统计',
@@ -199,6 +207,7 @@ import ProjectCard from './components/project-card.vue';
 import UserList from './components/user-list.vue';
 import OrderstatisticsCard from './components/orderstatistics-card.vue';
 import statisticsCard from '@/views/dashboard/analysis/components/statistics-card.vue';
+// import OnlineNum from '@/views/dashboard/monitor/components/online-num.vue';
 
 export default {
   name: 'DashboardWorkplace',
@@ -209,7 +218,8 @@ export default {
     ProjectCard,
     UserList,
     OrderstatisticsCard,
-    statisticsCard
+    statisticsCard,
+    // OnlineNum
   }
 };
 </script>

@@ -26,12 +26,6 @@ import java.util.List;
 public class SysMenuController {
     @Autowired
     private SysMenuMapper sysMenuMapper;
-    @Autowired
-    private ISysMenuService sysMenuService; // 注入NoteUserService
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate; // Redis 操作
-
-
 
     /**
      * 获取菜单列表

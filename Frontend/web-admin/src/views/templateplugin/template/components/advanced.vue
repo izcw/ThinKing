@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%;">
     <ele-table-select ref="selectRef" clearable placeholder="请选择发布人" value-key="email" label-key="email"
       v-model="selectedValue" :table-props="tableProps" :init-value="initValue" :popper-width="580">
       <Account-Search @search="onSearch" />
@@ -8,10 +8,14 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, defineProps, watchEffect } from 'vue';
+import { ref, reactive, watch, defineProps, watchEffect, computed, onMounted } from 'vue';
 import AccountSearch from './account-search.vue';
 import { pageUsers as SysPageUsers } from '@/api/system/user';
 import { PageUsers as NotePageUsers } from '@/api/note/user';
+import { useUserStore } from '@/store/modules/user';
+const userStore = useUserStore();
+
+
 
 // 表格下拉选中值
 const selectedValue = ref();
@@ -73,8 +77,18 @@ const initValue = ref();
 
 /* 回显数据 */
 const setInitValue = () => {
-  initValue.value = [];
+  // 当前登录用户信息
+  let loginUser = computed(() => userStore.info ?? {});
+  initValue.value =
+  {
+    email: loginUser.value.email,
+    nickname: loginUser.value.nickname
+  };
 };
+
+onMounted(()=>{
+  // setInitValue()
+})
 
 // 父组件的切换值
 const props = defineProps({

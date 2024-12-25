@@ -36,6 +36,58 @@
                     <b>&lt;/&gt;</b>
                 </el-button>
             </el-tooltip>
+            <el-tooltip class="box-item" effect="dark" placement="top" :hide-after="0">
+                <template #content>表格</template>
+
+                <el-dropdown placement="top-start">
+                    <el-button size="small">
+                        <n-icon size="24">
+                            <Table24Regular />
+                        </n-icon>
+                    </el-button>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item @click="editor.commands.addColumnBefore()">
+                                <n-icon size="12">
+                                    <ArrowLeft12Regular />
+                                </n-icon>
+                                在前面添加一列
+                            </el-dropdown-item>
+                            <el-dropdown-item @click="editor.commands.addColumnAfter()">
+                                <n-icon size="12">
+                                    <ArrowRight12Regular />
+                                </n-icon>
+                                在后面添加一列
+                            </el-dropdown-item>
+                            <el-dropdown-item @click="editor.commands.deleteColumn()">
+                                <n-icon size="12">
+                                    <TableDeleteColumn20Filled />
+                                </n-icon>
+                                删除列
+                            </el-dropdown-item>
+                            <el-dropdown-item @click="editor.commands.addRowBefore()">
+                                <n-icon size="12">
+                                    <ArrowUp16Filled />
+                                </n-icon>
+                                在上方添加一行
+                            </el-dropdown-item>
+                            <el-dropdown-item @click="editor.commands.addRowAfter()">
+                                <n-icon size="12">
+                                    <ArrowDown16Filled />
+                                </n-icon>
+                                在下方添加一行
+                            </el-dropdown-item>
+                            <el-dropdown-item @click="editor.commands.deleteRow()">
+                                <n-icon size="12">
+                                    <TableDeleteRow20Filled />
+                                </n-icon>
+                                删除行
+                            </el-dropdown-item>
+
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+            </el-tooltip>
             <el-tooltip class="box-item" effect="dark" placement="top" :hide-after="50">
                 <template #content>下标<br />Ctrl+,</template>
                 <el-button size="small" @click="editor.commands.toggleSubscript()"
@@ -183,8 +235,9 @@
     </bubble-menu>
 </template>
 <script setup>
-import { ref, defineProps, onMounted } from 'vue'
+import { ref, defineProps, markRaw } from 'vue'
 import { ElButton, ElPopover, ElTooltip, ElMessage } from 'element-plus'
+import { Table24Regular, ArrowLeft12Regular, ArrowRight12Regular, TableDeleteColumn20Filled, ArrowUp16Filled, ArrowDown16Filled, TableDeleteRow20Filled } from '@vicons/fluent'
 import { BubbleMenu } from '@tiptap/vue-3'
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";

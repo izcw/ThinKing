@@ -28,7 +28,7 @@
               </el-text>
             </ele-ellipsis> -->
 
-              <ele-ellipsis style="margin-top: 16px">
+              <!-- <ele-ellipsis style="margin-top: 16px">
                 <el-text style="display: flex;align-items: center;">
                   <ele-text :icon="UploadFilled" type="placeholder" class="list-item-tool"
                     style="margin-right: 2px;" /><el-text type="info">增量备份：</el-text>
@@ -42,7 +42,7 @@
                   <ele-text :icon="Timer" type="placeholder" class="list-item-tool" style="margin-right: 2px;" />
                   <el-text type="info">计划周期（增量）：</el-text> <el-text>每小时的第0分钟执行一次</el-text>
                 </el-text>
-              </ele-ellipsis>
+              </ele-ellipsis> -->
 
               <ele-ellipsis style="margin-top: 16px">
                 <el-text style="display: flex;align-items: center;">
@@ -57,26 +57,26 @@
                 </el-text>
               </ele-ellipsis>
               <ele-ellipsis style="margin-top: 16px">
-                <el-button-group>
-                  <el-button type="success" plain @click="IncrementalFun" :disabled="incrementalStatus"
+                <!-- <el-button-group> -->
+                  <!-- <el-button type="success" plain @click="IncrementalFun" :disabled="incrementalStatus"
                     v-loading="incrementalStatus">
                     <el-icon>
                       <Plus />
                     </el-icon>执行（增量备份）
-                  </el-button>
+                  </el-button> -->
                   <el-button type="success" plain @click="FullFun" :disabled="fullStatus" v-loading="fullStatus">
                     <el-icon>
                       <CirclePlusFilled />
                     </el-icon>执行（全量备份）
                   </el-button>
-                </el-button-group>
+                <!-- </el-button-group> -->
               </ele-ellipsis>
               <ele-ellipsis style="margin-top: 16px">
                 <el-button type="primary" plain text bg @click="ExportCompressedFile" :disabled="downloadStatus"
                   v-loading="downloadStatus"><el-icon>
                     <Download />
                   </el-icon>导出备份压缩包</el-button>
-                <el-button type="warning" plain text bg @click="ImportDataFun"><el-icon>
+                <el-button disabled type="warning" plain bg @click="ImportDataFun"><el-icon>
                     <Upload />
                   </el-icon>导入</el-button>
               </ele-ellipsis>

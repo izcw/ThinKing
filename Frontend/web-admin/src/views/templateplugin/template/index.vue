@@ -24,7 +24,7 @@
         <el-col :lg="8" :md="12" :sm="12" :xs="24">
           <el-radio-group v-model="where.role" @change="query">
             <el-radio-button label="admin">官方模板</el-radio-button>
-            <el-radio-button label="user">用户上传模板</el-radio-button>
+            <!-- <el-radio-button label="user">用户上传模板</el-radio-button> -->
           </el-radio-group>
         </el-col>
         <el-col :lg="4" :md="12" :sm="12" :xs="24">
@@ -43,13 +43,19 @@
       </el-row>
     </ele-card>
     <ele-card>
+      <div style="margin-bottom: 8px">
+        <el-button :icon="Plus" class="ele-fluid" @click="openEdit()">
+          添加
+        </el-button>
+      </div>
       <!-- 数据列表 -->
       <ele-loading :loading="loading" style="min-height: 100px" v-if="data.length > 0">
         <div v-for="item in data" :key="item.id">
           <div class="list-item">
             <div class="list-item-avatar">
-              <el-image style="width: 120px; height: 70px" :src="FILE_PATH_API_URL + item.preview" :zoom-rate="1.2"
-                :max-scale="7" :min-scale="0.2" :preview-src-list="[FILE_PATH_API_URL + item.preview]" fit="cover" />
+              <el-image style="width: 120px; height: 70px;border: 1px solid #eee;"
+                :src="FILE_PATH_API_URL + item.preview" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+                :preview-src-list="[FILE_PATH_API_URL + item.preview]" fit="cover" />
               <div class="list-item-avatar-extra">
                 <div style="margin-bottom: 2px">{{ item.templateName }}</div>
                 <ele-text size="sm" type="placeholder">
@@ -61,13 +67,17 @@
               <div class="list-item-title">发布人</div>
               <ele-text size="sm" type="placeholder">{{ item.email }}</ele-text>
             </div>
-            <div class="list-item-time">
-              <div class="list-item-title">发布时间</div>
-              <ele-text size="sm" type="placeholder">{{ item.update_time }}</ele-text>
-            </div>
-            <div class="list-item-status" style="display: block">
+            <!-- <div class="list-item-status" style="display: block">
               <el-switch v-model="item.recommend" :inactive-value="0" :active-value="1" inline-prompt active-text="推荐"
                 inactive-text="No" disabled />
+            </div> -->
+            <div class="list-item-time">
+              <div class="list-item-title">发布时间</div>
+              <ele-text size="sm" type="placeholder">{{ item.create_time }}</ele-text>
+            </div>
+            <div class="list-item-time">
+              <div class="list-item-title">修改时间</div>
+              <ele-text size="sm" type="placeholder">{{ item.update_time }}</ele-text>
             </div>
             <div class="list-item-status" style="display: block">
               <ele-dot v-for="(itemStatus, index) in statusListData" :key="index"
@@ -97,35 +107,26 @@
         </div>
       </ele-loading>
       <el-empty v-else description="暂无数据" :image-size="70" />
-      <div style="margin-top: 8px">
-        <el-button :icon="Plus" class="ele-fluid" @click="openEdit()">
-          添加
-        </el-button>
-      </div>
       <ele-pagination :total="count" v-model:page-size="limit" v-model:current-page="page"
         layout="prev, pager, next, jumper" style="margin-top: 18px; justify-content: center" />
     </ele-card>
+
     <!-- 编辑弹窗 -->
-    <ele-modal form :width="460" v-model="visible" :title="form.id ? '编辑' : '添加'">
+    <ele-modal form :width="460" v-model="visible" :title="form.templateId ? '编辑' : '添加'">
       <el-form ref="formRef" :model="form" :rules="rules" label-width="88px">
-        <el-form-item label="模板名称" prop="title">
-          <el-input clearable :maxlength="20" v-model="form.title" placeholder="请输入任务名称" />
+        <el-form-item label="页面id" prop="pageId">
+          <el-input clearable :maxlength="20" v-model="form.pageId" placeholder="请输入页面id（必须是页面id，否则不成功）" />
         </el-form-item>
-        <el-form-item label="发布时间" prop="time">
-          <el-date-picker type="datetime" v-model="form.time" format="YYYY-MM-DD HH:mm:ss"
-            value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择发布时间" class="ele-fluid" />
+        <el-form-item label="模板名称" prop="templateName">
+          <el-input clearable :maxlength="20" v-model="form.templateName" placeholder="请输入模版名称" />
         </el-form-item>
-        <el-form-item label="发布人" prop="user">
-          <el-select clearable v-model="form.user" placeholder="请选择发布人" class="ele-fluid">
-            <el-option value="SunSmile" label="SunSmile" />
-            <el-option value="Pojin" label="Pojin" />
-            <el-option value="SuperWill" label="SuperWill" />
-            <el-option value="Jasmine" label="Jasmine" />
-            <el-option value="Vast" label="Vast" />
-          </el-select>
+        <el-form-item label="模板描述" prop="comments">
+          <el-input :rows="4" type="textarea" v-model="form.comments" placeholder="请输入模板描述" maxlength="200"
+            show-word-limit />
         </el-form-item>
-        <el-form-item label="模板描述">
-          <el-input :rows="4" type="textarea" v-model="form.describe" placeholder="请输入模板描述" />
+        <el-form-item label="预览图">
+          <UploadImgbox :avatar-url="form.preview ? FILE_PATH_API_URL + form.preview : ''"
+            :default-avatar="defaultAvatar" @avatarChange="handleAvatarChange" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -139,7 +140,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, computed } from 'vue';
 import { Search, Plus, ArrowDown } from '@element-plus/icons-vue';
 import { ElMessageBox } from 'element-plus';
 import { EleMessage } from 'ele-admin-plus/es';
@@ -148,7 +149,12 @@ import { FILE_PATH_API_URL } from "@/config/setting"
 import { SubscribeListStatus } from '@/api/common/index.js';
 import Advanced from "./components/advanced.vue";
 import StatusSelect from "@/views/subscribe/membership/components/status-select.vue";
-import { PageTemplate } from '@/api/note/templateplugin/template/index';
+import { PageTemplate, AddTemplate, updateTemplate, removeTemplate } from '@/api/note/templateplugin/template/index';
+import UploadImgbox from "./components/upload-img.vue"; // 引入组件
+import { UpdateUser } from '@/api/note/user/index.js';
+import { UploadAvatar } from '@/api/common/uploadFile.js';
+import { useUserStore } from '@/store/modules/user';
+const userStore = useUserStore();
 
 // 列表加载状态
 const loading = ref(false);
@@ -196,16 +202,25 @@ const formRef = ref(null);
 
 // 编辑弹窗表单数据
 const { form, resetFields, assignFields } = useFormData({
-  id: void 0,
-  title: '',
-  time: void 0,
-  user: '',
-  describe: ''
+  templateId: void 0,
+  pageId: '',
+  email: userStore.info.email,
+  templateName: '',
+  preview: null,
+  comments: '',
 });
 
 // 编辑弹窗表单验证规则
 const rules = reactive({
-  title: [
+  pageId: [
+    {
+      required: true,
+      message: '页面ID不能为空',
+      type: 'string',
+      trigger: 'blur'
+    }
+  ],
+  templateName: [
     {
       required: true,
       message: '请输入模板名称',
@@ -213,19 +228,20 @@ const rules = reactive({
       trigger: 'blur'
     }
   ],
-  time: [
+  comments: [
     {
       required: true,
-      message: '请选择创建时间',
-      type: 'string',
+      message: '描述不能为空',
       trigger: 'blur'
-    }
-  ],
-  user: [
+    },
     {
-      required: true,
-      message: '请选择发布人',
-      type: 'string',
+      min: 1,
+      message: '描述长度不能少于1字',
+      trigger: 'blur'
+    },
+    {
+      max: 200,
+      message: '描述长度不能超过200字',
       trigger: 'blur'
     }
   ]
@@ -270,32 +286,30 @@ const closeEdit = () => {
 };
 
 /* 保存编辑 */
-const onSubmit = () => {
-  formRef.value?.validate((valid) => {
+const onSubmit = async () => {
+  formRef.value?.validate(async (valid) => {
     if (!valid) {
       return;
     }
     submitLoading.value = true;
-    setTimeout(() => {
-      closeEdit();
-      submitLoading.value = false;
-      EleMessage.success('保存成功');
-      if (form.id) {
-        // 保存修改
-        const index = data.value.findIndex((d) => d.id === form.id);
-        if (index !== -1) {
-          Object.assign(data.value[index], form);
-        }
+    try {
+      await handleSubmitAvatar();
+      const saveOrUpdate = form.templateId ? updateTemplate : AddTemplate;
+      const res = await saveOrUpdate(form);
+      if (res.code === 200) {
+        EleMessage.success(res.message);
+        query()
+        closeEdit();
       } else {
-        // 保存添加
-        data.value.push({
-          ...form,
-          id: new Date().getTime(),
-          cover:
-            'https://cdn.eleadmin.com/20200610/RZ8FQmZfHkcffMlTBCJllBFjEhEsObVo.jpg'
-        });
+        EleMessage.warning(res.message);
       }
-    }, 300);
+      selectedFile.value = null
+    } catch (e) {
+      EleMessage.error(e.message);
+    } finally {
+      submitLoading.value = false;
+      loading.value = false;
+    }
   });
 };
 
@@ -309,7 +323,13 @@ const dropClick = (key, item) => {
       draggable: true
     })
       .then(() => {
-        EleMessage.success('点击了删除');
+        removeTemplate(item.templateId)
+          .then((msg) => {
+            query();
+          })
+          .catch((e) => {
+            EleMessage.error(e.message);
+          });
       })
       .catch(() => { });
   } else if (key === 'share') {
@@ -332,6 +352,39 @@ SubscribeListStatus()
   .catch((e) => {
     EleMessage.error(e.message);
   });
+
+
+
+
+// 上传
+const defaultAvatar = ref(FILE_PATH_API_URL + 'SystemDefaultFiles/images/avatar/avatar-default.png');
+const selectedFile = ref(null);
+
+/* 更新图片回调 */
+const handleAvatarChange = (file) => {
+  selectedFile.value = file; // 保存文件
+};
+
+/* 提交图片 */
+const handleSubmitAvatar = async () => {
+  if (!selectedFile.value) return Promise.resolve();
+
+  const formData = new FormData();
+  formData.append('avatar', selectedFile.value);
+  if (form.preview) {
+    formData.append('avatar_oldPath', form.preview);
+  }
+
+  try {
+    const res = await UploadAvatar(formData);
+    // imagesShow.value = false;
+    form.preview = res.data;
+    return Promise.resolve();
+  } catch (error) {
+    EleMessage.error(error.message);
+    return Promise.reject(error);
+  }
+};
 </script>
 
 <script>

@@ -42,6 +42,18 @@ export async function addPage(data) {
 
 
 /**
+ * 使用模版
+ */
+export async function useTemplate(params) {
+  const res = await service.post('/note/page/useTemplate', null, { params });
+  if (res.code === 200) {
+    return res;
+  }
+  return Promise.reject(new Error(res.message));
+}
+
+
+/**
  * 修改
  */
 export async function update(data) {
@@ -80,8 +92,8 @@ export async function deletePage(params) {
 /**
  * 获取回收站笔记
  */
-export async function getRecyclePage() {
-  const res = await service.get('/note/page/RecyclePage');
+export async function getRecyclePage(params) {
+  const res = await service.get('/note/page/RecyclePage', { params });
   if (res.code === 200) {
     return res.data;
   }

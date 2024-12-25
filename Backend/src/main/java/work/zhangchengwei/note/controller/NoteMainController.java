@@ -3,7 +3,6 @@ package work.zhangchengwei.note.controller;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import work.zhangchengwei.core.web.ResponseResult;
 import work.zhangchengwei.note.entity.*;
 import work.zhangchengwei.note.mapper.NoteSpaceMapper;
@@ -13,8 +12,6 @@ import work.zhangchengwei.note.mapper.NoteUserMapper;
 import work.zhangchengwei.note.param.NoteSubscribesListInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import work.zhangchengwei.note.service.INotePageService;
-import work.zhangchengwei.note.service.INoteSpaceService;
 import work.zhangchengwei.note.service.INoteUserService;
 import work.zhangchengwei.note.service.PasswordService;
 
@@ -43,8 +40,6 @@ public class NoteMainController {
     private NoteSpaceMapper noteSpaceMapper;
     @Autowired
     private NoteSubscribeMapper noteSubscribeMapper;
-    @Autowired
-    private INoteSpaceService noteSpaceService;
 
 
     /**
@@ -142,13 +137,13 @@ public class NoteMainController {
 
             // 注册成功后我需要打印用户的id
             if (inserted) {
-//                System.out.println("新用户注册成功，用户ID：" + noteUser.getUserId());
                 return ResponseResult.success("注册成功",null);
             } else {
                 return ResponseResult.fail("注册失败");
             }
         }
     }
+
 
     /**
      * 注销接口，使用 Sa-Token 实现用户注销
@@ -162,13 +157,11 @@ public class NoteMainController {
         return ResponseResult.success("注销成功", null);
     }
 
-//    @PostMapping("/islogin")
-//    public String islogin(@RequestBody NoteUser noteUser , HttpServletRequest request){
-//        String token = request.getHeader("Authorization");
-//        System.out.println(token);
-//        return "当前会话是否登录：" + StpUtil.isLogin(noteUser.getEmail());
-//    }
-
-
+    //    @PostMapping("/islogin")
+    //    public String islogin(@RequestBody NoteUser noteUser , HttpServletRequest request){
+    //        String token = request.getHeader("Authorization");
+    //        System.out.println(token);
+    //        return "当前会话是否登录：" + StpUtil.isLogin(noteUser.getEmail());
+    //    }
 
 }

@@ -112,32 +112,6 @@ export default {
         },
       },
       {
-        title: '表情',
-        describe: '插入到文本中的表情符号',
-        icon: EmojiSparkle24RegularIcon,
-        command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
-        },
-      },
-      {
-        title: '折叠列表',
-        describe: '折叠列表可以选择性隐藏或显示内容内容',
-        icon: TextCaseTitle16RegularIcon,
-        command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setMark('italic')
-            .run()
-        },
-      },
-      {
         title: '引用',
         describe: '摘取引用',
         icon: TextQuote20FilledIcon,
@@ -154,7 +128,33 @@ export default {
         },
       },
       {
-        title: '标注',
+        title: '表情（未实现！！）',
+        describe: '插入到文本中的表情符号',
+        icon: EmojiSparkle24RegularIcon,
+        command: ({ editor, range }) => {
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setMark('italic')
+            .run()
+        },
+      },
+      {
+        title: '折叠列表（未实现！！）',
+        describe: '折叠列表可以选择性隐藏或显示内容内容',
+        icon: TextCaseTitle16RegularIcon,
+        command: ({ editor, range }) => {
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setMark('italic')
+            .run()
+        },
+      },
+      {
+        title: '标注（未实现！！）',
         describe: '将文字加强突出',
         icon: TextCaseTitle16RegularIcon,
         command: ({ editor, range }) => {
@@ -167,7 +167,7 @@ export default {
         },
       },
       {
-        title: '提及',
+        title: '提及（未实现！！）',
         describe: '使用事件',
         icon: Mention20FilledIcon,
         command: ({ editor, range }) => {

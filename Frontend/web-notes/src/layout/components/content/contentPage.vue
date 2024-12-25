@@ -19,7 +19,7 @@
                                     <el-space direction="vertical" alignment="normal" style="margin-bottom: 1rem">
                                         <el-text size="small">默认</el-text>
                                         <el-row :gutter="20">
-                                            <el-col :span="6" v-for="(item, index) in 27" :key="index"
+                                            <el-col :span="6" v-for="(item, index) in 29" :key="index"
                                                 @click="changeCover(item)" style="cursor: pointer;">
                                                 <el-image style="width: 100%; height: 70px;"
                                                     :src="FILE_PATH_API_URL + 'SystemDefaultFiles/images/cover/' + item + '.jpg'"

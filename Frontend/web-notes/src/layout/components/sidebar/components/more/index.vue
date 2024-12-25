@@ -53,7 +53,7 @@
         <!-- 弹出框 -->
         <el-dialog v-model="centerDialogVisible" width="1200" align-center>
             <div style="height:800px; overflow-y: auto;">
-                <component :is="currentComponent" />
+                <component :is="currentComponent" @closeDialog="centerDialogVisible = false" />
             </div>
         </el-dialog><!-- 设置 -->
     </div>
@@ -128,9 +128,9 @@ let SearchGarbage = ref("");
 
 // 过滤后的数据
 const filteredRecycleData = computed(() => {
-  return RecycleData.value.filter(item => 
-    item.title.toLowerCase().includes(SearchGarbage.value.toLowerCase())
-  );
+    return RecycleData.value.filter(item =>
+        item.title.toLowerCase().includes(SearchGarbage.value.toLowerCase())
+    );
 });
 
 let RecycleContentFun = () => {
@@ -138,7 +138,7 @@ let RecycleContentFun = () => {
     getRecyc()
 }
 let getRecyc = () => {
-    getRecyclePage().then((data) => {
+    getRecyclePage({ spaceId: store.routerParamsId.spaceId }).then((data) => {
         console.log("获取当前回收站笔记");
         console.log(data);
         RecycleData.value = data
@@ -170,7 +170,7 @@ let restorePage = (val) => {
 
 // 彻底删除及其子页面
 let deletePageFun = (val) => {
-    deletePage({ pageId: val}).then((msg) => {
+    deletePage({ pageId: val }).then((msg) => {
         ElMessage({
             message: msg,
             type: 'success',

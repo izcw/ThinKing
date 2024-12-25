@@ -16,7 +16,7 @@
                 </template>
                 <template v-slot:2>
                     <main class="content">
-                        <el-button size="small" style="position: absolute;top: 1rem;left: 1rem;z-index: 9999;"
+                        <el-button size="small" style="position: absolute;top: 1rem;left: 1rem;z-index: 99;"
                             v-if="FullDocumentStatus" @click="exitFullScreen">
                             <n-icon size="12">
                                 <ArrowLeft12Filled />

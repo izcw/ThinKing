@@ -1,16 +1,16 @@
 package work.zhangchengwei.note.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author izcw
- * @since 2024-11-23
+ * @since 2024-12-26
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,17 +32,22 @@ public class NoteTemplate implements Serializable {
      * id
      */
     @TableId(value = "template_id", type = IdType.AUTO)
-    private Integer templateId;
+    private Long templateId;
 
     /**
-     * 用户或管理员
+     * 页面id
      */
-    private String role;
+    private Long pageId;
 
     /**
      * 用户邮箱
      */
     private String email;
+
+    /**
+     * 用户或管理员
+     */
+    private String role;
 
     /**
      * 模板名称
@@ -84,6 +89,5 @@ public class NoteTemplate implements Serializable {
     @TableField("update_time")  // 映射到数据库的 update_time 列
     @JsonProperty("update_time")  // 控制序列化时的字段名为 update_time
     private LocalDateTime updateTime;
-
 
 }

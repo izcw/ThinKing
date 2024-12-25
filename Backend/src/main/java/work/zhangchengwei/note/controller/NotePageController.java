@@ -3,6 +3,7 @@ package work.zhangchengwei.note.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import work.zhangchengwei.core.web.ResponseResult;
 import work.zhangchengwei.note.entity.NotePage;
-import work.zhangchengwei.note.entity.NoteSpace;
-import work.zhangchengwei.note.entity.NoteSubscribe;
 import work.zhangchengwei.note.mapper.NotePageMapper;
 import work.zhangchengwei.note.service.INotePageService;
-import work.zhangchengwei.note.service.INoteSpaceService;
-import work.zhangchengwei.system.entity.SysUser;
 
 import java.util.List;
 
@@ -58,12 +55,9 @@ public class NotePageController {
         List<NotePage> list = notePageService.list(queryWrapper);
 
         // 返回查询结果
-//        if (list != null && !list.isEmpty()) {
-            return ResponseResult.success("查询成功", list);
-//        } else {
-//            return ResponseResult.error("没有找到数据");
-//        }
+        return ResponseResult.success("查询成功", list);
     }
+
 
     /**
      * 根据ID获取页面
@@ -79,6 +73,7 @@ public class NotePageController {
         return ResponseResult.success(notePage);
     }
 
+
     /**
      * 根据ID获取页面(分享的)
      * @param id 笔记ID
@@ -92,6 +87,7 @@ public class NotePageController {
         }
         return ResponseResult.success(notePage);
     }
+
 
     /**
      * 添加笔记
@@ -114,7 +110,7 @@ public class NotePageController {
                 "        }\n" +
                 "    ]\n" +
                 "}";
-        // 使用 Jackson 的 ObjectMapper 将 String 转换为 JsonNode
+
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonContent);
@@ -131,6 +127,52 @@ public class NotePageController {
             return ResponseResult.fail("添加失败");
         }
     }
+
+
+    /**
+     * 使用模版
+     * @param pageId 模版页面ID
+     * @param spaceId 用户空间id
+     * @return
+     */
+    @PostMapping("/useTemplate")
+    public ResponseResult<NotePage> useTemplate(@RequestParam("pageId") String pageId, @RequestParam("spaceId") String spaceId) {
+        // 校验参数
+        if (StringUtils.isEmpty(pageId) || StringUtils.isEmpty(spaceId)) {
+            return ResponseResult.fail("模版页面ID和空间ID不能为空");
+        }
+
+        // 获取当前登录用户的 ID
+        String userIdStr = StpUtil.getLoginIdAsString();
+        Long userId = Long.parseLong(userIdStr);
+
+        // 查找模版page_id
+        QueryWrapper<NotePage> pageQueryWrapper = new QueryWrapper<>();
+        pageQueryWrapper.lambda()
+                .eq(NotePage::getPageId, pageId);
+        NotePage existingPage = notePageService.getOne(pageQueryWrapper);
+
+        if (existingPage != null) {
+            // 在 NotePage 表中插入
+            existingPage.setSpaceId(Long.valueOf(spaceId));  // 设置新 space_id
+            existingPage.setUserId(userId);  // 设置当前用户的 user_id
+            existingPage.setPageId(null);
+            existingPage.setDeleted(0);
+            existingPage.setUpdateTime(null);
+            existingPage.setCreateTime(null);
+            boolean insertedPage = notePageService.save(existingPage);  // 插入新数据
+
+            if (insertedPage) {
+                // 返回插入的 NotePage 数据
+                return ResponseResult.success("使用成功", existingPage);
+            } else {
+                return ResponseResult.fail("使用失败");
+            }
+        } else {
+            return ResponseResult.fail("未找到指定的模版，请联系管理员");
+        }
+    }
+
 
     /**
      * 更新信息
@@ -261,28 +303,28 @@ public class NotePageController {
     }
 
 
-//    /**
-//     * 删除页面(彻底删除)
-//     * @param pageId 要删除ID
-//     * @return 删除结果
-//     */
-//    @DeleteMapping("/delete")
-//    public ResponseResult<String> deleteById(@RequestParam("pageId") String pageId) {
-//        boolean deleted = notePageMapper.deleteById(pageId) > 0;
-//        if (deleted) {
-//            return ResponseResult.success("删除成功",null);
-//        } else {
-//            return ResponseResult.error("删除失败，未找到对应记录");
-//        }
-//    }
+    //    /**
+    //     * 删除页面(彻底删除)
+    //     * @param pageId 要删除ID
+    //     * @return 删除结果
+    //     */
+    //    @DeleteMapping("/delete")
+    //    public ResponseResult<String> deleteById(@RequestParam("pageId") String pageId) {
+    //        boolean deleted = notePageMapper.deleteById(pageId) > 0;
+    //        if (deleted) {
+    //            return ResponseResult.success("删除成功",null);
+    //        } else {
+    //            return ResponseResult.error("删除失败，未找到对应记录");
+    //        }
+    //    }
 
 
     /**
-     * 获取空间下的所有笔记
+     * 获取该空间下的回收站笔记
      * @return 笔记列表
      */
     @GetMapping("/RecyclePage")
-    public ResponseResult<List<NotePage>> getRecyclePage() {
+    public ResponseResult<List<NotePage>> getRecyclePage(@RequestParam("spaceId") String spaceId) {
         // 获取登录用户的 userId 字符串
         String userIdStr = StpUtil.getLoginIdAsString();
         Long userId = Long.parseLong(userIdStr);
@@ -290,7 +332,7 @@ public class NotePageController {
         // 创建 QueryWrapper 并设置查询条件
         QueryWrapper<NotePage> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
-//        queryWrapper.eq("parent_id", 0);
+        queryWrapper.eq("space_id", spaceId);
 
         // 默认过滤逻辑删除字段
         queryWrapper.eq("deleted", 1);

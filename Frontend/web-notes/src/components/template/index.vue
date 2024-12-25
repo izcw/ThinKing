@@ -6,28 +6,34 @@
                 <h1>模版中心</h1>
             </div>
 
-            <el-input v-model="SearchValue" size="large" style="margin-bottom: 1rem;" placeholder="请搜索模版名称" />
+            <div style="display: flex;align-items: center;margin-bottom: 3rem;">
+                <el-input v-model="SearchValue" size="large" placeholder="请搜索模版名称" />
+                <el-button type="primary" size="large" @click="SearchTemplate" plain>搜索</el-button>
+            </div>
             <div class="template">
-                <div class="catalog">
+                <!-- <div class="catalog">
                     <div class="item" v-for="(item, index) in menuList" :key="index"
                         :class="{ active: selectItem == index }" @click="SearchTemplate(item, index)">
                         <el-text truncated>{{ item.label }}</el-text>
                     </div>
-                </div>
+                </div> -->
                 <div class="content">
-                    <el-row :gutter="20">
-                        <el-col :span="12" :md="12" :lg="8" :xl="6" v-for="(item, index) in 5" :key="index">
+                    <!-- {{ TemplateData.length }} -->
+                    <el-empty v-show="!TemplateData || TemplateData.length <= 0" :image-size="100" :image="logoGrey"
+                        description="没有此模版" style="margin: 3rem;" />
+
+                    <el-row :gutter="20" v-show="TemplateData">
+                        <el-col :span="12" :md="12" :lg="6" :xl="4" v-for="(item, index) in TemplateData" :key="index">
                             <div class="item">
                                 <div class="PreviewBox">
-                                    <img :src="FILE_PATH_API_URL + 'SystemDefaultFiles/images/template/template' + (index + 1) + '.jpg'"
-                                        alt="">
+                                    <img :src="FILE_PATH_API_URL + item.preview" alt="">
                                     <el-tooltip class="box-item" content="未实现" placement="top">
-                                        <el-button color="#626aef" size="small">使用</el-button>
+                                        <el-button color="#626aef" size="small"
+                                            @click="useTemplateFun(item.pageId)">使用</el-button>
                                     </el-tooltip>
                                 </div>
-                                <h3><el-text truncated>旅行计划</el-text></h3>
-                                <p><el-text type="info" size="small"
-                                        line-clamp="2">使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率使用此旅行计划模板可最大限度地提高会议效率</el-text>
+                                <h3><el-text truncated>{{ item.templateName }}</el-text></h3>
+                                <p><el-text type="info" size="small" line-clamp="2">{{ item.comments }}</el-text>
                                 </p>
                             </div>
                         </el-col>
@@ -38,9 +44,17 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive, defineEmits } from 'vue'
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
 import { FILE_PATH_API_URL } from "@/config/setting"
+import { PageTemplate } from '@/api/template/index'
+import { useTemplate } from '@/api/note/index'
+import logoGrey from "@/assets/images/logo-grey.png"
+import { useUserStore } from '@/stores/modules/user'
+const store = useUserStore()
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 let selectItem = ref(0)
 
@@ -52,10 +66,55 @@ const menuList = ref([
 ]);
 
 
+const query = reactive({
+    page: 1,
+    limit: 20,
+    sort: "create_time",
+    order: "desc",
+    templateName: "",
+})
+
+let TemplateData = ref()
+
+
+// 获取数据
+let getTemplate = () => {
+    PageTemplate(query).then((val) => {
+        TemplateData.value = val
+        return
+    }).catch((e) => {
+        console.error('获取失败', e);
+    });
+}
+getTemplate();
+
+
 // 搜索模版
 let SearchValue = ref()
-let SearchTemplate = (item, index) => {
-    selectItem.value = index
+let SearchTemplate = () => {
+    query.templateName = SearchValue.value;
+    getTemplate()
+}
+
+
+const emit = defineEmits();
+// 使用模版
+let useTemplateFun = (valid) => {
+    useTemplate({ pageId: valid, spaceId: store.routerParamsId.spaceId }).then((val) => {
+        console.log(val);
+        router.push('/space/' + store.routerParamsId.spaceId + '/' + val.data.pageId);
+        store.getSpaceData(store.routerParamsId.spaceId);
+        // 触发关闭对话框的事件
+        emit('closeDialog');
+        ElMessage({
+            message: val.message,
+            type: 'success',
+        });
+        return
+    }).catch((e) => {
+        ElMessage.error('使用失败')
+        console.error('使用失败', e);
+    });
 }
 </script>
 <style scoped lang='scss'>
@@ -96,6 +155,7 @@ let SearchTemplate = (item, index) => {
             height: 100%;
             border-left: 1px solid #eee;
             box-sizing: border-box;
+            margin-right: 1rem;
 
             .item {
                 cursor: pointer;
@@ -126,7 +186,6 @@ let SearchTemplate = (item, index) => {
         }
 
         .content {
-            margin-left: 1rem;
             width: 100%;
             height: 100%;
 

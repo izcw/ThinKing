@@ -93,9 +93,6 @@ public class SysMainController {
     }
 
 
-
-
-
     /**
      * 登录
      * @param sysUser 管理用户信息
@@ -152,6 +149,5 @@ public class SysMainController {
             return ResponseResult.unauthorized("该用户未注册！");
         }
     }
-
 
 }
