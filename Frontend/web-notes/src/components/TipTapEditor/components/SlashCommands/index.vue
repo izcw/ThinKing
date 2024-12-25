@@ -18,11 +18,11 @@
             </div>
           </n-infinite-scroll>
         </n-tab-pane>
+        <n-tab-pane name="tabP4" tab="图片">
+          <uploadImageBox/>
+        </n-tab-pane>
         <n-tab-pane name="tabP2" tab="AI">
           ai
-        </n-tab-pane>
-        <n-tab-pane name="tabP4" tab="图像与文件">
-          图像与文件
         </n-tab-pane>
         <n-tab-pane name="tabP5" tab="嵌入媒体">
           嵌入媒体
@@ -38,7 +38,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { ElButton, ElText } from 'element-plus'
-
+import uploadImageBox from '@/components/uploadImage.vue'
 
 
 

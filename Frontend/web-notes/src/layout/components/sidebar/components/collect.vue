@@ -22,7 +22,7 @@
                 </el-tooltip>
             </n-grid-item>
             <n-grid-item style="width: 100%;">
-                <el-tooltip :hide-after="0" content="双击'锁屏'" placement="top" effect="light">
+                <el-tooltip :hide-after="0" content="双击'锁屏'（暂未实现，可双击预览）" placement="top" effect="light">
                     <div class="Tools-item item official" @dblclick="LockScreen">
                         <n-icon size="20">
                             <LockClosed32Regular />

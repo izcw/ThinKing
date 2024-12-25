@@ -56,23 +56,29 @@
                 <!-- <div class="item select">
                     <p>页面底部信息</p><el-switch v-model="value1" />
                 </div> -->
-                <div class="item select">
+                <!-- <div class="item select">
                     <p>转为模板</p><el-switch v-model="StorePage.pageData.template" :active-value="1" :inactive-value="0"
                         @change="updateSetting({ template: StorePage.pageData.template == 0 ? 0 : 1 })" />
-                </div>
-                <div class="item select">
-                    <p>页面历史</p>
-                </div>
+                </div> -->
+                <el-tooltip class="box-item" content="暂未实现！！" placement="top">
+                    <div class="item select">
+                        <p>页面历史</p>
+                    </div>
+                </el-tooltip>
                 <!-- <div class="item select">
                     <p>页面背景</p>
                 </div> -->
-                <div class="item select">
-                    <p>导入</p>
-                </div>
-                <div class="item select">
-                    <p>导出&nbsp;/&nbsp;下载</p>
-                </div>
-                <div class="item select">
+                <el-tooltip class="box-item" content="暂未实现！！" placement="top">
+                    <div class="item select">
+                        <p>导入</p>
+                    </div>
+                </el-tooltip>
+                <el-tooltip class="box-item" content="暂未实现！！" placement="top">
+                    <div class="item select">
+                        <p>导出&nbsp;/&nbsp;下载</p>
+                    </div>
+                </el-tooltip>
+                <div class="item select" @click="DeletePageFun(StorePage.pageData)">
                     <p>删除</p>
                 </div>
             </div>
@@ -115,6 +121,10 @@ import { usePageStore } from '@/stores/page'
 const StorePage = usePageStore()
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
+import { getSpacePage, upRecycle } from '@/api/note/index.js'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 // 使用 markRaw 来标记组件
 const AutoFitWidth20RegularIcon = markRaw(AutoFitWidth20Regular);
@@ -183,6 +193,33 @@ let updateSetting = (val) => {
 let SetReadOnly = () => {
     updateSetting({ readonly: StorePage.pageData.readonly == '0' ? '0' : '1' })
     storeEditor.editor.setEditable(StorePage.pageData.readonly == '0' ? true : false)
+}
+
+
+// 删除页面
+let DeletePageFun = (val) => {
+    console.log(val);
+
+    upRecycle({ pageId: val.pageId, status: 1 }).then((msg) => {
+        console.log("删除成功", msg);
+        // if (store.routerParamsId.pageId == val) {
+        router.push('/space/' + val.spaceId)
+        // }
+        ElMessage({
+            message: msg,
+            type: 'success',
+        });
+        setTimeout(() => {
+            getSpacePage({ spaceId: store.routerParamsId.spaceId }).then((data) => {
+                console.log("获取当前空间的所有笔记");
+                store.spacePageData = data;
+            }).catch((e) => {
+                console.error('获取失败', e);
+            });
+        }, 100);
+    }).catch((e) => {
+        console.error(e);
+    });
 }
 </script>
 <style scoped lang='scss'>

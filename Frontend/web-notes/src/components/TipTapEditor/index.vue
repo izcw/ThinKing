@@ -90,6 +90,8 @@ const lowlight = createLowlight(all)
 import HardBreak from '@tiptap/extension-hard-break' // 空格
 import HorizontalRule from '@tiptap/extension-horizontal-rule' // 水平线
 
+import Image from '@tiptap/extension-image' // 图片
+
 // 表格
 import Gapcursor from '@tiptap/extension-gapcursor'
 import Table from '@tiptap/extension-table'
@@ -148,6 +150,9 @@ const editor = useEditor({
         Bold,
         Italic,
         Strike,
+        Image.configure({
+            allowBase64: true, // 允许将图像解析为base64字符串<img src="data:image/jpg;base64...">
+        }),
         Underline,
         Code,
         Link.configure({
