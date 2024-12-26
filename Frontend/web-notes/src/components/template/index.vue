@@ -27,13 +27,12 @@
                             <div class="item">
                                 <div class="PreviewBox">
                                     <img :src="FILE_PATH_API_URL + item.preview" alt="">
-                                    <el-tooltip class="box-item" content="未实现" placement="top">
-                                        <el-button color="#626aef" size="small"
-                                            @click="useTemplateFun(item.pageId)">使用</el-button>
-                                    </el-tooltip>
+                                    <el-button color="#626aef" size="small"
+                                        @click="useTemplateFun(item.pageId)">使用</el-button>
                                 </div>
                                 <h3><el-text truncated>{{ item.templateName }}</el-text></h3>
-                                <p><el-text type="info" size="small" line-clamp="2">{{ item.comments }}</el-text>
+                                <p>
+                                    <el-text type="info" size="small" line-clamp="2">{{ item.comments }}</el-text>
                                 </p>
                             </div>
                         </el-col>

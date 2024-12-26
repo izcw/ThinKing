@@ -39,7 +39,7 @@
             <el-tooltip class="box-item" effect="dark" placement="top" :hide-after="0">
                 <template #content>表格</template>
 
-                <el-dropdown placement="top-start">
+                <el-dropdown placement="top-start" style="margin: 0 8px;">
                     <el-button size="small">
                         <n-icon size="24">
                             <Table24Regular />
@@ -293,7 +293,7 @@ const cleanLink = () => {
 </script>
 <style scoped lang='scss'>
 .bubble-menu {
-    width: 500px;
+    width: 530px;
     padding: 6px 12px;
     border-radius: 4px;
     background-color: #fff;

@@ -19,14 +19,24 @@
           </n-infinite-scroll>
         </n-tab-pane>
         <n-tab-pane name="tabP4" tab="图片">
-          <uploadImageBox/>
+          <uploadImageBox />
         </n-tab-pane>
         <n-tab-pane name="tabP2" tab="AI">
-          ai
+          <div style="display: flex;width: 100%;height: 280px;align-items: flex-start;flex-direction: column;justify-content: space-between;">
+            <div style="display: flex;flex-direction: column;">
+              <el-tag type="info" style="margin-bottom: 4px">继续编写</el-tag>
+              <el-tag type="info" style="margin-bottom: 4px">总结</el-tag>
+              <el-tag type="info" style="margin-bottom: 4px">起草大纲</el-tag>
+            </div>
+            <div style="width: 100%;">
+              <el-input v-model="textareaAI" style="width: 100%" :rows="2" type="textarea" placeholder="万事问ai" />
+              <el-button type="primary" plain>发送</el-button>
+            </div>
+          </div>
         </n-tab-pane>
-        <n-tab-pane name="tabP5" tab="嵌入媒体">
+        <!-- <n-tab-pane name="tabP5" tab="嵌入媒体">
           嵌入媒体
-        </n-tab-pane>
+        </n-tab-pane> -->
       </n-tabs>
     </template>
     <div class="item" v-else>
@@ -96,6 +106,10 @@ const selectItem = (index) => {
     props.command(item);
   }
 };
+
+
+// AI
+let textareaAI = ref()
 </script>
 
 <style scoped lang="scss">

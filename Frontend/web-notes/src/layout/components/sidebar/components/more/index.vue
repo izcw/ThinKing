@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <el-alert title="垃圾箱中超过30天的页面将自动删除" type="info" :closable="false" />
+            <el-alert title="垃圾箱中超过30天的页面将（未实现）" type="info" :closable="false" />
         </el-popover>
 
 

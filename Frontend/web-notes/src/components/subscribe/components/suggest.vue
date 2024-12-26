@@ -4,9 +4,15 @@
             <div class="item">
                 <div class="title">{{ item.subscribeName }}<span class="hot" v-if="item.recommend == 1">热门方案</span>
                 </div>
-                <p class="describe"><el-text line-clamp="2" size="small">
+                <p class="describe">
+                    <el-text line-clamp="2" size="small">
                         {{ item.comments }}
-                    </el-text></p>
+                    </el-text>
+                    <br>
+                    <el-text line-clamp="2" size="small">
+                        空间：{{ item.space }}
+                    </el-text>
+                </p>
                 <div class="price">
                     <p>折扣价：<span class="Current">￥{{ item.price }}</span><span>&nbsp;/&nbsp;月</span></p>
                     <p class="oldprice">原&emsp;价：<del>￥{{ item.oldprice }}<span>&nbsp;/&nbsp;月</span></del>

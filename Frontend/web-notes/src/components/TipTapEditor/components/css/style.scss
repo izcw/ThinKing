@@ -179,6 +179,10 @@
         }
     }
 
+    ul ul{
+        margin-top: 0;
+    }
+
     // 代码
     pre {
         background: #2d2d2d;
@@ -369,8 +373,9 @@
     img {
         display: block;
         height: auto;
-        margin: 1.5rem 0;
+        margin: 1.5rem auto;
         max-width: 100%;
+        border: 1px solid #eee;
     
         &.ProseMirror-selectednode {
           outline: 2px solid #8b33ff;
