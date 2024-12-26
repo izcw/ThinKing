@@ -195,6 +195,14 @@ let iconData = ref([
         name: "书",
         icon: "📖"
     },
+    {
+        name: "灯",
+        icon: "💡"
+    },
+    {
+        name: "花",
+        icon: "🌸"
+    },
 ])
 </script>
 <style lang='scss'>

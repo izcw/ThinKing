@@ -1,5 +1,5 @@
 <template>
-    <div class="ThinKing-Editor-Box">
+    <div class="ThinKing-Editor-Box" @keydown="handleKeydown" tabindex="0">
         <!-- <div>
             <el-button v-if="editor" @click="editor.chain().focus().undo().run()" :disabled="!editor.can().undo()">
                 撤销
@@ -48,6 +48,7 @@ import { update } from '@/api/note/index.js'
 import './components/css/style.scss'
 import { ElButton } from 'element-plus'
 import 'element-plus/dist/index.css'
+import { ElMessage } from 'element-plus';
 import bubbleMenuBox from './components/bubbleMenu/index.vue'
 import NumberWordsBox from './components/NumberWords/index.vue'
 import { useEditor, EditorContent, BubbleMenu, VueNodeViewRenderer } from '@tiptap/vue-3'
@@ -61,7 +62,7 @@ import { Color } from '@tiptap/extension-color' // 字体颜色
 import TextStyle from '@tiptap/extension-text-style'
 import Dropcursor from '@tiptap/extension-dropcursor' // 拖动显示的条
 import Placeholder from '@tiptap/extension-placeholder' // 占位符提示
-// import History from '@tiptap/extension-history' // 撤销和重做
+import History from '@tiptap/extension-history' // 撤销和重做
 import Commands from './components/SlashCommands/commands' // 斜线命令
 import CommandsSuggestion from './components/SlashCommands/suggestion.js'
 import Mention from '@tiptap/extension-mention' // 提及
@@ -105,7 +106,7 @@ import TaskList from '@tiptap/extension-task-list'
 
 
 // 离线支持
-import { createYDoc, initYjsStore, fetchServerData, updateServerData } from '@/utils/yjsSync'
+// import { createYDoc, initYjsStore, fetchServerData, updateServerData } from '@/utils/yjsSync'
 
 // 将Editor对象放入状态管理
 import { useEditorPageStore } from '@/stores/EditorPage'
@@ -185,9 +186,9 @@ const editor = useEditor({
         CharacterCount.configure({
             limit: store.setting.limit,
         }),
-        // History.configure({
-        //     depth: store.setting.History,
-        // }),
+        History.configure({
+            depth: store.setting.History,
+        }),
         Commands.configure({
             suggestion: CommandsSuggestion
         }),
@@ -245,9 +246,56 @@ onBeforeUnmount(() => {
 });
 
 
+
+// Ctrl + S 事件处理函数（Windows/Linux: Ctrl, macOS: Cmd）
+const handleKeydown = (event) => {
+    // 判断 Ctrl + S 或 Cmd + S
+    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+        event.preventDefault(); // 阻止浏览器默认的保存行为
+        console.log('Ctrl + S 或 Cmd + S 被按下');
+        updateContent(editor.value.getJSON()); // 更新内容
+        // ElMessage({
+        //         message: '保存成功',
+        //         type: 'success',
+        //     });
+    }
+};
+
+// 键盘松开事件处理函数
+// const handleKeyup = (event) => {
+//     // 判断 Ctrl + S 或 Cmd + S 松开
+//     if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+//         event.preventDefault(); // 阻止默认的保存行为
+
+//         // 执行保存逻辑
+//         if (editor) {
+//             updateContent(editor.value.getJSON()); // 更新内容
+//             ElMessage({
+//                 message: '保存成功',
+//                 type: 'success',
+//             });
+//         }
+//     }
+// };
+
+// 在组件挂载时添加事件监听
+onMounted(() => {
+    // 监听容器内的键盘事件
+    const editorBox = document.querySelector('.ThinKing-Editor-Box');
+    // editorBox.addEventListener('keyup', handleKeyup);
+    editorBox.addEventListener('keydown', handleKeydown);
+});
+
+// 在组件卸载时移除事件监听
+onBeforeUnmount(() => {
+    const editorBox = document.querySelector('.ThinKing-Editor-Box');
+    // editorBox.removeEventListener('keyup', handleKeyup);
+    editorBox.removeEventListener('keydown', handleKeydown);
+});
+
+
 // 更新数据
 let updateContent = (val) => {
-    console.log("jiao");
     update({ pageId: StorePage.pageData.pageId, content: val }).then((data) => {
         console.log("修改成功", data);
         StorePage.pageData = data

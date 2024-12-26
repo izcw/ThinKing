@@ -274,7 +274,7 @@ const openEdit = (row) => {
 
 /* 删除 */
 const remove = (row) => {
-  removeUser(row)
+  removeUser({userId:row.userId})
     .then((msg) => {
       EleMessage.success(msg);
       reload()

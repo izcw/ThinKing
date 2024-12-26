@@ -336,6 +336,7 @@ public class NotePageController {
 
         // 默认过滤逻辑删除字段
         queryWrapper.eq("deleted", 1);
+        queryWrapper.orderByDesc("create_time");
 
         // 执行查询，假设你有一个 noteSpaceService 可以执行数据库查询
         List<NotePage> list = notePageService.list(queryWrapper);

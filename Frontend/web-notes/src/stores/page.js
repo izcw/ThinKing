@@ -8,7 +8,6 @@ export const usePageStore = defineStore('pagestore', () => {
     // 检测数据是否为空
     const isContentEmpty = computed(() => {
         if (pageData.value && pageData.value.content && pageData.value.content.content) {
-            console.log("LLL");
             if (pageData.value.content.content.length <= 1) {
                 return pageData.value.content.content[0].content === undefined
             }

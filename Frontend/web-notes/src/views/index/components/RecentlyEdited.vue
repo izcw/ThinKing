@@ -47,7 +47,6 @@ let openPage = (val) => {
 // 检测数据是否为空
 const isContentEmpty = (val) => {
     if (val && val.content && val.content.content) {
-        console.log("LLL");
         if (val.content.content.length <= 1) {
             return val.content.content[0].content === undefined
         }

@@ -8,7 +8,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 axios.defaults.withCredentials = true; // 添加此行以支持跨域携带 Cookies
 const service = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 5000,
+  timeout: 10000,
 });
 
 // 添加请求拦截器

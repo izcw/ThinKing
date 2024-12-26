@@ -8,31 +8,31 @@
             <el-input clearable v-model.trim="form.subscribeOrderId" placeholder="请输入" />
           </el-form-item>
         </el-col>
-        <el-col :lg="6" :md="12" :sm="12" :xs="24">
+        <!-- <el-col :lg="6" :md="12" :sm="12" :xs="24">
           <el-form-item label="套餐名称">
             <el-input clearable v-model.trim="form.subscribeName" placeholder="请输入" />
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col :lg="6" :md="12" :sm="12" :xs="24">
           <el-form-item label="用户id">
             <el-input clearable v-model.trim="form.userId" placeholder="请输入" />
           </el-form-item>
         </el-col>
-        <el-col  v-if="searchExpand"  :lg="6" :md="12" :sm="12" :xs="24">
+        <!-- <el-col  v-if="searchExpand"  :lg="6" :md="12" :sm="12" :xs="24">
           <el-form-item label="状态">
             <el-select clearable v-model="form.status" placeholder="请选择" class="ele-fluid">
               <el-option v-for="(item, index) in statusListData" :key="index" :value="item.code"
                 :label="item.describe" />
             </el-select>
           </el-form-item>
-        </el-col>
+        </el-col> -->
 
         <el-col :lg="6" :md="12" :sm="12" :xs="24">
           <el-form-item label-width="16px">
             <el-space>
               <el-button type="primary" @click="search">查询</el-button>
               <el-button @click="reset">重置</el-button>
-              <el-link type="primary" :underline="false" @click="toggleExpand">
+              <!-- <el-link type="primary" :underline="false" @click="toggleExpand">
                 <span v-if="searchExpand">
                   <span>收起</span>
                   <el-icon style="vertical-align: -1px">
@@ -45,7 +45,7 @@
                     <arrow-down />
                   </el-icon>
                 </span>
-              </el-link>
+              </el-link> -->
             </el-space>
           </el-form-item>
         </el-col>
