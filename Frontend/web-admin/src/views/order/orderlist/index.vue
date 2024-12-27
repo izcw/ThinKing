@@ -28,10 +28,10 @@
         <!-- 操作列 -->
         <template #action="{ row }">
           <el-space>
-            <el-link type="primary" :underline="false" @click.stop="openEdit(row)">
+            <el-link type="primary" :underline="false">
               审核
             </el-link>
-            <el-link type="danger" :underline="false" @click.stop="openEdit(row)">
+            <el-link type="danger" :underline="false">
               退款
             </el-link>
           </el-space>

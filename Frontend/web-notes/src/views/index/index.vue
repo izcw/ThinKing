@@ -3,7 +3,7 @@
         <CollapseMenuBox />
         <div class="container">
             <div class="title text-select">
-                <h1>晚上好呀，{{ store.userInfoData.nickname }}</h1>
+                <h1>{{greeting}}好呀，{{ store.userInfoData.nickname }}</h1>
             </div>
             <el-row :gutter="30">
                 <el-col :xs="24" :sm="24" :md="24" :lg="14" :xl="16">
@@ -33,7 +33,7 @@
     </div>
 </template>
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onMounted } from 'vue'
 import RecentlyEditedBox from './components/RecentlyEdited.vue';
 import calendarBox from './components/calendar.vue';
 import RelationshipDiagramBox from './components/RelationshipDiagram.vue';
@@ -41,10 +41,19 @@ import contributeBox from './components/contribute.vue';
 import recommendBox from './components/recommend.vue';
 import searchItemBox from '@/components/searchItem.vue';
 import CollapseMenuBox from '@/components/CollapseMenu.vue';
+import { getGreeting } from "@/utils/timeGreeting.js"
 import { useUserStore } from '@/stores/modules/user'
 const store = useUserStore()
 
 let search = ref();
+
+
+// 早、中晚
+const greeting = ref('');
+onMounted(() => {
+  greeting.value = getGreeting();
+});
+
 </script>
 <style scoped lang='scss'>
 .title {
