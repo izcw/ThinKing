@@ -31,9 +31,6 @@
             <el-link type="primary" :underline="false">
               审核
             </el-link>
-            <el-link type="danger" :underline="false">
-              退款
-            </el-link>
           </el-space>
         </template>
         <!-- 客户名表头 -->

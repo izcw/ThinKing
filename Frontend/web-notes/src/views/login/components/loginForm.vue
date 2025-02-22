@@ -39,8 +39,8 @@ const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ // 邮箱正
 
 const ruleFormRef = ref()
 const ruleForm = reactive({
-    email: 'xiaoli@qq.com',
-    password: "123456",
+    email: '',
+    password: "",
 })
 
 const rules = reactive({

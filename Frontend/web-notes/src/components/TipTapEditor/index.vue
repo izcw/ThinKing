@@ -228,14 +228,14 @@ const editor = useEditor({
         })
     ],
     onUpdate: ({ editor }) => {
-        updateContent(editor.getJSON())
+        updateContent(editor.getJSON());
         // console.log("更新内容");
         // console.log(StorePage.pageData.content);
     },
 })
 
 onMounted(() => {
-    store.editor = editor
+    store.editor = editor    
 })
 
 onBeforeUnmount(() => {

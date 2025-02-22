@@ -29,7 +29,7 @@
               <el-tag type="info" style="margin-bottom: 4px">起草大纲</el-tag>
             </div>
             <div style="width: 100%;">
-              <el-input v-model="textareaAI" style="width: 100%" :rows="2" type="textarea" placeholder="万事问ai" />
+              <el-input v-model="textareaAI" style="width: 100%" :rows="2" type="textarea" placeholder="万事问ai（未实现）" />
               <el-button type="primary" plain>发送</el-button>
             </div>
           </div>

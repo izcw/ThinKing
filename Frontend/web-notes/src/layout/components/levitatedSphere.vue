@@ -10,38 +10,39 @@
                 </n-icon>
             </n-float-button>
         </template>
-        回到顶部
-    </n-tooltip> -->
-    <n-flex>
-        <n-tooltip trigger="hover" placement="right">
-            <template #trigger>
-                <n-float-button class="levitatedSphere" position="absolute" bottom="2.5rem" right="2.5rem"
-                    menu-trigger="hover">
-                    <n-icon>
-                        <Crow />
-                    </n-icon>
-                    <template #menu>
-                        <n-tooltip trigger="hover" placement="right">
-                            <template #trigger>
-                                <n-float-button shape="square"  @click="requestFullScreen">
-                                    <n-icon>
-                                        <FullScreenMaximize16Filled />
-                                    </n-icon>
-                                </n-float-button>
-                            </template>
-                            全屏预览
-                        </n-tooltip>
-                        <!-- <n-tooltip trigger="hover" placement="right">
-                            <template #trigger>
-                                <n-float-button shape="square" @click="openAiTool">
-                                    <n-icon>
-                                        <Connectdevelop />
-                                    </n-icon>
-                                </n-float-button>
-                            </template>
-                            AI
-                        </n-tooltip>
-                        <n-tooltip trigger="hover" placement="right">
+回到顶部
+</n-tooltip> -->
+    <div>
+        <n-flex>
+            <n-tooltip trigger="hover" placement="right">
+                <template #trigger>
+                    <n-float-button class="levitatedSphere" position="absolute" bottom="2.5rem" right="2.5rem"
+                        menu-trigger="hover">
+                        <n-icon>
+                            <Crow />
+                        </n-icon>
+                        <template #menu>
+                            <n-tooltip trigger="hover" placement="right">
+                                <template #trigger>
+                                    <n-float-button shape="square" @click="requestFullScreen">
+                                        <n-icon>
+                                            <FullScreenMaximize16Filled />
+                                        </n-icon>
+                                    </n-float-button>
+                                </template>
+                                全屏预览
+                            </n-tooltip>
+                            <n-tooltip trigger="hover" placement="right">
+                                <template #trigger>
+                                    <n-float-button shape="square" @click="openAiTool">
+                                        <n-icon>
+                                            <Connectdevelop />
+                                        </n-icon>
+                                    </n-float-button>
+                                </template>
+                                AI
+                            </n-tooltip>
+                            <!--  <n-tooltip trigger="hover" placement="right">
                             <template #trigger>
                                 <router-link to="/template">
                                     <n-float-button shape="square">
@@ -53,28 +54,29 @@
                             </template>
                             模板
                         </n-tooltip> -->
-                        <n-tooltip trigger="hover" placement="right">
-                            <template #trigger>
-                                <n-float-button shape="square" @click="scrollIntoViewUp">
-                                    <n-icon>
-                                        <ArrowCircleUp16Filled />
-                                    </n-icon>
-                                </n-float-button>
-                            </template>
-                            回到顶部
-                        </n-tooltip>
-                    </template>
-                </n-float-button>
-            </template>
-            回到顶部、全屏预览等
-        </n-tooltip>
-    </n-flex>
+                            <n-tooltip trigger="hover" placement="right">
+                                <template #trigger>
+                                    <n-float-button shape="square" @click="scrollIntoViewUp">
+                                        <n-icon>
+                                            <ArrowCircleUp16Filled />
+                                        </n-icon>
+                                    </n-float-button>
+                                </template>
+                                回到顶部
+                            </n-tooltip>
+                        </template>
+                    </n-float-button>
+                </template>
+                回到顶部、使用AI、全屏预览等
+            </n-tooltip>
+        </n-flex>
+    </div>
 </template>
 
 <script setup>
 import { ref, defineEmits, watch, defineProps, inject } from 'vue'
 import { Crow, Connectdevelop, Magic } from '@vicons/fa'
-import { ArrowCircleUp16Filled, Diamond16Regular,FullScreenMaximize16Filled } from '@vicons/fluent'
+import { ArrowCircleUp16Filled, Diamond16Regular, FullScreenMaximize16Filled } from '@vicons/fluent'
 
 import { useSettingStore } from '@/stores/setting'
 const store = useSettingStore()
@@ -98,7 +100,7 @@ const openAiTool = () => {
 // 点击全屏预览
 const emit = defineEmits(['requestFullScreen']);
 function requestFullScreen() {
-  emit('requestFullScreen')
+    emit('requestFullScreen')
 }
 
 </script>

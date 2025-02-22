@@ -130,6 +130,7 @@ let requestFullScreen = () => {
     if (screenfull.isEnabled) {
         screenfull.request(pageContentRef.value);
         FullDocumentStatus.value = true
+        storeEditor.isEditable = true
         storeEditor.editor.setEditable(false)
     }
 }
@@ -139,6 +140,7 @@ let exitFullScreen = () => {
     if (screenfull.isEnabled) {
         screenfull.exit(pageContentRef.value);
         FullDocumentStatus.value = false;
+        storeEditor.isEditable = false
         storeEditor.editor.setEditable(true)
     }
 }

@@ -71,6 +71,7 @@
     "qrcode.vue": "^3.6.0",
     "relation-graph-vue3": "^2.2.8",
     "screenfull": "^6.0.2",
+    "turndown": "^7.2.0",
     "v-click-outside": "^3.2.0",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5",

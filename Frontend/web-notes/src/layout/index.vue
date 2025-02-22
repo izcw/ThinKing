@@ -9,7 +9,6 @@
             </template>
             <template v-slot:2>
                 <main class="content">
-
                     <router-view></router-view>
                 </main>
             </template>

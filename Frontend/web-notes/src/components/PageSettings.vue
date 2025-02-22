@@ -68,14 +68,12 @@
                 <!-- <div class="item select">
                     <p>页面背景</p>
                 </div> -->
+                <div class="item select" @click="exportMarkdown">
+                    <p>导出&nbsp;/&nbsp;下载Markdown</p>
+                </div>
                 <el-tooltip class="box-item" content="暂未实现！！" placement="top">
                     <div class="item select">
                         <p>导入</p>
-                    </div>
-                </el-tooltip>
-                <el-tooltip class="box-item" content="暂未实现！！" placement="top">
-                    <div class="item select">
-                        <p>导出&nbsp;/&nbsp;下载</p>
                     </div>
                 </el-tooltip>
                 <div class="item select" @click="DeletePageFun(StorePage.pageData)">
@@ -125,6 +123,8 @@ import { getSpacePage, upRecycle } from '@/api/note/index.js'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
+
 
 // 使用 markRaw 来标记组件
 const AutoFitWidth20RegularIcon = markRaw(AutoFitWidth20Regular);
@@ -221,6 +221,46 @@ let DeletePageFun = (val) => {
         console.error(e);
     });
 }
+
+
+// 导出markdown
+// 导入 Turndown.js
+import TurndownService from "turndown";
+
+// 初始化 Turndown.js
+const turndownService = new TurndownService({
+    headingStyle: "atx", // 设置标题风格为 `#`
+    bulletListMarker: "-", // 列表符号设置为 `-`
+    codeBlockStyle: "fenced", // 代码块样式为围栏样式 (```)
+});
+
+// 自定义规则（可选，根据需要添加）
+turndownService.addRule("removeStyles", {
+    filter: ["style", "script"], // 过滤 <style> 和 <script> 标签
+    replacement: () => "",
+});
+
+// 导出 Markdown 文件的方法
+const exportMarkdown = () => {
+    // 假设 editor 是你的编辑器实例
+    const htmlContent = storeEditor.editor.getHTML(); // 替换为你的实际调用方法
+
+    // 转换 HTML 为 Markdown
+    const markdownContent = turndownService.turndown(htmlContent);
+
+    // 创建 Blob 对象
+    const blob = new Blob([markdownContent], { type: "text/markdown;charset=utf-8" });
+
+    // 创建下载链接
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = StorePage.pageData.title ? StorePage.pageData.title : '未命名页面' + ".md"; // 默认文件名
+    link.click();
+
+    // 释放 URL 对象
+    URL.revokeObjectURL(url);
+};
 </script>
 <style scoped lang='scss'>
 .PageSettings {

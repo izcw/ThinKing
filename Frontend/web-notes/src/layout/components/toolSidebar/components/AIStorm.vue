@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="chat">
-                <n-input placeholder="万事问ai" type="textarea" size="small" :autosize="{
+                <n-input placeholder="万事问ai（未实现）" type="textarea" size="small" :autosize="{
                     minRows: 5,
                     maxRows: 5,
                 }" />

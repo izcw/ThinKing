@@ -3,17 +3,17 @@
 -->
 <template>
     <div class="toolSidebar">
-        <div style="padding: 1rem 0;box-sizing: border-box;">
+        <div v-if="storeEditor.isEditable" style="padding: 1rem 0;box-sizing: border-box;">
             <catalogOutlineBox />
         </div>
-        <!-- <n-tabs type="segment" v-model:value="store.TabsStatus" animated @before-leave="handleBeforeLeave">
+        <n-tabs v-else type="segment" v-model:value="store.TabsStatus" animated @before-leave="handleBeforeLeave">
             <n-tab-pane name="tabP1" tab="目录">
                 <catalogOutlineBox />
             </n-tab-pane>
             <n-tab-pane name="tabP2" tab="AI">
                 <AIStormBox />
             </n-tab-pane>
-        </n-tabs> -->
+        </n-tabs>
     </div>
 </template>
 <script setup>
@@ -22,6 +22,13 @@ import catalogOutlineBox from './components/catalogOutline.vue'
 import AIStormBox from './components/AIStorm.vue'
 import { useSettingStore } from '@/stores/setting'
 const store = useSettingStore()
+
+import { usePageStore } from '@/stores/page'
+const StorePage = usePageStore()
+
+import { useEditorPageStore } from '@/stores/EditorPage'
+const storeEditor = useEditorPageStore()
+
 
 
 // 展开关闭侧边栏宽度
@@ -61,6 +68,7 @@ const handleBeforeLeave = (tabName) => {
     width: 100%;
     height: 100%;
     padding: 0 1rem;
+    padding-top: 0.5rem;
     box-sizing: border-box;
 }
 </style>
